@@ -1,0 +1,10 @@
+{
+  "AppSettings": {
+    "SiteTitle": "Hooli"
+  },
+  "Data": {
+    "DefaultConnection": {
+      "ConnectionString": "Server=tcp:if2u1a8el2.database.windows.net,1433;Database=HooliDB;User ID=Hooli@if2u1a8el2;Password=LjTNP6uiHCU6UqkQpwbw;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;MultipleActiveResultSets=True;"
+    }
+  }
+}

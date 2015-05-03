@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.22823.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{09C7E8D4-088D-41BD-A65A-55824E79B0D0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C52D3241-B907-492C-AB51-108C7B7CACA9}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Hooli", "src\Hooli\Hooli.xproj", "{DB09AAE3-5ABD-478D-B057-DEA9E79850BC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DB09AAE3-5ABD-478D-B057-DEA9E79850BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB09AAE3-5ABD-478D-B057-DEA9E79850BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB09AAE3-5ABD-478D-B057-DEA9E79850BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB09AAE3-5ABD-478D-B057-DEA9E79850BC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DB09AAE3-5ABD-478D-B057-DEA9E79850BC} = {09C7E8D4-088D-41BD-A65A-55824E79B0D0}
+	EndGlobalSection
+EndGlobal
