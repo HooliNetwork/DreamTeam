@@ -7,28 +7,30 @@ using System.Threading.Tasks;
 
 namespace Hooli.Models
 {
-    public class Post
+    public class Event
     {
         [Key]
-        public int PostId { get; set; }
+        public int EventId { get; set; }
 
         [Required]
         [StringLength(160, MinimumLength = 2)]
-        public string Title { get; set; }
+        public string EventName { get; set; }
 
-        public string Text { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
+
+        public bool Private { get; set; }
+
+        public string Description { get; set; }
+
+        public string Location { get; set; }
 
         [Display(Name = "Image URL")]
         [StringLength(1024)]
         public string ImgUrl { get; set; }
 
-        public int UpVotes { get; set; }
-        public int DownVotes { get; set; }
-
         [DataType(DataType.DateTime)]
         public DateTime DateCreated { get; set; }
-
-        public virtual Group Group { get; set; }
 
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
