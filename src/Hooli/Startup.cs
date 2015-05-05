@@ -106,7 +106,7 @@ namespace Hooli
                 // sends the request to the following path or controller action.
                 app.UseErrorHandler("/Home/Error");
             }
-
+            //SampleData.InitializeHooliDatabaseAsync(app.ApplicationServices).Wait();
             // Add static files to the request pipeline.
             app.UseStaticFiles();
 

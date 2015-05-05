@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using Hooli.Models;
 using Microsoft.Framework.Caching.Memory;
+using System.Threading;
+using Microsoft.AspNet.Identity;
+using System.Security.Claims;
 
 namespace Hooli.Controllers
 {
@@ -12,17 +15,17 @@ namespace Hooli.Controllers
     {
         [FromServices]
         public HooliContext DbContext { get; set; }
+        public HomeController(UserManager<ApplicationUser> userManager)
+        {
+            UserManager = userManager;
+        }
+        public UserManager<ApplicationUser> UserManager { get; private set; }
 
         [FromServices]
         public IMemoryCache Cache { get; set; }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
         //
         // GET: /Home/
-        public async Task<IActionResult> Index2()
+        public async Task<IActionResult> Index()
         {
             // Get most popular Posts
             var Posts = await Cache.GetOrSet("top", async context =>
@@ -30,9 +33,8 @@ namespace Hooli.Controllers
                 //Refresh it every 10 minutes. Let this be the last item to be removed by cache if cache GC kicks in.
                 context.SetAbsoluteExpiration(TimeSpan.FromMinutes(10));
                 context.SetPriority(CachePreservationPriority.High);
-                return await GetTopPost(10);
+                return await GetTopPost(4);
             });
-
             return View(Posts);
         }
 
@@ -73,7 +75,45 @@ namespace Hooli.Controllers
             return await DbContext.Post
                 .OrderByDescending(a => a.UpVotes)
                 .Take(count)
+                .Include(u => u.User)
                 .ToListAsync();
         }
+        // POST: /StoreManager/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Post post, CancellationToken requestAborted)
+        {
+            var user = await GetCurrentUserAsync();
+            if (ModelState.IsValid && user != null)
+            {
+                post.User = user;
+                DbContext.Post.Add(post);
+                await DbContext.SaveChangesAsync(requestAborted);
+
+                //  Live feed here
+                //
+                //var postdata = new PostData
+                //{
+                //    Title = post.Title,
+                //    Url = Url.Action("Details", "Store", new { id = album.AlbumId })
+                //};
+                //_announcementHub.Clients.All.announcement(postdata);
+                //Cache.Remove("latestAlbum");
+
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+        // GET: /StoreManager/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+        private async Task<ApplicationUser> GetCurrentUserAsync()
+        {
+            return await UserManager.FindByIdAsync(Context.User.GetUserId());
+        }
+
+
     }
 }

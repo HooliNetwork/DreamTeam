@@ -12,7 +12,7 @@ namespace Hooli.Migrations
     {
         public override string Id
         {
-            get { return "20150505124643_hoolimigration"; }
+            get { return "20150505151656_hoolimigration"; }
         }
         
         public override string ProductVersion
