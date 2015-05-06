@@ -1,5 +1,7 @@
 ﻿init:
   - git config --global core.autocrlf true
+install:
+  - npm install -g npm bower gulp
 build_script:
   - build.cmd --quiet verify
 clone_depth: 1
