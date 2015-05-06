@@ -32,5 +32,9 @@ namespace Hooli.Models
 
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
+        public Post()
+        {
+            this.DateCreated = DateTime.UtcNow;
+        }
     }
 }

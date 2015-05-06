@@ -79,10 +79,8 @@ namespace Hooli
 
             // Add MVC services to the services container.
             services.AddMvc();
-
-            // Uncomment the following line to add Web API services which makes it easier to port Web API 2 controllers.
-            // You will also need to add the Microsoft.AspNet.Mvc.WebApiCompatShim package to the 'dependencies' section of project.json.
-            // services.AddWebApiConventions();
+            services.AddSignalR();
+            //Add all SignalR related services to IoC.
         }
 
         // Configure is called after ConfigureServices is called.
@@ -106,6 +104,9 @@ namespace Hooli
                 // sends the request to the following path or controller action.
                 app.UseErrorHandler("/Home/Error");
             }
+            //Configure SignalR
+            app.UseSignalR();
+
             //SampleData.InitializeHooliDatabaseAsync(app.ApplicationServices).Wait();
             // Add static files to the request pipeline.
             app.UseStaticFiles();

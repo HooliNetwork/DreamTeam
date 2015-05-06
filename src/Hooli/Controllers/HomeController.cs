@@ -52,11 +52,17 @@ namespace Hooli.Controllers
 
         
 
-        public IActionResult About()
+        public async Task<IActionResult> About()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            // Get most popular Posts
+            var Users = await Cache.GetOrSet("users", async context =>
+            {
+                //Refresh it every 10 minutes. Let this be the last item to be removed by cache if cache GC kicks in.
+                context.SetAbsoluteExpiration(TimeSpan.FromMinutes(10));
+                context.SetPriority(CachePreservationPriority.High);
+                return await GetUsers(4);
+            });
+            return View(Users);
         }
 
         public IActionResult Contact()
@@ -71,48 +77,24 @@ namespace Hooli.Controllers
             // Group the order details by Post and return
             // the Posts with the highest count of Upvotes
 
-            // TODO [EF] We don't query related data as yet, so the OrderByDescending isn't doing anything
             return await DbContext.Post
                 .OrderByDescending(a => a.UpVotes)
                 .Take(count)
                 .Include(u => u.User)
                 .ToListAsync();
         }
-        // POST: /StoreManager/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Post post, CancellationToken requestAborted)
+        private async Task<List<ApplicationUser>> GetUsers(int count)
         {
-            var user = await GetCurrentUserAsync();
-            if (ModelState.IsValid && user != null)
-            {
-                post.User = user;
-                DbContext.Post.Add(post);
-                await DbContext.SaveChangesAsync(requestAborted);
+            // Group the order details by Post and return
+            // the Posts with the highest count of Upvotes
 
-                //  Live feed here
-                //
-                //var postdata = new PostData
-                //{
-                //    Title = post.Title,
-                //    Url = Url.Action("Details", "Store", new { id = album.AlbumId })
-                //};
-                //_announcementHub.Clients.All.announcement(postdata);
-                //Cache.Remove("latestAlbum");
-
-                return RedirectToAction("Index");
-            }
-            return View();
+            return await DbContext.Users
+                .OrderByDescending(a => a.LastName)
+                .Take(count)
+                .Include(u => u.Posts)
+                .ToListAsync();
         }
-        // GET: /StoreManager/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-        private async Task<ApplicationUser> GetCurrentUserAsync()
-        {
-            return await UserManager.FindByIdAsync(Context.User.GetUserId());
-        }
+        
 
 
     }

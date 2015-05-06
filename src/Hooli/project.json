@@ -1,10 +1,16 @@
 ﻿{
+   "authors": [
+        "DreamTeam"
+  ],
+  "description": "Social platfrom",
+  "publishExclude": "*.cmd",
   "webroot": "wwwroot",
   "userSecretsId": "aspnet5-Hooli-9fc8e6aa-9156-45e6-bc4e-92a8cbd74888",
   "version": "1.0.0-*",
 
   "dependencies": {
     "EntityFramework.SqlServer": "7.0.0-beta4",
+    "EntityFramework.InMemory": "7.0.0-beta4",                          // For Mono.
     "EntityFramework.Commands": "7.0.0-beta4",
     "Microsoft.AspNet.Mvc": "6.0.0-beta4",
     "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-beta4",
@@ -16,19 +22,24 @@
     "Microsoft.AspNet.Diagnostics": "1.0.0-beta4",
     "Microsoft.AspNet.Diagnostics.Entity": "7.0.0-beta4",
     "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-beta4",
+    "Microsoft.AspNet.Session": "1.0.0-beta4",
+    "Microsoft.Framework.Caching.Distributed": "1.0.0-beta4",           // For Session.
     "Microsoft.AspNet.Server.IIS": "1.0.0-beta4",
     "Microsoft.AspNet.Server.WebListener": "1.0.0-beta4",
     "Microsoft.AspNet.StaticFiles": "1.0.0-beta4",
     "Microsoft.AspNet.Tooling.Razor": "1.0.0-beta4",
+    "Microsoft.AspNet.SignalR.Server": "3.0.0-beta4",
     "Microsoft.Framework.ConfigurationModel.Json": "1.0.0-beta4",
     "Microsoft.Framework.ConfigurationModel.UserSecrets": "1.0.0-beta4",
     "Microsoft.Framework.CodeGenerators.Mvc": "1.0.0-beta4",
     "Microsoft.Framework.Logging": "1.0.0-beta4",
     "Microsoft.Framework.Logging.Console": "1.0.0-beta4",
-    "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-beta4"
+    "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-beta4",
+    "kestrel": "1.0.0-beta4"
   },
 
   "commands": {
+    "kestrel": "Microsoft.AspNet.Hosting --server Kestrel --server.urls http://localhost:5001",
     "web": "Microsoft.AspNet.Hosting --server Microsoft.AspNet.Server.WebListener --server.urls http://localhost:5000",
     "gen": "Microsoft.Framework.CodeGeneration",
     "ef":  "EntityFramework.Commands"
@@ -56,3 +67,4 @@
     "prepare": [ "gulp copy" ]
   }
 }
+

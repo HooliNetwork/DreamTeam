@@ -1,0 +1,11 @@
+﻿@model Hooli.Models.Post
+
+@if (Model != null)
+{
+    <li>
+        <br />
+        <small><i>@Html.Label(null, "New Post!", new { style = "color: red" })</i></small>
+        <h4>@Model.Title</h4>
+        <h5 id="NewArrivalsPanel">@Model.Text</h5>"
+    </li>
+}
