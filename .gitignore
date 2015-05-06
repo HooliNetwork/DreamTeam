@@ -58,6 +58,7 @@ dlldata.c
 *.scc
 */*/wwwroot/lib
 */*/public/*
+project.lock.json
 
 # Chutzpah Test files
 _Chutzpah*
