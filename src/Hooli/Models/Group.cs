@@ -23,5 +23,7 @@ namespace Hooli.Models
         public DateTime DateCreated { get; set; }
 
         public virtual List<ApplicationUser> Members { get; set; }
+        public virtual List<ApplicationUser> Posts { get; set; }
+
     }
 }
