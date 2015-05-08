@@ -48,15 +48,43 @@ namespace Hooli.Controllers
             groupData.Private = group.Private;
             groupData.DateCreated = group.DateCreated;
             groupData.Members = group.Members;
+            groupData.GroupPicture = group.GroupPicture;
             
+
+            // Missing: A way to save the changes
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddPostToGroup(Group group)
+        public IActionResult AddPostToGroup(int groupId, Post post)
         {
+            var group = DbContext.Group.Single(groupTable => groupTable.GroupId == groupId);
+            group.Posts.Add(post);
 
+            // Missing: A way to save the changes
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult BanUser(int groupId, ApplicationUser user)
+        {
+            var group = DbContext.Group.Single(groupTable => groupTable.GroupId == groupId);
+            group.BannedUsers.Add(user);
+
+            // Missing: A way to save the changes
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult UnBanUser(int groupId, ApplicationUser user)
+        {
+            var group = DbContext.Group.Single(groupTable => groupTable.GroupId == groupId);
+            group.BannedUsers.Remove(user);
+
+            // Missing: A way to save the changes
             return View();
         }
 
