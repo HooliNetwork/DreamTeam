@@ -34,6 +34,7 @@ namespace Hooli.Controllers
                 Members = group.Members
             };
             DbContext.Group.Add(groupData);
+            DbContext.SaveChanges();
             return View();
         }
 
@@ -49,9 +50,8 @@ namespace Hooli.Controllers
             groupData.DateCreated = group.DateCreated;
             groupData.Members = group.Members;
             groupData.GroupPicture = group.GroupPicture;
-            
 
-            // Missing: A way to save the changes
+            DbContext.SaveChanges();
             return View();
         }
 
@@ -62,7 +62,7 @@ namespace Hooli.Controllers
             var group = DbContext.Group.Single(groupTable => groupTable.GroupId == groupId);
             group.Posts.Add(post);
 
-            // Missing: A way to save the changes
+            DbContext.SaveChanges();
             return View();
         }
 
@@ -73,7 +73,7 @@ namespace Hooli.Controllers
             var group = DbContext.Group.Single(groupTable => groupTable.GroupId == groupId);
             group.BannedUsers.Add(user);
 
-            // Missing: A way to save the changes
+            DbContext.SaveChanges();
             return View();
         }
 
@@ -84,7 +84,7 @@ namespace Hooli.Controllers
             var group = DbContext.Group.Single(groupTable => groupTable.GroupId == groupId);
             group.BannedUsers.Remove(user);
 
-            // Missing: A way to save the changes
+            DbContext.SaveChanges();
             return View();
         }
 
