@@ -22,6 +22,15 @@ namespace Hooli.Models
         [DataType(DataType.DateTime)]
         public DateTime DateCreated { get; set; }
 
+        public byte[] GroupPicture { get; set; }
+
         public virtual List<ApplicationUser> Members { get; set; }
+        public virtual List<ApplicationUser> BannedUsers { get; set; }
+        public virtual List<Post> Posts { get; set; }
+
+        public Group()
+        {
+            this.DateCreated = DateTime.UtcNow;
+        }
     }
 }
