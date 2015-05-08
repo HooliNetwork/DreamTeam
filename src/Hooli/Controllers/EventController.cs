@@ -10,7 +10,7 @@ using Hooli.Models;
 
 namespace Hooli.Controllers
 {
-    public class HomeController1 : Controller
+    public class EventController : Controller
     {
         [FromServices]
         public HooliContext DbContext { get; set; }
