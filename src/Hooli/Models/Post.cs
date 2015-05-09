@@ -40,13 +40,5 @@ namespace Hooli.Models
             _dbContext = dbContext;
             this.DateCreated = DateTime.UtcNow;
         }
-
-        public async Task<List<Comment>> GetPostComments()
-        {
-            return await _dbContext.Comment
-                Where(cart => cart.CartId == ShoppingCartId).
-                Include(c => c.Album).
-                ToListAsync();
-        }
     }
 }
