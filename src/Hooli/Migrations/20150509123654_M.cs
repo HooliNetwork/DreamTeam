@@ -39,6 +39,36 @@ namespace Hooli.Migrations
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                 });
             migration.CreateTable(
+                name: "Event",
+                columns: table => new
+                {
+                    DateCreated = table.Column(type: "datetime2", nullable: false),
+                    Description = table.Column(type: "nvarchar(max)", nullable: true),
+                    EndTime = table.Column(type: "datetime2", nullable: false),
+                    EventId = table.Column(type: "int", nullable: false)
+                        .Annotation("SqlServer:ValueGeneration", "Identity"),
+                    EventName = table.Column(type: "nvarchar(max)", nullable: true),
+                    ImgUrl = table.Column(type: "nvarchar(max)", nullable: true),
+                    Location = table.Column(type: "nvarchar(max)", nullable: true),
+                    Private = table.Column(type: "bit", nullable: false),
+                    StartTime = table.Column(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Event", x => x.EventId);
+                });
+            migration.CreateTable(
+                name: "FollowRelation",
+                columns: table => new
+                {
+                    FollowerId = table.Column(type: "nvarchar(450)", nullable: true),
+                    FollowingId = table.Column(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FollowRelation", x => new { x.FollowerId, x.FollowingId });
+                });
+            migration.CreateTable(
                 name: "Group",
                 columns: table => new
                 {
@@ -47,11 +77,35 @@ namespace Hooli.Migrations
                     GroupId = table.Column(type: "int", nullable: false)
                         .Annotation("SqlServer:ValueGeneration", "Identity"),
                     GroupName = table.Column(type: "nvarchar(max)", nullable: true),
+                    GroupPicture = table.Column(type: "varbinary(max)", nullable: true),
                     Private = table.Column(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Group", x => x.GroupId);
+                });
+            migration.CreateTable(
+                name: "Post",
+                columns: table => new
+                {
+                    DateCreated = table.Column(type: "datetime2", nullable: false),
+                    DownVotes = table.Column(type: "int", nullable: false),
+                    ImgUrl = table.Column(type: "nvarchar(max)", nullable: true),
+                    ParentPostId = table.Column(type: "int", nullable: true),
+                    PostId = table.Column(type: "int", nullable: false)
+                        .Annotation("SqlServer:ValueGeneration", "Identity"),
+                    Text = table.Column(type: "nvarchar(max)", nullable: true),
+                    Title = table.Column(type: "nvarchar(max)", nullable: true),
+                    UpVotes = table.Column(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Post", x => x.PostId);
+                    table.ForeignKey(
+                        name: "FK_Post_Post_ParentPostId",
+                        columns: x => x.ParentPostId,
+                        referencedTable: "Post",
+                        referencedColumn: "PostId");
                 });
             migration.CreateTable(
                 name: "AspNetRoles",
@@ -65,52 +119,6 @@ namespace Hooli.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
-                });
-            migration.CreateTable(
-                name: "Event",
-                columns: table => new
-                {
-                    DateCreated = table.Column(type: "datetime2", nullable: false),
-                    Description = table.Column(type: "nvarchar(max)", nullable: true),
-                    EndTime = table.Column(type: "datetime2", nullable: false),
-                    EventId = table.Column(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGeneration", "Identity"),
-                    EventName = table.Column(type: "nvarchar(max)", nullable: true),
-                    ImgUrl = table.Column(type: "nvarchar(max)", nullable: true),
-                    Location = table.Column(type: "nvarchar(max)", nullable: true),
-                    Private = table.Column(type: "bit", nullable: false),
-                    StartTime = table.Column(type: "datetime2", nullable: false),
-                    UserId = table.Column(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Event", x => x.EventId);
-                    table.ForeignKey(
-                        name: "FK_Event_AspNetUsers_UserId",
-                        columns: x => x.UserId,
-                        referencedTable: "AspNetUsers",
-                        referencedColumn: "Id");
-                });
-            migration.CreateTable(
-                name: "FollowRelation",
-                columns: table => new
-                {
-                    FollowerId = table.Column(type: "nvarchar(450)", nullable: true),
-                    FollowingId = table.Column(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FollowRelation", x => new { x.FollowerId, x.FollowingId });
-                    table.ForeignKey(
-                        name: "FK_FollowRelation_AspNetUsers_FollowerId",
-                        columns: x => x.FollowerId,
-                        referencedTable: "AspNetUsers",
-                        referencedColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_FollowRelation_AspNetUsers_FollowingId",
-                        columns: x => x.FollowingId,
-                        referencedTable: "AspNetUsers",
-                        referencedColumn: "Id");
                 });
             migration.CreateTable(
                 name: "AspNetUserClaims",
@@ -145,35 +153,6 @@ namespace Hooli.Migrations
                     table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
                     table.ForeignKey(
                         name: "FK_AspNetUserLogins_AspNetUsers_UserId",
-                        columns: x => x.UserId,
-                        referencedTable: "AspNetUsers",
-                        referencedColumn: "Id");
-                });
-            migration.CreateTable(
-                name: "Post",
-                columns: table => new
-                {
-                    DateCreated = table.Column(type: "datetime2", nullable: false),
-                    DownVotes = table.Column(type: "int", nullable: false),
-                    GroupGroupId = table.Column(type: "int", nullable: true),
-                    ImgUrl = table.Column(type: "nvarchar(max)", nullable: true),
-                    PostId = table.Column(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGeneration", "Identity"),
-                    Text = table.Column(type: "nvarchar(max)", nullable: true),
-                    Title = table.Column(type: "nvarchar(max)", nullable: true),
-                    UpVotes = table.Column(type: "int", nullable: false),
-                    UserId = table.Column(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Post", x => x.PostId);
-                    table.ForeignKey(
-                        name: "FK_Post_Group_GroupGroupId",
-                        columns: x => x.GroupGroupId,
-                        referencedTable: "Group",
-                        referencedColumn: "GroupId");
-                    table.ForeignKey(
-                        name: "FK_Post_AspNetUsers_UserId",
                         columns: x => x.UserId,
                         referencedTable: "AspNetUsers",
                         referencedColumn: "Id");
@@ -218,39 +197,11 @@ namespace Hooli.Migrations
                         referencedTable: "AspNetUsers",
                         referencedColumn: "Id");
                 });
-            migration.CreateTable(
-                name: "Comment",
-                columns: table => new
-                {
-                    CommentId = table.Column(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGeneration", "Identity"),
-                    DateCreated = table.Column(type: "datetime2", nullable: false),
-                    DownVotes = table.Column(type: "int", nullable: false),
-                    PostPostId = table.Column(type: "int", nullable: true),
-                    Text = table.Column(type: "nvarchar(max)", nullable: true),
-                    UpVotes = table.Column(type: "int", nullable: false),
-                    UserId = table.Column(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Comment", x => x.CommentId);
-                    table.ForeignKey(
-                        name: "FK_Comment_Post_PostPostId",
-                        columns: x => x.PostPostId,
-                        referencedTable: "Post",
-                        referencedColumn: "PostId");
-                    table.ForeignKey(
-                        name: "FK_Comment_AspNetUsers_UserId",
-                        columns: x => x.UserId,
-                        referencedTable: "AspNetUsers",
-                        referencedColumn: "Id");
-                });
         }
         
         public override void Down(MigrationBuilder migration)
         {
             migration.DropTable("AspNetUsers");
-            migration.DropTable("Comment");
             migration.DropTable("Event");
             migration.DropTable("FollowRelation");
             migration.DropTable("Group");
