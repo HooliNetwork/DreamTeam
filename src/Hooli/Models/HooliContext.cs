@@ -31,6 +31,7 @@ namespace Hooli.Models
 
     public class HooliContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<ApplicationUser> User { get; set; }
         public DbSet<Post> Post { get; set; }
         public DbSet<Comment> Comment { get; set; }
         public DbSet<Event> Event { get; set; }

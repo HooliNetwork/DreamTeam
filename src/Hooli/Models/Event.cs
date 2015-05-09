@@ -34,5 +34,13 @@ namespace Hooli.Models
 
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
+        public virtual List<ApplicationUser> AttendingUsers { get; set; }
+        public virtual List<ApplicationUser> InvitedUsers { get; set; }
+        public virtual List<Post> Posts { get; set; }
+
+        public Event()
+        {
+            this.DateCreated = DateTime.UtcNow;
+        }
     }
 }
