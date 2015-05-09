@@ -9,7 +9,6 @@ namespace Hooli.Models
 {
     public class Post
     {
-        private readonly HooliContext _dbContext;
         [Key]
         public int PostId { get; set; }
 
@@ -34,9 +33,8 @@ namespace Hooli.Models
 
         public virtual ApplicationUser User { get; set; }
 
-        public Post(HooliContext dbContext)
+        public Post()
         {
-            _dbContext = dbContext;
             this.DateCreated = DateTime.UtcNow;
             Points = 0;
         }

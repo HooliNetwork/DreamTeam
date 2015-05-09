@@ -66,6 +66,7 @@ namespace Hooli.Components
                 .Where(u => (following.Contains(u.User.Id)))
                 .FirstOrDefaultAsync();
 
+
             return latestPost;
         }
 
