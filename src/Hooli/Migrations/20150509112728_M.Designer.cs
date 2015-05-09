@@ -8,11 +8,11 @@ using Hooli.Models;
 namespace Hooli.Migrations
 {
     [ContextType(typeof(HooliContext))]
-    partial class hoolimigration
+    partial class M
     {
         public override string Id
         {
-            get { return "20150505151656_hoolimigration"; }
+            get { return "20150509112728_M"; }
         }
         
         public override string ProductVersion
@@ -124,6 +124,15 @@ namespace Hooli.Migrations
                             .Annotation("OriginalValueIndex", 9)
                             .Annotation("ShadowIndex", 0);
                         b.Key("EventId");
+                    });
+                
+                builder.Entity("Hooli.Models.FollowRelation", b =>
+                    {
+                        b.Property<string>("FollowerId")
+                            .Annotation("OriginalValueIndex", 0);
+                        b.Property<string>("FollowingId")
+                            .Annotation("OriginalValueIndex", 1);
+                        b.Key("FollowerId", "FollowingId");
                     });
                 
                 builder.Entity("Hooli.Models.Group", b =>
@@ -253,6 +262,12 @@ namespace Hooli.Migrations
                 builder.Entity("Hooli.Models.Event", b =>
                     {
                         b.ForeignKey("Hooli.Models.ApplicationUser", "UserId");
+                    });
+                
+                builder.Entity("Hooli.Models.FollowRelation", b =>
+                    {
+                        b.ForeignKey("Hooli.Models.ApplicationUser", "FollowerId");
+                        b.ForeignKey("Hooli.Models.ApplicationUser", "FollowingId");
                     });
                 
                 builder.Entity("Hooli.Models.Post", b =>
