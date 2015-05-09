@@ -20,8 +20,7 @@ namespace Hooli.Models
         [StringLength(1024)]
         public string ImgUrl { get; set; }
 
-        public int UpVotes { get; set; }
-        public int DownVotes { get; set; }
+        public int Points { get; set; }
 
         [DataType(DataType.DateTime)]
         public DateTime DateCreated { get; set; }
@@ -37,6 +36,7 @@ namespace Hooli.Models
         public Post()
         {
             this.DateCreated = DateTime.UtcNow;
+            Points = 0;
         }
     }
 }

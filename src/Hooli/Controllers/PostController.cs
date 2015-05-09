@@ -77,6 +77,27 @@ namespace Hooli.Controllers
             }
             return View(post);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Upvote(Post post, CancellationToken requestAborted)
+        {
+            var postData = DbContext.Posts.Single(postTable => postTable.PostId == post.PostId);
+            postData.Points++;
+            await DbContext.SaveChangesAsync(requestAborted);
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Downvote(Post post, CancellationToken requestAborted)
+        {
+            var postData = DbContext.Posts.Single(postTable => postTable.PostId == post.PostId);
+            postData.Points--;
+            await DbContext.SaveChangesAsync(requestAborted);
+            return View();
+        }
+
         // GET: /StoreManager/Create
         public IActionResult Create()
         {
