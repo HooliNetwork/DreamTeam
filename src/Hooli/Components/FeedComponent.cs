@@ -45,7 +45,7 @@ namespace Hooli.Components
             return View(latestPost);
         }
 
-        private Task<Post> GetLatestPost()
+        private async Task<Post> GetLatestPost()
         {
             var user = await GetCurrentUserAsync();
             var following = user.Following.Select(c => c.FollowingId);
