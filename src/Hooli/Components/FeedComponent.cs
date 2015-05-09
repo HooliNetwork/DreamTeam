@@ -58,27 +58,34 @@ namespace Hooli.Components
             return latestPost;
         }
 
-        private Task<Post> GetPostsOrderedByUpvotes()
+        private async Task<Post> GetPostsOrderedByUpvotes()
         {
-            var postsByUpvotes = DbContext.Posts
+            var user = await GetCurrentUserAsync();
+            var following = user.Following.Select(c => c.FollowingId);
+            var postsByUpvotes = await DbContext.Posts
                 .OrderByDescending(a => a.UpVotes - a.DownVotes)
                 .Where(a => a.ParentPostId == 0)
+                .Where(a => (following.Contains(a.User.Id)))
                 .FirstOrDefaultAsync();
 
             return postsByUpvotes;
         }
 
-        private Task<Post> GetUserGroups()
+        private async Task<Group> GetUserGroups()
         {
-            
-            return null;
+            var user = await GetCurrentUserAsync();
+            var groups = user.Groups.Select(a => a.GroupId);
+            var userGroups = await DbContext.Groups.OrderByDescending(a => a.GroupName).Where(a => (groups.Contains(a.GroupId))).FirstOrDefaultAsync();
+            return userGroups;
         }
 
 
-        private Task<Post> GetUserEvents()
+        private async Task<Event> GetUserEvents()
         {
-            // To do
-            return null;
+            var user = await GetCurrentUserAsync();
+            var events = user.Events.Select(a => a.EventId);
+            var userEvents = await DbContext.Events.OrderByDescending(a => a.EventName).Where(a => (events.Contains(a.EventId))).FirstOrDefaultAsync();
+            return userEvents;
         }
         private async Task<ApplicationUser> GetCurrentUserAsync()
         {
