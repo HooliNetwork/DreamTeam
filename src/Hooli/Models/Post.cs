@@ -30,7 +30,6 @@ namespace Hooli.Models
 
         public virtual Group Group { get; set; }
 
-        [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
         public Post()
         {
