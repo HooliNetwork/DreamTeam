@@ -114,20 +114,60 @@ a:hover {
 
 .image-box {
     height:75px;
-    background: orange;
+    background: rgb(219, 219, 219);
     margin-bottom: 10px;
 }
 
+.posts-orderby {
+    position: absolute;
+    top: 30px;
+    right: 20px;
+    font-size: 0.9em;
+}
+
+.posts-orderby p {
+    margin: 0;
+    text-align: right;
+    font-weight: 700;
+}
+
+.posts-type {
+    width: 100%;
+}
+
+.posts-type-button {
+    height: 30px;
+    width: 50%;
+    background: rgba(221, 221, 221, 1);
+    float: left;
+    color: #333;
+}
+
+.posts-type-button:hover {
+    text-decoration: none;
+    background: rgba(255, 165, 0, 1);
+}
+
+.posts-type-button:focus {
+    text-decoration: none;
+}
+
+.button-selected {
+    background: rgba(255, 165, 0, 1);
+}
+
 .post {
-    min-height: 80px;
     border-top: 1px solid #DDD;
     width: 100%;
+    min-height: 80px;
+    clear: left;
 }
 
 .post-rating {
     margin-top:5px;
     height: 75px;
     text-align: center;
+    float: left;
 }
 
 .vote {
@@ -146,6 +186,7 @@ a:hover {
 
 .post-body {
     padding: 10px;
+    float: left;
 }
 
 .post-body h2 {
@@ -157,7 +198,6 @@ a:hover {
 .post-body-info {
     font-size: 0.9em;
 }
-
 
 .col-md-1,
 .col-md-2,
@@ -186,8 +226,9 @@ a:hover {
     .navbar-nav>li>a {
         line-height: 40px;
     }
-}
-@media (max-width: 991px) {
+    .posts-orderby {
+        top: 8px;
+    }
     #navbar-logo-large {
         display: none;
     }
@@ -195,6 +236,7 @@ a:hover {
         display: block;
     }
 }
+
 @media (max-width: 767px) {
     .navbar-nav>li>a {
         line-height: 20px;
@@ -212,8 +254,7 @@ a:hover {
     }
     #navbar-logo-small {
         display: none;
-    }
-    
+    }   
 }
 
 @media (min-width: 1200px) {

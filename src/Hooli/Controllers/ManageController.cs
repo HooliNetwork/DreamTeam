@@ -9,12 +9,17 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Mvc;
 using Hooli;
 using Hooli.Models;
+using System.Threading;
+
 
 namespace Hooli.Controllers
 {
     [Authorize]
     public class ManageController : Controller
     {
+        [FromServices]
+        public HooliContext DbContext { get; set; }
+
         public ManageController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             UserManager = userManager;
@@ -359,6 +364,31 @@ namespace Hooli.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditProfile(ApplicationUser user, CancellationToken requestAborted)
+        {
+
+            var profileData = DbContext.User.Single(userTable => userTable.Id == user.Id);
+
+            profileData.FirstName = user.FirstName;
+            profileData.LastName = user.LastName;
+            profileData.DateOfBirth = user.DateOfBirth;
+            profileData.RelationshipStatus = user.RelationshipStatus;
+            profileData.ProfilePicture = user.ProfilePicture;
+
+            await DbContext.SaveChangesAsync(requestAborted);
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ListUserPostByDate(ApplicationUser user)
+        {
+            // To do
+            return View();
         }
 
         #endregion

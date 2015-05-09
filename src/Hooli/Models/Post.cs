@@ -13,8 +13,6 @@ namespace Hooli.Models
         [Key]
         public int PostId { get; set; }
 
-        [Required]
-        [StringLength(160, MinimumLength = 2)]
         public string Title { get; set; }
 
         public string Text { get; set; }
@@ -30,6 +28,10 @@ namespace Hooli.Models
         public DateTime DateCreated { get; set; }
 
         public virtual Group Group { get; set; }
+
+        public int? ParentPostId { get; set; }
+        public Post ParentPost { get; set; }
+        public List<Post> Children { get; set; }
 
         public virtual ApplicationUser User { get; set; }
 
