@@ -371,7 +371,7 @@ namespace Hooli.Controllers
         public async Task<IActionResult> EditProfile(ApplicationUser user, CancellationToken requestAborted)
         {
 
-            var profileData = DbContext.User.Single(userTable => userTable.Id == user.Id);
+            var profileData = await GetCurrentUserAsync();
 
             profileData.FirstName = user.FirstName;
             profileData.LastName = user.LastName;

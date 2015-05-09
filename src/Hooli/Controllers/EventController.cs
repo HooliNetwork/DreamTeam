@@ -37,7 +37,7 @@ namespace Hooli.Controllers
                 ImgUrl = newEvent.ImgUrl,
                 DateCreated = newEvent.DateCreated,              
             };
-            DbContext.Event.Add(eventData);
+            DbContext.Events.Add(eventData);
             await DbContext.SaveChangesAsync(requestAborted);
             return View();
         }
@@ -46,7 +46,7 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditEvent(Event newEvent, CancellationToken requestAborted)
         {
-            var eventData = DbContext.Event.Single(eventTable => eventTable.EventId == newEvent.EventId);
+            var eventData = DbContext.Events.Single(eventTable => eventTable.EventId == newEvent.EventId);
 
             eventData.EventName = newEvent.EventName;
             eventData.Description = newEvent.Description;
@@ -64,7 +64,7 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddUserToAttending(int eventId, ApplicationUser user, CancellationToken requestAborted)
         {
-            var eventData = DbContext.Event.Single(eventTable => eventTable.EventId == eventId);
+            var eventData = DbContext.Events.Single(eventTable => eventTable.EventId == eventId);
             eventData.AttendingUsers.Add(user);
             await DbContext.SaveChangesAsync(requestAborted);
             return View();
@@ -74,7 +74,7 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddUserToInvited(int eventId, ApplicationUser user, CancellationToken requestAborted)
         {
-            var eventData = DbContext.Event.Single(eventTable => eventTable.EventId == eventId);
+            var eventData = DbContext.Events.Single(eventTable => eventTable.EventId == eventId);
             eventData.InvitedUsers.Add(user);
             await DbContext.SaveChangesAsync(requestAborted);
             return View();
@@ -84,7 +84,7 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddPostToEvent(int eventId, Post post, CancellationToken requestAborted)
         {
-            var eventData = DbContext.Event.Single(eventTable => eventTable.EventId == eventId);
+            var eventData = DbContext.Events.Single(eventTable => eventTable.EventId == eventId);
             eventData.Posts.Add(post);
             await DbContext.SaveChangesAsync(requestAborted);
             return View();
