@@ -37,8 +37,9 @@ namespace Hooli.Components
             return View(latestPost);
         }
 
-        private Task<Post> GetLatestPost()
+        private async Task<Post> GetLatestPost()
         {
+            var user = await GetCurrentUserAsync();
             var latestPost = DbContext.Posts
                 .OrderByDescending(a => a.DateCreated)
                 .Where(a => (a.DateCreated - DateTime.UtcNow).TotalDays <= 2)
@@ -59,7 +60,7 @@ namespace Hooli.Components
 
         private Task<Post> GetUserGroups()
         {
-            // To do
+            
             return null;
         }
 
