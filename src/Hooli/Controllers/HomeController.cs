@@ -56,14 +56,15 @@ namespace Hooli.Controllers
         public async Task<IActionResult> About()
         {
             // Get most popular Posts
-            var Users = await Cache.GetOrSet("users", async context =>
-            {
-                //Refresh it every 10 minutes. Let this be the last item to be removed by cache if cache GC kicks in.
-                context.SetAbsoluteExpiration(TimeSpan.FromMinutes(10));
-                context.SetPriority(CachePreservationPriority.High);
-                return await GetUsers(4);
-            });
-            return View(Users);
+            //var Users = await Cache.GetOrSet("users", async context =>
+            //{
+            //Refresh it every 10 minutes. Let this be the last item to be removed by cache if cache GC kicks in.
+            //    context.SetAbsoluteExpiration(TimeSpan.FromMinutes(10));
+            //   context.SetPriority(CachePreservationPriority.High);
+            //    return await GetUsers(4);
+            //});
+            //return View(Users);
+            return View();
         }
 
         public IActionResult Contact()
