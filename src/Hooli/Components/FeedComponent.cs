@@ -6,12 +6,19 @@ using Microsoft.AspNet.Mvc;
 using Microsoft.Framework.Caching.Memory;
 using Hooli.Models;
 using Microsoft.Data.Entity;
+using Microsoft.AspNet.Identity;
 
 namespace Hooli.Components
 {
     [ViewComponent(Name = "Feed")]
     public class FeedComponent : ViewComponent
     {
+        public FeedComponent(UserManager<ApplicationUser> userManager)
+        {
+            UserManager = userManager;
+        }
+        public UserManager<ApplicationUser> UserManager { get; private set; }
+
         [Activate]
         public HooliContext DbContext
         {
@@ -40,7 +47,7 @@ namespace Hooli.Components
         private Task<Post> GetLatestPost()
         {
             var user = await GetCurrentUserAsync();
-            var latestPost = DbContext.Posts
+            var latestPost = await DbContext.Posts
                 .OrderByDescending(a => a.DateCreated)
                 .Where(a => (a.DateCreated - DateTime.UtcNow).TotalDays <= 2)
                 .FirstOrDefaultAsync();
@@ -69,6 +76,10 @@ namespace Hooli.Components
         {
             // To do
             return null;
+        }
+        private async Task<ApplicationUser> GetCurrentUserAsync()
+        {
+            return await UserManager.FindByIdAsync(Context.User.GetUserId());
         }
     }
 }
