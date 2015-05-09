@@ -35,7 +35,7 @@ namespace Hooli.Controllers
                 DateCreated = group.DateCreated,
                 Members = group.Members
             };
-            DbContext.Group.Add(groupData);
+            DbContext.Groups.Add(groupData);
             await DbContext.SaveChangesAsync(requestAborted);
             return View();
         }
@@ -44,7 +44,7 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditGroup(Group group, CancellationToken requestAborted)
         {
-            var groupData = DbContext.Group.Single(groupTable => groupTable.GroupId == group.GroupId);
+            var groupData = DbContext.Groups.Single(groupTable => groupTable.GroupId == group.GroupId);
 
             groupData.GroupName = group.GroupName;
             groupData.Description = group.Description;
@@ -61,7 +61,7 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddPostToGroup(int groupId, Post post, CancellationToken requestAborted)
         {
-            var group = DbContext.Group.Single(groupTable => groupTable.GroupId == groupId);
+            var group = DbContext.Groups.Single(groupTable => groupTable.GroupId == groupId);
             group.Posts.Add(post);
 
             await DbContext.SaveChangesAsync(requestAborted);
@@ -72,7 +72,7 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> BanUser(int groupId, ApplicationUser user, CancellationToken requestAborted)
         {
-            var group = DbContext.Group.Single(groupTable => groupTable.GroupId == groupId);
+            var group = DbContext.Groups.Single(groupTable => groupTable.GroupId == groupId);
             group.BannedUsers.Add(user);
 
             await DbContext.SaveChangesAsync(requestAborted);
@@ -83,7 +83,7 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UnBanUser(int groupId, ApplicationUser user, CancellationToken requestAborted)
         {
-            var group = DbContext.Group.Single(groupTable => groupTable.GroupId == groupId);
+            var group = DbContext.Groups.Single(groupTable => groupTable.GroupId == groupId);
             group.BannedUsers.Remove(user);
 
             await DbContext.SaveChangesAsync(requestAborted);
