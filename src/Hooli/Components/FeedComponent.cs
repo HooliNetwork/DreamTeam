@@ -44,6 +44,7 @@ namespace Hooli.Components
                 .Where(a => (a.DateCreated - DateTime.UtcNow).TotalDays <= 2)
                 .FirstOrDefaultAsync();
 
+
             return latestPost;
         }
     }
