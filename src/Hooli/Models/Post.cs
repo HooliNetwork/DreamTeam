@@ -9,6 +9,7 @@ namespace Hooli.Models
 {
     public class Post
     {
+        private readonly HooliContext _dbContext;
         [Key]
         public int PostId { get; set; }
 
@@ -32,9 +33,19 @@ namespace Hooli.Models
 
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
-        public Post()
+
+        public Post(HooliContext dbContext)
         {
+            _dbContext = dbContext;
             this.DateCreated = DateTime.UtcNow;
+        }
+
+        public async Task<List<Comment>> GetPostComments()
+        {
+            return await _dbContext.Comment
+                Where(cart => cart.CartId == ShoppingCartId).
+                Include(c => c.Album).
+                ToListAsync();
         }
     }
 }
