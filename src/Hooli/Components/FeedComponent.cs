@@ -46,5 +46,28 @@ namespace Hooli.Components
 
             return latestPost;
         }
+
+        private Task<Post> GetPostsOrderedByUpvotes()
+        {
+            var postsByUpvotes = DbContext.Posts
+                .OrderByDescending(a => a.UpVotes - a.DownVotes)
+                .Where(a => a.ParentPostId == 0)
+                .FirstOrDefaultAsync();
+
+            return postsByUpvotes;
+        }
+
+        private Task<Post> GetUserGroups()
+        {
+            // To do
+            return null;
+        }
+
+
+        private Task<Post> GetUserEvents()
+        {
+            // To do
+            return null;
+        }
     }
 }
