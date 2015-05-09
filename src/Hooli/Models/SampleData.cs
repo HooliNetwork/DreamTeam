@@ -99,7 +99,9 @@ namespace Hooli.Models
         {
             var posts = new Post[]
             {
-                
+                new Post {Title = "10 things you are doing wrong", Text="1, 2, 3, 4, 5",  UpVotes=10, DownVotes =2},
+                new Post {Title = "10 things you are doing right", Text="1, 2, 3, 4, 5",  UpVotes=7, DownVotes =3},
+                new Post {Title = "10 things you are doing", Text="1, 2, 3, 4, 5",  UpVotes=11, DownVotes =10}
             };
 
             return posts;
