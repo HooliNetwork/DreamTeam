@@ -27,16 +27,21 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreatGroup(Group group, CancellationToken requestAborted)
         {
-            var groupData = new Group
+            //var groupData = new Group
+            //{
+            //    GroupName = group.GroupName,
+            //    Description = group.Description,
+            //    Private = group.Private, 
+            //    DateCreated = group.DateCreated,
+            //    Members = group.Members
+            //};
+            //DbContext.Groups.Add(groupData);
+            if (ModelState.IsValid)
             {
-                GroupName = group.GroupName,
-                Description = group.Description,
-                Private = group.Private, 
-                DateCreated = group.DateCreated,
-                Members = group.Members
-            };
-            DbContext.Groups.Add(groupData);
-            await DbContext.SaveChangesAsync(requestAborted);
+                DbContext.Add(group);
+                await DbContext.SaveChangesAsync(requestAborted);
+            }
+
             return View();
         }
 
@@ -44,16 +49,21 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditGroup(Group group, CancellationToken requestAborted)
         {
-            var groupData = DbContext.Groups.Single(groupTable => groupTable.GroupId == group.GroupId);
+            if (ModelState.IsValid)
+            {
+                DbContext.Update(group);
+                await DbContext.SaveChangesAsync(requestAborted);
+            }
 
-            groupData.GroupName = group.GroupName;
-            groupData.Description = group.Description;
-            groupData.Private = group.Private;
-            groupData.DateCreated = group.DateCreated;
-            groupData.Members = group.Members;
-            groupData.GroupPicture = group.GroupPicture;
+            //var groupData = DbContext.Groups.Single(groupTable => groupTable.GroupId == group.GroupId);
 
-            await DbContext.SaveChangesAsync(requestAborted);
+            //groupData.GroupName = group.GroupName;
+            //groupData.Description = group.Description;
+            //groupData.Private = group.Private;
+            //groupData.DateCreated = group.DateCreated;
+            //groupData.Members = group.Members;
+            //groupData.GroupPicture = group.GroupPicture;
+
             return View();
         }
 
@@ -63,7 +73,6 @@ namespace Hooli.Controllers
         {
             var group = DbContext.Groups.Single(groupTable => groupTable.GroupId == groupId);
             group.Posts.Add(post);
-
             await DbContext.SaveChangesAsync(requestAborted);
             return View();
         }
@@ -74,7 +83,6 @@ namespace Hooli.Controllers
         {
             var group = DbContext.Groups.Single(groupTable => groupTable.GroupId == groupId);
             group.BannedUsers.Add(user);
-
             await DbContext.SaveChangesAsync(requestAborted);
             return View();
         }
@@ -85,7 +93,6 @@ namespace Hooli.Controllers
         {
             var group = DbContext.Groups.Single(groupTable => groupTable.GroupId == groupId);
             group.BannedUsers.Remove(user);
-
             await DbContext.SaveChangesAsync(requestAborted);
             return View();
         }
