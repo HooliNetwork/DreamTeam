@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using Hooli.Models;
+using System.Threading;
 
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -23,7 +24,7 @@ namespace Hooli.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateEvent(Event newEvent)
+        public async Task<IActionResult> CreateEvent(Event newEvent, CancellationToken requestAborted)
         {
             var eventData = new Event
             {
@@ -37,13 +38,13 @@ namespace Hooli.Controllers
                 DateCreated = newEvent.DateCreated,              
             };
             DbContext.Event.Add(eventData);
-            DbContext.SaveChanges();
+            await DbContext.SaveChangesAsync(requestAborted);
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditEvent(Event newEvent)
+        public async Task<IActionResult> EditEvent(Event newEvent, CancellationToken requestAborted)
         {
             var eventData = DbContext.Event.Single(eventTable => eventTable.EventId == newEvent.EventId);
 
@@ -55,37 +56,37 @@ namespace Hooli.Controllers
             eventData.Private = newEvent.Private;
             eventData.ImgUrl = newEvent.ImgUrl;
 
-            DbContext.SaveChanges();
+            await DbContext.SaveChangesAsync(requestAborted);
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddUserToAttending(int eventId, ApplicationUser user)
+        public async Task<IActionResult> AddUserToAttending(int eventId, ApplicationUser user, CancellationToken requestAborted)
         {
             var eventData = DbContext.Event.Single(eventTable => eventTable.EventId == eventId);
             eventData.AttendingUsers.Add(user);
-            DbContext.SaveChanges();
+            await DbContext.SaveChangesAsync(requestAborted);
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddUserToInvited(int eventId, ApplicationUser user)
+        public async Task<IActionResult> AddUserToInvited(int eventId, ApplicationUser user, CancellationToken requestAborted)
         {
             var eventData = DbContext.Event.Single(eventTable => eventTable.EventId == eventId);
             eventData.InvitedUsers.Add(user);
-            DbContext.SaveChanges();
+            await DbContext.SaveChangesAsync(requestAborted);
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddPostToEvent(int eventId, Post post)
+        public async Task<IActionResult> AddPostToEvent(int eventId, Post post, CancellationToken requestAborted)
         {
             var eventData = DbContext.Event.Single(eventTable => eventTable.EventId == eventId);
             eventData.Posts.Add(post);
-            DbContext.SaveChanges();
+            await DbContext.SaveChangesAsync(requestAborted);
             return View();
         }
 

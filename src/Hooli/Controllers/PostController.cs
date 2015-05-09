@@ -13,7 +13,6 @@ using Hooli.ViewModels;
 using Microsoft.AspNet.Identity;
 using System.Security.Claims;
 
-// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Hooli.Controllers
 {
@@ -61,7 +60,7 @@ namespace Hooli.Controllers
             if (ModelState.IsValid && user != null)
             {
                 post.User = user;
-                DbContext.Post.Add(post);
+                DbContext.Posts.Add(post);
                 await DbContext.SaveChangesAsync(requestAborted);
 
                 var postdata = new PostData

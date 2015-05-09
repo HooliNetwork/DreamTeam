@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using Hooli.Models;
+using System.Threading;
+
 
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -23,7 +25,7 @@ namespace Hooli.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreatGroup(Group group)
+        public async Task<IActionResult> CreatGroup(Group group, CancellationToken requestAborted)
         {
             var groupData = new Group
             {
@@ -34,13 +36,13 @@ namespace Hooli.Controllers
                 Members = group.Members
             };
             DbContext.Group.Add(groupData);
-            DbContext.SaveChanges();
+            await DbContext.SaveChangesAsync(requestAborted);
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditGroup(Group group)
+        public async Task<IActionResult> EditGroup(Group group, CancellationToken requestAborted)
         {
             var groupData = DbContext.Group.Single(groupTable => groupTable.GroupId == group.GroupId);
 
@@ -51,40 +53,40 @@ namespace Hooli.Controllers
             groupData.Members = group.Members;
             groupData.GroupPicture = group.GroupPicture;
 
-            DbContext.SaveChanges();
+            await DbContext.SaveChangesAsync(requestAborted);
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddPostToGroup(int groupId, Post post)
+        public async Task<IActionResult> AddPostToGroup(int groupId, Post post, CancellationToken requestAborted)
         {
             var group = DbContext.Group.Single(groupTable => groupTable.GroupId == groupId);
             group.Posts.Add(post);
 
-            DbContext.SaveChanges();
+            await DbContext.SaveChangesAsync(requestAborted);
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult BanUser(int groupId, ApplicationUser user)
+        public async Task<IActionResult> BanUser(int groupId, ApplicationUser user, CancellationToken requestAborted)
         {
             var group = DbContext.Group.Single(groupTable => groupTable.GroupId == groupId);
             group.BannedUsers.Add(user);
 
-            DbContext.SaveChanges();
+            await DbContext.SaveChangesAsync(requestAborted);
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult UnBanUser(int groupId, ApplicationUser user)
+        public async Task<IActionResult> UnBanUser(int groupId, ApplicationUser user, CancellationToken requestAborted)
         {
             var group = DbContext.Group.Single(groupTable => groupTable.GroupId == groupId);
             group.BannedUsers.Remove(user);
 
-            DbContext.SaveChanges();
+            await DbContext.SaveChangesAsync(requestAborted);
             return View();
         }
 
