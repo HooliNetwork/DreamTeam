@@ -9,12 +9,17 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Mvc;
 using Hooli;
 using Hooli.Models;
+using System.Threading;
+
 
 namespace Hooli.Controllers
 {
     [Authorize]
     public class ManageController : Controller
     {
+        [FromServices]
+        public HooliContext DbContext { get; set; }
+
         public ManageController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             UserManager = userManager;
@@ -363,7 +368,7 @@ namespace Hooli.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditProfile(ApplicationUser user, CancellationToken requestAborted)
+        public async Task<IActionResult> EditProfile(ApplicationUser user, CancellationToken requestAborted)
         {
 
             var profileData = DbContext.User.Single(userTable => userTable.Id == user.Id);
@@ -374,7 +379,7 @@ namespace Hooli.Controllers
             profileData.RelationshipStatus = user.RelationshipStatus;
             profileData.ProfilePicture = user.ProfilePicture;
 
-            DbContext.SaveChangesAsync(requestAborted);
+            await DbContext.SaveChangesAsync(requestAborted);
             return View();
         }
 
