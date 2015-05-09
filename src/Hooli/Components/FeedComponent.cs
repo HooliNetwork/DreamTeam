@@ -39,12 +39,36 @@ namespace Hooli.Components
 
         private Task<Post> GetLatestPost()
         {
-            var latestPost = DbContext.Post
+            var latestPost = DbContext.Posts
                 .OrderByDescending(a => a.DateCreated)
                 .Where(a => (a.DateCreated - DateTime.UtcNow).TotalDays <= 2)
                 .FirstOrDefaultAsync();
 
+
             return latestPost;
+        }
+
+        private Task<Post> GetPostsOrderedByUpvotes()
+        {
+            var postsByUpvotes = DbContext.Posts
+                .OrderByDescending(a => a.UpVotes - a.DownVotes)
+                .Where(a => a.ParentPostId == 0)
+                .FirstOrDefaultAsync();
+
+            return postsByUpvotes;
+        }
+
+        private Task<Post> GetUserGroups()
+        {
+            // To do
+            return null;
+        }
+
+
+        private Task<Post> GetUserEvents()
+        {
+            // To do
+            return null;
         }
     }
 }
