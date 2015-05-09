@@ -1,0 +1,5 @@
+#!/bin/bash
+
+scp -r css/ hoddmachine@hordur.me:sites/hordur.me/html/hooli
+scp -r view_templates/ hoddmachine@hordur.me:sites/hordur.me/html/hooli
+scp hooli.html hoddmachine@hordur.me:sites/hordur.me/html/hooli
