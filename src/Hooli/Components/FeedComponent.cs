@@ -108,7 +108,7 @@ namespace Hooli.Components
             var postsByVotes = await DbContext.Posts
                 .Where(a => a.ParentPostId == null)
                 .Where(a => (following.Contains(a.User.Id)))
-                .OrderByDescending(a => a.UpVotes - a.DownVotes)
+                .OrderByDescending(a => a.Points)
                 .ToListAsync();
 
             return postsByVotes;
@@ -131,7 +131,7 @@ namespace Hooli.Components
             var postsByVotes = await DbContext.Posts
                 .Where(a => a.ParentPostId == null)
                 .Where(g => group.Contains(g.Group.GroupId))
-                .OrderByDescending(a => a.UpVotes - a.DownVotes)
+                .OrderByDescending(a => a.Points)
                 .ToListAsync();
 
             return postsByVotes;
