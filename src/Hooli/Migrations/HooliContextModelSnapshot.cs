@@ -116,6 +116,15 @@ namespace Hooli.Migrations
                         b.Key("EventId");
                     });
                 
+                builder.Entity("Hooli.Models.FollowRelation", b =>
+                    {
+                        b.Property<string>("FollowerId")
+                            .Annotation("OriginalValueIndex", 0);
+                        b.Property<string>("FollowingId")
+                            .Annotation("OriginalValueIndex", 1);
+                        b.Key("FollowerId", "FollowingId");
+                    });
+                
                 builder.Entity("Hooli.Models.Group", b =>
                     {
                         b.Property<DateTime>("DateCreated")
@@ -243,6 +252,12 @@ namespace Hooli.Migrations
                 builder.Entity("Hooli.Models.Event", b =>
                     {
                         b.ForeignKey("Hooli.Models.ApplicationUser", "UserId");
+                    });
+                
+                builder.Entity("Hooli.Models.FollowRelation", b =>
+                    {
+                        b.ForeignKey("Hooli.Models.ApplicationUser", "FollowerId");
+                        b.ForeignKey("Hooli.Models.ApplicationUser", "FollowingId");
                     });
                 
                 builder.Entity("Hooli.Models.Post", b =>

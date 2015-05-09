@@ -8,6 +8,7 @@ using Microsoft.Framework.Caching.Memory;
 using System.Threading;
 using Microsoft.AspNet.Identity;
 using System.Security.Claims;
+using Microsoft.Data.Entity;
 
 namespace Hooli.Controllers
 {

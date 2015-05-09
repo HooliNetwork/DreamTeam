@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Framework.Caching.Memory;
 using Hooli.Models;
+using Microsoft.Data.Entity;
 
 namespace Hooli.Components
 {

@@ -9,6 +9,7 @@ using Microsoft.AspNet.Mvc.ModelBinding;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Framework.OptionsModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hooli.Models
 {
@@ -24,6 +25,8 @@ namespace Hooli.Models
         public virtual List<Comment> Comments { get; set; }
         public virtual List<Event> Events { get; set; }
         public virtual List<Group> Groups { get; set; }
+        public virtual List<ApplicationUser> Following { get; set; }
+        public virtual List<ApplicationUser> Followers { get; set; }
     }
 
     public class HooliContext : IdentityDbContext<ApplicationUser>
@@ -33,18 +36,16 @@ namespace Hooli.Models
         public DbSet<Comment> Comment { get; set; }
         public DbSet<Event> Event { get; set; }
         public DbSet<Group> Group { get; set; }
+        public DbSet<FollowRelation> FollowRelation { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            
             builder.Entity<Post>().Key(p => p.PostId);
             builder.Entity<Comment>().Key(p => p.CommentId);
             builder.Entity<Event>().Key(e => e.EventId);
             builder.Entity<Group>().Key(g => g.GroupId);
+            builder.Entity<FollowRelation>().Key(f => new { f.FollowerId, f.FollowingId });
             base.OnModelCreating(builder);
-            // Customize the ASP.NET Identity model and override the defaults if needed.
-            // For example, you can rename the ASP.NET Identity table names and more.
-            // Add your customizations after calling base.OnModelCreating(builder);
         }
     }
 }
