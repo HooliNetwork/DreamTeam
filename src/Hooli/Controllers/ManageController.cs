@@ -361,6 +361,31 @@ namespace Hooli.Controllers
             }
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditProfile(ApplicationUser user, CancellationToken requestAborted)
+        {
+
+            var profileData = DbContext.User.Single(userTable => userTable.Id == user.Id);
+
+            profileData.FirstName = user.FirstName;
+            profileData.LastName = user.LastName;
+            profileData.DateOfBirth = user.DateOfBirth;
+            profileData.RelationshipStatus = user.RelationshipStatus;
+            profileData.ProfilePicture = user.ProfilePicture;
+
+            DbContext.SaveChangesAsync(requestAborted);
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ListUserPostByDate(ApplicationUser user)
+        {
+            // To do
+            return View();
+        }
+
         #endregion
     }
 }
