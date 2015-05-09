@@ -37,7 +37,7 @@ namespace Hooli.Components
             return View(latestPost);
         }
 
-        private async Task<Post> GetLatestPost()
+        private Task<Post> GetLatestPost()
         {
             var user = await GetCurrentUserAsync();
             var latestPost = DbContext.Posts
