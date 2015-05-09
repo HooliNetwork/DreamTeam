@@ -65,29 +65,6 @@ namespace Hooli.Migrations
                         b.Annotation("Relational:TableName", "AspNetUsers");
                     });
                 
-                builder.Entity("Hooli.Models.Comment", b =>
-                    {
-                        b.Property<int>("CommentId")
-                            .GenerateValueOnAdd()
-                            .Annotation("OriginalValueIndex", 0)
-                            .Annotation("SqlServer:ValueGeneration", "Default");
-                        b.Property<DateTime>("DateCreated")
-                            .Annotation("OriginalValueIndex", 1);
-                        b.Property<int>("DownVotes")
-                            .Annotation("OriginalValueIndex", 2);
-                        b.Property<int?>("PostPostId")
-                            .Annotation("OriginalValueIndex", 3)
-                            .Annotation("ShadowIndex", 0);
-                        b.Property<string>("Text")
-                            .Annotation("OriginalValueIndex", 4);
-                        b.Property<int>("UpVotes")
-                            .Annotation("OriginalValueIndex", 5);
-                        b.Property<string>("UserId")
-                            .Annotation("OriginalValueIndex", 6)
-                            .Annotation("ShadowIndex", 1);
-                        b.Key("CommentId");
-                    });
-                
                 builder.Entity("Hooli.Models.Event", b =>
                     {
                         b.Property<DateTime>("DateCreated")
@@ -110,17 +87,16 @@ namespace Hooli.Migrations
                             .Annotation("OriginalValueIndex", 7);
                         b.Property<DateTime>("StartTime")
                             .Annotation("OriginalValueIndex", 8);
-                        b.Property<string>("UserId")
-                            .Annotation("OriginalValueIndex", 9)
-                            .Annotation("ShadowIndex", 0);
                         b.Key("EventId");
                     });
                 
                 builder.Entity("Hooli.Models.FollowRelation", b =>
                     {
                         b.Property<string>("FollowerId")
+                            .GenerateValueOnAdd()
                             .Annotation("OriginalValueIndex", 0);
                         b.Property<string>("FollowingId")
+                            .GenerateValueOnAdd()
                             .Annotation("OriginalValueIndex", 1);
                         b.Key("FollowerId", "FollowingId");
                     });
@@ -137,8 +113,10 @@ namespace Hooli.Migrations
                             .Annotation("SqlServer:ValueGeneration", "Default");
                         b.Property<string>("GroupName")
                             .Annotation("OriginalValueIndex", 3);
-                        b.Property<bool>("Private")
+                        b.Property<byte[]>("GroupPicture")
                             .Annotation("OriginalValueIndex", 4);
+                        b.Property<bool>("Private")
+                            .Annotation("OriginalValueIndex", 5);
                         b.Key("GroupId");
                     });
                 
@@ -148,10 +126,9 @@ namespace Hooli.Migrations
                             .Annotation("OriginalValueIndex", 0);
                         b.Property<int>("DownVotes")
                             .Annotation("OriginalValueIndex", 1);
-                        b.Property<int?>("GroupGroupId")
-                            .Annotation("OriginalValueIndex", 2)
-                            .Annotation("ShadowIndex", 0);
                         b.Property<string>("ImgUrl")
+                            .Annotation("OriginalValueIndex", 2);
+                        b.Property<int?>("ParentPostId")
                             .Annotation("OriginalValueIndex", 3);
                         b.Property<int>("PostId")
                             .GenerateValueOnAdd()
@@ -163,9 +140,6 @@ namespace Hooli.Migrations
                             .Annotation("OriginalValueIndex", 6);
                         b.Property<int>("UpVotes")
                             .Annotation("OriginalValueIndex", 7);
-                        b.Property<string>("UserId")
-                            .Annotation("OriginalValueIndex", 8)
-                            .Annotation("ShadowIndex", 1);
                         b.Key("PostId");
                     });
                 
@@ -243,27 +217,9 @@ namespace Hooli.Migrations
                         b.Annotation("Relational:TableName", "AspNetUserRoles");
                     });
                 
-                builder.Entity("Hooli.Models.Comment", b =>
-                    {
-                        b.ForeignKey("Hooli.Models.Post", "PostPostId");
-                        b.ForeignKey("Hooli.Models.ApplicationUser", "UserId");
-                    });
-                
-                builder.Entity("Hooli.Models.Event", b =>
-                    {
-                        b.ForeignKey("Hooli.Models.ApplicationUser", "UserId");
-                    });
-                
-                builder.Entity("Hooli.Models.FollowRelation", b =>
-                    {
-                        b.ForeignKey("Hooli.Models.ApplicationUser", "FollowerId");
-                        b.ForeignKey("Hooli.Models.ApplicationUser", "FollowingId");
-                    });
-                
                 builder.Entity("Hooli.Models.Post", b =>
                     {
-                        b.ForeignKey("Hooli.Models.Group", "GroupGroupId");
-                        b.ForeignKey("Hooli.Models.ApplicationUser", "UserId");
+                        b.ForeignKey("Hooli.Models.Post", "ParentPostId");
                     });
                 
                 builder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityRoleClaim`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]", b =>

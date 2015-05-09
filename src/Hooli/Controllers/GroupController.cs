@@ -33,7 +33,7 @@ namespace Hooli.Controllers
                 DateCreated = group.DateCreated,
                 Members = group.Members
             };
-            DbContext.Group.Add(groupData);
+            DbContext.Groups.Add(groupData);
             DbContext.SaveChanges();
             return View();
         }
@@ -42,7 +42,7 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult EditGroup(Group group)
         {
-            var groupData = DbContext.Group.Single(groupTable => groupTable.GroupId == group.GroupId);
+            var groupData = DbContext.Groups.Single(groupTable => groupTable.GroupId == group.GroupId);
 
             groupData.GroupName = group.GroupName;
             groupData.Description = group.Description;
@@ -59,7 +59,7 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddPostToGroup(int groupId, Post post)
         {
-            var group = DbContext.Group.Single(groupTable => groupTable.GroupId == groupId);
+            var group = DbContext.Groups.Single(groupTable => groupTable.GroupId == groupId);
             group.Posts.Add(post);
 
             DbContext.SaveChanges();
@@ -70,7 +70,7 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult BanUser(int groupId, ApplicationUser user)
         {
-            var group = DbContext.Group.Single(groupTable => groupTable.GroupId == groupId);
+            var group = DbContext.Groups.Single(groupTable => groupTable.GroupId == groupId);
             group.BannedUsers.Add(user);
 
             DbContext.SaveChanges();
@@ -81,7 +81,7 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult UnBanUser(int groupId, ApplicationUser user)
         {
-            var group = DbContext.Group.Single(groupTable => groupTable.GroupId == groupId);
+            var group = DbContext.Groups.Single(groupTable => groupTable.GroupId == groupId);
             group.BannedUsers.Remove(user);
 
             DbContext.SaveChanges();
