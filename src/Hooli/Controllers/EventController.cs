@@ -36,7 +36,7 @@ namespace Hooli.Controllers
                 ImgUrl = newEvent.ImgUrl,
                 DateCreated = newEvent.DateCreated,              
             };
-            DbContext.Event.Add(eventData);
+            DbContext.Events.Add(eventData);
             DbContext.SaveChanges();
             return View();
         }
@@ -45,7 +45,7 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult EditEvent(Event newEvent)
         {
-            var eventData = DbContext.Event.Single(eventTable => eventTable.EventId == newEvent.EventId);
+            var eventData = DbContext.Events.Single(eventTable => eventTable.EventId == newEvent.EventId);
 
             eventData.EventName = newEvent.EventName;
             eventData.Description = newEvent.Description;
@@ -63,7 +63,7 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddUserToAttending(int eventId, ApplicationUser user)
         {
-            var eventData = DbContext.Event.Single(eventTable => eventTable.EventId == eventId);
+            var eventData = DbContext.Events.Single(eventTable => eventTable.EventId == eventId);
             eventData.AttendingUsers.Add(user);
             DbContext.SaveChanges();
             return View();
@@ -73,7 +73,7 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddUserToInvited(int eventId, ApplicationUser user)
         {
-            var eventData = DbContext.Event.Single(eventTable => eventTable.EventId == eventId);
+            var eventData = DbContext.Events.Single(eventTable => eventTable.EventId == eventId);
             eventData.InvitedUsers.Add(user);
             DbContext.SaveChanges();
             return View();
@@ -83,7 +83,7 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddPostToEvent(int eventId, Post post)
         {
-            var eventData = DbContext.Event.Single(eventTable => eventTable.EventId == eventId);
+            var eventData = DbContext.Events.Single(eventTable => eventTable.EventId == eventId);
             eventData.Posts.Add(post);
             DbContext.SaveChanges();
             return View();

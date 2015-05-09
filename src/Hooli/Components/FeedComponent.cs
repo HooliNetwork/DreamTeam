@@ -39,7 +39,7 @@ namespace Hooli.Components
 
         private Task<Post> GetLatestPost()
         {
-            var latestPost = DbContext.Post
+            var latestPost = DbContext.Posts
                 .OrderByDescending(a => a.DateCreated)
                 .Where(a => (a.DateCreated - DateTime.UtcNow).TotalDays <= 2)
                 .FirstOrDefaultAsync();
