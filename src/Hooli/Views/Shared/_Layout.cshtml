@@ -38,17 +38,17 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a asp-controller="Home" asp-action="Index" class="navbar-brand">
-                        <img id="navbar-logo-large" src="images/logo_hooli.png" alt="Hooli logo" />
-                        <img id="navbar-logo-small" src="images/logo_hooli_sm.png" alt="Hooli logo" />
+                        <img id="navbar-logo-large" src="~/images/logo_hooli.png" alt="Hooli logo" />
+                        <img id="navbar-logo-small" src="~/images/logo_hooli_sm.png" alt="Hooli logo" />
                     </a>
                 </div>
 
                 <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav navbar-right">
                         <li><a asp-controller="Group" asp-action="Index">Groups</a></li>
-                        <li><a asp-controller="Home" asp-action="Index">People</a></li>
-                        <li><a asp-controller="Home" asp-action="Index">Events</a></li>
-                        <li><a asp-controller="Home" asp-action="Contact">Chat</a></li>
+                        <li><a asp-controller="People" asp-action="Index">People</a></li>
+                        <li><a asp-controller="Event" asp-action="Index">Events</a></li>
+                        <li><a asp-controller="Chat" asp-action="Index">Chat</a></li>
                         <li>
                             <form class="navbar-search" role="search">
                                 <div class="form-group">
@@ -62,20 +62,23 @@
                         <li id="navbar-profile-photo">
                             <a asp-controller="Profile" asp-action="Index">
                                 <span class="visible-mobile">Profile</span>
-                                <img id="navbar-profile" class="hidden-mobile" src="images/johann.jpg" alt="Profile photo" />
+                                <img id="navbar-profile" class="hidden-mobile" src="~/images/johann.jpg" alt="Profile photo" />
                             </a>
                         </li>
+                        <li>
+                            <a>Log out</a>
+                        </li>
                     </ul>
-                    @await Html.PartialAsync("_LoginPartial")
+                    @*@await Html.PartialAsync("_LoginPartial")*@
                 </div>
             </div>
         </div>
-        <div class="container body-content">
+        <main class="container body-content">
             @RenderBody()
             <footer>
                 <p>&copy; 2015 - @AppSettings.Options.SiteTitle</p>
             </footer>
-        </div>
+        </main>
 
         <environment names="Development">
             <script src="~/lib/jquery/jquery.js"></script>
