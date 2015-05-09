@@ -7,6 +7,7 @@ using Microsoft.Framework.Caching.Memory;
 using Hooli.Models;
 using Microsoft.Data.Entity;
 using Microsoft.AspNet.Identity;
+using System.Security.Claims;
 
 namespace Hooli.Components
 {
@@ -47,9 +48,11 @@ namespace Hooli.Components
         private async Task<Post> GetLatestPost()
         {
             var user = await GetCurrentUserAsync();
+            var following = user.Following.Select(c => c.FollowingId);
             var latestPost = await DbContext.Posts
                 .OrderByDescending(a => a.DateCreated)
                 .Where(a => (a.DateCreated - DateTime.UtcNow).TotalDays <= 2)
+                .Where(u => (following.Contains(u.User.Id)))
                 .FirstOrDefaultAsync();
 
             return latestPost;
