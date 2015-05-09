@@ -97,14 +97,12 @@ namespace Hooli.Models
 
         private static Post[] GetPosts()
         {
-              var posts = new Post[]
-              {
+            var posts = new Post[]
+            {
+                
+            };
 
-
-
-              };
-
-              return posts;
+            return posts;
         }
     }
 }
