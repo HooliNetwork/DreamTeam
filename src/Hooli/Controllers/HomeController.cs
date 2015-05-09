@@ -79,7 +79,7 @@ namespace Hooli.Controllers
             // the Posts with the highest count of Upvotes
 
             return await DbContext.Posts
-                .OrderByDescending(a => a.UpVotes)
+                .OrderByDescending(a => a.Points)
                 .Take(count)
                 .Include(u => u.User)
                 .ToListAsync();
@@ -91,7 +91,7 @@ namespace Hooli.Controllers
             var user = await GetCurrentUserAsync();
             var FollowedUsers = user.Following;
             return await DbContext.Posts
-                .OrderByDescending(a => a.UpVotes)
+                .OrderByDescending(a => a.Points)
                 .Take(count)
                 .Include(u => u.User)
                 .ToListAsync();

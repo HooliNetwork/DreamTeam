@@ -75,7 +75,7 @@ namespace Hooli.Components
             var user = await GetCurrentUserAsync();
             var following = user.Following.Select(c => c.FollowingId);
             var postsByUpvotes = await DbContext.Posts
-                .OrderByDescending(a => a.UpVotes - a.DownVotes)
+                .OrderByDescending(a => a.Points)
                 .Where(a => a.ParentPostId == 0)
                 .Where(a => (following.Contains(a.User.Id)))
                 .FirstOrDefaultAsync();
