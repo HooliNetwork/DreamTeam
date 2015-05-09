@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using Hooli.Models;
+using System.Threading;
 
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -23,7 +24,7 @@ namespace Hooli.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditProfile(ApplicationUser user)
+        public IActionResult EditProfile(ApplicationUser user, CancellationToken requestAborted)
         {
 
             var profileData = DbContext.User.Single(userTable => userTable.Id == user.Id);
@@ -34,7 +35,7 @@ namespace Hooli.Controllers
             profileData.RelationshipStatus = user.RelationshipStatus;
             profileData.ProfilePicture = user.ProfilePicture;
 
-            DbContext.SaveChanges(); 
+            DbContext.SaveChangesAsync(requestAborted); 
             return View();
         }
 
