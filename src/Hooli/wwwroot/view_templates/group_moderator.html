@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="">
 <head>
@@ -5,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Hooli - Profile</title>
+    <title>Hooli - Group</title>
     <link rel="shortcut icon" href="">
     <link href='http://fonts.googleapis.com/css?family=Rambla:400,700,400italic' rel='stylesheet' type='text/css'>
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
@@ -64,87 +65,103 @@
             <div class="col-md-4">
                 <div class="content-box padding-remove-sides">
                     <div class="info-photo-container">
-                        <div class="info-photo info-photo-user" style="background: url(../images/user_photo.jpg) center / cover;">
+                        <div class="info-photo" style="background: url(../images/group_photo.jpg) center / cover;">
                             <div class="info-photo-shade">
-                                <a href="#"><h1>Hörður Ragnarsson</h1></a>
+                                <a href="#"><h1>Silicon valley</h1></a>
                             </div>
                         </div>
                     </div>
-                    <div class="profile-info row">
-                        <div class="form-group clear">
-                            <label class="col-xs-3 col-md-4 col-lg-3 control-label">Full name</label>
-                            <div class="col-xs-9 col-md-8 col-lg-9">
-                                <span>Hörður Ragnarsson</span>
-                            </div>
-                        </div>
-                        <div class="form-group clear">
-                            <label class="col-xs-3 col-md-4 col-lg-3 control-label">Age</label>
-                            <div class="col-xs-9 col-md-8 col-lg-9">
-                                <span>23 years old</span>
-                            </div>
-                        </div>
-                        <div class="form-group clear">
-                            <label class="col-xs-3 col-md-4 col-lg-3 control-label">Nationality</label>
-                            <div class="col-xs-9 col-md-8 col-lg-9">
-                                <span>Iceland</span>
-                            </div>
-                        </div>
-                        <div class="form-group clear">
-                            <label class="col-xs-3 col-md-4 col-lg-3 control-label">Username</label>
-                            <div class="col-xs-9 col-md-8 col-lg-9">
-                                <span>hoddmachine</span>
-                            </div>
-                        </div>
+                    <div class="group-info padding-side">
+                        <p class="group-info-description">
+                            In the high-tech gold rush of modern Silicon Valley, the people most qualified to succeed are the least capable of handling success. A comedy partially inspired by Mike Judge's own experiences as a Silicon Valley engineer in the late 1980s.
+                        </p>
                     </div>
                     <div class="profile-buttons padding-side margin-top">
                         <button type="button" class="btn btn-primary btn-block btn-option">
-                            <span>Edit profile</span>
+                            <span>Edit group</span>
                         </button>
                     </div>
                     <div class="edit-info-container margin-top padding-side">
                         <form class="form-horizontal">
-                            <h2>Profile information</h2>
+                            <h2>Group information</h2>
                             <div class="form-group">
-                                <label for="first_name" class="col-sm-3 col-md-5 col-lg-4 control-label">First name</label>
+                                <label for="group_name" class="col-sm-3 col-md-5 col-lg-4 control-label">Group name</label>
                                 <div class="col-sm-9 col-md-7 col-lg-8">
-                                    <input type="text" class="form-control full-width" id="first_name" value="Hörður">
+                                    <input type="text" class="form-control full-width" id="group_name" value="Silicon valley">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="last_name" class="col-sm-3 col-md-5 col-lg-4 control-label">Last name</label>
+                                <label for="group_description" class="col-sm-3 col-md-5 col-lg-4 control-label">Description</label>
                                 <div class="col-sm-9 col-md-7 col-lg-8">
-                                    <input type="text" class="form-control full-width" id="last_name" value="Ragnarsson">
+                                    <textarea class="form-control full-width" id="group_description">In the high-tech gold rush of modern Silicon Valley, the people most qualified to succeed are the least capable of handling success. A comedy partially inspired by Mike Judge's own experiences as a Silicon Valley engineer in the late 1980s.
+                                    </textarea>
+                                </div>
+                            </div>
+                            <h2>Group settings</h2>
+                            <div class="form-group" style="margin-bottom: 10px;">
+                                <label for="privacy" class="col-sm-3 col-md-5 col-lg-4 control-label">Privacy</label>
+                                <div class="col-sm-9 col-md-7 col-lg-8">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="privacy" id="privacy" value="1"> Private
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="privacy" id="privacy" value="0" checked="checked"> Public
+                                    </label>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="date_birth" class="col-sm-3 col-md-5 col-lg-4 control-label">Date of birth</label>
+                                <label for="add_moderator" class="col-sm-3 col-md-5 col-lg-4 control-label">Add Mod</label>
                                 <div class="col-sm-9 col-md-7 col-lg-8">
-                                    <input type="date" class="form-control full-width" id="date_birth" value="1992-04-05">
+                                    <button type="button" class="btn btn-primary btn-edge">Add</button>
+                                    <input type="text" class="form-control full-width" id="add_moderator" placeholder="Username">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="nationality" class="col-sm-3 col-md-5 col-lg-4 control-label">Nationality</label>
+                                <label for="moderator-list" class="col-sm-3 col-md-5 col-lg-4 control-label">Moderators</label>
                                 <div class="col-sm-9 col-md-7 col-lg-8">
-                                    <input type="text" class="form-control full-width" id="nationality" value="Iceland">
+                                    <dl id="moderator-list">
+                                        <dt id="modlist_hoddmachine">
+                                            <button type="button" class="btn btn-link btn-xs btn-hooli">X</button>
+                                            hoddmachine
+                                        </dt>
+                                        <dt id="modlist_hoddmachine">
+                                            <button type="button" class="btn btn-link btn-xs btn-hooli">X</button>
+                                            joiblumen
+                                        </dt>
+                                    </dl>
                                 </div>
                             </div>
-                            
-                            <h2>Profile settings</h2>
                             <div class="form-group">
-                                <label for="email" class="col-sm-3 col-md-5 col-lg-4 control-label">Email</label>
+                                <label for="ban_user" class="col-sm-3 col-md-5 col-lg-4 control-label">Ban user</label>
                                 <div class="col-sm-9 col-md-7 col-lg-8">
-                                    <input type="email" class="form-control full-width" id="email" value="hordur.ragnarsson@gmail.com">
+                                    <button type="button" class="btn btn-primary btn-edge">Ban</button>
+                                    <input type="text" class="form-control full-width" id="ban_user" placeholder="Username">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="password" class="col-sm-3 col-md-5 col-lg-4 control-label">Password</label>
+                                <label for="banned-list" class="col-sm-3 col-md-5 col-lg-4 control-label">Banned users</label>
                                 <div class="col-sm-9 col-md-7 col-lg-8">
-                                    <input type="password" class="form-control full-width" id="password" value="123456789">
+                                    <dl id="banned-list">
+                                        <dt id="banlist_dabbikongur">
+                                            <button type="button" class="btn btn-link btn-xs btn-hooli">X</button>
+                                            dabbikóngur
+                                        </dt>
+                                        <dt id="banlist_siggisyra">
+                                            <button type="button" class="btn btn-link btn-xs btn-hooli">X</button>
+                                            siggisýra
+                                        </dt>
+                                    </dl>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-12">
-                                    <button type="submit" class="btn btn-primary btn-block margin-top">Save changes</button>
+                                    <button type="submit" class="btn btn-primary btn-block">Save changes</button>
+                                </div>
+                            </div>
+                            <h2>Scary settings</h2>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <button type="button" class="btn btn-danger btn-block">Delete group</button>
                                 </div>
                             </div>
                         </form>

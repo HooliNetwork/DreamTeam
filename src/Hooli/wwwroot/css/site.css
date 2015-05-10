@@ -303,6 +303,11 @@ form input[type=radio] {
     margin-bottom: 0;
 }
 
+#moderator-list,
+#banned-list {
+    padding-top:8px;
+}
+    
 .fb-button {
     width: 100%;
     line-height: 35px;
@@ -326,14 +331,27 @@ form input[type=radio] {
     outline: 0 none;
 }
 
+.btn-primary,
+.btn-danger {
+    border-radius: 0;
+}
+
 .btn-primary {
     background: #fd7e23;
     color: #ffffff;
-    border-radius: 0;
 }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
     background: #FF964B;
+}
+
+.btn-hooli {
+    color: #333;
+}
+
+.btn-hooli:hover, .btn-hooli:focus, .btn-hooli:active, .btn-hooli.active, .open > .dropdown-toggle.btn-hooli {
+    color: #fd7e23;
+    text-decoration: none;
 }
 
 .btn-option {
@@ -356,6 +374,13 @@ form input[type=radio] {
     margin-bottom: 10px;
 }
 
+.btn-edge {
+    height: 35px;
+    border-left: 0;
+    position: absolute;
+    right: 15px;
+}
+
 .col-centered {
     float: none;
     margin: 0 auto;
@@ -373,6 +398,10 @@ form input[type=radio] {
 
 .margin-top {
     margin-top: 20px;
+}
+
+.margin-bottom-sm {
+    margin-bottom: 10px;
 }
 
 .clear {
