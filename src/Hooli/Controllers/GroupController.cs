@@ -25,7 +25,7 @@ namespace Hooli.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreatGroup(Group group, CancellationToken requestAborted)
+        public async Task<IActionResult> CreateGroup(Group group, CancellationToken requestAborted)
         {
             //var groupData = new Group
             //{
