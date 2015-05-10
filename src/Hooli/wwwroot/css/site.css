@@ -370,6 +370,10 @@ form input[type=radio] {
     margin-top: 20px;
 }
 
+.clear {
+    clear: both;
+}
+
 @media (max-width: 991px) {
     .hidden-mobile {
         display:none !important;
