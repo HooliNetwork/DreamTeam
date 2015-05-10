@@ -241,7 +241,9 @@ p {
 
 input[type=text],
 input[type=email],
-input[type=password] {
+input[type=password],
+input[type=date],
+textarea {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -256,13 +258,23 @@ input[type=password] {
     margin-bottom: 5px;
 }
 
+textarea.form-control {
+    border-radius: 0;
+    border: 1px solid #DDD;
+}
+
 form input[type=email],
 form input[type=password] {
     width: 100%;
     max-width: 100%;
 }
 
-form input[type=text] {
+.full-width {
+    width: 100%;
+    max-width: 100%;
+}
+
+form[id=form-signup] input[type=text] {
     width: 50%;
     float:left;
 }
@@ -285,6 +297,10 @@ form input[type=radio] {
     margin-top: 20px;
     font-size: 0.9em;
     font-weight: 700;
+}
+
+.edit-info-container .form-group {
+    margin-bottom: 0;
 }
 
 .fb-button {
@@ -325,11 +341,6 @@ form input[type=radio] {
     color: #333;    
 }
 
-.btn-option:hover, .btn-option:focus, .btn-option:active, .btn-option.active, .open > .dropdown-toggle.btn-option {
-    background: #DDD;
-    color: #333;    
-}
-
 .btn-selected {
     background: #fd7e23;
     color: #FFF;    
@@ -358,6 +369,14 @@ form input[type=radio] {
 .padding-side {
     padding-left: 20px;
     padding-right: 20px;
+}
+
+.margin-top {
+    margin-top: 20px;
+}
+
+.clear {
+    clear: both;
 }
 
 @media (max-width: 991px) {
