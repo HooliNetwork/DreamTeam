@@ -26,150 +26,150 @@ namespace Hooli.Controllers
             _serviceProvider = services.BuildServiceProvider();
         }
 
-        [Fact]
-        public async Task Index_CreatesViewWithGenres()
-        {
-            // Arrange
-            var dbContext = _serviceProvider.GetRequiredService<HooliContext>();
-            CreateTestGenres(numberOfGenres: 10, numberOfAlbums: 1, dbContext: dbContext);
+        //[Fact]
+        //public async Task Index_CreatesViewWithGenres()
+        //{
+        //    // Arrange
+        //    var dbContext = _serviceProvider.GetRequiredService<HooliContext>();
+        //    CreateTestGenres(numberOfGenres: 10, numberOfAlbums: 1, dbContext: dbContext);
 
-            var controller = new StoreController()
-            {
-                DbContext = dbContext,
-            };
+        //    var controller = new StoreController()
+        //    {
+        //        DbContext = dbContext,
+        //    };
 
-            // Act
-            var result = await controller.Index();
+        //    // Act
+        //    var result = await controller.Index();
 
-            // Assert
-            var viewResult = Assert.IsType<ViewResult>(result);
-            Assert.Null(viewResult.ViewName);
+        //    // Assert
+        //    var viewResult = Assert.IsType<ViewResult>(result);
+        //    Assert.Null(viewResult.ViewName);
 
-            Assert.NotNull(viewResult.ViewData);
-            var viewModel = Assert.IsType<List<Genre>>(viewResult.ViewData.Model);
-            Assert.Equal(10, viewModel.Count);
-        }
+        //    Assert.NotNull(viewResult.ViewData);
+        //    var viewModel = Assert.IsType<List<Genre>>(viewResult.ViewData.Model);
+        //    Assert.Equal(10, viewModel.Count);
+        //}
 
-        [Fact]
-        public async Task Browse_ReturnsHttpNotFoundWhenNoGenreData()
-        {
-            // Arrange
-            var controller = new StoreController()
-            {
-                DbContext = _serviceProvider.GetRequiredService<HooliContext>(),
-            };
+        //[Fact]
+        //public async Task Browse_ReturnsHttpNotFoundWhenNoGenreData()
+        //{
+        //    // Arrange
+        //    var controller = new StoreController()
+        //    {
+        //        DbContext = _serviceProvider.GetRequiredService<HooliContext>(),
+        //    };
 
-            // Act
-            var result = await controller.Browse(string.Empty);
+        //    // Act
+        //    var result = await controller.Browse(string.Empty);
 
-            // Assert
-            Assert.IsType<HttpNotFoundResult>(result);
-        }
+        //    // Assert
+        //    Assert.IsType<HttpNotFoundResult>(result);
+        //}
 
-        [Fact]
-        public async Task Browse_ReturnsViewWithGenre()
-        {
-            // Arrange
-            var genreName = "Genre 1";
+        //[Fact]
+        //public async Task Browse_ReturnsViewWithGenre()
+        //{
+        //    // Arrange
+        //    var genreName = "Genre 1";
 
-            var dbContext = _serviceProvider.GetRequiredService<HooliContext>();
-            CreateTestGenres(numberOfGenres: 3, numberOfAlbums: 3, dbContext: dbContext);
+        //    var dbContext = _serviceProvider.GetRequiredService<HooliContext>();
+        //    CreateTestGenres(numberOfGenres: 3, numberOfAlbums: 3, dbContext: dbContext);
 
-            var controller = new StoreController()
-            {
-                DbContext = dbContext,
-            };
+        //    var controller = new StoreController()
+        //    {
+        //        DbContext = dbContext,
+        //    };
 
-            // Act
-            var result = await controller.Browse(genreName);
+        //    // Act
+        //    var result = await controller.Browse(genreName);
 
-            // Assert
-            var viewResult = Assert.IsType<ViewResult>(result);
-            Assert.Null(viewResult.ViewName);
+        //    // Assert
+        //    var viewResult = Assert.IsType<ViewResult>(result);
+        //    Assert.Null(viewResult.ViewName);
 
-            Assert.NotNull(viewResult.ViewData);
-            var viewModel = Assert.IsType<Genre>(viewResult.ViewData.Model);
-            Assert.Equal(genreName, viewModel.Name);
-            Assert.NotNull(viewModel.Albums);
-            Assert.Equal(3, viewModel.Albums.Count);
-        }
+        //    Assert.NotNull(viewResult.ViewData);
+        //    var viewModel = Assert.IsType<Genre>(viewResult.ViewData.Model);
+        //    Assert.Equal(genreName, viewModel.Name);
+        //    Assert.NotNull(viewModel.Albums);
+        //    Assert.Equal(3, viewModel.Albums.Count);
+        //}
 
-        [Fact]
-        public async Task Details_ReturnsHttpNotFoundWhenNoAlbumData()
-        {
-            // Arrange
-            var albumId = int.MinValue;
-            var controller = new StoreController()
-            {
-                DbContext = _serviceProvider.GetRequiredService<HooliContext>(),
-                Cache = _serviceProvider.GetRequiredService<IMemoryCache>(),
-            };
+        //[Fact]
+        //public async Task Details_ReturnsHttpNotFoundWhenNoAlbumData()
+        //{
+        //    // Arrange
+        //    var albumId = int.MinValue;
+        //    var controller = new StoreController()
+        //    {
+        //        DbContext = _serviceProvider.GetRequiredService<HooliContext>(),
+        //        Cache = _serviceProvider.GetRequiredService<IMemoryCache>(),
+        //    };
 
-            // Act
-            var result = await controller.Details(albumId);
+        //    // Act
+        //    var result = await controller.Details(albumId);
 
-            // Assert
-            Assert.IsType<HttpNotFoundResult>(result);
-        }
+        //    // Assert
+        //    Assert.IsType<HttpNotFoundResult>(result);
+        //}
 
-        [Fact]
-        public async Task Details_ReturnsAlbumDetail()
-        {
-            // Arrange
-            var albumId = 1;
+        //[Fact]
+        //public async Task Details_ReturnsAlbumDetail()
+        //{
+        //    // Arrange
+        //    var albumId = 1;
 
-            var dbContext = _serviceProvider.GetRequiredService<HooliContext>();
-            var genres = CreateTestGenres(numberOfGenres: 3, numberOfAlbums: 3, dbContext: dbContext);
+        //    var dbContext = _serviceProvider.GetRequiredService<HooliContext>();
+        //    var genres = CreateTestGenres(numberOfGenres: 3, numberOfAlbums: 3, dbContext: dbContext);
 
-            var cache = _serviceProvider.GetRequiredService<IMemoryCache>();
+        //    var cache = _serviceProvider.GetRequiredService<IMemoryCache>();
 
-            var controller = new StoreController()
-            {
-                DbContext = dbContext,
-                Cache = cache,
-            };
+        //    var controller = new StoreController()
+        //    {
+        //        DbContext = dbContext,
+        //        Cache = cache,
+        //    };
 
-            // Act
-            var result = await controller.Details(albumId);
+        //    // Act
+        //    var result = await controller.Details(albumId);
 
-            // Assert
-            var viewResult = Assert.IsType<ViewResult>(result);
-            Assert.Null(viewResult.ViewName);
+        //    // Assert
+        //    var viewResult = Assert.IsType<ViewResult>(result);
+        //    Assert.Null(viewResult.ViewName);
 
-            Assert.NotNull(viewResult.ViewData);
-            var viewModel = Assert.IsType<Album>(viewResult.ViewData.Model);
-            Assert.NotNull(viewModel.Genre);
-            var genre = genres.SingleOrDefault(g => g.GenreId == viewModel.GenreId);
-            Assert.NotNull(genre);
-            Assert.NotNull(genre.Albums.SingleOrDefault(a => a.AlbumId == albumId));
-            Assert.Null(viewModel.Artist);
+        //    Assert.NotNull(viewResult.ViewData);
+        //    var viewModel = Assert.IsType<Album>(viewResult.ViewData.Model);
+        //    Assert.NotNull(viewModel.Genre);
+        //    var genre = genres.SingleOrDefault(g => g.GenreId == viewModel.GenreId);
+        //    Assert.NotNull(genre);
+        //    Assert.NotNull(genre.Albums.SingleOrDefault(a => a.AlbumId == albumId));
+        //    Assert.Null(viewModel.Artist);
 
-            var cachedAlbum = cache.Get<Task<Album>>("album_1");
-            Assert.NotNull(cachedAlbum);
-            Assert.Equal(albumId, cachedAlbum.Result.AlbumId);
-        }
+        //    var cachedAlbum = cache.Get<Task<Album>>("album_1");
+        //    Assert.NotNull(cachedAlbum);
+        //    Assert.Equal(albumId, cachedAlbum.Result.AlbumId);
+        //}
 
-        private static Genre[] CreateTestGenres(int numberOfGenres, int numberOfAlbums, DbContext dbContext)
-        {
-            var albums = Enumerable.Range(1, numberOfAlbums * numberOfGenres).Select(n =>
-                  new Album()
-                  {
-                      AlbumId = n,
-                  }).ToList();
+        //private static Genre[] CreateTestGenres(int numberOfGenres, int numberOfAlbums, DbContext dbContext)
+        //{
+        //    var albums = Enumerable.Range(1, numberOfAlbums * numberOfGenres).Select(n =>
+        //          new Album()
+        //          {
+        //              AlbumId = n,
+        //          }).ToList();
 
-            var generes = Enumerable.Range(1, numberOfGenres).Select(n =>
-                 new Genre()
-                 {
-                     Albums = albums.Where(i => i.AlbumId % numberOfGenres == n - 1).ToList(),
-                     GenreId = n,
-                     Name = "Genre " + n,
-                 });
+        //    var generes = Enumerable.Range(1, numberOfGenres).Select(n =>
+        //         new Genre()
+        //         {
+        //             Albums = albums.Where(i => i.AlbumId % numberOfGenres == n - 1).ToList(),
+        //             GenreId = n,
+        //             Name = "Genre " + n,
+        //         });
 
-            dbContext.AddRange(albums);
-            dbContext.AddRange(generes);
-            dbContext.SaveChanges();
+        //    dbContext.AddRange(albums);
+        //    dbContext.AddRange(generes);
+        //    dbContext.SaveChanges();
 
-            return generes.ToArray();
-        }
+        //    return generes.ToArray();
+        //}
     }
 }

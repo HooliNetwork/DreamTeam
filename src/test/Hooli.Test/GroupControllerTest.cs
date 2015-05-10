@@ -43,7 +43,7 @@ namespace Hooli.Controllers
             var user = new ApplicationUser() { UserName = "TestUser" };
             List<ApplicationUser> memberList = new List<ApplicationUser>();
             memberList.Add(user);
-            var group = new Group() { GroupId = 1, Members = memberList, BannedUsers = null };
+            var  group = new Group() { GroupId = 1, Members = memberList, BannedUsers = null };
             dbContext.Add(group);
 
             // Act
@@ -51,6 +51,7 @@ namespace Hooli.Controllers
 
             // Assert
             Assert.True(group.BannedUsers.Contains(user));
+            Assert.True(false);
         }
 
         //private static ISession CreateTestSession()

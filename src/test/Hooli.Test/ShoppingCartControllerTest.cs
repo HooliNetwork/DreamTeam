@@ -34,248 +34,248 @@ namespace Hooli.Controllers
             _serviceProvider = services.BuildServiceProvider();
         }
 
-        [Fact]
-        public async Task Index_ReturnsNoCartItems_WhenSessionEmpty()
-        {
-            // Arrange
-            var sessionFeature = new SessionFeature()
-            {
-                Session = CreateTestSession(),
-            };
+        //[Fact]
+        //public async Task Index_ReturnsNoCartItems_WhenSessionEmpty()
+        //{
+        //    // Arrange
+        //    var sessionFeature = new SessionFeature()
+        //    {
+        //        Session = CreateTestSession(),
+        //    };
 
-            var httpContext = new DefaultHttpContext();
-            httpContext.SetFeature<ISessionFeature>(sessionFeature);
+        //    var httpContext = new DefaultHttpContext();
+        //    httpContext.SetFeature<ISessionFeature>(sessionFeature);
 
-            var controller = new ShoppingCartController()
-            {
-                DbContext = _serviceProvider.GetRequiredService<HooliContext>(),
-            };
-            controller.ActionContext.HttpContext = httpContext;
+        //    var controller = new ShoppingCartController()
+        //    {
+        //        DbContext = _serviceProvider.GetRequiredService<HooliContext>(),
+        //    };
+        //    controller.ActionContext.HttpContext = httpContext;
 
-            // Act
-            var result = await controller.Index();
+        //    // Act
+        //    var result = await controller.Index();
 
-            // Assert
-            var viewResult = Assert.IsType<ViewResult>(result);
-            Assert.NotNull(viewResult.ViewData);
-            Assert.Null(viewResult.ViewName);
+        //    // Assert
+        //    var viewResult = Assert.IsType<ViewResult>(result);
+        //    Assert.NotNull(viewResult.ViewData);
+        //    Assert.Null(viewResult.ViewName);
 
-            var model = Assert.IsType<ShoppingCartViewModel>(viewResult.ViewData.Model);
-            Assert.Equal(0, model.CartItems.Count);
-            Assert.Equal(0, model.CartTotal);
-        }
+        //    var model = Assert.IsType<ShoppingCartViewModel>(viewResult.ViewData.Model);
+        //    Assert.Equal(0, model.CartItems.Count);
+        //    Assert.Equal(0, model.CartTotal);
+        //}
 
-        [Fact]
-        public async Task Index_ReturnsNoCartItems_WhenNoItemsInCart()
-        {
-            // Arrange
-            var sessionFeature = new SessionFeature()
-            {
-                Session = CreateTestSession(),
-            };
+        //[Fact]
+        //public async Task Index_ReturnsNoCartItems_WhenNoItemsInCart()
+        //{
+        //    // Arrange
+        //    var sessionFeature = new SessionFeature()
+        //    {
+        //        Session = CreateTestSession(),
+        //    };
 
-            var httpContext = new DefaultHttpContext();
-            httpContext.SetFeature<ISessionFeature>(sessionFeature);
-            httpContext.Session.SetString("Session", "CartId_A");
+        //    var httpContext = new DefaultHttpContext();
+        //    httpContext.SetFeature<ISessionFeature>(sessionFeature);
+        //    httpContext.Session.SetString("Session", "CartId_A");
 
-            var controller = new ShoppingCartController()
-            {
-                DbContext = _serviceProvider.GetRequiredService<HooliContext>(),
-            };
-            controller.ActionContext.HttpContext = httpContext;
+        //    var controller = new ShoppingCartController()
+        //    {
+        //        DbContext = _serviceProvider.GetRequiredService<HooliContext>(),
+        //    };
+        //    controller.ActionContext.HttpContext = httpContext;
 
-            // Act
-            var result = await controller.Index();
+        //    // Act
+        //    var result = await controller.Index();
 
-            // Assert
-            var viewResult = Assert.IsType<ViewResult>(result);
-            Assert.NotNull(viewResult.ViewData);
-            Assert.Null(viewResult.ViewName);
+        //    // Assert
+        //    var viewResult = Assert.IsType<ViewResult>(result);
+        //    Assert.NotNull(viewResult.ViewData);
+        //    Assert.Null(viewResult.ViewName);
 
-            var model = Assert.IsType<ShoppingCartViewModel>(viewResult.ViewData.Model);
-            Assert.Equal(0, model.CartItems.Count);
-            Assert.Equal(0, model.CartTotal);
-        }
+        //    var model = Assert.IsType<ShoppingCartViewModel>(viewResult.ViewData.Model);
+        //    Assert.Equal(0, model.CartItems.Count);
+        //    Assert.Equal(0, model.CartTotal);
+        //}
 
-        [Fact]
-        public async Task Index_ReturnsCartItems_WhenItemsInCart()
-        {
-            // Arrange
-            var cartId = "CartId_A";
-            var sessionFeature = new SessionFeature()
-            {
-                Session = CreateTestSession(),
-            };
+        //[Fact]
+        //public async Task Index_ReturnsCartItems_WhenItemsInCart()
+        //{
+        //    // Arrange
+        //    var cartId = "CartId_A";
+        //    var sessionFeature = new SessionFeature()
+        //    {
+        //        Session = CreateTestSession(),
+        //    };
 
-            var httpContext = new DefaultHttpContext();
-            httpContext.SetFeature<ISessionFeature>(sessionFeature);
-            httpContext.Session.SetString("Session", cartId);
+        //    var httpContext = new DefaultHttpContext();
+        //    httpContext.SetFeature<ISessionFeature>(sessionFeature);
+        //    httpContext.Session.SetString("Session", cartId);
 
-            var dbContext = _serviceProvider.GetRequiredService<HooliContext>();
-            var cartItems = CreateTestCartItems(
-                cartId,
-                itemPrice: 10,
-                numberOfItem: 5);
-            dbContext.AddRange(cartItems.Select(n => n.Album).Distinct());
-            dbContext.AddRange(cartItems);
-            dbContext.SaveChanges();
+        //    var dbContext = _serviceProvider.GetRequiredService<HooliContext>();
+        //    var cartItems = CreateTestCartItems(
+        //        cartId,
+        //        itemPrice: 10,
+        //        numberOfItem: 5);
+        //    dbContext.AddRange(cartItems.Select(n => n.Album).Distinct());
+        //    dbContext.AddRange(cartItems);
+        //    dbContext.SaveChanges();
 
-            var controller = new ShoppingCartController()
-            {
-                DbContext = dbContext,
-            };
-            controller.ActionContext.HttpContext = httpContext;
+        //    var controller = new ShoppingCartController()
+        //    {
+        //        DbContext = dbContext,
+        //    };
+        //    controller.ActionContext.HttpContext = httpContext;
 
-            // Act
-            var result = await controller.Index();
+        //    // Act
+        //    var result = await controller.Index();
 
-            // Assert
-            var viewResult = Assert.IsType<ViewResult>(result);
-            Assert.NotNull(viewResult.ViewData);
-            Assert.Null(viewResult.ViewName);
+        //    // Assert
+        //    var viewResult = Assert.IsType<ViewResult>(result);
+        //    Assert.NotNull(viewResult.ViewData);
+        //    Assert.Null(viewResult.ViewName);
 
-            var model = Assert.IsType<ShoppingCartViewModel>(viewResult.ViewData.Model);
-            Assert.Equal(5, model.CartItems.Count);
-            Assert.Equal(5 * 10, model.CartTotal);
-        }
+        //    var model = Assert.IsType<ShoppingCartViewModel>(viewResult.ViewData.Model);
+        //    Assert.Equal(5, model.CartItems.Count);
+        //    Assert.Equal(5 * 10, model.CartTotal);
+        //}
 
-        [Fact]
-        public async Task AddToCart_AddsItemToCart()
-        {
-            // Arrange
-            var albumId = 3;
-            var sessionFeature = new SessionFeature()
-            {
-                Session = CreateTestSession(),
-            };
+        //[Fact]
+        //public async Task AddToCart_AddsItemToCart()
+        //{
+        //    // Arrange
+        //    var albumId = 3;
+        //    var sessionFeature = new SessionFeature()
+        //    {
+        //        Session = CreateTestSession(),
+        //    };
 
-            var httpContext = new DefaultHttpContext();
-            httpContext.SetFeature<ISessionFeature>(sessionFeature);
-            httpContext.Session.SetString("Session", "CartId_A");
+        //    var httpContext = new DefaultHttpContext();
+        //    httpContext.SetFeature<ISessionFeature>(sessionFeature);
+        //    httpContext.Session.SetString("Session", "CartId_A");
 
-            // Creates the albums of AlbumId = 1 ~ 10.
-            var dbContext = _serviceProvider.GetRequiredService<HooliContext>();
-            var albums = CreateTestAlbums(itemPrice: 10);
-            dbContext.AddRange(albums);
-            dbContext.SaveChanges();
+        //    // Creates the albums of AlbumId = 1 ~ 10.
+        //    var dbContext = _serviceProvider.GetRequiredService<HooliContext>();
+        //    var albums = CreateTestAlbums(itemPrice: 10);
+        //    dbContext.AddRange(albums);
+        //    dbContext.SaveChanges();
 
-            var controller = new ShoppingCartController()
-            {
-                DbContext = dbContext
-            };
-            controller.ActionContext.HttpContext = httpContext;
+        //    var controller = new ShoppingCartController()
+        //    {
+        //        DbContext = dbContext
+        //    };
+        //    controller.ActionContext.HttpContext = httpContext;
 
-            // Act
-            var result = await controller.AddToCart(albumId, CancellationToken.None);
+        //    // Act
+        //    var result = await controller.AddToCart(albumId, CancellationToken.None);
 
-            // Assert
-            var cart = ShoppingCart.GetCart(dbContext, httpContext);
-            Assert.Equal(1, (await cart.GetCartItems()).Count);
-            Assert.Equal(albumId, (await cart.GetCartItems()).Single().AlbumId);
+        //    // Assert
+        //    var cart = ShoppingCart.GetCart(dbContext, httpContext);
+        //    Assert.Equal(1, (await cart.GetCartItems()).Count);
+        //    Assert.Equal(albumId, (await cart.GetCartItems()).Single().AlbumId);
 
-            var redirectResult = Assert.IsType<RedirectToActionResult>(result);
-            Assert.Null(redirectResult.ControllerName);
-            Assert.Equal("Index", redirectResult.ActionName);
-        }
+        //    var redirectResult = Assert.IsType<RedirectToActionResult>(result);
+        //    Assert.Null(redirectResult.ControllerName);
+        //    Assert.Equal("Index", redirectResult.ActionName);
+        //}
 
-        [Fact]
-        public async Task RemoveFromCart_RemovesItemFromCart()
-        {
-            // Arrange
-            var cartId = "CartId_A";
-            var cartItemId = 3;
-            var numberOfItem = 5;
-            var unitPrice = 10;
-            var httpContext = new DefaultHttpContext();
+        //[Fact]
+        //public async Task RemoveFromCart_RemovesItemFromCart()
+        //{
+        //    // Arrange
+        //    var cartId = "CartId_A";
+        //    var cartItemId = 3;
+        //    var numberOfItem = 5;
+        //    var unitPrice = 10;
+        //    var httpContext = new DefaultHttpContext();
 
-            // Session and cart initialization
-            var sessionFeature = new SessionFeature()
-            {
-                Session = CreateTestSession(),
-            };
-            httpContext.SetFeature<ISessionFeature>(sessionFeature);
-            httpContext.Session.SetString("Session", cartId);
+        //    // Session and cart initialization
+        //    var sessionFeature = new SessionFeature()
+        //    {
+        //        Session = CreateTestSession(),
+        //    };
+        //    httpContext.SetFeature<ISessionFeature>(sessionFeature);
+        //    httpContext.Session.SetString("Session", cartId);
 
-            // DbContext initialization
-            var dbContext = _serviceProvider.GetRequiredService<HooliContext>();
-            var cartItems = CreateTestCartItems(cartId, unitPrice, numberOfItem);
-            dbContext.AddRange(cartItems.Select(n => n.Album).Distinct());
-            dbContext.AddRange(cartItems);
-            dbContext.SaveChanges();
+        //    // DbContext initialization
+        //    var dbContext = _serviceProvider.GetRequiredService<HooliContext>();
+        //    var cartItems = CreateTestCartItems(cartId, unitPrice, numberOfItem);
+        //    dbContext.AddRange(cartItems.Select(n => n.Album).Distinct());
+        //    dbContext.AddRange(cartItems);
+        //    dbContext.SaveChanges();
 
-            // ServiceProvder initialization
-            var serviceProviderFeature = new ServiceProvidersFeature();
-            httpContext.SetFeature<IServiceProvidersFeature>(serviceProviderFeature);
+        //    // ServiceProvder initialization
+        //    var serviceProviderFeature = new ServiceProvidersFeature();
+        //    httpContext.SetFeature<IServiceProvidersFeature>(serviceProviderFeature);
 
-            // AntiForgery initialization
-            serviceProviderFeature.RequestServices = _serviceProvider;
-            var antiForgery = serviceProviderFeature.RequestServices.GetRequiredService<AntiForgery>();
-            var tokens = antiForgery.GetTokens(httpContext, "testToken");
+        //    // AntiForgery initialization
+        //    serviceProviderFeature.RequestServices = _serviceProvider;
+        //    var antiForgery = serviceProviderFeature.RequestServices.GetRequiredService<AntiForgery>();
+        //    var tokens = antiForgery.GetTokens(httpContext, "testToken");
 
-            // Header initialization for AntiForgery
-            var headers = new KeyValuePair<string, string[]>(
-                "RequestVerificationToken",
-                new string[] { tokens.CookieToken + ":" + tokens.FormToken });
-            httpContext.Request.Headers.Add(headers);
+        //    // Header initialization for AntiForgery
+        //    var headers = new KeyValuePair<string, string[]>(
+        //        "RequestVerificationToken",
+        //        new string[] { tokens.CookieToken + ":" + tokens.FormToken });
+        //    httpContext.Request.Headers.Add(headers);
 
-            // Cotroller initialization
-            var controller = new ShoppingCartController()
-            {
-                DbContext = dbContext,
-                AntiForgery = antiForgery,
-            };
-            controller.ActionContext.HttpContext = httpContext;
+        //    // Cotroller initialization
+        //    var controller = new ShoppingCartController()
+        //    {
+        //        DbContext = dbContext,
+        //        AntiForgery = antiForgery,
+        //    };
+        //    controller.ActionContext.HttpContext = httpContext;
 
-            // Act
-            var result = await controller.RemoveFromCart(cartItemId, CancellationToken.None);
+        //    // Act
+        //    var result = await controller.RemoveFromCart(cartItemId, CancellationToken.None);
 
-            // Assert
-            var jsonResult = Assert.IsType<JsonResult>(result);
-            var viewModel = Assert.IsType<ShoppingCartRemoveViewModel>(jsonResult.Value);
-            Assert.Equal(numberOfItem - 1, viewModel.CartCount);
-            Assert.Equal((numberOfItem - 1) * 10, viewModel.CartTotal);
-            Assert.Equal(" has been removed from your shopping cart.", viewModel.Message);
+        //    // Assert
+        //    var jsonResult = Assert.IsType<JsonResult>(result);
+        //    var viewModel = Assert.IsType<ShoppingCartRemoveViewModel>(jsonResult.Value);
+        //    Assert.Equal(numberOfItem - 1, viewModel.CartCount);
+        //    Assert.Equal((numberOfItem - 1) * 10, viewModel.CartTotal);
+        //    Assert.Equal(" has been removed from your shopping cart.", viewModel.Message);
 
-            var cart = ShoppingCart.GetCart(dbContext, httpContext);
-            Assert.False((await cart.GetCartItems()).Any(c => c.CartItemId == cartItemId));
-        }
+        //    var cart = ShoppingCart.GetCart(dbContext, httpContext);
+        //    Assert.False((await cart.GetCartItems()).Any(c => c.CartItemId == cartItemId));
+        //}
 
-        private static ISession CreateTestSession()
-        {
+        //private static ISession CreateTestSession()
+        //{
 
-            return new DistributedSession(
-                new LocalCache(new MemoryCache(new MemoryCacheOptions())),
-                "sessionId_A",
-                idleTimeout: TimeSpan.MaxValue,
-                tryEstablishSession: () => true,
-                loggerFactory: new NullLoggerFactory(),
-                isNewSessionKey: true);
-        }
+        //    return new DistributedSession(
+        //        new LocalCache(new MemoryCache(new MemoryCacheOptions())),
+        //        "sessionId_A",
+        //        idleTimeout: TimeSpan.MaxValue,
+        //        tryEstablishSession: () => true,
+        //        loggerFactory: new NullLoggerFactory(),
+        //        isNewSessionKey: true);
+        //}
 
-        private static CartItem[] CreateTestCartItems(string cartId, decimal itemPrice, int numberOfItem)
-        {
-            var albums = CreateTestAlbums(itemPrice);
+        //private static CartItem[] CreateTestCartItems(string cartId, decimal itemPrice, int numberOfItem)
+        //{
+        //    var albums = CreateTestAlbums(itemPrice);
 
-            var cartItems = Enumerable.Range(1, numberOfItem).Select(n =>
-                new CartItem()
-                {
-                    Count = 1,
-                    CartId = cartId,
-                    AlbumId = n % albums.Length,
-                    Album = albums[n % albums.Length],
-                }).ToArray();
+        //    var cartItems = Enumerable.Range(1, numberOfItem).Select(n =>
+        //        new CartItem()
+        //        {
+        //            Count = 1,
+        //            CartId = cartId,
+        //            AlbumId = n % albums.Length,
+        //            Album = albums[n % albums.Length],
+        //        }).ToArray();
 
-            return cartItems;
-        }
+        //    return cartItems;
+        //}
 
-        private static Album[] CreateTestAlbums(decimal itemPrice)
-        {
-            return Enumerable.Range(1, 10).Select(n =>
-                new Album()
-                {
-                    AlbumId = n,
-                    Price = itemPrice,
-                }).ToArray();
-        }
+        //private static Album[] CreateTestAlbums(decimal itemPrice)
+        //{
+        //    return Enumerable.Range(1, 10).Select(n =>
+        //        new Album()
+        //        {
+        //            AlbumId = n,
+        //            Price = itemPrice,
+        //        }).ToArray();
+        //}
     }
 }
