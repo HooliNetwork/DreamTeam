@@ -78,7 +78,8 @@ namespace Hooli.Controllers
                 {
                     Console.WriteLine(o);
                 }
-                _feedHub.Clients.User("johann@gmail.com").feed(postdata);
+                Console.WriteLine(Context.User.Identity.Name);
+                _feedHub.Clients.User("Johann@gmail.com").feed(postdata);
                 //_feedHub.Clients.All.feed(postdata);
                 Cache.Remove("latestPost");
 
