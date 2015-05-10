@@ -4,18 +4,32 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>Hooli</h1>
+<div class="row">
+    <div class="col-md-8">
+        <div class="content-box">
+            <h1>The Feed</h1>
+            <div class="posts-orderby">
+                <div class="container">
+                    <p>Order posts by:</p>
+                    <form role="form">
+                        <label class="radio-inline">
+                            <input type="radio" name="optradio">Time
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="optradio" checked="checked">Popularity
+                        </label>
+                    </form>
+                </div>
+            </div>
+            <div class="posts-type">
+                <button type="button" class="btn btn-link posts-type-button button-selected">
+                    <span>People</span>
+                </button>
+                <button type="button" class="btn btn-link posts-type-button">
+                    <span>Groups</span>
+                </button>
+            </div>
+            @await Component.InvokeAsync("Feed",true, false)
+        </div>
+    </div>
 </div>
-
-@*<ul class="row list-unstyled" id="album-list">
-    @foreach (var p in Model)
-    {
-        <li class="col-lg-2 col-md-2 col-sm-2 col-xs-4 container">
-                <h4>@p.Title</h4>
-                <h5>@p.Text</h5>
-                <h5>@p.User.FirstName</h5>
-                <h6>Upvotes: @p.UpVotes</h6>    
-        </li>
-    }
-</ul>*@

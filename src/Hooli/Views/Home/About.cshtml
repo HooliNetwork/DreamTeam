@@ -1,21 +1,8 @@
 ﻿@using Hooli.Models
-@model List<ApplicationUser>
+@model List<Post>
 @{
     ViewBag.Title = "About";
 }
-<ul class="row list-unstyled" id="album-list">
-    @foreach (var u in Model)
-    {
-        <li class="col-lg-2 col-md-2 col-sm-2 col-xs-4 container">
-            <h4>@u.UserName</h4>
-            <h5>Posts:</h5>
-            @foreach (var p in u.Posts)
-            {
-                <h4>@p.Title</h4>
-                <h5>@p.Text</h5>
-                <h5>@p.User.FirstName</h5>
-                <h6>Upvotes: @p.UpVotes</h6>
-            }
-       </li>
-    }
-</ul>
+
+@await Component.InvokeAsync("Feed")
+
