@@ -303,6 +303,11 @@ form input[type=radio] {
     margin-bottom: 0;
 }
 
+#moderator-list,
+#banned-list {
+    padding-top:8px;
+}
+    
 .fb-button {
     width: 100%;
     line-height: 35px;

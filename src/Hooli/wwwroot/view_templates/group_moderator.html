@@ -83,7 +83,7 @@
                     </div>
                     <div class="edit-info-container margin-top padding-side">
                         <form class="form-horizontal">
-                            <h2>Public information</h2>
+                            <h2>Group information</h2>
                             <div class="form-group">
                                 <label for="group_name" class="col-sm-3 col-md-5 col-lg-4 control-label">Group name</label>
                                 <div class="col-sm-9 col-md-7 col-lg-8">
@@ -97,7 +97,7 @@
                                     </textarea>
                                 </div>
                             </div>
-                            <h2>Private settings</h2>
+                            <h2>Group settings</h2>
                             <div class="form-group" style="margin-bottom: 10px;">
                                 <label for="privacy" class="col-sm-3 col-md-5 col-lg-4 control-label">Privacy</label>
                                 <div class="col-sm-9 col-md-7 col-lg-8">
@@ -117,9 +117,9 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="group_name" class="col-sm-3 col-md-5 col-lg-4 control-label">Moderators</label>
+                                <label for="moderator-list" class="col-sm-3 col-md-5 col-lg-4 control-label">Moderators</label>
                                 <div class="col-sm-9 col-md-7 col-lg-8">
-                                    <dl id="moderator-list" style="padding-top:8px;">
+                                    <dl id="moderator-list">
                                         <dt id="modlist_hoddmachine">
                                             <button type="button" class="btn btn-link btn-xs btn-hooli">X</button>
                                             hoddmachine
@@ -127,6 +127,28 @@
                                         <dt id="modlist_hoddmachine">
                                             <button type="button" class="btn btn-link btn-xs btn-hooli">X</button>
                                             joiblumen
+                                        </dt>
+                                    </dl>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="ban_user" class="col-sm-3 col-md-5 col-lg-4 control-label">Ban user</label>
+                                <div class="col-sm-9 col-md-7 col-lg-8">
+                                    <button type="button" class="btn btn-primary btn-edge">Ban</button>
+                                    <input type="text" class="form-control full-width" id="ban_user" placeholder="Username">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="banned-list" class="col-sm-3 col-md-5 col-lg-4 control-label">Banned users</label>
+                                <div class="col-sm-9 col-md-7 col-lg-8">
+                                    <dl id="banned-list">
+                                        <dt id="banlist_dabbikongur">
+                                            <button type="button" class="btn btn-link btn-xs btn-hooli">X</button>
+                                            dabbikóngur
+                                        </dt>
+                                        <dt id="banlist_siggisyra">
+                                            <button type="button" class="btn btn-link btn-xs btn-hooli">X</button>
+                                            siggisýra
                                         </dt>
                                     </dl>
                                 </div>
