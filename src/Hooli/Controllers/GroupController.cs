@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using Hooli.Models;
 using System.Threading;
+using Microsoft.AspNet.Authorization;
 
 
 
@@ -12,6 +13,7 @@ using System.Threading;
 
 namespace Hooli.Controllers
 {
+    [Authorize]
     public class GroupController : Controller
     {
         [FromServices]
