@@ -30,9 +30,10 @@ namespace Hooli.Models
         public int? ParentPostId { get; set; }
         public Post ParentPost { get; set; }
         public List<Post> Children { get; set; }
+        public string UserId { get; set; }
 
+        [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
-
         public Post()
         {
             this.DateCreated = DateTime.UtcNow;

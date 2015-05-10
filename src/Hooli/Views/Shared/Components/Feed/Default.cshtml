@@ -1,28 +1,30 @@
-﻿@model Hooli.Models.Post
+﻿@model List<Hooli.Models.Post>
 
 
 @if (Model != null) {
+    @foreach (var p in Model) {
     <div class="post">
         <div class="row">
             <div class="col-xs-2 col-sm-1 post-rating">
                 <button type="submit" class="btn btn-link vote">
                     <span class="glyphicon glyphicon-menu-up"></span>
                 </button>
-                <div class="post-rating-count">345</div>
+                <div class="post-rating-count">@p.Points</div>
                 <button type="submit" class="btn btn-link vote">
                     <span class="glyphicon glyphicon-menu-down"></span>
                 </button>
             </div>
             <div class="col-xs-10 col-sm-11 post-body">
-                <a asp-controller="Home" asp-action="Contact"><h2>@Model.Title</h2></a>
+                <a asp-controller="Home" asp-action="Contact"><h2>@p.Title</h2></a>
                 <div class="post-body-info">
-                    <span class="post-author">Posted by <a asp-controller="Home" asp-action="Contact"><strong>@Model.User</strong></a></span>
-                    <span class="post-date"> on <strong>@Model.DateCreated</strong>.</span>
+                    <span class="post-author">Posted by <a asp-controller="Home" asp-action="Contact"><strong>@p.User.FirstName</strong></a></span>
+                    <span class="post-date"> on <strong>@p.DateCreated</strong>.</span>
                     <span class="post-comment-count"> Total comments <strong></strong>.</span>
                 </div>
             </div>
         </div>
     </div>
-}
+    }
+    }
 
          
