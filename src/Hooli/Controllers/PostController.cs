@@ -70,7 +70,11 @@ namespace Hooli.Controllers
                     //Url = Url.Action("Details", "Post", new { id = post.PostId })
                     Text = post.Text
                 };
-                _feedHub.Clients.All.feed(postdata);
+                var following = DbContext.FollowRelations
+                        .Where(u => u.FollowingId == user.Id)
+                        .Select(u => u.FollowerId).ToList();
+                _feedHub.Clients.Users(following).feed(postdata);
+                //_feedHub.Clients.All.feed(postdata);
                 Cache.Remove("latestPost");
 
                 return RedirectToAction("Index");

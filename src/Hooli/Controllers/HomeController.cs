@@ -9,9 +9,11 @@ using System.Threading;
 using Microsoft.AspNet.Identity;
 using System.Security.Claims;
 using Microsoft.Data.Entity;
+using Microsoft.AspNet.Authorization;
 
 namespace Hooli.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         [FromServices]
@@ -36,6 +38,10 @@ namespace Hooli.Controllers
             //    context.SetPriority(CachePreservationPriority.High);
             //    return await GetMostRecentPosts(10);
             //});
+            //var user = await GetCurrentUserAsync();
+            //user.Followers = DbContext.FollowRelations.Where(f => f.FollowerId == user.Id).ToList();
+            //user.Following = DbContext.FollowRelations.Where(f => f.FollowingId == user.Id).ToList();
+
             return View();
         }
 
