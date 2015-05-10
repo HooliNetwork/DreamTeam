@@ -242,6 +242,7 @@ p {
 input[type=text],
 input[type=email],
 input[type=password],
+input[type=date],
 textarea {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -296,6 +297,10 @@ form input[type=radio] {
     margin-top: 20px;
     font-size: 0.9em;
     font-weight: 700;
+}
+
+.edit-info-container .form-group {
+    margin-bottom: 0;
 }
 
 .fb-button {
