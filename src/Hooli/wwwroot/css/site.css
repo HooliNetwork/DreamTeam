@@ -55,12 +55,15 @@ p {
     display: none;
 }
 
+#navbar-logout-button {
+    margin-left: 60px;
+}
+
 #navbar-profile {
-    width:110px;
+    width: 110px;
     height: 110px;
     border-radius: 50%;
     border: 4px solid white;
-    margin-right: 18px  ;
 }
 
 #navbar-profile-photo{
@@ -135,8 +138,8 @@ p {
 
 .posts-orderby {
     position: absolute;
-    top: 8px;
-    right: 32px;
+    top: 15px;
+    right: 30px;
     font-size: 0.9em;
 }
 
@@ -146,29 +149,13 @@ p {
     font-weight: 700;
 }
 
+.posts-orderby button {
+    display: inline;
+    width: 50px;
+}
+
 .posts-type {
     width: 100%;
-}
-
-.posts-type-button {
-    height: 30px;
-    width: 50%;
-    background: rgba(221, 221, 221, 1);
-    float: left;
-    color: #333;
-}
-
-.posts-type-button:hover {
-    text-decoration: none;
-    background: rgba(255, 165, 0, 1);
-}
-
-.posts-type-button:focus {
-    text-decoration: none;
-}
-
-.button-selected {
-    background: rgba(255, 165, 0, 1);
 }
 
 .post {
@@ -334,6 +321,26 @@ form input[type=radio] {
     background: #FF964B;
 }
 
+.btn-option {
+    background: #CCC;
+    color: #333;    
+}
+
+.btn-option:hover, .btn-option:focus, .btn-option:active, .btn-option.active, .open > .dropdown-toggle.btn-option {
+    background: #DDD;
+    color: #333;    
+}
+
+.btn-selected {
+    background: #fd7e23;
+    color: #FFF;    
+}
+
+.btn-2way {
+    width: 50%;
+    float: left;
+}
+
 .btn-mtop {
     margin-top: 15px;
     margin-bottom: 10px;
@@ -378,14 +385,11 @@ form input[type=radio] {
     .visible-mobile {
         display:inline !important;
     }
-    .navbar-nav {
-
+    #navbar-logout-button {
+        margin-left: 0;
     }
     .navbar-nav>li>a {
         line-height: 40px;
-    }
-    .posts-orderby {
-        top: 8px;
     }
     #navbar-logo-large {
         display: none;
@@ -419,7 +423,4 @@ form input[type=radio] {
 }
 
 @media (min-width: 1200px) {
-    #navbar-profile {
-        margin-right: 53px;
-    }
 }

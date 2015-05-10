@@ -49,11 +49,13 @@
                             </div>
                         </form>
                     </li>
-                    <li id="navbar-profile-photo"><a href="#">
-                        <span class="visible-mobile">Profile</span>
-                        <img id="navbar-profile" class="hidden-mobile" src="../images/johann.jpg" alt="Profile photo"/></a>
+                    <li id="navbar-profile-photo">
+                        <a href="#">
+                            <span class="visible-mobile">Profile</span>
+                            <img id="navbar-profile" class="hidden-mobile" src="../images/johann.jpg" alt="Profile photo"/>
+                        </a>
                     </li>
-                    <li><a href="#">Log out</a></li>
+                    <li id="navbar-logout-button"><a href="#">Log out</a></li>
                 </ul>
             </div><!--.nav-collapse -->
         </div>
@@ -61,27 +63,80 @@
 
     <main class="container body-content">
         <div class="row">
+            <div class="col-md-4">
+                <div class="content-box">
+                    <h1>Groups</h1>
+                    <div class="container image-wall">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="image-box"></div>                            
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="image-box"></div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="image-box"></div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="image-box"></div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="image-box"></div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="image-box"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <a href="#">See all followed groups</a>
+                    </div>
+                </div>
+                <div class="content-box">
+                    <h1>People</h1>
+                    <div class="container image-wall">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="image-box"></div>                            
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="image-box"></div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="image-box"></div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="image-box"></div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="image-box"></div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="image-box"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <a href="#">See all followed groups</a>
+                    </div>
+                </div>
+            </div>
             <div class="col-md-8">
                 <div class="content-box">
                     <h1>The Feed</h1>
                     <div class="posts-orderby">
-                        <div class="container">
-                            <p>Order posts by:</p>
-                            <form role="form">
-                                <label class="radio-inline">
-                                    <input type="radio" name="optradio">Time
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="optradio" checked="checked">Popularity
-                                </label>
-                            </form>
-                        </div>
+                        <button type="button" class="btn btn-primary btn-2way btn-option">
+                            <span>New</span>
+                        </button>
+                        <button type="button" class="btn btn-primary btn-2way btn-selected">
+                            <span>Top</span>
+                        </button>
                     </div>
                     <div class="posts-type">
-                        <button type="button" class="btn btn-link posts-type-button button-selected">
+                        <button type="button" class="btn btn-primary btn-2way btn-selected">
                             <span>People</span>
                         </button>
-                        <button type="button" class="btn btn-link posts-type-button">
+                        <button type="button" class="btn btn-primary btn-2way btn-option">
                             <span>Groups</span>
                         </button>
                     </div>
@@ -147,64 +202,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="content-box">
-                    <h1>Groups</h1>
-                    <div class="container image-wall">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <div class="image-box"></div>                            
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="image-box"></div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="image-box"></div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="image-box"></div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="image-box"></div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="image-box"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-right">
-                        <a href="#">See all followed groups</a>
-                    </div>
-                </div>
-                <div class="content-box">
-                    <h1>People</h1>
-                    <div class="container image-wall">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <div class="image-box"></div>                            
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="image-box"></div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="image-box"></div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="image-box"></div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="image-box"></div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="image-box"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-right">
-                        <a href="#">See all followed groups</a>
                     </div>
                 </div>
             </div>

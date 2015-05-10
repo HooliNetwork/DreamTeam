@@ -54,7 +54,7 @@
                         <span class="visible-mobile">Profile</span>
                         <img id="navbar-profile" class="hidden-mobile" src="../images/johann.jpg" alt="Profile photo"/></a>
                     </li>
-                    <li><a href="#">Log out</a></li>
+                    <li id="navbar-logout-button"><a href="#">Log out</a></li>
                 </ul>
             </div><!--.nav-collapse -->
         </div>
@@ -62,7 +62,7 @@
 
     <main class="container body-content">
         <div class="row">
-            <div class="col-md-4 col-md-push-8">
+            <div class="col-md-4">
                 <div class="content-box padding-remove-sides">
                     <div class="info-photo-container">
                         <div class="info-photo" style="background: url(../images/group_photo.jpg) center / cover;">
@@ -78,21 +78,16 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-8 col-md-pull-4">
+            <div class="col-md-8">
                 <div class="content-box">
                     <h1>Group feed</h1>
                     <div class="posts-orderby">
-                        <div class="container">
-                            <p>Order posts by:</p>
-                            <form role="form">
-                                <label class="radio-inline">
-                                    <input type="radio" name="optradio">Time
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="optradio" checked="checked">Popularity
-                                </label>
-                            </form>
-                        </div>
+                        <button type="button" class="btn btn-primary btn-2way btn-option">
+                            <span>New</span>
+                        </button>
+                        <button type="button" class="btn btn-primary btn-2way btn-selected">
+                            <span>Top</span>
+                        </button>
                     </div>
                     <div class="new-post">
                         <button type="button" class="btn btn-primary btn-block">
