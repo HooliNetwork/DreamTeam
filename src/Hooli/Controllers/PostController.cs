@@ -72,8 +72,13 @@ namespace Hooli.Controllers
                 };
                 var following = DbContext.FollowRelations
                         .Where(u => u.FollowingId == user.Id)
-                        .Select(u => u.FollowerId).ToList();
-                _feedHub.Clients.Users(following).feed(postdata);
+                        .Select(u => u.FollowerId)
+                        .ToList();
+                foreach (object o in following)
+                {
+                    Console.WriteLine(o);
+                }
+                _feedHub.Clients.User("johann@gmail.com").feed(postdata);
                 //_feedHub.Clients.All.feed(postdata);
                 Cache.Remove("latestPost");
 
