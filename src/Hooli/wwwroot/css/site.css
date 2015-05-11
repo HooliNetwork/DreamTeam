@@ -97,10 +97,9 @@ p {
 
 .content-box {
     background: rgba(255,255,255,0.5);
-    min-height: 100px;
     padding-left: 20px;
     padding-right: 20px;
-    padding-bottom: 10px;
+    padding-bottom: 20px;
     margin-bottom: 20px;
 }
 
@@ -209,6 +208,20 @@ p {
     margin-bottom: 20px;
 }
 
+.info-photo>button {
+    width: 100px;
+}
+
+.highlight-overlay {
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.0);
+}
+
+.highlight-overlay:hover {
+    background: rgba(255, 234, 211, 0.2);
+}
+
 .info-photo-user {
     height: 350px;
 }
@@ -237,6 +250,10 @@ p {
 
 .info-info p {
     line-height: 1.3em;
+}
+
+.following-people .info-photo {
+    height: 320px;
 }
 
 input[type=text],
@@ -297,6 +314,10 @@ form input[type=radio] {
     margin-top: 20px;
     font-size: 0.9em;
     font-weight: 700;
+}
+
+.edit-info-container {
+    display: none;
 }
 
 .edit-info-container .form-group {
@@ -379,6 +400,10 @@ form input[type=radio] {
     float: left;
 }
 
+.btn-container {
+    height: inherit;
+}
+
 .btn-mtop {
     margin-top: 15px;
     margin-bottom: 10px;
@@ -391,6 +416,19 @@ form input[type=radio] {
     right: 15px;
 }
 
+.row .btn {
+    border-color: #DDD;
+    border-style: solid;
+    border-width: 1px;
+    border-top: none;
+    border-bottom: none;
+    border-left: none;
+}
+
+.row .btn:last-of-type {
+    border-right: none;
+}
+
 .col-centered {
     float: none;
     margin: 0 auto;
@@ -400,6 +438,12 @@ form input[type=radio] {
     padding-left: 0;
     padding-right: 0;
 }
+
+.p-rm-s {
+    padding-left: 0;
+    padding-right: 0;
+}
+
 
 .padding-side {
     padding-left: 20px;
@@ -438,7 +482,7 @@ form input[type=radio] {
         display: block;
     }
     .image-box {
-        height: 95px;
+        height: 80px;
     }
 }
 
@@ -464,16 +508,22 @@ form input[type=radio] {
         margin-top: -20px;
     }
     .image-box {
-        height: 110px;
+        height: 100px;
     }
     .hidden-xs {
         display: none !important;
+    }
+    .following-people .info-photo {
+        height: 220px;
     }
 }
 
 @media (min-width: 992px) {
     .image-box {
         height: 75px;
+    }
+    .following-people .info-photo {
+        height: 220px;
     }
 }
 

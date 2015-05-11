@@ -52,7 +52,6 @@ namespace Hooli.Controllers
             return View();
         }
 
-        // POST: /StoreManager/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Post post, CancellationToken requestAborted)

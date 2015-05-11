@@ -1,0 +1,191 @@
+﻿
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Hooli - Search</title>
+    <link rel="shortcut icon" href="">
+    <link href='http://fonts.googleapis.com/css?family=Rambla:400,700,400italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/site.css" />
+    <!--[if IE]>
+        <script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    <img id="navbar-logo-large" src="../images/logo_hooli.png" alt="Hooli logo"/>
+                    <img id="navbar-logo-small" src="../images/logo_hooli_sm.png" alt="Hooli logo"/>
+                </a>
+            </div>
+
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href="#">Groups</a></li>
+                    <li><a href="#">People</a></li>
+                    <li><a href="#">Events</a></li>
+                    <li><a href="#">Chat</a></li>
+                    <li>
+                        <form class="navbar-search" role="search">
+                            <div class="form-group">
+                                <input type="search" class="form-control" placeholder="Search">
+                                <button type="submit" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </div>
+                        </form>
+                    </li>
+                    <li id="navbar-profile-photo"><a href="#">
+                        <span class="visible-mobile">Profile</span>
+                        <img id="navbar-profile" class="hidden-mobile" src="../images/johann.jpg" alt="Profile photo"/></a>
+                    </li>
+                    <li id="navbar-logout-button"><a href="#">Log out</a></li>
+                </ul>
+            </div><!--.nav-collapse -->
+        </div>
+    </nav>
+
+    <main class="container body-content">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="content-box">
+                    <h1>Search filters</h1>
+                    <div class="row">
+                        <button type="button" class="btn btn-primary col-xs-3 btn-selected">
+                            <span>All</span>
+                        </button>
+                        <button type="button" class="btn btn-primary col-xs-3 btn-option">
+                            <span>Groups</span>
+                        </button>
+                        <button type="button" class="btn btn-primary col-xs-3 btn-option">
+                            <span>People</span>
+                        </button>
+                        <button type="button" class="btn btn-primary col-xs-3 btn-option">
+                            <span>Events</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="content-box hidden-mobile">
+                    <h1>Groups you might find intersting</h1>
+                    <div class="container image-wall">
+                        <div class="row">
+                            <div class="col-min-padding col-xs-8 col-sm-12 col-md-8">
+                                <div class="image-box" style="background: url(../images/groups/group_cheese.jpg) center / cover;"></div>
+                            </div>
+                            <div class="col-min-padding col-xs-4 col-sm-6 col-md-4">
+                                <div class="image-box" style="background: url(../images/groups/group_movies.jpg) center / cover;"></div>
+                            </div>
+                            <div class="col-min-padding col-xs-4 col-sm-6 col-md-4">
+                                <div class="image-box" style="background: url(../images/groups/group_programming.jpg) center / cover;"></div>
+                            </div>
+                            <div class="col-min-padding col-xs-8 col-sm-12 col-md-8">
+                                <div class="image-box" style="background: url(../images/groups/group_cycling.jpg) center / cover;"></div>
+                            </div>
+                            <div class="col-min-padding col-xs-8 col-sm-6 col-md-8">
+                                <div class="image-box" style="background: url(../images/groups/group_silicon.jpg) center / cover;"></div>
+                            </div>
+                            <div class="col-min-padding col-xs-4 col-sm-6 col-md-4">
+                                <div class="image-box" style="background: url(../images/groups/group_bitcoin.jpg) center / cover;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-box hidden-mobile">
+                    <h1>People you might find intersting</h1>
+                    <div class="container image-wall">
+                        <div class="row">
+                            <div class="col-min-padding col-xs-8 col-sm-12 col-md-8">
+                                <div class="image-box" style="background: url(../images/groups/group_cheese.jpg) center / cover;"></div>
+                            </div>
+                            <div class="col-min-padding col-xs-4 col-sm-6 col-md-4">
+                                <div class="image-box" style="background: url(../images/groups/group_movies.jpg) center / cover;"></div>
+                            </div>
+                            <div class="col-min-padding col-xs-4 col-sm-6 col-md-4">
+                                <div class="image-box" style="background: url(../images/groups/group_programming.jpg) center / cover;"></div>
+                            </div>
+                            <div class="col-min-padding col-xs-8 col-sm-12 col-md-8">
+                                <div class="image-box" style="background: url(../images/groups/group_cycling.jpg) center / cover;"></div>
+                            </div>
+                            <div class="col-min-padding col-xs-8 col-sm-6 col-md-8">
+                                <div class="image-box" style="background: url(../images/groups/group_silicon.jpg) center / cover;"></div>
+                            </div>
+                            <div class="col-min-padding col-xs-4 col-sm-6 col-md-4">
+                                <div class="image-box" style="background: url(../images/groups/group_bitcoin.jpg) center / cover;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="content-box">
+                    <h1>Search results</h1>
+                    <div class="row following-info-container">
+                        <div class="info-photo-container col-sm-12 col-md-6">
+                            <div class="info-photo" style="background: url(../images/groups/group_silicon.jpg) center / cover;">
+                                <button type="button" class="btn btn-primary btn-selected pull-right">
+                                    <span>Follow</span>
+                                </button>
+                                <div class="info-photo-shade">
+                                    <a href="#"><h1>Silicon valley</h1></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-photo-container col-sm-12 col-md-6">
+                            <div class="info-photo" style="background: url(../images/groups/group_cheese.jpg) center / cover;">
+                                <button type="button" class="btn btn-primary btn-option pull-right">
+                                    <span>Unfollow</span>
+                                </button>
+                                <div class="info-photo-shade">
+                                    <a href="#"><h1>Cheese cakes</h1></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-photo-container col-sm-12 col-md-6">
+                            <div class="info-photo" style="background: url(../images/groups/group_bitcoin.jpg) center / cover;">
+                                <button type="button" class="btn btn-primary btn-selected pull-right">
+                                    <span>Follow</span>
+                                </button>
+                                <div class="info-photo-shade">
+                                    <a href="#"><h1>Bitcoin</h1></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-photo-container col-sm-12 col-md-6">
+                            <div class="info-photo" style="background: url(../images/groups/group_cycling.jpg) center / cover;">
+                                <button type="button" class="btn btn-primary btn-selected pull-right">
+                                    <span>Follow</span>
+                                </button>
+                                <div class="info-photo-shade">
+                                    <a href="#"><h1>Cycling</h1></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+          $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+</body>
+</html>
