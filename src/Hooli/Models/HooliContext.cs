@@ -21,17 +21,26 @@ namespace Hooli.Models
         public DateTime DateOfBirth { get; set; }
         public string RelationshipStatus { get; set; }
         public byte[] ProfilePicture { get; set; }
-        public virtual List<Post> Posts { get; set; }
+        [ForeignKey("UserID")]
+        public virtual ICollection<Post> Posts { get; set; }
         public virtual List<Event> Events { get; set; }
         public virtual List<Group> Groups { get; set; }
         public virtual List<FollowRelation> Following { get; set; }
         public virtual List<FollowRelation> Followers { get; set; }
         public virtual List<File> Files { get; set; }
+        
+        public ApplicationUser()
+        {
+            Following = new List<FollowRelation>();
+            Followers = new List<FollowRelation>();
+        }
     }
+
 
     public class HooliContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Post> Posts { get; set; }
+
         public DbSet<Event> Events { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<FollowRelation> FollowRelations { get; set; }
@@ -40,12 +49,21 @@ namespace Hooli.Models
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Post>()
-                .Reference(c => c.ParentPost)
-                .InverseCollection(c => c.Children)
-                .ForeignKey(c => c.ParentPostId);
+              .Reference(c => c.User)
+              .InverseCollection(c => c.Posts)
+              .ForeignKey(c => c.UserId);
             builder.Entity<Event>().Key(e => e.EventId);
             builder.Entity<Group>().Key(g => g.GroupId);
-            builder.Entity<FollowRelation>().Key(f => new { f.FollowerId, f.FollowingId });
+            builder.Entity<FollowRelation>()
+                .Key(k => new { k.FollowerId, k.FollowingId });
+            builder.Entity<FollowRelation>()
+                .Reference(c => c.Follower)
+                .InverseCollection(c => c.Followers)
+                .ForeignKey(c => c.FollowerId);
+            builder.Entity<FollowRelation>()
+                .Reference(c => c.Following)
+                .InverseCollection(c => c.Following)
+                .ForeignKey(c => c.FollowingId);
             base.OnModelCreating(builder);
         }
     }

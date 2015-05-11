@@ -1,55 +1,37 @@
 ﻿@model RegisterViewModel
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = "Sign up";
 }
 
-<h2>@ViewBag.Title.</h2>
+<div class="row">
+    <div class="col-lg-4 col-md-5 col-sm-6 col-xs-10 col-centered">
+        <div class="content-box">
+            <h1>Join Hooli today!</h1>
+            <form asp-controller="Account" asp-action="Register" id="form-signup" method="post" class="form-horizontal" role="form">
+                <h2>Sign up with your email address</h2>
+                <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+                <fieldset>
+                    <input asp-for="FirstName" type="text" class="form-control" id="first_name" placeholder="First name" autofocus="autofocus" required="required"/>
 
-<form asp-controller="Account" asp-action="Register" method="post" class="form-horizontal" role="form">
-    <h4>Create a new account.</h4>
-    <hr />
-    <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
-    <div class="form-group">
-        <label asp-for="Email" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
-            <input asp-for="Email" class="form-control" />
-            <span asp-validation-for="Email" class="text-danger"></span>
+                    <input asp-for="LastName" type="text" class="form-control" id="last_name" placeholder="Last name" required="required"/>
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+
+                    <input asp-for="Email" type="email" class="form-control" id="email" placeholder="Email" required="required"/>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+
+                    <input asp-for="Password" type="password" class="form-control" id="password" placeholder="Password" required="required"/>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+
+                    <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Confirm password" required="required"/>
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </fieldset>
+                <button type="submit" class="btn btn-primary btn-block btn-mtop" id="form_signup_button" value="Register" />Sign up</button>
+            </form>
         </div>
     </div>
-    <div class="form-group">
-        <label asp-for="FirstName" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
-            <input asp-for="FirstName" class="form-control" />
-            <span asp-validation-for="FirstName" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="form-group">
-        <label asp-for="LastName" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
-            <input asp-for="LastName" class="form-control" />
-            <span asp-validation-for="LastName" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="form-group">
-        <label asp-for="Password" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
-            <input asp-for="Password" class="form-control" />
-            <span asp-validation-for="Password" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="form-group">
-        <label asp-for="ConfirmPassword" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
-            <input asp-for="ConfirmPassword" class="form-control" />
-            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
-        </div>
-    </div>
-</form>
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }

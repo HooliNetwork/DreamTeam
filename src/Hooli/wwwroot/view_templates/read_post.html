@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Hooli - Read post</title>
+    <link rel="shortcut icon" href="">
+    <link href='http://fonts.googleapis.com/css?family=Rambla:400,700,400italic' rel='stylesheet' type='text/css'>
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/site.css" />
+    <!--[if IE]>
+        <script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    <img id="navbar-logo-large" src="../images/logo_hooli.png" alt="Hooli logo"/>
+                    <img id="navbar-logo-small" src="../images/logo_hooli_sm.png" alt="Hooli logo"/>
+                </a>
+            </div>
+
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href="#">Groups</a></li>
+                    <li><a href="#">People</a></li>
+                    <li><a href="#">Events</a></li>
+                    <li><a href="#">Chat</a></li>
+                    <li>
+                        <form class="navbar-search" role="search">
+                            <div class="form-group">
+                                <input type="search" class="form-control" placeholder="Search">
+                                <button type="submit" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </div>
+                        </form>
+                    </li>
+                    <li id="navbar-profile-photo"><a href="#">
+                        <span class="visible-mobile">Profile</span>
+                        <img id="navbar-profile" class="hidden-mobile" src="../images/johann.jpg" alt="Profile photo"/></a>
+                    </li>
+                    <li id="navbar-logout-button"><a href="#">Log out</a></li>
+                </ul>
+            </div><!--.nav-collapse -->
+        </div>
+    </nav>
+
+    <main class="container body-content">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="content-box padding-remove-sides">
+                    <div class="info-photo-container">
+                        <div class="info-photo" style="background: url(../images/group_photo.jpg) center / cover;">
+                            <div class="info-photo-shade">
+                                <a href="#"><h1>Silicon valley</h1></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group-info padding-side">
+                        <p class="group-info-description">
+                            In the high-tech gold rush of modern Silicon Valley, the people most qualified to succeed are the least capable of handling success. A comedy partially inspired by Mike Judge's own experiences as a Silicon Valley engineer in the late 1980s.
+                        </p>
+                        <button type="button" class="btn btn-primary btn-block">
+                            <span>Join group</span>
+                        </button>
+                        <button type="button" class="btn btn-primary btn-block btn-option">
+                            <span>Leave group</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="content-box">
+                    <div class="view-post">
+                        <div class="post-rating">
+                            <button type="submit" class="btn btn-link vote">
+                                <span class="glyphicon glyphicon-menu-up"></span>
+                            </button>
+                            <div class="post-rating-count">86</div>
+                            <button type="submit" class="btn btn-link vote">
+                                <span class="glyphicon glyphicon-menu-down"></span>
+                            </button>
+                        </div>
+                        <h1>Microsoft is my passion</h1>
+                        <p class="post-body-info">
+                            <span class="post-author">Posted by <a href="#"><strong>Jóhann</strong></a></span>
+                            <span class="post-date"> on <strong>9. mars 2015 18:48</strong>.</span>
+                        </p>
+                        <p>
+                            Windows phone hotmail leadership Zune most people steal music google is not a real company. Linux is a cancer Whoo! vista microsoft word bing outlook most people steal music windows leadership. Linux is a cancer google is not a real company i don't know what a monopoly is linux is not in the public domain windows i've got my kids brainwashed most people steal music winning innovation. Hotmail i don't know what a monopoly is linux is not in the public domain bing. Linux is a cancer hotmail i have never honestly thrown a chair in my life open source windows phone.
+                        </p>
+                        <p>
+                            Leadership powerpoint presentation Whoo! microsoft excel. Innovation no i do not have an ipod windows will be everywhere bing i have never honestly thrown a chair in my life open source Zune linux is not in the public domain. Powerpoint presentation Whoo! i've got my kids brainwashed Zune DEVELOPERS microsoft excel. Winning google is not a real company Zune hotmail bing i have never honestly thrown a chair in my life. Open source outlook programming vista DEVELOPERS.
+                        </p>
+                    </div>
+                    <div class="post-comments">
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+</body>
+</html>
