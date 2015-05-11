@@ -307,7 +307,17 @@ form input[type=radio] {
 #banned-list {
     padding-top:8px;
 }
-    
+
+.view-post {
+    padding-top: 10px;
+}
+
+.view-post>.post-rating {
+    height: 60px;
+    margin-top: 15px;
+    margin-right: 15px;
+}
+
 .fb-button {
     width: 100%;
     line-height: 35px;
@@ -455,6 +465,9 @@ form input[type=radio] {
     }
     .image-box {
         height: 110px;
+    }
+    .hidden-xs {
+        display: none !important;
     }
 }
 
