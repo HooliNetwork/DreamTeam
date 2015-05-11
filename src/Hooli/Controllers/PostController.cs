@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Threading;
-using System.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
@@ -16,6 +15,7 @@ using System.Security.Claims;
 using System.Collections.Generic;
 using Microsoft.AspNet.Http;
 using Microsoft.Net.Http.Headers;
+using Microsoft.Framework.Runtime;
 
 namespace Hooli.Controllers
 {
@@ -24,6 +24,8 @@ namespace Hooli.Controllers
     {
         private IConnectionManager _connectionManager;
         private IHubContext _feedHub;
+        IApplicationEnvironment _hostingEnvironment;
+
         public PostController(UserManager<ApplicationUser> userManager)
         {
             UserManager = userManager;
@@ -58,20 +60,23 @@ namespace Hooli.Controllers
         // POST: /StoreManager/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Post post, CancellationToken requestAborted, IFormFile upload)
+        public async Task<IActionResult> Create(Post post, CancellationToken requestAborted, IFormFile file)
         {
             var user = await GetCurrentUserAsync();
             if (ModelState.IsValid && user != null)
             {
                 post.User = user;
-                DbContext.Posts.Add(post);
-                await DbContext.SaveChangesAsync(requestAborted);
 
                 var fileName = ContentDispositionHeaderValue
-                    .Parse(upload.ContentDisposition)
+                    .Parse(file.ContentDisposition)
                     .FileName;
+                var filePath = _hostingEnvironment.ApplicationBasePath + "\\wwwroot\\" + fileName;
+                await file.SaveAsAsync(filePath);
 
+                post.ImageUrl = filePath;
 
+                DbContext.Posts.Add(post);
+                await DbContext.SaveChangesAsync(requestAborted);
 
                 var postdata = new PostData
                 {

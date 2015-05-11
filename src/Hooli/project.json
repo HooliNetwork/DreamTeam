@@ -37,7 +37,8 @@
         "Microsoft.Framework.Logging.Console": "1.0.0-beta4",
         "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-beta4",
         "kestrel": "1.0.0-beta4",
-        "Microsoft.AspNet.Http": "1.0.0-beta4"
+        "Microsoft.AspNet.Http": "1.0.0-beta4",
+        "Microsoft.WindowsAzure.ConfigurationManager": "2.0.3"
     },
 
     "commands": {
