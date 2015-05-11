@@ -2,6 +2,8 @@
 @model List<Post>
 @{
     ViewBag.Title = "Home Page";
+    bool groupView = false;
+    bool timeView = true;
 }
 
 <div class="row">
@@ -70,22 +72,22 @@
             <div class="content-box">
                 <h1>The Feed</h1>
                 <div class="posts-orderby">
-                    <button type="button" class="btn btn-primary btn-2way btn-option">
+                    <button type="button" id="filter_by_time" class="btn btn-primary btn-2way btn-option" onclick="timeView='true'">
                         <span>New</span>
                     </button>
-                    <button type="button" class="btn btn-primary btn-2way btn-selected">
+                    <button type="button" id="filter_by_popularity" class="btn btn-primary btn-2way btn-selected" onclick="timeView='false'">
                         <span>Top</span>
                     </button>
                 </div>
                 <div class="posts-type">
-                    <button type="button" class="btn btn-primary btn-2way btn-selected">
+                    <button type="button" id="filter_by_people" class="btn btn-primary btn-2way btn-selected" onclick="groupView='false'">
                         <span>People</span>
                     </button>
-                    <button type="button" class="btn btn-primary btn-2way btn-option">
+                    <button type="button" id="filter_by_groups" class="btn btn-primary btn-2way btn-option" onclick="groupView='true'">
                         <span>Groups</span>
                     </button>
                 </div>
-                @await Component.InvokeAsync("Feed",true, false)
+                @await Component.InvokeAsync("Feed", timeView, groupView)
             </div>
         </div>
 </div>
