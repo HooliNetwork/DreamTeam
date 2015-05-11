@@ -7,6 +7,6 @@ namespace Hooli.Models
 {
     public enum FileType
     {
-        ProfilePicture = 1, Photo
+        ProfilePicture = 1, Image
     }
 }

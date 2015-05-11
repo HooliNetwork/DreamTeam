@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading;
+using System.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
@@ -12,7 +13,9 @@ using Hooli.Models;
 using Hooli.ViewModels;
 using Microsoft.AspNet.Identity;
 using System.Security.Claims;
-
+using System.Collections.Generic;
+using Microsoft.AspNet.Http;
+using Microsoft.Net.Http.Headers;
 
 namespace Hooli.Controllers
 {
@@ -54,7 +57,7 @@ namespace Hooli.Controllers
         // POST: /StoreManager/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Post post, CancellationToken requestAborted)
+        public async Task<IActionResult> Create(Post post, CancellationToken requestAborted, IFormFile upload)
         {
             var user = await GetCurrentUserAsync();
             if (ModelState.IsValid && user != null)
@@ -62,13 +65,19 @@ namespace Hooli.Controllers
                 post.User = user;
                 DbContext.Posts.Add(post);
                 await DbContext.SaveChangesAsync(requestAborted);
-                
+
+                var fileName = ContentDispositionHeaderValue
+                    .Parse(upload.ContentDisposition)
+                    .FileName;
+
+
+
                 var postdata = new PostData
                 {
                     Title = post.Title,
                     // We might want link to the post
                     //Url = Url.Action("Details", "Post", new { id = post.PostId })
-                    Text = post.Text
+                    Text = post.Text,
                 };
                 var following = DbContext.FollowRelations
                         .Where(u => u.FollowingId == user.Id)
