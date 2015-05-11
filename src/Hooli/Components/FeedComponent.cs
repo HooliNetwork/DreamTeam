@@ -28,29 +28,14 @@ namespace Hooli.Components
 
         public async Task<IViewComponentResult> InvokeAsync(bool latestPosts, bool group)
         {
-            System.Diagnostics.Debug.WriteLine("Inside Invoke Async");
             var user = await GetCurrentUserAsync();
-            System.Diagnostics.Debug.WriteLine("UserID" + user.Id);
             if (group)
             {
-                System.Diagnostics.Debug.WriteLine("Inside group");
-                var groups = user.Groups?.Select(g => g.GroupId);
-                System.Diagnostics.Debug.WriteLine("1");
+                var groups = user.GroupsMember?.Select(g => g.GroupId);
+
                 if (latestPosts && groups != null)
-                {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    var groups = user.GroupsMember?.Select(g => g.GroupId);
-           
-                    if (latestPosts && groups != null)
-=======
-                    System.Diagnostics.Debug.WriteLine("2");
+                { 
                     var post = await Cache.GetOrSet("latestGroupPost", async context =>
->>>>>>> Working on the Filtering buttons on the feed, added files for the group view, creating a group, viewing a single group and more
-=======
-                    System.Diagnostics.Debug.WriteLine("2");
-                    var post = await Cache.GetOrSet("latestGroupPost", async context =>
->>>>>>> Working on the Filtering buttons on the feed, added files for the group view, creating a group, viewing a single group and more
                     {
                         context.SetAbsoluteExpiration(TimeSpan.FromMinutes(5));
                         return await GetLatestGroupPost(groups);
@@ -60,19 +45,15 @@ namespace Hooli.Components
                 }
                 else if(groups != null)
                 {
-                    System.Diagnostics.Debug.WriteLine("4");
                     var post = await Cache.GetOrSet("popularGroupPost", async context =>
                     {
                         context.SetAbsoluteExpiration(TimeSpan.FromMinutes(5));
                         return await GetPopularGroupPosts(groups);
                     });
-                    System.Diagnostics.Debug.WriteLine("5");
                     return View(post);
                 }
                 else
                 {
-                    System.Diagnostics.Debug.WriteLine("6");
-                    System.Diagnostics.Debug.WriteLine("User first name " + user.FirstName);
                     return View(new List<Post> { new Post() { Title = "No posts!", User = user} });
                 }
             }
