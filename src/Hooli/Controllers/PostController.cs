@@ -19,6 +19,7 @@ using Microsoft.Net.Http.Headers;
 
 namespace Hooli.Controllers
 {
+    [Authorize]
     public class PostController : Controller
     {
         private IConnectionManager _connectionManager;
