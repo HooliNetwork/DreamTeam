@@ -48,7 +48,7 @@ namespace Hooli.Migrations
                     EventId = table.Column(type: "int", nullable: false)
                         .Annotation("SqlServer:ValueGeneration", "Identity"),
                     EventName = table.Column(type: "nvarchar(max)", nullable: true),
-                    ImgUrl = table.Column(type: "nvarchar(max)", nullable: true),
+                    Image = table.Column(type: "varbinary(max)", nullable: true),
                     Location = table.Column(type: "nvarchar(max)", nullable: true),
                     Private = table.Column(type: "bit", nullable: false),
                     StartTime = table.Column(type: "datetime2", nullable: false)
@@ -56,21 +56,6 @@ namespace Hooli.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Event", x => x.EventId);
-                });
-            migration.CreateTable(
-                name: "File",
-                columns: table => new
-                {
-                    Content = table.Column(type: "varbinary(max)", nullable: true),
-                    ContentType = table.Column(type: "nvarchar(max)", nullable: true),
-                    FileId = table.Column(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGeneration", "Identity"),
-                    FileName = table.Column(type: "nvarchar(max)", nullable: true),
-                    FileType = table.Column(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_File", x => x.FileId);
                 });
             migration.CreateTable(
                 name: "Group",
@@ -81,7 +66,7 @@ namespace Hooli.Migrations
                     GroupId = table.Column(type: "int", nullable: false)
                         .Annotation("SqlServer:ValueGeneration", "Identity"),
                     GroupName = table.Column(type: "nvarchar(max)", nullable: true),
-                    GroupPicture = table.Column(type: "varbinary(max)", nullable: true),
+                    Image = table.Column(type: "varbinary(max)", nullable: true),
                     Private = table.Column(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -187,7 +172,8 @@ namespace Hooli.Migrations
                 {
                     DateCreated = table.Column(type: "datetime2", nullable: false),
                     GroupGroupId = table.Column(type: "int", nullable: true),
-                    ImgUrl = table.Column(type: "nvarchar(max)", nullable: true),
+                    Image = table.Column(type: "varbinary(max)", nullable: true),
+                    Link = table.Column(type: "nvarchar(max)", nullable: true),
                     ParentPostId = table.Column(type: "int", nullable: true),
                     Points = table.Column(type: "int", nullable: false),
                     PostId = table.Column(type: "int", nullable: false)
@@ -261,7 +247,6 @@ namespace Hooli.Migrations
         {
             migration.DropTable("AspNetUsers");
             migration.DropTable("Event");
-            migration.DropTable("File");
             migration.DropTable("FollowRelation");
             migration.DropTable("Group");
             migration.DropTable("GroupMember");

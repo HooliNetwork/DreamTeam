@@ -36,7 +36,7 @@ namespace Hooli.Controllers
                 Private = newEvent.Private,
                 Description = newEvent.Description,
                 Location = newEvent.Location,
-                ImgUrl = newEvent.ImgUrl,
+                Image = newEvent.Image,
                 DateCreated = newEvent.DateCreated,              
             };
             DbContext.Events.Add(eventData);
@@ -56,7 +56,7 @@ namespace Hooli.Controllers
             eventData.EndTime = newEvent.EndTime;
             eventData.Location = newEvent.Location;
             eventData.Private = newEvent.Private;
-            eventData.ImgUrl = newEvent.ImgUrl;
+            eventData.Image = newEvent.Image;
 
             await DbContext.SaveChangesAsync(requestAborted);
             return View();

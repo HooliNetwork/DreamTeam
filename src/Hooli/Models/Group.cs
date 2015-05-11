@@ -22,7 +22,7 @@ namespace Hooli.Models
         [DataType(DataType.DateTime)]
         public DateTime DateCreated { get; set; }
 
-        public byte[] GroupPicture { get; set; }
+        public byte[] Image { get; set; }
 
         public virtual List<GroupMember> Members { get; set; }
         //public virtual List<ApplicationUser> BannedUsers { get; set; }

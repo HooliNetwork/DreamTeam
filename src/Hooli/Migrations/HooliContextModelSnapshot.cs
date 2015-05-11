@@ -79,7 +79,7 @@ namespace Hooli.Migrations
                             .Annotation("SqlServer:ValueGeneration", "Default");
                         b.Property<string>("EventName")
                             .Annotation("OriginalValueIndex", 4);
-                        b.Property<string>("ImgUrl")
+                        b.Property<byte[]>("Image")
                             .Annotation("OriginalValueIndex", 5);
                         b.Property<string>("Location")
                             .Annotation("OriginalValueIndex", 6);
@@ -88,23 +88,6 @@ namespace Hooli.Migrations
                         b.Property<DateTime>("StartTime")
                             .Annotation("OriginalValueIndex", 8);
                         b.Key("EventId");
-                    });
-                
-                builder.Entity("Hooli.Models.File", b =>
-                    {
-                        b.Property<byte[]>("Content")
-                            .Annotation("OriginalValueIndex", 0);
-                        b.Property<string>("ContentType")
-                            .Annotation("OriginalValueIndex", 1);
-                        b.Property<int>("FileId")
-                            .GenerateValueOnAdd()
-                            .Annotation("OriginalValueIndex", 2)
-                            .Annotation("SqlServer:ValueGeneration", "Default");
-                        b.Property<string>("FileName")
-                            .Annotation("OriginalValueIndex", 3);
-                        b.Property<int>("FileType")
-                            .Annotation("OriginalValueIndex", 4);
-                        b.Key("FileId");
                     });
                 
                 builder.Entity("Hooli.Models.FollowRelation", b =>
@@ -128,7 +111,7 @@ namespace Hooli.Migrations
                             .Annotation("SqlServer:ValueGeneration", "Default");
                         b.Property<string>("GroupName")
                             .Annotation("OriginalValueIndex", 3);
-                        b.Property<byte[]>("GroupPicture")
+                        b.Property<byte[]>("Image")
                             .Annotation("OriginalValueIndex", 4);
                         b.Property<bool>("Private")
                             .Annotation("OriginalValueIndex", 5);
@@ -153,22 +136,24 @@ namespace Hooli.Migrations
                         b.Property<int?>("GroupGroupId")
                             .Annotation("OriginalValueIndex", 1)
                             .Annotation("ShadowIndex", 0);
-                        b.Property<string>("ImgUrl")
+                        b.Property<byte[]>("Image")
                             .Annotation("OriginalValueIndex", 2);
-                        b.Property<int?>("ParentPostId")
+                        b.Property<string>("Link")
                             .Annotation("OriginalValueIndex", 3);
-                        b.Property<int>("Points")
+                        b.Property<int?>("ParentPostId")
                             .Annotation("OriginalValueIndex", 4);
+                        b.Property<int>("Points")
+                            .Annotation("OriginalValueIndex", 5);
                         b.Property<int>("PostId")
                             .GenerateValueOnAdd()
-                            .Annotation("OriginalValueIndex", 5)
+                            .Annotation("OriginalValueIndex", 6)
                             .Annotation("SqlServer:ValueGeneration", "Default");
                         b.Property<string>("Text")
-                            .Annotation("OriginalValueIndex", 6);
-                        b.Property<string>("Title")
                             .Annotation("OriginalValueIndex", 7);
-                        b.Property<string>("UserId")
+                        b.Property<string>("Title")
                             .Annotation("OriginalValueIndex", 8);
+                        b.Property<string>("UserId")
+                            .Annotation("OriginalValueIndex", 9);
                         b.Key("PostId");
                     });
                 

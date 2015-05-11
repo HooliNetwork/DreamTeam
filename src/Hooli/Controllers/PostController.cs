@@ -65,7 +65,7 @@ namespace Hooli.Controllers
                 post.User = user;
                 if((file != null) && (file.Length > 0))
                 {
-                    post.PostImage = UploadImage(file);
+                    post.Image = UploadImage(file);
                 }
                 
                 DbContext.Posts.Add(post);

@@ -16,11 +16,11 @@ namespace Hooli.Models
 
         public string Text { get; set; }
 
-        [Display(Name = "Image URL")]
+        [Display(Name = "Link")]
         [StringLength(1024)]
-        public string ImageUrl { get; set; }
+        public string Link { get; set; }
 
-        public byte[] PostImage { get; set; }
+        public byte[] Image { get; set; }
 
         public int Points { get; set; }
 
