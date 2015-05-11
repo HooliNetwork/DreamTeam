@@ -194,3 +194,4 @@ ModelManifest.xml
 
 # DS_Store
 *.DS_Store
+/.vs/config/applicationhost.config
