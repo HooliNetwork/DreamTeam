@@ -101,7 +101,7 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Upvote(Post post, CancellationToken requestAborted)
         {
-            var postData = DbContext.Posts.Single(postTable => postTable.PostId == post.PostId);
+            var postData = await DbContext.Posts.SingleAsync(postTable => postTable.PostId == post.PostId);
             postData.Points++;
             await DbContext.SaveChangesAsync(requestAborted);
             return View();
@@ -111,11 +111,33 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Downvote(Post post, CancellationToken requestAborted)
         {
-            var postData = DbContext.Posts.Single(postTable => postTable.PostId == post.PostId);
+            var postData = await DbContext.Posts.SingleAsync(postTable => postTable.PostId == post.PostId);
             postData.Points--;
             await DbContext.SaveChangesAsync(requestAborted);
             return View();
         }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Post post, CancellationToken requestAborted)
+        {
+            var postData = await DbContext.Posts.SingleAsync(postTable => postTable.PostId == post.PostId);
+            postData.Title = post.Title;
+            postData.Title = post.Text;
+            await DbContext.SaveChangesAsync(requestAborted);
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(Post post, CancellationToken requestAborted)
+        {
+            var postData = await DbContext.Posts.SingleAsync(postTable => postTable.PostId == post.PostId);
+            DbContext.Remove(postData);
+            await DbContext.SaveChangesAsync(requestAborted);
+            return View();
+        }
+
 
         // GET: /StoreManager/Create
         public IActionResult Create()
