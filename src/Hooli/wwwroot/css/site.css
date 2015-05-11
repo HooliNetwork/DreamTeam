@@ -312,6 +312,10 @@ form input[type=radio] {
     font-weight: 700;
 }
 
+.edit-info-container {
+    display: none;
+}
+
 .edit-info-container .form-group {
     margin-bottom: 0;
 }
@@ -457,7 +461,7 @@ form input[type=radio] {
         display: block;
     }
     .image-box {
-        height: 95px;
+        height: 80px;
     }
 }
 
@@ -483,7 +487,7 @@ form input[type=radio] {
         margin-top: -20px;
     }
     .image-box {
-        height: 110px;
+        height: 100px;
     }
     .hidden-xs {
         display: none !important;
