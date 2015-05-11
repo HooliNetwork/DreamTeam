@@ -39,9 +39,14 @@ namespace Hooli.Components
                 if (latestPosts && groups != null)
                 {
 <<<<<<< HEAD
+<<<<<<< HEAD
                     var groups = user.GroupsMember?.Select(g => g.GroupId);
            
                     if (latestPosts && groups != null)
+=======
+                    System.Diagnostics.Debug.WriteLine("2");
+                    var post = await Cache.GetOrSet("latestGroupPost", async context =>
+>>>>>>> Working on the Filtering buttons on the feed, added files for the group view, creating a group, viewing a single group and more
 =======
                     System.Diagnostics.Debug.WriteLine("2");
                     var post = await Cache.GetOrSet("latestGroupPost", async context =>
