@@ -11,7 +11,12 @@ namespace Hooli.Models
     {
         [Key]
 <<<<<<< HEAD
+<<<<<<< HEAD
         public string GroupId { get; set; }
+=======
+        [Display(Name = "Unique name")]
+        public int GroupId { get; set; }
+>>>>>>> Working on creating a group, not yet possible to save to database.
 =======
         [Display(Name = "Unique name")]
         public int GroupId { get; set; }
@@ -29,9 +34,7 @@ namespace Hooli.Models
         [DataType(DataType.DateTime)]
         public DateTime DateCreated { get; set; }
 
-        [Display(Name = "ImageURI")]
-        [StringLength(1024)]
-        public string Image { get; set; }
+        public byte[] Image { get; set; }
 
         public virtual List<GroupMember> Members { get; set; }
         public virtual List<Post> Posts { get; set; }
