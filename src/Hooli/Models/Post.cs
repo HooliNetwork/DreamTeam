@@ -26,6 +26,7 @@ namespace Hooli.Models
         public int Points { get; set; }
 
         [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime DateCreated { get; set; }
 
         public virtual Group Group { get; set; }
