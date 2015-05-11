@@ -5,7 +5,6 @@ $(document).ready(function () {
     $(".posts-type button:nth-child(1)").click(function () {
         $(".posts-type button:nth-child(1)").removeClass("btn-option").addClass("btn-selected");
         $(".posts-type button:nth-child(2)").removeClass("btn-selected").addClass("btn-option");
-        $('#feed=content').load('/Components/Feed');
     });
     $(".posts-type button:nth-child(2)").click(function () {
         $(".posts-type button:nth-child(1)").removeClass("btn-selected").addClass("btn-option");
@@ -22,6 +21,10 @@ $(document).ready(function () {
 
     $(".create-post-button").click(function(){
         $(".new-post-container").toggleClass('open');
+    });
+
+    $(".create-group-button").click(function () {
+        $(".edit-info-container").toggleClass('open');
     });
     
 });

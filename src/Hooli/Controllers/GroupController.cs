@@ -27,24 +27,40 @@ namespace Hooli.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreatGroup(Group group, CancellationToken requestAborted)
+        public async Task<IActionResult> CreateGroup(Group group, CancellationToken requestAborted)
         {
-            //var groupData = new Group
-            //{
-            //    GroupName = group.GroupName,
-            //    Description = group.Description,
-            //    Private = group.Private, 
-            //    DateCreated = group.DateCreated,
-            //    Members = group.Members
-            //};
-            //DbContext.Groups.Add(groupData);
+            System.Diagnostics.Debug.WriteLine("Inside CreateGroup function Trol");
+            System.Diagnostics.Debug.WriteLine("Model state" + ModelState);
             if (ModelState.IsValid)
             {
-                DbContext.Add(group);
+                System.Diagnostics.Debug.WriteLine("Inside if sentence");
+                DbContext.Groups.Add(group);
+                System.Diagnostics.Debug.WriteLine("Inside if sentence 2");
                 await DbContext.SaveChangesAsync(requestAborted);
+                System.Diagnostics.Debug.WriteLine("Inside if sentence 3");
+
+
+                var groupData = new Group
+                {
+                    GroupName = group.GroupName,
+                    Description = group.Description,
+                    Private = group.Private,
+                    //Members = group.Members
+                  };
+
+                System.Diagnostics.Debug.WriteLine("Inside if sentence 4");
+
+            System.Diagnostics.Debug.WriteLine(group.DateCreated);
+       
+            System.Diagnostics.Debug.WriteLine("Inside if sentence 5");
+
+
+            return RedirectToAction("Index");
             }
 
-            return View();
+                System.Diagnostics.Debug.WriteLine("Leaving CreateGroup function");
+                return View(group);
+           
         }
 
         [HttpPost]
