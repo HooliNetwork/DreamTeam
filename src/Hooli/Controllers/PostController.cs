@@ -63,7 +63,11 @@ namespace Hooli.Controllers
             if (ModelState.IsValid && user != null)
             {
                 post.User = user;
-                post.PostImage = UploadImage(file);
+                if((file != null) && (file.Length > 0))
+                {
+                    post.PostImage = UploadImage(file);
+                }
+                
                 DbContext.Posts.Add(post);
                 await DbContext.SaveChangesAsync(requestAborted);
                 
@@ -123,9 +127,8 @@ namespace Hooli.Controllers
             return await UserManager.FindByIdAsync(Context.User.GetUserId());
         }
 
-        public Image UploadImage(IFormFile file)
+        public byte [] UploadImage(IFormFile file)
         {
-            Image image;
             byte[] bytes; 
 
             using (var memoryStream = new MemoryStream())
@@ -133,15 +136,8 @@ namespace Hooli.Controllers
                 file.OpenReadStream().CopyTo(memoryStream);
                 bytes = memoryStream.ToArray();
             };
-
-            var parsedContentDisposition = ContentDispositionHeaderValue.Parse(file.ContentDisposition);
-            image = new Image
-            {
-                ImageName = parsedContentDisposition.FileName,
-                Content = bytes
-            };
             
-            return image;
+            return bytes;
         }
     }
 }
