@@ -39,10 +39,12 @@
                 </button>
             </div>
             <div class="new-post">
-                <button type="button" class="btn btn-primary btn-block">
+                <button type="button" class="btn btn-primary btn-block create-post-button">
                     <span>Add new Post</span>
                 </button>
+                    @Html.Partial("_Create")
             </div>
+
             <div class="post">
                 <div class="row">
                     <div class="col-xs-2 col-sm-1 post-rating">
@@ -108,4 +110,5 @@
             </div>
         </div>
     </div>
+
 </div>

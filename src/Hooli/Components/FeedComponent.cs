@@ -97,7 +97,7 @@ namespace Hooli.Components
             var latestPost = await DbContext.Posts
                 .OrderByDescending(a => a.DateCreated)
                 .Where(a => a.ParentPostId == null)
-                .Where(u => (following.Contains(u.UserId)))
+                .Where(u => (following.Contains(u.UserId)) || (u.UserId == Context.User.GetUserId()))
                 .Where(a => (a.DateCreated - DateTime.UtcNow).TotalDays <= 2)
                 .Include(u => u.User)
                 .ToListAsync();
@@ -112,7 +112,7 @@ namespace Hooli.Components
         {
             var postsByVotes = await DbContext.Posts
                 .Where(a => a.ParentPostId == null)
-                .Where(a => (following.Contains(a.UserId)))
+                .Where(a => (following.Contains(a.UserId)) || (a.UserId == Context.User.GetUserId()))
                 .OrderByDescending(a => a.Points)
                 .Include(u => u.User)
                 .ToListAsync();

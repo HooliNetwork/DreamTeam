@@ -19,5 +19,10 @@ $(document).ready(function () {
         $(".posts-orderby button:nth-child(2)").removeClass("btn-option").addClass("btn-selected");
     });
 
+    $(".create-post-button").click(function(){
+        $(".new-post-container").slideToggle(75);
+    });
     
 });
+
+

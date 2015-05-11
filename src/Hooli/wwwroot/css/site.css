@@ -318,6 +318,10 @@ form input[type=radio] {
     margin-right: 15px;
 }
 
+.new-post-container {
+    display: none;
+}
+
 .fb-button {
     width: 100%;
     line-height: 35px;
