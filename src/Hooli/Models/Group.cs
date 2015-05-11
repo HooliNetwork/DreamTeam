@@ -10,12 +10,15 @@ namespace Hooli.Models
     public class Group
     {
         [Key]
+        [Display(Name = "Unique name")]
         public string GroupId { get; set; }
 
         [Required]
         [StringLength(160, MinimumLength = 2)]
+        [Display(Name = "Group name")]
         public string GroupName { get; set; }
 
+        [Display(Name = "Description")]
         public string Description { get; set; }
         public bool Private {get; set;}
 

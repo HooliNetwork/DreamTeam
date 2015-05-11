@@ -4,3 +4,112 @@
 @{
     // ViewBag.Title = "Home Page";
 }
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="content-box padding-remove-sides">
+            <div class="info-photo-container">
+                <div class="info-photo" style="background: url(../images/group_photo.jpg) center / cover;">
+                    <div class="info-photo-shade">
+                        <a href="#"><h1>Silicon valley</h1></a>
+                    </div>
+                </div>
+            </div>
+            <div class="group-info padding-side">
+                <p class="group-info-description">
+                    In the high-tech gold rush of modern Silicon Valley, the people most qualified to succeed are the least capable of handling success. A comedy partially inspired by Mike Judge's own experiences as a Silicon Valley engineer in the late 1980s.
+                </p>
+                <button type="button" class="btn btn-primary btn-block">
+                    <span>Join group</span>
+                </button>
+                <button type="button" class="btn btn-primary btn-block btn-option">
+                    <span>Leave group</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="content-box">
+            <h1>Group feed</h1>
+            <div class="posts-orderby">
+                <button type="button" class="btn btn-primary btn-2way btn-option">
+                    <span>New</span>
+                </button>
+                <button type="button" class="btn btn-primary btn-2way btn-selected">
+                    <span>Top</span>
+                </button>
+            </div>
+            <div class="new-post">
+                <button type="button" class="btn btn-primary btn-block create-post-button">
+                    <span>Add new Post</span>
+                </button>
+                @Html.Partial("_Create")
+            </div>
+
+            <div class="post">
+                <div class="row">
+                    <div class="col-xs-2 col-sm-1 post-rating">
+                        <button type="submit" class="btn btn-link vote">
+                            <span class="glyphicon glyphicon-menu-up"></span>
+                        </button>
+                        <div class="post-rating-count">345</div>
+                        <button type="submit" class="btn btn-link vote">
+                            <span class="glyphicon glyphicon-menu-down"></span>
+                        </button>
+                    </div>
+                    <div class="col-xs-10 col-sm-11 post-body">
+                        <a href="#"><h2>Við söknum Jóhanns!</h2></a>
+                        <div class="post-body-info">
+                            <span class="post-author">Posted by <a href="#"><strong>Jóhann</strong></a></span>
+                            <span class="post-date"> on <strong>14. mars 2015 14:45</strong>.</span>
+                            <span class="post-comment-count"> Total comments <strong>24</strong>.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="post">
+                <div class="row">
+                    <div class="col-xs-2 col-sm-1 post-rating">
+                        <button type="submit" class="btn btn-link vote">
+                            <span class="glyphicon glyphicon-menu-up"></span>
+                        </button>
+                        <div class="post-rating-count">86</div>
+                        <button type="submit" class="btn btn-link vote">
+                            <span class="glyphicon glyphicon-menu-down"></span>
+                        </button>
+                    </div>
+                    <div class="col-xs-10 col-sm-11 post-body">
+                        <a href="#"><h2>The world is coming to an end</h2></a>
+                        <div class="post-body-info">
+                            <span class="post-author">Posted by <a href="#"><strong>Jóhann</strong></a></span>
+                            <span class="post-date"> on <strong>16. mars 2015 11:25</strong>.</span>
+                            <span class="post-comment-count"> Total comments <strong>2</strong>.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="post">
+                <div class="row">
+                    <div class="col-xs-2 col-sm-1 post-rating">
+                        <button type="submit" class="btn btn-link vote">
+                            <span class="glyphicon glyphicon-menu-up"></span>
+                        </button>
+                        <div class="post-rating-count">86</div>
+                        <button type="submit" class="btn btn-link vote">
+                            <span class="glyphicon glyphicon-menu-down"></span>
+                        </button>
+                    </div>
+                    <div class="col-xs-10 col-sm-11 post-body">
+                        <div><a href="#"><h2>I miss my bitch, I'm missing my bitch now</h2></a></div>
+                        <div class="post-body-info">
+                            <span class="post-author">Posted by <a href="#"><strong>Jóhann</strong></a></span>
+                            <span class="post-date"> on <strong>9. mars 2015 18:48</strong>.</span>
+                            <span class="post-comment-count"> Total comments <strong>55</strong>.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

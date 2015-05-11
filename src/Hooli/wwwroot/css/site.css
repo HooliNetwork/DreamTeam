@@ -316,9 +316,7 @@ form input[type=radio] {
     font-weight: 700;
 }
 
-.edit-info-container {
-    display: none;
-}
+
 
 .edit-info-container .form-group {
     margin-bottom: 0;
