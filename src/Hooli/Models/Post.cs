@@ -19,6 +19,9 @@ namespace Hooli.Models
         [Display(Name = "Image URL")]
         [StringLength(1024)]
         public string ImgUrl { get; set; }
+        public string ImageUrl { get; set; }
+
+        public Image PostImage { get; set; }
 
         public int Points { get; set; }
 

@@ -30,8 +30,7 @@ namespace Hooli.Models
 
         public virtual List<FollowRelation> Following { get; set; }
         public virtual List<FollowRelation> Followers { get; set; }
-        public virtual List<File> Files { get; set; }
-        
+
         public ApplicationUser()
         {
             Following = new List<FollowRelation>();
@@ -47,7 +46,6 @@ namespace Hooli.Models
         public DbSet<Event> Events { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<FollowRelation> FollowRelations { get; set; }
-        public DbSet<File> Files { get; set; }
         public DbSet<GroupMember> GroupMembers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
