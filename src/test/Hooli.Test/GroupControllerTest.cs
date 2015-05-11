@@ -41,16 +41,16 @@ namespace Hooli.Controllers
             var controller = new GroupController();
             var dbContext = _serviceProvider.GetRequiredService<HooliContext>();
             var user = new ApplicationUser() { UserName = "TestUser" };
-            List<ApplicationUser> memberList = new List<ApplicationUser>();
-            memberList.Add(user);
-            var  group = new Group() { GroupId = 1, Members = memberList, BannedUsers = null };
-            dbContext.Add(group);
+            //List<ApplicationUser> memberList = new List<ApplicationUser>();
+            //memberList.Add(user);
+            //var  group = new Group() { GroupId = "1", Members = memberList, BannedUsers = null };
+            //dbContext.Add(group);
 
             // Act
-            var result = await controller.BanUser(1, user, CancellationToken.None);
+            var result = await controller.BanUser("1", user, CancellationToken.None);
 
             // Assert
-            Assert.True(group.BannedUsers.Contains(user));
+            //Assert.True(group.BannedUsers.Contains(user));
             Assert.True(false);
         }
 

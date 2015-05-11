@@ -15,6 +15,8 @@ using System.Security.Claims;
 using Microsoft.AspNet.Http;
 using Microsoft.Net.Http.Headers;
 using System.IO;
+using Hooli.CloudStorage;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace Hooli.Controllers
 {
@@ -31,6 +33,9 @@ namespace Hooli.Controllers
 
         [FromServices]
         public HooliContext DbContext { get; set; }
+
+        [FromServices]
+        public Cloud storage { get; set; }
 
         [FromServices]
         public IMemoryCache Cache { get; set; }
@@ -61,10 +66,11 @@ namespace Hooli.Controllers
             var user = await GetCurrentUserAsync();
             if (ModelState.IsValid && user != null)
             {
+                
                 post.User = user;
                 if((file != null) && (file.Length > 0))
                 {
-                    post.Image = UploadImage(file);
+                    post.Image = await storage.GetUri("postimages", post.PostId.ToString(), file);
                 }
                 
                 DbContext.Posts.Add(post);
@@ -148,17 +154,6 @@ namespace Hooli.Controllers
             return await UserManager.FindByIdAsync(Context.User.GetUserId());
         }
 
-        public byte [] UploadImage(IFormFile file)
-        {
-            byte[] bytes; 
 
-            using (var memoryStream = new MemoryStream())
-            {
-                file.OpenReadStream().CopyTo(memoryStream);
-                bytes = memoryStream.ToArray();
-            };
-            
-            return bytes;
-        }
     }
 }

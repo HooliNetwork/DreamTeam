@@ -120,7 +120,7 @@ namespace Hooli.Components
             return postsByVotes;
         }
 
-        private async Task<List<Post>> GetLatestGroupPost(IEnumerable<int> group)
+        private async Task<List<Post>> GetLatestGroupPost(IEnumerable<string> group)
         {
             var latestPost = await DbContext.Posts
                 .Where(a => a.ParentPostId == null)
@@ -133,7 +133,7 @@ namespace Hooli.Components
             return latestPost;
         }
 
-        private async Task<List<Post>> GetPopularGroupPosts(IEnumerable<int> group)
+        private async Task<List<Post>> GetPopularGroupPosts(IEnumerable<string> group)
         {
             var postsByVotes = await DbContext.Posts
                 .Where(a => a.ParentPostId == null)
