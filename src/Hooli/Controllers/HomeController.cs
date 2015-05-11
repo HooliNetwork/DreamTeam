@@ -18,11 +18,9 @@ namespace Hooli.Controllers
     {
         [FromServices]
         public HooliContext DbContext { get; set; }
-        public HomeController(UserManager<ApplicationUser> userManager)
-        {
-            UserManager = userManager;
-        }
-        public UserManager<ApplicationUser> UserManager { get; private set; }
+
+        [FromServices]
+        public UserManager<ApplicationUser> UserManager { get; set; }
 
         [FromServices]
         public IMemoryCache Cache { get; set; }
