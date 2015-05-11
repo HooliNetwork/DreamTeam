@@ -47,7 +47,7 @@ namespace Hooli.Components
         private async Task<Group> GetUserGroups()
         {
             var user = await GetCurrentUserAsync();
-            var groups = user.Groups.Select(a => a.GroupId);
+            var groups = user.GroupsMember.Select(a => a.GroupId);
             var userGroups = await DbContext.Groups.OrderByDescending(a => a.GroupName).Where(a => (groups.Contains(a.GroupId))).FirstOrDefaultAsync();
             return userGroups;
         }
