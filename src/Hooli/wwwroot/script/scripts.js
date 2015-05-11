@@ -20,7 +20,7 @@ $(document).ready(function () {
     });
 
     $(".create-post-button").click(function(){
-        $(".new-post-container").slideToggle(75);
+        $(".new-post-container").toggleClass('open');
     });
     
 });
