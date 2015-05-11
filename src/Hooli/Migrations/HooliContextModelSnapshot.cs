@@ -135,26 +135,40 @@ namespace Hooli.Migrations
                         b.Key("GroupId");
                     });
                 
+                builder.Entity("Hooli.Models.GroupMember", b =>
+                    {
+                        b.Property<int>("GroupId")
+                            .Annotation("OriginalValueIndex", 0);
+                        b.Property<string>("UserId")
+                            .Annotation("OriginalValueIndex", 1);
+                        b.Property<bool>("banned")
+                            .Annotation("OriginalValueIndex", 2);
+                        b.Key("UserId", "GroupId");
+                    });
+                
                 builder.Entity("Hooli.Models.Post", b =>
                     {
                         b.Property<DateTime>("DateCreated")
                             .Annotation("OriginalValueIndex", 0);
+                        b.Property<int?>("GroupGroupId")
+                            .Annotation("OriginalValueIndex", 1)
+                            .Annotation("ShadowIndex", 0);
                         b.Property<string>("ImgUrl")
-                            .Annotation("OriginalValueIndex", 1);
-                        b.Property<int?>("ParentPostId")
                             .Annotation("OriginalValueIndex", 2);
-                        b.Property<int>("Points")
+                        b.Property<int?>("ParentPostId")
                             .Annotation("OriginalValueIndex", 3);
+                        b.Property<int>("Points")
+                            .Annotation("OriginalValueIndex", 4);
                         b.Property<int>("PostId")
                             .GenerateValueOnAdd()
-                            .Annotation("OriginalValueIndex", 4)
+                            .Annotation("OriginalValueIndex", 5)
                             .Annotation("SqlServer:ValueGeneration", "Default");
                         b.Property<string>("Text")
-                            .Annotation("OriginalValueIndex", 5);
-                        b.Property<string>("Title")
                             .Annotation("OriginalValueIndex", 6);
-                        b.Property<string>("UserId")
+                        b.Property<string>("Title")
                             .Annotation("OriginalValueIndex", 7);
+                        b.Property<string>("UserId")
+                            .Annotation("OriginalValueIndex", 8);
                         b.Key("PostId");
                     });
                 
@@ -238,8 +252,15 @@ namespace Hooli.Migrations
                         b.ForeignKey("Hooli.Models.ApplicationUser", "FollowingId");
                     });
                 
+                builder.Entity("Hooli.Models.GroupMember", b =>
+                    {
+                        b.ForeignKey("Hooli.Models.Group", "GroupId");
+                        b.ForeignKey("Hooli.Models.ApplicationUser", "UserId");
+                    });
+                
                 builder.Entity("Hooli.Models.Post", b =>
                     {
+                        b.ForeignKey("Hooli.Models.Group", "GroupGroupId");
                         b.ForeignKey("Hooli.Models.Post", "ParentPostId");
                         b.ForeignKey("Hooli.Models.ApplicationUser", "UserId");
                     });

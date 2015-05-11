@@ -33,7 +33,7 @@ namespace Hooli.Components
             {
                 if (group)
                 {
-                    var groups = user.Groups?.Select(g => g.GroupId);
+                    var groups = user.GroupsMember?.Select(g => g.GroupId);
            
                     if (latestPosts && groups != null)
                     {

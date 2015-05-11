@@ -83,8 +83,8 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> BanUser(int groupId, ApplicationUser user, CancellationToken requestAborted)
         {
-            var group = DbContext.Groups.Single(groupTable => groupTable.GroupId == groupId);
-            group.BannedUsers.Add(user);
+            var ban = await DbContext.GroupMembers.SingleAsync(u => (u.GroupId == groupId) && (u.UserId == user.Id));
+            ban.banned = true;
             await DbContext.SaveChangesAsync(requestAborted);
             return View();
         }
@@ -93,8 +93,8 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UnBanUser(int groupId, ApplicationUser user, CancellationToken requestAborted)
         {
-            var group = DbContext.Groups.Single(groupTable => groupTable.GroupId == groupId);
-            group.BannedUsers.Remove(user);
+            var unban = await DbContext.GroupMembers.SingleAsync(u => (u.GroupId == groupId) && (u.UserId == user.Id));
+            unban.banned = false;
             await DbContext.SaveChangesAsync(requestAborted);
             return View();
         }
