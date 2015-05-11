@@ -12,7 +12,9 @@ using Hooli.Models;
 using Hooli.ViewModels;
 using Microsoft.AspNet.Identity;
 using System.Security.Claims;
-
+using Microsoft.AspNet.Http;
+using Microsoft.Net.Http.Headers;
+using System.IO;
 
 namespace Hooli.Controllers
 {
@@ -55,12 +57,13 @@ namespace Hooli.Controllers
         // POST: /StoreManager/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Post post, CancellationToken requestAborted)
+        public async Task<IActionResult> Create(Post post, CancellationToken requestAborted, IFormFile file)
         {
             var user = await GetCurrentUserAsync();
             if (ModelState.IsValid && user != null)
             {
                 post.User = user;
+                post.PostImage = UploadImage(file);
                 DbContext.Posts.Add(post);
                 await DbContext.SaveChangesAsync(requestAborted);
                 
@@ -118,6 +121,27 @@ namespace Hooli.Controllers
         private async Task<ApplicationUser> GetCurrentUserAsync()
         {
             return await UserManager.FindByIdAsync(Context.User.GetUserId());
+        }
+
+        public Image UploadImage(IFormFile file)
+        {
+            Image image;
+            byte[] bytes; 
+
+            using (var memoryStream = new MemoryStream())
+            {
+                file.OpenReadStream().CopyTo(memoryStream);
+                bytes = memoryStream.ToArray();
+            };
+
+            var parsedContentDisposition = ContentDispositionHeaderValue.Parse(file.ContentDisposition);
+            image = new Image
+            {
+                ImageName = parsedContentDisposition.FileName,
+                Content = bytes
+            };
+            
+            return image;
         }
     }
 }

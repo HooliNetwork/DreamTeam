@@ -6,15 +6,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Hooli.Models
 {
-    public class File
+    public class Image
     {
-        public int FileId { get; set; }
+        public int ImageId { get; set; }
         [StringLength(255)]
-        public string FileName { get; set; }
+        public string ImageName { get; set; }
         [StringLength(100)]
         public string ContentType { get; set; }
         public byte[] Content { get; set; }
-        public FileType FileType { get; set; }
         public virtual ApplicationUser User { get; set; }
     }
 }
