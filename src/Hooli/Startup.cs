@@ -51,11 +51,23 @@ namespace Hooli
             // Add Application settings to the services container.
             services.Configure<AppSettings>(Configuration.GetSubKey("AppSettings"));
 
-            // Add EF services to the services container.
-            services.AddEntityFramework()
-                .AddSqlServer()
-                .AddDbContext<HooliContext>(options =>
-                    options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
+            //Sql client not available on mono
+            var useInMemoryStore = Type.GetType("Mono.Runtime") != null;
+
+            // Add EF services to the services container
+            if (useInMemoryStore)
+            {
+                services.AddEntityFramework()
+                        .AddInMemoryStore()
+                        .AddDbContext<HooliContext>();
+            }
+            else
+            {
+                services.AddEntityFramework()
+                        .AddSqlServer()
+                        .AddDbContext<HooliContext>(options =>
+                            options.UseSqlServer(Configuration.Get("Data:DefaultConnection:ConnectionString")));
+            }
 
             // Add Identity services to the services container.
             services.AddIdentity<ApplicationUser, IdentityRole>()
