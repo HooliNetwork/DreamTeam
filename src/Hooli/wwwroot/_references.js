@@ -7,3 +7,4 @@
 /// <reference path="lib/signalr/jquery.signalR.min.js" />
 /// <reference path="lib/jquery/jquery.js" />
 /// <reference path="lib/bootstrap/js/npm.js" />
+/// <reference path="script/javascript.js" />
