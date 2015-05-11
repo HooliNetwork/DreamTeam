@@ -12,10 +12,9 @@ using Hooli.Models;
 using Hooli.ViewModels;
 using Microsoft.AspNet.Identity;
 using System.Security.Claims;
-using System.Collections.Generic;
 using Microsoft.AspNet.Http;
 using Microsoft.Net.Http.Headers;
-using Microsoft.Framework.Runtime;
+using System.IO;
 
 namespace Hooli.Controllers
 {
@@ -24,8 +23,6 @@ namespace Hooli.Controllers
     {
         private IConnectionManager _connectionManager;
         private IHubContext _feedHub;
-        IApplicationEnvironment _hostingEnvironment;
-
         public PostController(UserManager<ApplicationUser> userManager)
         {
             UserManager = userManager;
@@ -66,24 +63,16 @@ namespace Hooli.Controllers
             if (ModelState.IsValid && user != null)
             {
                 post.User = user;
-
-                var fileName = ContentDispositionHeaderValue
-                    .Parse(file.ContentDisposition)
-                    .FileName;
-                var filePath = _hostingEnvironment.ApplicationBasePath + "\\wwwroot\\" + fileName;
-                await file.SaveAsAsync(filePath);
-
-                post.ImageUrl = filePath;
-
+                post.PostImage = UploadImage(file);
                 DbContext.Posts.Add(post);
                 await DbContext.SaveChangesAsync(requestAborted);
-
+                
                 var postdata = new PostData
                 {
                     Title = post.Title,
                     // We might want link to the post
                     //Url = Url.Action("Details", "Post", new { id = post.PostId })
-                    Text = post.Text,
+                    Text = post.Text
                 };
                 var following = DbContext.FollowRelations
                         .Where(u => u.FollowingId == user.Id)
@@ -132,6 +121,27 @@ namespace Hooli.Controllers
         private async Task<ApplicationUser> GetCurrentUserAsync()
         {
             return await UserManager.FindByIdAsync(Context.User.GetUserId());
+        }
+
+        public Image UploadImage(IFormFile file)
+        {
+            Image image;
+            byte[] bytes; 
+
+            using (var memoryStream = new MemoryStream())
+            {
+                file.OpenReadStream().CopyTo(memoryStream);
+                bytes = memoryStream.ToArray();
+            };
+
+            var parsedContentDisposition = ContentDispositionHeaderValue.Parse(file.ContentDisposition);
+            image = new Image
+            {
+                ImageName = parsedContentDisposition.FileName,
+                Content = bytes
+            };
+            
+            return image;
         }
     }
 }

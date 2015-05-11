@@ -21,6 +21,8 @@ namespace Hooli.Models
         public string ImgUrl { get; set; }
         public string ImageUrl { get; set; }
 
+        public Image PostImage { get; set; }
+
         public int Points { get; set; }
 
         [DataType(DataType.DateTime)]
