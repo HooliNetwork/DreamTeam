@@ -10,7 +10,8 @@ using Microsoft.AspNet.Mvc;
 using Hooli;
 using Hooli.Models;
 using System.Threading;
-
+using Microsoft.AspNet.Http;
+using Hooli.CloudStorage;
 
 namespace Hooli.Controllers
 {
@@ -25,6 +26,9 @@ namespace Hooli.Controllers
 
         [FromServices]
         public SignInManager<ApplicationUser> SignInManager { get; set; }
+
+        [FromServices]
+        public Cloud Storage { get; set; }
 
         //
         // GET: /Account/Index
@@ -364,16 +368,23 @@ namespace Hooli.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditProfile(ApplicationUser user, CancellationToken requestAborted)
+        public async Task<IActionResult> EditProfile(ApplicationUser user, CancellationToken requestAborted, IFormFile file)
         {
 
             var profileData = await GetCurrentUserAsync();
 
-            profileData.FirstName = user.FirstName;
-            profileData.LastName = user.LastName;
-            profileData.DateOfBirth = user.DateOfBirth;
-            profileData.RelationshipStatus = user.RelationshipStatus;
-            profileData.ProfilePicture = user.ProfilePicture;
+            // profileData.FirstName = user.FirstName;
+            // profileData.LastName = user.LastName;
+            if ((user.DateOfBirth != null) && (user.DateOfBirth.ToString().Length > 0))
+            {
+                profileData.DateOfBirth = user.DateOfBirth;
+            }
+            // profileData.RelationshipStatus = user.RelationshipStatus;
+
+            if ((file != null) && (file.Length > 0))
+            {
+                profileData.ProfilePicture = await Storage.GetUri("profilepictures", Guid.NewGuid().ToString(), file);
+            }
 
             await DbContext.SaveChangesAsync(requestAborted);
             return View();

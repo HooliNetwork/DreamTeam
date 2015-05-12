@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Http.Authentication;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNet.Http;
 
 namespace Hooli.Models
 {
@@ -87,5 +88,11 @@ namespace Hooli.Models
     {
         public string SelectedProvider { get; set; }
         public ICollection<SelectListItem> Providers { get; set; }
+    }
+
+    public class EditProfileViewModel
+    {
+        public DateTime DateOfBirth { get; set; }
+        public IFormFile ProfilePicture { get; set; }
     }
 }
