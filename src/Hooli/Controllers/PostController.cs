@@ -69,8 +69,8 @@ namespace Hooli.Controllers
                 
                 post.User = user;
                 if((file != null) && (file.Length > 0))
-                {
-                    post.Image = await storage.GetUri("postimages", post.PostId.ToString(), file);
+                {               
+                    post.Image = await storage.GetUri("postimages", Guid.NewGuid().ToString(), file);
                 }
                 
                 DbContext.Posts.Add(post);
