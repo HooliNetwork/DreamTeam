@@ -121,7 +121,7 @@ namespace Hooli.Controllers
             dynamic model = new ExpandoObject();
             if (!String.IsNullOrEmpty(searchString))
             {
-
+                var currentuser = await GetCurrentUserAsync();
                 model.Users =  await DbContext.Users.Where(s => s.LastName
                                             .Contains(searchString)
                                             || s.FirstName.Contains(searchString))
@@ -131,6 +131,14 @@ namespace Hooli.Controllers
                                             .Contains(searchString))
                                             .ToListAsync();
 
+                model.Following = DbContext.FollowRelations
+                                .Where(u => u.FollowerId == currentuser.Id)
+                                .Select(u => u.FollowingId).ToList();
+                model.Joined = DbContext.GroupMembers
+                                .Where(u => u.UserId == currentuser.Id)
+                                .Select(u => u.GroupId).ToList();
+
+    
                 //model.Events = View(await DbContext.Events.Where(e => e.EventName
                 //                            .Contains(searchString))
                 //                            .ToListAsync());

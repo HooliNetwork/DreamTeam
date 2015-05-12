@@ -386,6 +386,48 @@ namespace Hooli.Controllers
             // To do
             return View();
         }
+        [HttpPost]
+        public async Task<IActionResult> JoinGroup(string Id)
+        {
+            var message = "";
+            Console.WriteLine(Id);
+            try
+            {
+                var groupmember = new GroupMember() { GroupId = Id, UserId = Context.User.GetUserId(), banned = false };
+                DbContext.GroupMembers.Add(groupmember);
+                await DbContext.SaveChangesAsync();
+                // process your data using the parameter value
+                message = "Successfully processed!";
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;  // if processing fails, we send the failure message to the view
+            }
+
+            return Json(new { message });
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> FollowUser(string Id)
+        {
+            var message = "";
+            Console.WriteLine(Id);
+            try
+            {
+                var follow = new FollowRelation() { FollowerId = Context.User.GetUserId(), FollowingId = Id};
+                DbContext.FollowRelations.Add(follow);
+                await DbContext.SaveChangesAsync();
+                // process your data using the parameter value
+                message = "Successfully processed!";
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;  // if processing fails, we send the failure message to the view
+            }
+
+            return Json(new { message });
+
+        }
 
         #endregion
     }

@@ -5,6 +5,7 @@
 @{
 // ViewBag.Title = "Home Page";
 }
+
 <div class="row">
     <div class="col-md-4">
         <div class="content-box search-filters">
@@ -83,9 +84,18 @@
                 {
                     <div class="info-photo-container col-sm-12 col-md-6 search-results s_people">
                         <div class="info-photo" style="background: url(../images/people/people_statham.jpg) center / cover;">
-                            <button type="button" class="btn btn-primary btn-selected pull-right btn-trans">
-                                <span>Follow</span>
-                            </button>
+                            @if (Model.Following.Contains(u.Id))
+                            {
+                                <button type="button" data-id="@u.Id" data-url="/Manage/FollowUser" class="btn-follow btn btn-primary pull-right btn-trans btn-option">
+                                    <span>Unfollow</span>
+                                </button>
+                            }
+                            else
+                            {
+                                <button type="button" data-id="@u.Id" data-url="/Manage/FollowUser" class="btn-follow btn btn-primary pull-right btn-trans">
+                                    <span>Follow</span>
+                                </button>
+                            }
                             <div class="info-photo-shade">
                                 <a href="#"><h1>@u.FirstName @u.LastName</h1></a>
                             </div>
@@ -96,9 +106,18 @@
                 {
                     <div class="info-photo-container col-sm-12 col-md-6 search-results s_groups">
                         <div class="info-photo" style="background: url(../images/groups/group_silicon.jpg) center / cover;">
-                            <button type="button" class="btn btn-primary btn-selected pull-right btn-trans">
-                                <span>Follow</span>
-                            </button>
+                            @if (Model.Joined.Contains(g.GroupId))
+                            {
+                                <button type="button" data-id="@g.GroupId" data-url="/Manage/JoinGroup" class="btn-follow btn btn-primary pull-right btn-trans btn-option">
+                                    <span>Unfollow</span>
+                                </button>
+                            }
+                            else
+                            {
+                                <button type="button" data-id="@g.GroupId" data-url="/Manage/JoinGroup" class="btn-follow btn btn-primary pull-right btn-trans">
+                                    <span>Follow</span>
+                                </button>
+                            }
                             <div class="info-photo-shade">
                                 <a href="#"><h1>@g.GroupName</h1></a>
                             </div>
@@ -122,8 +141,26 @@
         </div>
     </div>
 </div>
-@section MyScripts {
+@section ajaxstuff{
     <script>
+        $(document).ready(function () {
+            $(".btn-follow").click(function () {
+                var uri = $(this).attr('data-url');
+                var id = $(this).attr('data-id');
+                $.ajax({
+                    type: "POST",
+                    url: uri,
+                    data: {
+                        'Id': id
+                    }
+                }).success(function (result) {
+                    alert(result);
+                }).fail(function (error) {
+                    alert("There was an error posting the data to the server: " + error.responseText);
+                });
+            });
+        });
     </script>
+    }
 }
 
