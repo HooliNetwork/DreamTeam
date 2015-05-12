@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNet.Http;
 
 namespace Hooli.Models
 {
@@ -92,5 +93,7 @@ namespace Hooli.Models
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public IFormFile ProfilePicture { get; set; }
     }
 }

@@ -27,6 +27,8 @@
                     <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Confirm password" required="required"/>
                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 </fieldset>
+                <label asp-for="ProfilePicture" class="control-label col-sm-2"></label>
+                <input type="file" id="file" name="file" class="form-control full-width" />
                 <button type="submit" class="btn btn-primary btn-block btn-mtop" id="form_signup_button" value="Register" />Sign up</button>
             </form>
         </div>

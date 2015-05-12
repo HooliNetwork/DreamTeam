@@ -11,6 +11,8 @@ using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
 using Hooli;
 using Hooli.Models;
+using Hooli.CloudStorage;
+using Microsoft.AspNet.Http;
 
 namespace Hooli.Controllers
 {
@@ -27,6 +29,9 @@ namespace Hooli.Controllers
 
         public SignInManager<ApplicationUser> SignInManager { get; private set; }
 
+        [FromServices]
+        public Cloud Storage { get; set; }
+  
         //
         // GET: /Account/Login
         [HttpGet]
@@ -91,7 +96,11 @@ namespace Hooli.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName};
+                if ((model.ProfilePicture != null) && (model.ProfilePicture.Length > 0))
+                {
+                    user.ProfilePicture = await Storage.GetUri("profilepictures", Guid.NewGuid().ToString(), model.ProfilePicture);
+                }
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
