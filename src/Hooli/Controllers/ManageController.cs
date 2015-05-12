@@ -373,8 +373,10 @@ namespace Hooli.Controllers
 
             var profileData = await GetCurrentUserAsync();
 
-            // profileData.FirstName = user.FirstName;
-            // profileData.LastName = user.LastName;
+            profileData.FirstName = user.FirstName;
+
+            profileData.LastName = user.LastName;
+
             if ((user.DateOfBirth != null) && (user.DateOfBirth.ToString().Length > 0))
             {
                 profileData.DateOfBirth = user.DateOfBirth;
