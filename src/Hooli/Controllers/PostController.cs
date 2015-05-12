@@ -29,13 +29,14 @@ namespace Hooli.Controllers
         {
             UserManager = userManager;
         }
+
         public UserManager<ApplicationUser> UserManager { get; private set; }
 
         [FromServices]
         public HooliContext DbContext { get; set; }
 
         [FromServices]
-        public Cloud storage { get; set; }
+        public Cloud Storage { get; set; }
 
         [FromServices]
         public IMemoryCache Cache { get; set; }
@@ -70,7 +71,7 @@ namespace Hooli.Controllers
                 post.User = user;
                 if((file != null) && (file.Length > 0))
                 {               
-                    post.Image = await storage.GetUri("postimages", Guid.NewGuid().ToString(), file);
+                    post.Image = await Storage.GetUri("postimages", Guid.NewGuid().ToString(), file);
                 }
                 
                 DbContext.Posts.Add(post);

@@ -6,6 +6,10 @@ using Microsoft.AspNet.Mvc;
 using Hooli.Models;
 using System.Threading;
 using Microsoft.AspNet.Authorization;
+using Microsoft.AspNet.Identity;
+using System.Security.Claims;
+using Microsoft.AspNet.Http;
+using Hooli.CloudStorage;
 
 
 
@@ -19,32 +23,57 @@ namespace Hooli.Controllers
         [FromServices]
         public HooliContext DbContext { get; set; }
 
+        [FromServices]
+        public Cloud storage { get; set; }
+
+        [FromServices]
+        public UserManager<ApplicationUser> UserManager { get; set; }
+
         // GET: /<controller>/
-        public IActionResult Index()
+
+        public async Task<IActionResult> Index()
         {
+            var user = await GetCurrentUserAsync();
+            var groups = DbContext.GroupMembers
+                    .Where(u => u.UserId == user.Id)
+                    .Select(u => u.GroupId).ToList();
+            //  return View( await GetGroups(groups));
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateGroup(Group group, CancellationToken requestAborted)
+        public async Task<IActionResult> CreateGroup(Group group, CancellationToken requestAborted, IFormFile file)
         {
-            //var groupData = new Group
-            //{
-            //    GroupName = group.GroupName,
-            //    Description = group.Description,
-            //    Private = group.Private, 
-            //    DateCreated = group.DateCreated,
-            //    Members = group.Members
-            //};
-            //DbContext.Groups.Add(groupData);
-            if (ModelState.IsValid)
+            var user = await GetCurrentUserAsync();
+            if (ModelState.IsValid && user != null)     
             {
-                DbContext.Add(group);
+
+                if ((file != null) && (file.Length > 0))
+                {
+                    group.Image = await storage.GetUri("postimages", Guid.NewGuid().ToString(), file);
+                }
+
+                DbContext.Groups.Add(group);
+
+                var groupmember = new GroupMember() { GroupId = group.GroupId, UserId=user.Id, banned = false };
+
+                DbContext.GroupMembers.Add(groupmember);
+
+
                 await DbContext.SaveChangesAsync(requestAborted);
+
+
+
+
+            System.Diagnostics.Debug.WriteLine(group.DateCreated);
+      
+            return RedirectToAction("Index");
+              
             }
 
-            return View();
+            return View(group);
+           
         }
 
         [HttpPost]
@@ -53,7 +82,14 @@ namespace Hooli.Controllers
         {
             if (ModelState.IsValid)
             {
-                DbContext.Update(group);
+                //DbContext.Update(group);
+                var groupData = DbContext.Groups.Single(groupTable => groupTable.GroupId == group.GroupId);
+
+                groupData.GroupName = group.GroupName;
+                groupData.Description = group.Description;
+                groupData.Private = group.Private;
+                groupData.Members = group.Members;
+                groupData.Image = group.Image;
                 await DbContext.SaveChangesAsync(requestAborted);
             }
 
@@ -99,6 +135,29 @@ namespace Hooli.Controllers
             return View();
         }
 
+        //
+        // GET: /Group/SingleGroup
+        [HttpGet]
+        public IActionResult SingleGroup(string id)
+        {
+            
+            return View();
+        }
+
+
+        private async Task<List<Group>> GetGroups(IEnumerable<string> group)
+        {
+            System.Diagnostics.Debug.WriteLine("Inside the getgroup function");
+            var groups = await DbContext.Groups
+                .Where(g => group.Contains(g.GroupId))
+                .ToListAsync();
+            return groups;
+        }
+
+        private async Task<ApplicationUser> GetCurrentUserAsync()
+        {
+            return await UserManager.FindByIdAsync(Context.User.GetUserId());
+        }
 
     }
 }

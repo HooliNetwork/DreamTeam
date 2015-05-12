@@ -1,4 +1,4 @@
-﻿@model List<ApplicationUser>
+﻿@model dynamic
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -7,19 +7,19 @@
 }
 <div class="row">
     <div class="col-md-4">
-        <div class="content-box">
+        <div class="content-box search-filters">
             <h1>Search filters</h1>
             <div class="row">
-                <button type="button" class="btn btn-primary col-xs-3 btn-selected">
+                <button type="button" name="s_all" class="btn btn-primary col-xs-3">
                     <span>All</span>
                 </button>
-                <button type="button" class="btn btn-primary col-xs-3 btn-option">
+                <button type="button" name="s_groups" class="btn btn-primary col-xs-3 btn-option">
                     <span>Groups</span>
                 </button>
-                <button type="button" class="btn btn-primary col-xs-3 btn-option">
+                <button type="button" name="s_people" class="btn btn-primary col-xs-3 btn-option">
                     <span>People</span>
                 </button>
-                <button type="button" class="btn btn-primary col-xs-3 btn-option">
+                <button type="button" name="s_events" class="btn btn-primary col-xs-3 btn-option">
                     <span>Events</span>
                 </button>
             </div>
@@ -79,20 +79,51 @@
         <div class="content-box">
             <h1>Search results</h1>
             <div class="row following-info-container">
-             @foreach (var u in Model)
-             {
-                <div class="info-photo-container col-sm-12 col-md-6">
-                    <div class="info-photo" style="background: url(../images/groups/group_silicon.jpg) center / cover;">
-                        <button type="button" class="btn btn-primary btn-selected pull-right">
-                            <span>Follow</span>
-                        </button>
-                        <div class="info-photo-shade">
-                            <a href="#"><h1>@u.FirstName @u.LastName</h1></a>
+                @foreach (var u in Model.Users)
+                {
+                    <div class="info-photo-container col-sm-12 col-md-6 search-results s_people">
+                        <div class="info-photo" style="background: url(../images/people/people_statham.jpg) center / cover;">
+                            <button type="button" class="btn btn-primary btn-selected pull-right btn-trans">
+                                <span>Follow</span>
+                            </button>
+                            <div class="info-photo-shade">
+                                <a href="#"><h1>@u.FirstName @u.LastName</h1></a>
+                            </div>
                         </div>
                     </div>
-                </div>
-             }
+                }
+                @foreach (var g in Model.Groups)
+                {
+                    <div class="info-photo-container col-sm-12 col-md-6 search-results s_groups">
+                        <div class="info-photo" style="background: url(../images/groups/group_silicon.jpg) center / cover;">
+                            <button type="button" class="btn btn-primary btn-selected pull-right btn-trans">
+                                <span>Follow</span>
+                            </button>
+                            <div class="info-photo-shade">
+                                <a href="#"><h1>@g.GroupName</h1></a>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @*@foreach (var e in Model.Events)
+                {
+                    <div class="info-photo-container col-sm-12 col-md-6 search-results s_events">
+                        <div class="info-photo" style="background: url(./images/events/event_party.jpg) center / cover;">
+                            <button type="button" class="btn btn-primary btn-selected pull-right btn-trans">
+                                <span>Follow</span>
+                            </button>
+                            <div class="info-photo-shade">
+                                <a href="#"><h1>e.EventName</h1></a>
+                            </div>
+                        </div>
+                    </div>
+                }*@
             </div>
         </div>
     </div>
 </div>
+@section MyScripts {
+    <script>
+    </script>
+}
+

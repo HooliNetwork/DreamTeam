@@ -14,6 +14,9 @@ using Microsoft.Framework.Logging.Testing;
 using Hooli.Models;
 using Hooli.ViewModels;
 using Xunit;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Hosting;
+using Microsoft.AspNet.Identity;
 
 namespace Hooli.Controllers
 {
@@ -24,12 +27,12 @@ namespace Hooli.Controllers
         public GroupControllerTest()
         {
             var services = new ServiceCollection();
-
             services.AddEntityFramework()
-                .AddInMemoryStore()
-                .AddDbContext<HooliContext>();
+                    .AddInMemoryStore()
+                    .AddDbContext<HooliContext>();
 
-            services.AddMvc();
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                    .AddEntityFrameworkStores<HooliContext>();
 
             _serviceProvider = services.BuildServiceProvider();
         }
@@ -38,66 +41,111 @@ namespace Hooli.Controllers
         public async Task BanUserTest()
         {
             // Arrange
+            var userId = "1";
+            var groupId = "Bicycle";
+            var user = new ApplicationUser() { UserName = "Test", Id = userId};
+            var group = new Group() {GroupName = "Bicycle", GroupId = groupId };
+            var userManager = _serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            var userManagerResult = await userManager.CreateAsync(user);
             var dbContext = _serviceProvider.GetRequiredService<HooliContext>();
-            var user = new ApplicationUser() { UserName = "TestUser", Id = "1"};
-            var group = new Group() { GroupId = "1", GroupName = "Cool People"};
-            // var groupMemberUser = new GroupMember() { GroupId = "1", UserId = "1", banned = false, Group = group, Member = user};
-            // group.Members.Add(groupMemberUser);
-            dbContext.Add(user);
-            // dbContext.Add(groupMemberUser);
-            dbContext.Add(group);
+            var groupMemberUser = new GroupMember() { GroupId = groupId, UserId = userId, banned = false, Group = group, Member = user};
+            dbContext.Add(groupMemberUser);
             dbContext.SaveChanges();
-            var controller = new GroupController()
+
+              var controller = new GroupController()
             {
                 DbContext = dbContext,
             };
 
-            // Act
-            var result = await controller.BanUser(group.GroupId, user, CancellationToken.None);
+            // Act BanUser
+            await controller.BanUser(groupId, userId, CancellationToken.None);
 
-            // Assert
-            //Assert.True(true);
-            Assert.True(groupMemberUser.banned );
+            // Assert BanUser
+            Assert.True(groupMemberUser.banned == true);
+
+            // Act UnBanUser
+            await controller.UnBanUser(groupId, userId, CancellationToken.None);
+
+            // Assert UnBanUser
+            Assert.True(groupMemberUser.banned == false);
         }
 
         [Fact]
-        public async Task UnBanUserTest()
+        public async Task AddPostToGroupTest()
         {
             // Arrange
+            // Everything with userId should propably be erased
+            //var userId = "1";
+            //var user = new ApplicationUser() { UserName = "Test", Id = userId };
+            //var userManager = _serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            //var userManagerResult = await userManager.CreateAsync(user);
+            //var post = new Post() { PostId = postId, UserId = userId };
+
+
+            var postId = 1;
+            var groupId = "1";
+            var post = new Post() { PostId = postId };
+            var group = new Group() { GroupId = groupId, GroupName = groupId };
             var dbContext = _serviceProvider.GetRequiredService<HooliContext>();
-            var user = new ApplicationUser() { UserName = "TestUser", Id = "1" };
-            var group = new Group() { GroupId = "1", GroupName = "Cool People" };
-            var groupMemberUser = new GroupMember() { GroupId = "1", UserId = "1", banned = false, Group = group, Member = user };
-            group.Members.Add(groupMemberUser);
-            dbContext.Add(user);
-            dbContext.Add(groupMemberUser);
+
             dbContext.Add(group);
+            dbContext.Add(post);
             dbContext.SaveChanges();
+
             var controller = new GroupController()
             {
                 DbContext = dbContext,
             };
 
             // Act
-            var result = await controller.BanUser(group.GroupId, user, CancellationToken.None);
+            await controller.AddPostToGroup(groupId, post, CancellationToken.None);
 
             // Assert
-            Assert.True(!groupMemberUser.banned);
+            Assert.True(group.Posts.Count == 1);
         }
 
-        //private static ISession CreateTestSession()
-        //{
+        [Fact]
+        public async Task EditGroupTest()
+        {
+            // Arrange
+            var groupId = "1";
+            var group = new Group() { GroupId = groupId, GroupName = "Name1" };
+            var dbContext = _serviceProvider.GetRequiredService<HooliContext>();
+            var changedGroup = new Group() { GroupId = groupId, GroupName = "Name2" };
 
-        //    return new DistributedSession(
-        //        new LocalCache(new MemoryCache(new MemoryCacheOptions())),
-        //        "sessionId_A",
-        //        idleTimeout: TimeSpan.MaxValue,
-        //        tryEstablishSession: () => true,
-        //        loggerFactory: new NullLoggerFactory(),
-        //        isNewSessionKey: true);
-        //}
+            dbContext.Add(group);
+            dbContext.SaveChanges();
 
+            var controller = new GroupController()
+            {
+                DbContext = dbContext,
+            };
 
+            // Act
+            await controller.EditGroup(changedGroup, CancellationToken.None);
+
+            // Assert
+            Assert.True(group.GroupName == changedGroup.GroupName);
+        }
+
+        [Fact]
+        public async Task CreateGroupTest()
+        {
+            // Arrange
+            var groupId = "1";
+            var group = new Group() { GroupId = groupId, GroupName = groupId };
+            var dbContext = _serviceProvider.GetRequiredService<HooliContext>();
+
+            var controller = new GroupController()
+            {
+                DbContext = dbContext,
+            };
+            // Act
+            await controller.CreateGroup(group, CancellationToken.None, null);
+
+            // Assert
+            Assert.False(controller.DbContext.Groups.Single(u => u.GroupId == groupId).Equals(null));
+        }
     }
 
 }

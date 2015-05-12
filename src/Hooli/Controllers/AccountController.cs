@@ -11,6 +11,8 @@ using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
 using Hooli;
 using Hooli.Models;
+using Hooli.CloudStorage;
+using Microsoft.AspNet.Http;
 
 namespace Hooli.Controllers
 {
@@ -27,6 +29,9 @@ namespace Hooli.Controllers
 
         public SignInManager<ApplicationUser> SignInManager { get; private set; }
 
+        [FromServices]
+        public Cloud Storage { get; set; }
+  
         //
         // GET: /Account/Login
         [HttpGet]
@@ -87,11 +92,16 @@ namespace Hooli.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel model)
+        public async Task<IActionResult> Register(RegisterViewModel model, IFormFile file)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName};
+                if ((file != null) && (file.Length > 0))
+                {
+                    user.ProfilePicture = await Storage.GetUri("profilepictures", Guid.NewGuid().ToString(), file);
+                    Console.WriteLine("Added to blob");
+                }
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

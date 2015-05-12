@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity;
 using System.Security.Claims;
 using Microsoft.Data.Entity;
 using Microsoft.AspNet.Authorization;
+using System.Dynamic;
 
 namespace Hooli.Controllers
 {
@@ -26,8 +27,8 @@ namespace Hooli.Controllers
         public IMemoryCache Cache { get; set; }
         //
         // GET: /Home/
-        public async Task<IActionResult> Index()
-        {
+        public async Task<IActionResult> Index(string sortOrder)
+        { 
             // Get most popular Posts, from following users
             //var Posts = await Cache.GetOrSet("top", async context =>
             //{
@@ -115,28 +116,25 @@ namespace Hooli.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Search(string searchString, string searchType="Users")
+        public async Task<IActionResult> Search(string searchString)
         {
+            dynamic model = new ExpandoObject();
             if (!String.IsNullOrEmpty(searchString))
             {
-                switch (searchType)
-                {
-                    case "Users":
-                        return View(await DbContext.Users.Where(s => s.LastName
-                                                   .Contains(searchString)
-                                                   || s.FirstName.Contains(searchString))
-                                                   .ToListAsync());
-                    case "Groups":
-                        return View(await DbContext.Groups.Where(g => g.GroupName
-                                                   .Contains(searchString))
-                                                   .ToListAsync());
-                    case "Events":
-                        return View(await DbContext.Events.Where(e => e.EventName
-                                                    .Contains(searchString))
-                                                    .ToListAsync());
-                    default:
-                        return View();
-                }
+
+                model.Users =  await DbContext.Users.Where(s => s.LastName
+                                            .Contains(searchString)
+                                            || s.FirstName.Contains(searchString))
+                                            .ToListAsync();
+
+                model.Groups = await DbContext.Groups.Where(g => g.GroupName
+                                            .Contains(searchString))
+                                            .ToListAsync();
+
+                //model.Events = View(await DbContext.Events.Where(e => e.EventName
+                //                            .Contains(searchString))
+                //                            .ToListAsync());
+                return View(model);
             }
             else
             {
