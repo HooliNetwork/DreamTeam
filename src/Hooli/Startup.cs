@@ -21,6 +21,8 @@ using Microsoft.Framework.Logging;
 using Microsoft.Framework.Logging.Console;
 using Microsoft.Framework.Runtime;
 using Hooli.Models;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace Hooli
 {
@@ -51,11 +53,23 @@ namespace Hooli
             // Add Application settings to the services container.
             services.Configure<AppSettings>(Configuration.GetSubKey("AppSettings"));
 
-            // Add EF services to the services container.
-            services.AddEntityFramework()
-                .AddSqlServer()
-                .AddDbContext<HooliContext>(options =>
-                    options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
+            //Sql client not available on mono
+            var useInMemoryStore = Type.GetType("Mono.Runtime") != null;
+
+            // Add EF services to the services container
+            if (useInMemoryStore)
+            {
+                services.AddEntityFramework()
+                        .AddInMemoryStore()
+                        .AddDbContext<HooliContext>();
+            }
+            else
+            {
+                services.AddEntityFramework()
+                        .AddSqlServer()
+                        .AddDbContext<HooliContext>(options =>
+                            options.UseSqlServer(Configuration.Get("Data:DefaultConnection:ConnectionString")));
+            }
 
             // Add Identity services to the services container.
             services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -77,10 +91,12 @@ namespace Hooli
                 options.ClientSecret = Configuration["Authentication:MicrosoftAccount:ClientSecret"];
             });
 
+
             // Add MVC services to the services container.
             services.AddMvc();
             services.AddSignalR();
-            //Add all SignalR related services to IoC.
+
+            services.AddTransient<Hooli.CloudStorage.Cloud>();
         }
 
         // Configure is called after ConfigureServices is called.
@@ -89,7 +105,7 @@ namespace Hooli
             // Configure the HTTP request pipeline.
 
             // Add the console logger.
-            loggerfactory.AddConsole(minLevel: LogLevel.Warning);
+            loggerfactory.AddConsole(minLevel: Microsoft.Framework.Logging.LogLevel.Warning);
 
             // Add the following to the request pipeline only in development environment.
             if (env.IsEnvironment("Development"))

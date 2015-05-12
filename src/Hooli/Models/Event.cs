@@ -19,15 +19,15 @@ namespace Hooli.Models
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
 
+        [Display(Name = "ImageURI")]
+        [StringLength(1024)]
+        public string Image { get; set; }
+
         public bool Private { get; set; }
 
         public string Description { get; set; }
 
         public string Location { get; set; }
-
-        [Display(Name = "Image URL")]
-        [StringLength(1024)]
-        public string ImgUrl { get; set; }
 
         [DataType(DataType.DateTime)]
         public DateTime DateCreated { get; set; }

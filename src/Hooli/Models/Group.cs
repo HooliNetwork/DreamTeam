@@ -10,7 +10,7 @@ namespace Hooli.Models
     public class Group
     {
         [Key]
-        public int GroupId { get; set; }
+        public string GroupId { get; set; }
 
         [Required]
         [StringLength(160, MinimumLength = 2)]
@@ -22,7 +22,9 @@ namespace Hooli.Models
         [DataType(DataType.DateTime)]
         public DateTime DateCreated { get; set; }
 
-        public byte[] GroupPicture { get; set; }
+        [Display(Name = "ImageURI")]
+        [StringLength(1024)]
+        public string Image { get; set; }
 
         public virtual List<GroupMember> Members { get; set; }
         //public virtual List<ApplicationUser> BannedUsers { get; set; }

@@ -20,7 +20,9 @@ namespace Hooli.Models
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string RelationshipStatus { get; set; }
-        public byte[] ProfilePicture { get; set; }
+        [Display(Name = "ImageURI")]
+        [StringLength(1024)]
+        public string ProfilePicture { get; set; }
         [ForeignKey("UserID")]
         public virtual List<Post> Posts { get; set; }
         public virtual List<Event> Events { get; set; }
@@ -42,7 +44,6 @@ namespace Hooli.Models
     public class HooliContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Post> Posts { get; set; }
-
         public DbSet<Event> Events { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<FollowRelation> FollowRelations { get; set; }

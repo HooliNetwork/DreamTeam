@@ -27,7 +27,7 @@ namespace Hooli.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreatGroup(Group group, CancellationToken requestAborted)
+        public async Task<IActionResult> CreateGroup(Group group, CancellationToken requestAborted)
         {
             //var groupData = new Group
             //{
@@ -71,7 +71,7 @@ namespace Hooli.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddPostToGroup(int groupId, Post post, CancellationToken requestAborted)
+        public async Task<IActionResult> AddPostToGroup(string groupId, Post post, CancellationToken requestAborted)
         {
             var group = DbContext.Groups.Single(groupTable => groupTable.GroupId == groupId);
             group.Posts.Add(post);
@@ -81,7 +81,7 @@ namespace Hooli.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> BanUser(int groupId, ApplicationUser user, CancellationToken requestAborted)
+        public async Task<IActionResult> BanUser(string groupId, ApplicationUser user, CancellationToken requestAborted)
         {
             var ban = await DbContext.GroupMembers.SingleAsync(u => (u.GroupId == groupId) && (u.UserId == user.Id));
             ban.banned = true;
@@ -91,7 +91,7 @@ namespace Hooli.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UnBanUser(int groupId, ApplicationUser user, CancellationToken requestAborted)
+        public async Task<IActionResult> UnBanUser(string groupId, ApplicationUser user, CancellationToken requestAborted)
         {
             var unban = await DbContext.GroupMembers.SingleAsync(u => (u.GroupId == groupId) && (u.UserId == user.Id));
             unban.banned = false;
