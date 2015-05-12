@@ -131,16 +131,23 @@ namespace Hooli.Controllers
         //
         // GET: /Group/SingleGroup
         [HttpGet]
-        public IActionResult SingleGroup(string id)
+        public async Task<IActionResult> SingleGroup(string id)
         {
-            
-            return View();
-        }
+            var group = await DbContext.Groups
+                    .Where(a => a.GroupId == id)
+                    .FirstOrDefaultAsync();
 
+            if (group == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(group);
+           // return View();
+        }
 
         private async Task<List<Group>> GetGroups(IEnumerable<string> group)
         {
-            System.Diagnostics.Debug.WriteLine("Inside the getgroup function");
             var groups = await DbContext.Groups
                 .Where(g => group.Contains(g.GroupId))
                 .ToListAsync();
