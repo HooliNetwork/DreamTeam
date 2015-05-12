@@ -4,7 +4,7 @@
 @{
     // ViewBag.Title = "Home Page";
 }
-@model Hooli.Models.Group
+@*@model List<Hooli.Models.Group>*@
 
 <div class="row">
     <div class="col-md-4">
@@ -12,7 +12,8 @@
             <button type="button" class="btn btn-primary full-width margin-top create-group-button">
                 <span>Create new group</span>
             </button>
-            @Html.Partial("CreateGroup")
+           @Html.Partial("_CreateGroup")
+
         </div>
         <div class="content-box hidden-mobile">
             <h1>Groups you might find intersting</h1>
@@ -43,36 +44,11 @@
     <div class="col-md-8">
         <div class="content-box">
             <h1>Groups you are following</h1>
+
             <div class="row following-info-container">
-                <div class="info-photo-container col-sm-12 col-md-6">
-                    <div class="info-photo" style="background: url(../images/groups/group_silicon.jpg) center / cover;">
-                        <div class="info-photo-shade">
-                            <a href="#"><h1>Silicon valley</h1></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="info-photo-container col-sm-12 col-md-6">
-                    <div class="info-photo" style="background: url(../images/groups/group_cheese.jpg) center / cover;">
-                        <div class="info-photo-shade">
-                            <a href="#"><h1>Cheese cakes</h1></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="info-photo-container col-sm-12 col-md-6">
-                    <div class="info-photo" style="background: url(../images/groups/group_bitcoin.jpg) center / cover;">
-                        <div class="info-photo-shade">
-                            <a href="#"><h1>Bitcoin</h1></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="info-photo-container col-sm-12 col-md-6">
-                    <div class="info-photo" style="background: url(../images/groups/group_cycling.jpg) center / cover;">
-                        <div class="info-photo-shade">
-                            <a href="#"><h1>Cycling</h1></a>
-                        </div>
-                    </div>
-                </div>
+                @await Component.InvokeAsync("Group")
             </div>
+
         </div>
     </div>
 </div>
