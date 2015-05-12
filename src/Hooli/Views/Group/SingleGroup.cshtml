@@ -4,7 +4,7 @@
 @{
     // ViewBag.Title = "Home Page";
 }
-@model List<Hooli.Models.Post>
+@model Hooli.Models.Group
 
 <div class="row">
     <div class="col-md-4">
@@ -46,6 +46,8 @@
                 </button>
                 @Html.Partial("_Create")
             </div>
+
+            @*<div>@Model.Description</div>*@
 
 
             <!-- This below is new -->

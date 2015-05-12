@@ -14,18 +14,21 @@
         <div class="info-photo-container col-sm-12 col-md-6">
            @if (@p.Image != null)
            {
-            <div class="info-photo" style="background: url(@p.Image) center / cover;">
-
-                }
-                else
-                {
-                <div class="info-photo" style="background: url(~/images/hooli_groupphoto_default.jpg) center / cover;">
-
-                    }
+                <div class="info-photo" style="background: url(@p.Image) center / cover;">
                     <div class="info-photo-shade">
                         <a asp-controller="Group" asp-action="SingleGroup"><h1>@p.GroupName</h1></a>
                     </div>
                 </div>
+           }
+           @if(@p.Image == null)
+           {
+                <div class="info-photo" style="background: url(@Url.Content("~/images/hooli_groupphoto_default.jpg")) center / cover;">
+                    <div class="info-photo-shade">
+                        <a asp-controller="Group" asp-action="SingleGroup"><h1>@p.GroupName</h1></a>
+                    </div>
+                </div>
+           }
+                    
             </div>
 
            }
