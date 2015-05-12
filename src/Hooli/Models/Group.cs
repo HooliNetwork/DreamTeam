@@ -11,11 +11,7 @@ namespace Hooli.Models
     {
         [Key]
         [Display(Name = "Unique name")]
-<<<<<<< HEAD
         public string GroupId { get; set; }
-=======
-        public int GroupId { get; set; }
->>>>>>> Working on creating a group, not yet possible to save to database.
 
         [Required]
         [StringLength(160, MinimumLength = 2)]
