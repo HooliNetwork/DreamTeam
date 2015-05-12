@@ -133,7 +133,8 @@ namespace Hooli.Controllers
         [HttpGet]
         public IActionResult SingleGroup(string id)
         {
-            return View(id);
+            
+            return View();
         }
 
 
