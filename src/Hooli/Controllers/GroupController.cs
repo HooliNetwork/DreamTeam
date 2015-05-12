@@ -115,6 +115,15 @@ namespace Hooli.Controllers
             return View();
         }
 
+        //
+        // GET: /Account/Login
+        [HttpGet]
+        public IActionResult SingleGroup()
+        {
+            
+            return View();
+        }
+
 
     }
 }
