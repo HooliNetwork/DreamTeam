@@ -60,18 +60,27 @@ namespace Hooli.Controllers
             Assert.Equal(statusCodeView, viewResult.ViewName);
         }
 
+        // Finish when Search has been completed
         //[Fact]
-        //public async Task GetTopPostsTest()
+        //public async Task SearchTest()
         //{
         //    // Arrange
-        //    var post1 = new Post() { Title = "title1", Text = "text1", Points = 150 };
-        //    var post2 = new Post() { Title = "title2", Text = "text2", Points = 300 };
-        //    var post3 = new Post() { Title = "title3", Text = "text3", Points = 50 };
+        //    var user1 = new ApplicationUser() { Id = "1", UserName = "name1", FirstName = "Benedikt", LastName = "Sigurleifsson" };
+        //    var user2 = new ApplicationUser() { Id = "2", UserName = "name2", FirstName = "Magnus", LastName = "Magnusson" };
+        //    var user3 = new ApplicationUser() { Id = "3", UserName = "name3", FirstName = "Sara", LastName = "Arnadottir" };
+
+        //    var group1 = new Group() { GroupId = "1", GroupName = "Bikes" };
+        //    var group2 = new Group() { GroupId = "2", GroupName = "Cars" };
+        //    var group3 = new Group() { GroupId = "3", GroupName = "Skates" };
+
 
         //    var dbContext = _serviceProvider.GetRequiredService<HooliContext>();
-        //    dbContext.Add(post1);
-        //    dbContext.Add(post2);
-        //    dbContext.Add(post3);
+        //    dbContext.Add(user1);
+        //    dbContext.Add(user2);
+        //    dbContext.Add(user3);
+        //    dbContext.Add(group1);
+        //    dbContext.Add(group2);
+        //    dbContext.Add(group3);
         //    dbContext.SaveChanges();
 
         //    var controller = new HomeController()
@@ -80,7 +89,7 @@ namespace Hooli.Controllers
         //    };
 
         //    // Act
-        //    await controller.
+        //    await controller.Search();
 
         //    // Assert
         //    Assert.False(controller.DbContext.Groups.Single(u => u.GroupId == groupId).Equals(null));
