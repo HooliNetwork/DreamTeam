@@ -29,6 +29,7 @@ namespace Hooli.Controllers
         {
             UserManager = userManager;
         }
+
         public UserManager<ApplicationUser> UserManager { get; private set; }
 
         [FromServices]

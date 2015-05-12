@@ -142,7 +142,7 @@ namespace Hooli.Controllers
                 DbContext = dbContext,
             };
             // Act
-            await controller.CreateGroup(group, CancellationToken.None);
+            await controller.CreateGroup(group, CancellationToken.None, null);
 
             // Assert
             Assert.False(controller.DbContext.Groups.Single(u => u.GroupId == groupId).Equals(null));
