@@ -1,4 +1,4 @@
-﻿
+
 
 $(document).ready(function () {
     //TODO: add a check so that if a person clicks a previously selected button classes aren't added
@@ -21,6 +21,10 @@ $(document).ready(function () {
 
     $(".create-post-button").click(function(){
         $(".new-post-container").toggleClass('open');
+    });
+
+    $(".create-group-button").click(function () {
+        $(".edit-info-container").toggleClass('open');
     });
     
 });

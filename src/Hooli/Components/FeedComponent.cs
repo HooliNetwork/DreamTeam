@@ -94,6 +94,7 @@ namespace Hooli.Components
 
         private async Task<List<Post>> GetLatestPost(IEnumerable<string> following)
         {
+            Console.WriteLine("1");
             var latestPost = await DbContext.Posts
                 .OrderByDescending(a => a.DateCreated)
                 .Where(a => a.ParentPostId == null)
@@ -110,6 +111,8 @@ namespace Hooli.Components
 
         private async Task<List<Post>> GetPopularPosts(IEnumerable<string> following)
         {
+            Console.WriteLine("2");
+
             var postsByVotes = await DbContext.Posts
                 .Where(a => a.ParentPostId == null)
                 .Where(a => (following.Contains(a.UserId)) || (a.UserId == Context.User.GetUserId()))
@@ -122,6 +125,8 @@ namespace Hooli.Components
 
         private async Task<List<Post>> GetLatestGroupPost(IEnumerable<string> group)
         {
+            Console.WriteLine("3");
+
             var latestPost = await DbContext.Posts
                 .Where(a => a.ParentPostId == null)
                 .Where(g => group.Contains(g.Group.GroupId))
@@ -135,6 +140,8 @@ namespace Hooli.Components
 
         private async Task<List<Post>> GetPopularGroupPosts(IEnumerable<string> group)
         {
+            Console.WriteLine("4");
+
             var postsByVotes = await DbContext.Posts
                 .Where(a => a.ParentPostId == null)
                 .Where(g => group.Contains(g.Group.GroupId))

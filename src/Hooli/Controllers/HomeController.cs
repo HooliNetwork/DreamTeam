@@ -27,8 +27,8 @@ namespace Hooli.Controllers
         public IMemoryCache Cache { get; set; }
         //
         // GET: /Home/
-        public async Task<IActionResult> Index()
-        {
+        public async Task<IActionResult> Index(string sortOrder)
+        { 
             // Get most popular Posts, from following users
             //var Posts = await Cache.GetOrSet("top", async context =>
             //{

@@ -62,19 +62,19 @@
     <main class="container body-content">
         <div class="row">
             <div class="col-md-4">
-                <div class="content-box">
+                <div class="content-box search-filters">
                     <h1>Search filters</h1>
                     <div class="row">
-                        <button type="button" class="btn btn-primary col-xs-3 btn-selected">
+                        <button type="button" name="s_all" class="btn btn-primary col-xs-3">
                             <span>All</span>
                         </button>
-                        <button type="button" class="btn btn-primary col-xs-3 btn-option">
+                        <button type="button" name="s_groups" class="btn btn-primary col-xs-3 btn-option">
                             <span>Groups</span>
                         </button>
-                        <button type="button" class="btn btn-primary col-xs-3 btn-option">
+                        <button type="button" name="s_people" class="btn btn-primary col-xs-3 btn-option">
                             <span>People</span>
                         </button>
-                        <button type="button" class="btn btn-primary col-xs-3 btn-option">
+                        <button type="button" name="s_events" class="btn btn-primary col-xs-3 btn-option">
                             <span>Events</span>
                         </button>
                     </div>
@@ -134,7 +134,7 @@
                 <div class="content-box">
                     <h1>Search results</h1>
                     <div class="row following-info-container">
-                        <div class="info-photo-container col-sm-12 col-md-6">
+                        <div class="info-photo-container col-sm-12 col-md-6 search-results s_groups">
                             <div class="info-photo" style="background: url(../images/groups/group_silicon.jpg) center / cover;">
                                 <button type="button" class="btn btn-primary btn-selected pull-right btn-trans">
                                     <span>Follow</span>
@@ -144,17 +144,17 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="info-photo-container col-sm-12 col-md-6">
-                            <div class="info-photo" style="background: url(../images/groups/group_cheese.jpg) center / cover;">
+                        <div class="info-photo-container col-sm-12 col-md-6 search-results s_people">
+                            <div class="info-photo" style="background: url(../images/people/people_kari.jpg) center / cover;">
                                 <button type="button" class="btn btn-primary btn-option pull-right btn-trans">
                                     <span>Unfollow</span>
                                 </button>                                 
                                 <div class="info-photo-shade">
-                                    <a href="#"><h1>Cheese cakes</h1></a>
+                                    <a href="#"><h1>Kári Mímisson</h1></a>
                                 </div>
                             </div>
                         </div>
-                        <div class="info-photo-container col-sm-12 col-md-6">
+                        <div class="info-photo-container col-sm-12 col-md-6 search-results s_groups">
                             <div class="info-photo" style="background: url(../images/groups/group_bitcoin.jpg) center / cover;">
                                 <button type="button" class="btn btn-primary btn-selected pull-right btn-trans">
                                     <span>Follow</span>
@@ -164,16 +164,56 @@
                                 </div>
                             </div>
                         </div> 
-                        <div class="info-photo-container col-sm-12 col-md-6">
-                            <div class="info-photo" style="background: url(../images/groups/group_cycling.jpg) center / cover;">
+                        <div class="info-photo-container col-sm-12 col-md-6 search-results s_events">
+                            <div class="info-photo" style="background: url(../images/events/event_party.jpg) center / cover;">
+                                <button type="button" class="btn btn-primary btn-selected pull-right btn-trans">
+                                    <span>Attend</span>
+                                </button>
+                                <div class="info-photo-shade">
+                                    <a href="#"><h1>Sónar Barcelona 2015</h1></a>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="info-photo-container col-sm-12 col-md-6 search-results s_people">
+                            <div class="info-photo" style="background: url(../images/people/people_statham.jpg) center / cover;">
                                 <button type="button" class="btn btn-primary btn-selected pull-right btn-trans">
                                     <span>Follow</span>
                                 </button>
                                 <div class="info-photo-shade">
-                                    <a href="#"><h1>Cycling</h1></a>
+                                    <a href="#"><h1>Jason Statham</h1></a>
                                 </div>
                             </div>
                         </div>
+                        <div class="info-photo-container col-sm-12 col-md-6 search-results s_events">
+                            <div class="info-photo" style="background: url(../images/events/event_pitch.jpg) center / cover;">
+                                <button type="button" class="btn btn-primary btn-option pull-right btn-trans">
+                                    <span>Not attending</span>
+                                </button>                                 
+                                <div class="info-photo-shade">
+                                    <a href="#"><h1>Pitch Perfect 2</h1></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-photo-container col-sm-12 col-md-6 search-results s_people">
+                            <div class="info-photo" style="background: url(../images/people/people_musk.jpg) center / cover;">
+                                <button type="button" class="btn btn-primary btn-selected pull-right btn-trans">
+                                    <span>Follow</span>
+                                </button>
+                                <div class="info-photo-shade">
+                                    <a href="#"><h1>Elon Musk</h1></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-photo-container col-sm-12 col-md-6 search-results s_groups">
+                            <div class="info-photo" style="background: url(../images/groups/group_cheese.jpg) center / cover;">
+                                <button type="button" class="btn btn-primary btn-selected pull-right btn-trans">
+                                    <span>Follow</span>
+                                </button>
+                                <div class="info-photo-shade">
+                                    <a href="#"><h1>Cheese cakes</h1></a>
+                                </div>
+                            </div>
+                        </div> 
                     </div>
                 </div>
             </div>
@@ -182,10 +222,6 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <script>
-        $(function () {
-          $('[data-toggle="tooltip"]').tooltip()
-        })
-    </script>
+    <script src="../script/scripts.js"></script>
 </body>
 </html>

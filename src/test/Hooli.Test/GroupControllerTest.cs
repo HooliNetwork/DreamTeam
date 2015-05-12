@@ -15,6 +15,8 @@ using Hooli.Models;
 using Hooli.ViewModels;
 using Xunit;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Hosting;
+using Microsoft.AspNet.Identity;
 
 namespace Hooli.Controllers
 {
@@ -25,15 +27,12 @@ namespace Hooli.Controllers
         public GroupControllerTest()
         {
             var services = new ServiceCollection();
-
             services.AddEntityFramework()
-                .AddInMemoryStore()
-                .AddDbContext<HooliContext>();
+                    .AddInMemoryStore()
+                    .AddDbContext<HooliContext>();
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<HooliContext>();
-
-            services.AddMvc();
+                    .AddEntityFrameworkStores<HooliContext>();
 
             _serviceProvider = services.BuildServiceProvider();
         }
@@ -42,66 +41,34 @@ namespace Hooli.Controllers
         public async Task BanUserTest()
         {
             // Arrange
+            var userId = "5";
+            var groupID = "5";
+            var user = new ApplicationUser() { UserName = "Test", Id = userId};
+            var group = new Group() {GroupName = "Cool People" , GroupId = groupID };
+            var userManager = _serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            var userManagerResult = await userManager.CreateAsync(user);
             var dbContext = _serviceProvider.GetRequiredService<HooliContext>();
-            var user = new ApplicationUser() { UserName = "TestUser", Id = "1"};
-            var group = new Group() { GroupId = "1", GroupName = "Cool People"};
-            var groupMemberUser = new GroupMember() { GroupId = "1", UserId = "1", banned = false, Group = group, Member = user};
-            group.Members.Add(groupMemberUser);
-            dbContext.Add(user);
-            // dbContext.Add(groupMemberUser);
-            dbContext.Add(group);
-            dbContext.SaveChanges();
-            var controller = new GroupController()
-            {
-                DbContext = dbContext,
-            };
-
-            // Act
-            var result = await controller.BanUser(group.GroupId, user, CancellationToken.None);
-
-            // Assert
-            //Assert.True(true);
-            Assert.True(groupMemberUser.banned );
-        }
-
-        [Fact]
-        public async Task UnBanUserTest()
-        {
-            // Arrange
-            var dbContext = _serviceProvider.GetRequiredService<HooliContext>();
-            var user = new ApplicationUser() { UserName = "TestUser", Id = "1" };
-            var group = new Group() { GroupId = "1", GroupName = "Cool People" };
-            var groupMemberUser = new GroupMember() { GroupId = "1", UserId = "1", banned = false, Group = group, Member = user };
-            group.Members.Add(groupMemberUser);
-            dbContext.Add(user);
+            var groupMemberUser = new GroupMember() { GroupId = "5", UserId = "5", banned = false, Group = group, Member = user};
             dbContext.Add(groupMemberUser);
-            dbContext.Add(group);
             dbContext.SaveChanges();
-            var controller = new GroupController()
+
+              var controller = new GroupController()
             {
                 DbContext = dbContext,
             };
 
-            // Act
-            var result = await controller.BanUser(group.GroupId, user, CancellationToken.None);
+            // Act BanUser
+            await controller.BanUser("5", "5", CancellationToken.None);
 
-            // Assert
-            Assert.True(!groupMemberUser.banned);
+            // Assert BanUser
+            Assert.True(groupMemberUser.banned == true);
+
+            // Act UnBanUser
+            await controller.UnBanUser("5", "5", CancellationToken.None);
+
+            // Assert UnBanUser
+            Assert.True(groupMemberUser.banned == false);
         }
-
-        //private static ISession CreateTestSession()
-        //{
-
-        //    return new DistributedSession(
-        //        new LocalCache(new MemoryCache(new MemoryCacheOptions())),
-        //        "sessionId_A",
-        //        idleTimeout: TimeSpan.MaxValue,
-        //        tryEstablishSession: () => true,
-        //        loggerFactory: new NullLoggerFactory(),
-        //        isNewSessionKey: true);
-        //}
-
-
     }
 
 }

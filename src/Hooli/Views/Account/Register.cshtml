@@ -7,7 +7,7 @@
     <div class="col-lg-4 col-md-5 col-sm-6 col-xs-10 col-centered">
         <div class="content-box">
             <h1>Join Hooli today!</h1>
-            <form asp-controller="Account" asp-action="Register" id="form-signup" method="post" class="form-horizontal" role="form">
+            <form asp-controller="Account" asp-action="Register" enctype="multipart/form-data" id="form-signup" method="post" class="form-horizontal" role="form">
                 <h2>Sign up with your email address</h2>
                 <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
                 <fieldset>
@@ -26,7 +26,9 @@
 
                     <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Confirm password" required="required"/>
                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    <input asp-for="ProfilePicture" type="file" id="file" name="file" class="form-control"/>
                 </fieldset>
+
                 <button type="submit" class="btn btn-primary btn-block btn-mtop" id="form_signup_button" value="Register" />Sign up</button>
             </form>
         </div>
