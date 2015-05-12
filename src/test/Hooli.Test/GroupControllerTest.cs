@@ -38,20 +38,51 @@ namespace Hooli.Controllers
         public async Task BanUserTest()
         {
             // Arrange
-            var controller = new GroupController();
             var dbContext = _serviceProvider.GetRequiredService<HooliContext>();
-            var user = new ApplicationUser() { UserName = "TestUser" };
-            //List<ApplicationUser> memberList = new List<ApplicationUser>();
-            //memberList.Add(user);
-            //var  group = new Group() { GroupId = "1", Members = memberList, BannedUsers = null };
-            //dbContext.Add(group);
+            var user = new ApplicationUser() { UserName = "TestUser", Id = "1"};
+            var group = new Group() { GroupId = "1", GroupName = "Cool People"};
+            // var groupMemberUser = new GroupMember() { GroupId = "1", UserId = "1", banned = false, Group = group, Member = user};
+            // group.Members.Add(groupMemberUser);
+            dbContext.Add(user);
+            // dbContext.Add(groupMemberUser);
+            dbContext.Add(group);
+            dbContext.SaveChanges();
+            var controller = new GroupController()
+            {
+                DbContext = dbContext,
+            };
 
             // Act
-            var result = await controller.BanUser("1", user, CancellationToken.None);
+            var result = await controller.BanUser(group.GroupId, user, CancellationToken.None);
 
             // Assert
-            //Assert.True(group.BannedUsers.Contains(user));
-            Assert.True(false);
+            //Assert.True(true);
+            Assert.True(groupMemberUser.banned );
+        }
+
+        [Fact]
+        public async Task UnBanUserTest()
+        {
+            // Arrange
+            var dbContext = _serviceProvider.GetRequiredService<HooliContext>();
+            var user = new ApplicationUser() { UserName = "TestUser", Id = "1" };
+            var group = new Group() { GroupId = "1", GroupName = "Cool People" };
+            var groupMemberUser = new GroupMember() { GroupId = "1", UserId = "1", banned = false, Group = group, Member = user };
+            group.Members.Add(groupMemberUser);
+            dbContext.Add(user);
+            dbContext.Add(groupMemberUser);
+            dbContext.Add(group);
+            dbContext.SaveChanges();
+            var controller = new GroupController()
+            {
+                DbContext = dbContext,
+            };
+
+            // Act
+            var result = await controller.BanUser(group.GroupId, user, CancellationToken.None);
+
+            // Assert
+            Assert.True(!groupMemberUser.banned);
         }
 
         //private static ISession CreateTestSession()
