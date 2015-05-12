@@ -6,6 +6,8 @@ using Microsoft.AspNet.Mvc;
 using Hooli.Models;
 using System.Threading;
 using Microsoft.AspNet.Authorization;
+using Microsoft.AspNet.Identity;
+using System.Security.Claims;
 
 
 
@@ -14,15 +16,22 @@ using Microsoft.AspNet.Authorization;
 namespace Hooli.Controllers
 {
     [Authorize]
-    [Route("[controller]")]
     public class GroupController : Controller
     {
         [FromServices]
         public HooliContext DbContext { get; set; }
 
+        [FromServices]
+        public UserManager<ApplicationUser> UserManager { get; set; }
+
         // GET: /<controller>/
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var user = await GetCurrentUserAsync();
+            var groups = DbContext.GroupMembers
+                    .Where(u => u.UserId == user.Id)
+                    .Select(u => u.GroupId).ToList();
+            //  return View( await GetGroups(groups));
             return View();
         }
 
@@ -30,15 +39,12 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateGroup(Group group, CancellationToken requestAborted)
         {
-            System.Diagnostics.Debug.WriteLine("Inside CreateGroup function Trol");
-            System.Diagnostics.Debug.WriteLine("Model state" + ModelState);
-            if (ModelState.IsValid)
+            var user = await GetCurrentUserAsync();
+            if (ModelState.IsValid && user != null)     
             {
-                System.Diagnostics.Debug.WriteLine("Inside if sentence");
+                
                 DbContext.Groups.Add(group);
-                System.Diagnostics.Debug.WriteLine("Inside if sentence 2");
                 await DbContext.SaveChangesAsync(requestAborted);
-                System.Diagnostics.Debug.WriteLine("Inside if sentence 3");
 
 
                 var groupData = new Group
@@ -49,18 +55,13 @@ namespace Hooli.Controllers
                     //Members = group.Members
                   };
 
-                System.Diagnostics.Debug.WriteLine("Inside if sentence 4");
 
             System.Diagnostics.Debug.WriteLine(group.DateCreated);
-       
-            System.Diagnostics.Debug.WriteLine("Inside if sentence 5");
-
-
+      
             return RedirectToAction("Index");
             }
 
-                System.Diagnostics.Debug.WriteLine("Leaving CreateGroup function");
-                return View(group);
+            return View(group);
            
         }
 
@@ -117,14 +118,28 @@ namespace Hooli.Controllers
         }
 
         //
-        // GET: /Account/SingleGroup
-        [HttpGet("SingleGroup/{id}")]
-        public IActionResult SingleGroup(int id)
+        // GET: /Group/SingleGroup
+        [HttpGet]
+        public IActionResult SingleGroup(string id)
         {
             
             return View();
         }
 
+
+        private async Task<List<Group>> GetGroups(IEnumerable<string> group)
+        {
+            System.Diagnostics.Debug.WriteLine("Inside the getgroup function");
+            var groups = await DbContext.Groups
+                .Where(g => group.Contains(g.GroupId))
+                .ToListAsync();
+            return groups;
+        }
+
+        private async Task<ApplicationUser> GetCurrentUserAsync()
+        {
+            return await UserManager.FindByIdAsync(Context.User.GetUserId());
+        }
 
     }
 }

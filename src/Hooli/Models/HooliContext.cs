@@ -32,11 +32,13 @@ namespace Hooli.Models
 
         public virtual List<FollowRelation> Following { get; set; }
         public virtual List<FollowRelation> Followers { get; set; }
+    
 
         public ApplicationUser()
         {
             Following = new List<FollowRelation>();
             Followers = new List<FollowRelation>();
+            GroupsMember = new List<GroupMember>();
         }
     }
 
