@@ -20,7 +20,9 @@ namespace Hooli.Models
         [StringLength(1024)]
         public string Link { get; set; }
 
-        public byte[] Image { get; set; }
+        [Display(Name = "ImageURI")]
+        [StringLength(1024)]
+        public string Image { get; set; }
 
         public int Points { get; set; }
 

@@ -21,6 +21,8 @@ using Microsoft.Framework.Logging;
 using Microsoft.Framework.Logging.Console;
 using Microsoft.Framework.Runtime;
 using Hooli.Models;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace Hooli
 {
@@ -89,10 +91,12 @@ namespace Hooli
                 options.ClientSecret = Configuration["Authentication:MicrosoftAccount:ClientSecret"];
             });
 
+
             // Add MVC services to the services container.
             services.AddMvc();
             services.AddSignalR();
-            //Add all SignalR related services to IoC.
+
+            services.AddTransient<Hooli.CloudStorage.Cloud>();
         }
 
         // Configure is called after ConfigureServices is called.
@@ -101,7 +105,7 @@ namespace Hooli
             // Configure the HTTP request pipeline.
 
             // Add the console logger.
-            loggerfactory.AddConsole(minLevel: LogLevel.Warning);
+            loggerfactory.AddConsole(minLevel: Microsoft.Framework.Logging.LogLevel.Warning);
 
             // Add the following to the request pipeline only in development environment.
             if (env.IsEnvironment("Development"))

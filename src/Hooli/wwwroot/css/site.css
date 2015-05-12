@@ -339,6 +339,53 @@ form input[type=radio] {
     margin-right: 15px;
 }
 
+.view-post>p {
+    font-size: 1em;
+}
+
+.info-photo.comment {
+    width: 30px;
+    height: 30px;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: inherit;
+    position: absolute;
+}
+.info-photo.comment:hover {
+    opacity: 0.8;
+}
+
+.comment-container {
+    margin-bottom: 10px;
+}
+
+.parent-comment-container>.parent-comment-container {
+    margin-left: 40px;
+}
+
+.comment-body {
+    margin-left: 40px;
+}
+
+.comment-info {
+    font-size: 0.8em;
+    margin-bottom: 0;
+}
+
+.comment-text {
+    font-size: 1em;
+    color: #333;
+    line-height: 1.2em;
+    margin-bottom: 0;;
+}
+
+.clearfix:after { 
+   content: " ";
+   display: block; 
+   height: 0; 
+   clear: both;
+}
+
 .slider.open {
 	max-height: 600px; /* approximate max height */
 
@@ -393,6 +440,16 @@ form input[type=radio] {
     color: #333;
 }
 
+.btn-hooli-link {
+    color: #fd7e23;
+    padding: 0;
+    font-weight: bolder;
+}
+
+.btn-hooli-link:hover, .btn-hooli-link:focus, .btn-hooli-link:active, .btn-hooli-link.active, .open > .dropdown-toggle.btn-hooli-link {
+    color: #FF964B;
+}
+
 .btn-hooli:hover, .btn-hooli:focus, .btn-hooli:active, .btn-hooli.active, .open > .dropdown-toggle.btn-hooli {
     color: #fd7e23;
     text-decoration: none;
@@ -427,6 +484,10 @@ form input[type=radio] {
     border-left: 0;
     position: absolute;
     right: 15px;
+}
+
+.btn-trans {
+    opacity: 0.95;
 }
 
 .row .btn {
@@ -471,8 +532,16 @@ form input[type=radio] {
     margin-bottom: 10px;
 }
 
+.margin-b-no {
+    margin-bottom: 0;
+}
+
 .clear {
     clear: both;
+}
+
+.sep-top {
+    border-top: 1px solid #DDD;
 }
 
 @media (max-width: 991px) {

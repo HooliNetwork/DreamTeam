@@ -19,7 +19,9 @@ namespace Hooli.Models
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
 
-        public byte[] Image { get; set; }
+        [Display(Name = "ImageURI")]
+        [StringLength(1024)]
+        public string Image { get; set; }
 
         public bool Private { get; set; }
 

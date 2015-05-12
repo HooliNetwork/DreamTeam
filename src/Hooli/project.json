@@ -8,8 +8,7 @@
     "version": "1.0.0-*",
 
     "dependencies": {
-        "WindowsAzure.Storage": "4.3.0",
-        "windowsazure.mediaservices": "3.2.0.0",
+        "WindowsAzure.Storage": "4.4.0-preview",
         "EntityFramework.SqlServer": "7.0.0-beta4",
         "EntityFramework.InMemory": "7.0.0-beta4", // For Mono.
         "EntityFramework.Commands": "7.0.0-beta4",
@@ -52,7 +51,7 @@
         "dnx451": { },
         "dnxcore50": {
             "dependencies": {
-                "EntityFramework.Core": "7.0.0-beta4"
+              "EntityFramework.Core": "7.0.0-beta4"
             }
         }
     },

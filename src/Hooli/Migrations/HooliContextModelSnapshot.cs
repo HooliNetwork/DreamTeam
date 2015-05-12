@@ -51,7 +51,7 @@ namespace Hooli.Migrations
                             .Annotation("OriginalValueIndex", 13);
                         b.Property<bool>("PhoneNumberConfirmed")
                             .Annotation("OriginalValueIndex", 14);
-                        b.Property<byte[]>("ProfilePicture")
+                        b.Property<string>("ProfilePicture")
                             .Annotation("OriginalValueIndex", 15);
                         b.Property<string>("RelationshipStatus")
                             .Annotation("OriginalValueIndex", 16);
@@ -79,7 +79,7 @@ namespace Hooli.Migrations
                             .Annotation("SqlServer:ValueGeneration", "Default");
                         b.Property<string>("EventName")
                             .Annotation("OriginalValueIndex", 4);
-                        b.Property<byte[]>("Image")
+                        b.Property<string>("Image")
                             .Annotation("OriginalValueIndex", 5);
                         b.Property<string>("Location")
                             .Annotation("OriginalValueIndex", 6);
@@ -105,13 +105,12 @@ namespace Hooli.Migrations
                             .Annotation("OriginalValueIndex", 0);
                         b.Property<string>("Description")
                             .Annotation("OriginalValueIndex", 1);
-                        b.Property<int>("GroupId")
+                        b.Property<string>("GroupId")
                             .GenerateValueOnAdd()
-                            .Annotation("OriginalValueIndex", 2)
-                            .Annotation("SqlServer:ValueGeneration", "Default");
+                            .Annotation("OriginalValueIndex", 2);
                         b.Property<string>("GroupName")
                             .Annotation("OriginalValueIndex", 3);
-                        b.Property<byte[]>("Image")
+                        b.Property<string>("Image")
                             .Annotation("OriginalValueIndex", 4);
                         b.Property<bool>("Private")
                             .Annotation("OriginalValueIndex", 5);
@@ -120,7 +119,7 @@ namespace Hooli.Migrations
                 
                 builder.Entity("Hooli.Models.GroupMember", b =>
                     {
-                        b.Property<int>("GroupId")
+                        b.Property<string>("GroupId")
                             .Annotation("OriginalValueIndex", 0);
                         b.Property<string>("UserId")
                             .Annotation("OriginalValueIndex", 1);
@@ -133,10 +132,10 @@ namespace Hooli.Migrations
                     {
                         b.Property<DateTime>("DateCreated")
                             .Annotation("OriginalValueIndex", 0);
-                        b.Property<int?>("GroupGroupId")
+                        b.Property<string>("GroupGroupId")
                             .Annotation("OriginalValueIndex", 1)
                             .Annotation("ShadowIndex", 0);
-                        b.Property<byte[]>("Image")
+                        b.Property<string>("Image")
                             .Annotation("OriginalValueIndex", 2);
                         b.Property<string>("Link")
                             .Annotation("OriginalValueIndex", 3);
