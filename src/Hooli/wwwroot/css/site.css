@@ -467,8 +467,12 @@ form input[type=radio] {
     color: #ffffff;
 }
 
-.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+.btn-primary:hover, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
     background: #FF964B;
+}
+
+.btn-primary:focus {
+    background: #fd7e23;    
 }
 
 .btn-hooli {
@@ -493,6 +497,11 @@ form input[type=radio] {
 .btn-option {
     background: #CCC;
     color: #333;    
+}
+
+.btn-option:focus {
+    background: #CCC;
+    color: #333;
 }
 
 .btn-selected {
