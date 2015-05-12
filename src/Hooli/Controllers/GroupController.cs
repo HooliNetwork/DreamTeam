@@ -14,6 +14,7 @@ using Microsoft.AspNet.Authorization;
 namespace Hooli.Controllers
 {
     [Authorize]
+    [Route("[controller]")]
     public class GroupController : Controller
     {
         [FromServices]
@@ -116,9 +117,9 @@ namespace Hooli.Controllers
         }
 
         //
-        // GET: /Account/Login
-        [HttpGet]
-        public IActionResult SingleGroup()
+        // GET: /Account/SignleGroup
+        [HttpGet("SingleGroup/{id}")]
+        public IActionResult SingleGroup(int id)
         {
             
             return View();
