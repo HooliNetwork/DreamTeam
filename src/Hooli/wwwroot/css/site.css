@@ -359,7 +359,7 @@ form input[type=radio] {
     margin-bottom: 10px;
 }
 
-.parent-comment-container>.parent-comment-container {
+.parent-comment-container:nth-child(-n+2) {
     margin-left: 40px;
 }
 
