@@ -65,30 +65,25 @@ namespace Hooli.Components
             }
             else
             {
-                //var following = user.Followers.Select(c => c.Following.Id);
                 var following = DbContext.FollowRelations
                     .Where(u => u.FollowerId == user.Id)
                     .Select(u => u.FollowingId).ToList();
-                foreach (object o in following)
-                {
-                    System.Diagnostics.Debug.WriteLine(o);
-                }
+                //foreach (object o in following)
+                //{
+                //    System.Diagnostics.Debug.WriteLine(o);
+                //}
                 if (latestPosts && following != null)
                 {
-                    //var post = await Cache.GetOrSet("latestPost", async context =>
-                    //{
-                    //    context.SetAbsoluteExpiration(TimeSpan.FromMinutes(5));
-                        var post = await GetLatestPost(following);
-                    //});
+                    var post = await GetLatestPost(following);
                     return View(post);
                 }
                 else if(following != null)
                 {
-                    var post = await Cache.GetOrSet("popularPost", async context =>
-                    {
-                        context.SetAbsoluteExpiration(TimeSpan.FromMinutes(5));
-                        return await GetPopularPosts(following);
-                    });
+                    //var post = await Cache.GetOrSet("popularPost", async context =>
+                    //{
+                        //context.SetAbsoluteExpiration(TimeSpan.FromMinutes(5));
+                         var post = await GetPopularPosts(following);
+                    //});
                     return View(post);
                 }
                 else
