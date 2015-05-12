@@ -69,6 +69,35 @@ $(document).ready(function () {
         type: 'image'
         // other options
     });
+
+    $(".btn-follow").click(function () {
+        var currBtn = $(this);
+        var btnText = $("span", this);
+        var btnType = btnText.text();
+        var uri = currBtn.attr('data-url');
+        var id = currBtn.attr('data-id');
+        console.log(uri + id);
+        $.ajax({
+            type: "POST",
+            url: uri,
+            data: {
+                'Id': id
+            }
+        }).success(function (result) {
+            if (btnType === "Follow") {
+                btnText.text("Unfollow");
+            } else if (btnType === "Unfollow") {
+                btnText.text("Follow");
+            } else if (btnType === "Attend") {
+                btnText.text("Unattend");
+            } else {
+                btnText.text("Attend");
+            }
+            currBtn.toggleClass("btn-option")
+        }).fail(function (error) {
+            alert("There was an error posting the data to the server: " + error.responseText);
+        });
+    });
     
 });
 

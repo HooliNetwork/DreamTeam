@@ -86,7 +86,7 @@
                         <div class="info-photo" style="background: url(../images/people/people_statham.jpg) center / cover;">
                             @if (Model.Following.Contains(u.Id))
                             {
-                                <button type="button" data-id="@u.Id" data-url="/Manage/FollowUser" class="btn-follow btn btn-primary pull-right btn-trans btn-option">
+                                <button type="button" data-id="@u.Id" data-url="/Manage/UnfollowUser" class="btn-follow btn btn-primary pull-right btn-trans btn-option">
                                     <span>Unfollow</span>
                                 </button>
                             }
@@ -108,13 +108,13 @@
                         <div class="info-photo" style="background: url(../images/groups/group_silicon.jpg) center / cover;">
                             @if (Model.Joined.Contains(g.GroupId))
                             {
-                                <button type="button" data-id="@g.GroupId" data-url="/Manage/JoinGroup" class="btn-follow btn btn-primary pull-right btn-trans btn-option">
+                                <button type="button" data-id="@g.GroupId" data-url="/Manage/UnFollowGroup" class="btn-follow btn btn-primary pull-right btn-trans btn-option">
                                     <span>Unfollow</span>
                                 </button>
                             }
                             else
                             {
-                                <button type="button" data-id="@g.GroupId" data-url="/Manage/JoinGroup" class="btn-follow btn btn-primary pull-right btn-trans">
+                                <button type="button" data-id="@g.GroupId" data-url="/Manage/FollowGroup" class="btn-follow btn btn-primary pull-right btn-trans">
                                     <span>Follow</span>
                                 </button>
                             }
@@ -144,21 +144,7 @@
 @section ajaxstuff{
     <script>
         $(document).ready(function () {
-            $(".btn-follow").click(function () {
-                var uri = $(this).attr('data-url');
-                var id = $(this).attr('data-id');
-                $.ajax({
-                    type: "POST",
-                    url: uri,
-                    data: {
-                        'Id': id
-                    }
-                }).success(function (result) {
-                    alert(result);
-                }).fail(function (error) {
-                    alert("There was an error posting the data to the server: " + error.responseText);
-                });
-            });
+
         });
     </script>
     }
