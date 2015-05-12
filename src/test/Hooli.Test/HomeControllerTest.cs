@@ -42,31 +42,7 @@ namespace Hooli.Controllers
             Assert.Equal(errorView, viewResult.ViewName);
         }
 
-        //[Fact]
-        //public async Task Index_GetsSixTopAlbums()
-        //{
-        //    // Arrange
-        //    var controller = new HomeController()
-        //    {
-        //        DbContext = _serviceProvider.GetRequiredService<HooliContext>(),
-        //        Cache = _serviceProvider.GetRequiredService<IMemoryCache>(),
-        //    };
-
-        //    PopulateData(controller.DbContext);
-
-        //    // Action
-        //    var result = await controller.Index();
-
-        //    // Assert
-        //    var viewResult = Assert.IsType<ViewResult>(result);
-        //    Assert.Null(viewResult.ViewName);
-
-        //    Assert.NotNull(viewResult.ViewData);
-        //    Assert.NotNull(viewResult.ViewData.Model);
-
-        //    var albums = Assert.IsType<List<Album>>(viewResult.ViewData.Model);
-        //    Assert.Equal(6, albums.Count);
-        //}
+        
 
         [Fact]
         public void StatusCodePage_ReturnsStatusCodePage()
@@ -84,47 +60,8 @@ namespace Hooli.Controllers
             Assert.Equal(statusCodeView, viewResult.ViewName);
         }
 
-        //private void PopulateData(DbContext context)
-        //{
-        //    var albums = TestAlbumDataProvider.GetAlbums();
 
-        //    foreach (var album in albums)
-        //    {
-        //        context.Add(album);
-        //    }
 
-        //    context.SaveChanges();
-        //}
-
-        //private class TestAlbumDataProvider
-        //{
-        //    public static Album[] GetAlbums()
-        //    {
-        //        var generes = Enumerable.Range(1, 10).Select(n =>
-        //            new Genre()
-        //            {
-        //                GenreId = n,
-        //                Name = "Genre Name " + n,
-        //            }).ToArray();
-
-        //        var artists = Enumerable.Range(1, 10).Select(n =>
-        //            new Artist()
-        //            {
-        //                ArtistId = n + 1,
-        //                Name = "Artist Name " + n,
-        //            }).ToArray();
-
-        //        var albums = Enumerable.Range(1, 10).Select(n =>
-        //            new Album()
-        //            {
-        //                Artist = artists[n - 1],
-        //                ArtistId = n,
-        //                Genre = generes[n - 1],
-        //                GenreId = n,
-        //            }).ToArray();
-
-        //        return albums;
-        //    }
-        //}
+    
     }
 }
