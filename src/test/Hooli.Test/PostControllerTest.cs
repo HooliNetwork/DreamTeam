@@ -51,29 +51,97 @@ namespace Hooli.Test
             await controller.Create(post, CancellationToken.None, null);
 
             // Assert
-            Assert.True(true);
-            //Assert.False(controller.DbContext.Posts.Single(u => u.PostId == postId).Equals(null));
+            Assert.False(controller.DbContext.Posts.Single(u => u.PostId == postId).Equals(null));
 
         }
 
-        //[Fact]
-        //public async Task EditTest()
-        //{
-        //}
-        //[Fact]
-        //public async Task UpvoteTest()
-        //{
-        //}
+        [Fact]
+        public async Task EditTest()
+        {
+            // Arrange
+            var postId = 1;
+            var post = new Post() { PostId = postId, Points = 0, Title = "Text1"};
 
-        //[Fact]
-        //public async Task DownvoteTest()
-        //{
-        //}
+            var changedPost = new Post() { PostId = postId, Points = 0, Title = "Text2" };
 
-        //[Fact]
-        //public async Task DeleteTest()
-        //{
+            var dbContext = _serviceProvider.GetRequiredService<HooliContext>();
 
-        //}
+            var userId = "1";
+            var user = new ApplicationUser() { UserName = "Test", Id = userId };
+            var userManager = _serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            var userManagerResult = await userManager.CreateAsync(user);
+
+            var controller = new PostController(userManager)
+            {
+                DbContext = dbContext,
+            };
+
+            // Act 
+            await controller.Edit(changedPost, CancellationToken.None);
+
+            // Assert 
+            Assert.True(changedPost.Equals(post));
+        }
+
+        [Fact]
+        public async Task PointsTest()
+        {
+            // Arrange
+            var postId = 1;
+            var post = new Post() { PostId = postId, Points = 0 };
+            var dbContext = _serviceProvider.GetRequiredService<HooliContext>();
+
+            var userId = "1";
+            var user = new ApplicationUser() { UserName = "Test", Id = userId };
+            var userManager = _serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            var userManagerResult = await userManager.CreateAsync(user);
+
+            var controller = new PostController(userManager)
+            {
+                DbContext = dbContext,
+            };
+
+            // Act Upvote
+            await controller.Upvote(post, CancellationToken.None);
+
+            // Assert Upvote
+            Assert.True(post.Points == 1);
+
+            // Act Downvote
+            await controller.Downvote(post, CancellationToken.None);
+
+            // Assert Downvote
+            Assert.True(post.Points == 0);
+        }
+
+
+
+        [Fact]
+        public async Task DeleteTest()
+        {
+            // Arrange
+            var postId = 1;
+            var post = new Post() { PostId = postId, Points = 0 };
+            var dbContext = _serviceProvider.GetRequiredService<HooliContext>();
+
+            var userId = "1";
+            var user = new ApplicationUser() { UserName = "Test", Id = userId };
+            var userManager = _serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            var userManagerResult = await userManager.CreateAsync(user);
+
+            dbContext.Add(post);
+            dbContext.SaveChanges();
+
+            var controller = new PostController(userManager)
+            {
+                DbContext = dbContext,
+            };
+
+            // Act 
+            await controller.Delete(post, CancellationToken.None);
+
+            // Assert 
+            Assert.True(controller.DbContext.Posts.Single(u => u.PostId == postId).Equals(null));
+        }
     }
 }

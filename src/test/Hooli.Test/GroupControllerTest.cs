@@ -109,10 +109,9 @@ namespace Hooli.Controllers
         {
             // Arrange
             var groupId = "1";
-            var changedGroupId = "2";
-            var group = new Group() { GroupId = groupId, GroupName = groupId };
+            var group = new Group() { GroupId = groupId, GroupName = "Name1" };
             var dbContext = _serviceProvider.GetRequiredService<HooliContext>();
-            var changedGroup = new Group() { GroupId = changedGroupId, GroupName = changedGroupId };
+            var changedGroup = new Group() { GroupId = groupId, GroupName = "Name2" };
 
             dbContext.Add(group);
             dbContext.SaveChanges();
