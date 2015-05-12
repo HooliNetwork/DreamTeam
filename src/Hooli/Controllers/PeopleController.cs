@@ -31,27 +31,6 @@ namespace Hooli.Controllers
             return View();
         }
 
-        [HttpGet]
-        public async Task<ViewResult> FollowedList()
-        {
-            System.Diagnostics.Debug.WriteLine("The followed");
-            var user = await GetCurrentUserAsync();
-            //A list of followersId
-            var people = DbContext.FollowRelations
-                .Where(u => u.FollowerId == user.Id)
-                .Select(u => u.FollowingId).ToList();
-            //A list of users followed
-            var peoples = await DbContext.Users
-                .Where(p => people.Contains(p.Id))
-                .ToListAsync();
-            System.Diagnostics.Debug.WriteLine("Followed list function");
-            foreach(var o in peoples)
-            {
-                System.Diagnostics.Debug.WriteLine(o.FirstName);
-            }
-            return View(peoples);
-        }
-
         private async Task<ApplicationUser> GetCurrentUserAsync()
         {
             return await UserManager.FindByIdAsync(Context.User.GetUserId());
