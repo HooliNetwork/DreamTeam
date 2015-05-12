@@ -14,6 +14,7 @@ using Microsoft.Framework.Logging.Testing;
 using Hooli.Models;
 using Hooli.ViewModels;
 using Xunit;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Hooli.Controllers
 {
@@ -29,6 +30,9 @@ namespace Hooli.Controllers
                 .AddInMemoryStore()
                 .AddDbContext<HooliContext>();
 
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<HooliContext>();
+
             services.AddMvc();
 
             _serviceProvider = services.BuildServiceProvider();
@@ -41,8 +45,8 @@ namespace Hooli.Controllers
             var dbContext = _serviceProvider.GetRequiredService<HooliContext>();
             var user = new ApplicationUser() { UserName = "TestUser", Id = "1"};
             var group = new Group() { GroupId = "1", GroupName = "Cool People"};
-            // var groupMemberUser = new GroupMember() { GroupId = "1", UserId = "1", banned = false, Group = group, Member = user};
-            // group.Members.Add(groupMemberUser);
+            var groupMemberUser = new GroupMember() { GroupId = "1", UserId = "1", banned = false, Group = group, Member = user};
+            group.Members.Add(groupMemberUser);
             dbContext.Add(user);
             // dbContext.Add(groupMemberUser);
             dbContext.Add(group);
