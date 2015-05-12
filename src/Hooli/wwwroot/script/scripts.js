@@ -32,7 +32,8 @@ $(document).ready(function () {
         if(filter === "s_all") {
             $(".search-results").show(100);
         } else {
-            $(".search-results").hide(100)
+            //$(".search-results").hide(100)
+            $(".search-results").not('.' + filter).hide(100);            
             $('.' + filter).show(100);
         }
     })
