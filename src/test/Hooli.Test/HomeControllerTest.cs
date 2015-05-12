@@ -60,8 +60,32 @@ namespace Hooli.Controllers
             Assert.Equal(statusCodeView, viewResult.ViewName);
         }
 
+        //[Fact]
+        //public async Task GetTopPostsTest()
+        //{
+        //    // Arrange
+        //    var post1 = new Post() { Title = "title1", Text = "text1", Points = 150 };
+        //    var post2 = new Post() { Title = "title2", Text = "text2", Points = 300 };
+        //    var post3 = new Post() { Title = "title3", Text = "text3", Points = 50 };
+
+        //    var dbContext = _serviceProvider.GetRequiredService<HooliContext>();
+        //    dbContext.Add(post1);
+        //    dbContext.Add(post2);
+        //    dbContext.Add(post3);
+        //    dbContext.SaveChanges();
+
+        //    var controller = new HomeController()
+        //    {
+        //        DbContext = dbContext,
+        //    };
+
+        //    // Act
+        //    await controller.
+
+        //    // Assert
+        //    Assert.False(controller.DbContext.Groups.Single(u => u.GroupId == groupId).Equals(null));
+        //}
 
 
-    
     }
 }
