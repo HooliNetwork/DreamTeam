@@ -117,7 +117,7 @@ namespace Hooli.Controllers
         }
 
         //
-        // GET: /Account/SignleGroup
+        // GET: /Account/SingleGroup
         [HttpGet("SingleGroup/{id}")]
         public IActionResult SingleGroup(int id)
         {
