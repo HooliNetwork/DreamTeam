@@ -1,0 +1,73 @@
+﻿@model Hooli.Models.Group
+
+<div class="edit-info-container margin-top slider">
+    <form class="form-horizontal" asp-anti-forgery="true" asp-controller="Group" asp-action="CreateGroup" enctype="multipart/form-data" method="post" role="form">
+        <h2>Group information</h2>
+         <div class="form-group">
+             <label asp-for="GroupId" class="col-sm-3 col-md-5 col-lg-4 control-label"></label>
+             <div class="col-sm-9 col-md-7 col-lg-8">
+                 <input type="text" asp-for="GroupId" class="form-control full-width" id="group_id" required="required" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Your unique URL name, hooli.com/g/yourGroupName><br><strong>This cannot be changed later!</strong>"/>
+             </div>
+         </div>
+        <div class="form-group">
+            <label asp-for="GroupName" class="col-sm-3 col-md-5 col-lg-4 control-label"></label>
+            <div class="col-sm-9 col-md-7 col-lg-8">
+                <input type="text" asp-for="GroupName" class="form-control full-width" id="group_name" required="required" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description" class="col-sm-3 col-md-5 col-lg-4 control-label"></label>
+            <div class="col-sm-9 col-md-7 col-lg-8">
+                <textarea asp-for="Description" class="form-control full-width" id="group_description"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Image" class="control-label col-sm-2"></label>
+            <div class="col-md-10">
+                <input type="file" asp-for="Image" id="file" name="file" />
+                <span asp-validation-for="Image" class="text-danger" />
+            </div>
+        </div>
+        <h2>Group settings</h2>
+        <div class="form-group" style="margin-bottom: 10px;">
+            <label asp-for="Private" class="col-sm-3 col-md-5 col-lg-4 control-label"></label>
+            <div class="col-sm-9 col-md-7 col-lg-8">
+                <label class="radio-inline">
+                    <input type="radio" asp-for="Private" name="privacy" id="privacy" value="1" /> Private
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" asp-for="Private" name="privacy" id="privacy" value="0" checked="checked" /> Public
+                </label>
+            </div>
+        </div>
+
+
+
+
+        <!--
+        <div class="form-group">
+            <label for="add_moderator" class="col-sm-3 col-md-5 col-lg-4 control-label">Add Mod</label>
+            <div class="col-sm-9 col-md-7 col-lg-8">
+                <button type="button" class="btn btn-primary btn-edge">Add</button>
+                <input type="search" class="form-control full-width" id="add_moderator" placeholder="Username">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="moderator-list" class="col-sm-3 col-md-5 col-lg-4 control-label">Moderators</label>
+            <div class="col-sm-9 col-md-7 col-lg-8">
+                <dl id="moderator-list">
+                    <dt id="modlist_hoddmachine">
+                        <button type="button" class="btn btn-link btn-xs btn-hooli">X</button>
+                        joiblumen
+                    </dt>
+                </dl>
+            </div>
+        </div>
+            -->
+        <div class="form-group">
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-primary btn-block">Create group!</button>
+            </div>
+        </div>
+    </form>
+</div>

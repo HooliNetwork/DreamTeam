@@ -36,25 +36,40 @@ namespace Hooli.Components
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var group = await Cache.GetOrSet("group", async context =>
-            {
-                context.SetAbsoluteExpiration(TimeSpan.FromMinutes(10));
-                return await GetUserGroups();
-            });
-            return View(group);
+            //var group = await Cache.GetOrSet("group", async context =>
+            //{
+            //    context.SetAbsoluteExpiration(TimeSpan.FromMinutes(10));
+            //    return await GetUserGroups();
+            //});
+            //return View(group);
+            var user = await GetCurrentUserAsync();
+            var groups = DbContext.GroupMembers
+                    .Where(u => u.UserId == user.Id)
+                    .Select(u => u.GroupId).ToList();
+             return View( await GetGroups(groups));
         }
 
-        private async Task<Group> GetUserGroups()
-        {
-            var user = await GetCurrentUserAsync();
-            var groups = user.GroupsMember.Select(a => a.GroupId);
-            var userGroups = await DbContext.Groups.OrderByDescending(a => a.GroupName).Where(a => (groups.Contains(a.GroupId))).FirstOrDefaultAsync();
-            return userGroups;
-        }
+        //private async Task<Group> GetUserGroups()
+        //{
+        //    var user = await GetCurrentUserAsync();
+        //    var groups = user.GroupsMember.Select(a => a.GroupId);
+        //    var userGroups = await DbContext.Groups.OrderByDescending(a => a.GroupName).Where(a => (groups.Contains(a.GroupId))).FirstOrDefaultAsync();
+        //    return userGroups;
+        //}
 
         private async Task<ApplicationUser> GetCurrentUserAsync()
         {
             return await UserManager.FindByIdAsync(Context.User.GetUserId());
         }
+
+        private async Task<List<Group>> GetGroups(IEnumerable<string> group)
+        {
+            System.Diagnostics.Debug.WriteLine("Inside the getgroup function");
+            var groups = await DbContext.Groups
+                .Where(g => group.Contains(g.GroupId))
+                .ToListAsync();
+            return groups;
+        }
+
     }
 }

@@ -87,7 +87,9 @@
                         <span>Groups</span>
                     </button>
                 </div>
-                @await Component.InvokeAsync("Feed", timeView, groupView)
+                <div id="feed-content">
+                    @await Component.InvokeAsync("Feed", timeView, groupView)
+                </div>
             </div>
         </div>
 </div>

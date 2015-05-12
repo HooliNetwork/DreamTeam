@@ -1,0 +1,35 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    // ViewBag.Title = "Home Page";
+}
+
+@model List<Hooli.Models.Group>
+
+@if (Model != null)
+{
+    @foreach (var p in Model)
+    {
+        <div class="info-photo-container col-sm-12 col-md-6">
+           @if (@p.Image != null)
+           {
+                <div class="info-photo" style="background: url(@p.Image) center / cover;">
+                    <div class="info-photo-shade">
+                        <a asp-controller="Group" asp-action="SingleGroup"><h1>@p.GroupName</h1></a>
+                    </div>
+                </div>
+           }
+           @if(@p.Image == null)
+           {
+                <div class="info-photo" style="background: url(@Url.Content("~/images/hooli_groupphoto_default.jpg")) center / cover;">
+                    <div class="info-photo-shade">
+                        <a asp-controller="Group" asp-action="SingleGroup"><h1>@p.GroupName</h1></a>
+                    </div>
+                </div>
+           }
+                    
+            </div>
+
+           }
+}
