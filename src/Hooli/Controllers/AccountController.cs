@@ -92,14 +92,15 @@ namespace Hooli.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel model)
+        public async Task<IActionResult> Register(RegisterViewModel model, IFormFile file)
         {
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName};
-                if ((model.ProfilePicture != null) && (model.ProfilePicture.Length > 0))
+                if ((file != null) && (file.Length > 0))
                 {
-                    user.ProfilePicture = await Storage.GetUri("profilepictures", Guid.NewGuid().ToString(), model.ProfilePicture);
+                    user.ProfilePicture = await Storage.GetUri("profilepictures", Guid.NewGuid().ToString(), file);
+                    Console.WriteLine("Added to blob");
                 }
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
