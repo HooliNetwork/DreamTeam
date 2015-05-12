@@ -31,7 +31,8 @@
         <div class="form-group">
             <label asp-for="Image" class="control-label col-sm-2"></label>
             <div class="col-md-10">
-                <input type="file" id="file" name="file" />
+                <input type="file" asp-for="Image" id="file" name="file" />
+                <span asp-validation-for="Image" class="text-danger" />
             </div>
         </div>
 
