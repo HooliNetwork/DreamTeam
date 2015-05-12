@@ -9,7 +9,8 @@
     <title>Hooli - Read post</title>
     <link rel="shortcut icon" href="">
     <link href='http://fonts.googleapis.com/css?family=Rambla:400,700,400italic' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/magnific-popup.css"> 
     <link rel="stylesheet" href="../css/site.css" />
     <!--[if IE]>
         <script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -86,6 +87,14 @@
             <div class="col-md-8">
                 <div class="content-box">
                     <div class="view-post">
+                        <div class="mod-controls">
+                            <button type="button" class="btn btn-primary btn-xs btn-2way">
+                                <span>Edit</span>
+                            </button>
+                            <button type="button" class="btn btn-danger btn-xs btn-2way">
+                                <span>Delete</span>
+                            </button>
+                        </div>
                         <div class="post-rating">
                             <button type="submit" class="btn btn-link vote">
                                 <span class="glyphicon glyphicon-menu-up"></span>
@@ -95,6 +104,9 @@
                                 <span class="glyphicon glyphicon-menu-down"></span>
                             </button>
                         </div>
+                        <a class="image-link" href="http://upload.wikimedia.org/wikipedia/commons/9/9e/Steve_Ballmer_at_CES_2010.jpg">
+                            <div class="photo-sm margin-top" style="background: url(http://upload.wikimedia.org/wikipedia/commons/9/9e/Steve_Ballmer_at_CES_2010.jpg) center / cover;"></div>
+                        </a>
                         <h1>Microsoft is my passion</h1>
                         <p class="post-body-info">
                             <span class="post-author">Posted by <a href="#"><strong>Jóhann</strong></a></span>
@@ -257,7 +269,9 @@
         </div>
     </main>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script> 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="../script/jquery.magnific-popup.js"></script>
+    <script src="../script/scripts.js"></script>
 </body>
 </html>

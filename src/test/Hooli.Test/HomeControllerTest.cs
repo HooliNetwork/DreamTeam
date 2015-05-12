@@ -42,31 +42,7 @@ namespace Hooli.Controllers
             Assert.Equal(errorView, viewResult.ViewName);
         }
 
-        //[Fact]
-        //public async Task Index_GetsSixTopAlbums()
-        //{
-        //    // Arrange
-        //    var controller = new HomeController()
-        //    {
-        //        DbContext = _serviceProvider.GetRequiredService<HooliContext>(),
-        //        Cache = _serviceProvider.GetRequiredService<IMemoryCache>(),
-        //    };
-
-        //    PopulateData(controller.DbContext);
-
-        //    // Action
-        //    var result = await controller.Index();
-
-        //    // Assert
-        //    var viewResult = Assert.IsType<ViewResult>(result);
-        //    Assert.Null(viewResult.ViewName);
-
-        //    Assert.NotNull(viewResult.ViewData);
-        //    Assert.NotNull(viewResult.ViewData.Model);
-
-        //    var albums = Assert.IsType<List<Album>>(viewResult.ViewData.Model);
-        //    Assert.Equal(6, albums.Count);
-        //}
+        
 
         [Fact]
         public void StatusCodePage_ReturnsStatusCodePage()
@@ -84,47 +60,41 @@ namespace Hooli.Controllers
             Assert.Equal(statusCodeView, viewResult.ViewName);
         }
 
-        //private void PopulateData(DbContext context)
+        // Finish when Search has been completed
+        //[Fact]
+        //public async Task SearchTest()
         //{
-        //    var albums = TestAlbumDataProvider.GetAlbums();
+        //    // Arrange
+        //    var user1 = new ApplicationUser() { Id = "1", UserName = "name1", FirstName = "Benedikt", LastName = "Sigurleifsson" };
+        //    var user2 = new ApplicationUser() { Id = "2", UserName = "name2", FirstName = "Magnus", LastName = "Magnusson" };
+        //    var user3 = new ApplicationUser() { Id = "3", UserName = "name3", FirstName = "Sara", LastName = "Arnadottir" };
 
-        //    foreach (var album in albums)
+        //    var group1 = new Group() { GroupId = "1", GroupName = "Bikes" };
+        //    var group2 = new Group() { GroupId = "2", GroupName = "Cars" };
+        //    var group3 = new Group() { GroupId = "3", GroupName = "Skates" };
+
+
+        //    var dbContext = _serviceProvider.GetRequiredService<HooliContext>();
+        //    dbContext.Add(user1);
+        //    dbContext.Add(user2);
+        //    dbContext.Add(user3);
+        //    dbContext.Add(group1);
+        //    dbContext.Add(group2);
+        //    dbContext.Add(group3);
+        //    dbContext.SaveChanges();
+
+        //    var controller = new HomeController()
         //    {
-        //        context.Add(album);
-        //    }
+        //        DbContext = dbContext,
+        //    };
 
-        //    context.SaveChanges();
+        //    // Act
+        //    await controller.Search();
+
+        //    // Assert
+        //    Assert.False(controller.DbContext.Groups.Single(u => u.GroupId == groupId).Equals(null));
         //}
 
-        //private class TestAlbumDataProvider
-        //{
-        //    public static Album[] GetAlbums()
-        //    {
-        //        var generes = Enumerable.Range(1, 10).Select(n =>
-        //            new Genre()
-        //            {
-        //                GenreId = n,
-        //                Name = "Genre Name " + n,
-        //            }).ToArray();
 
-        //        var artists = Enumerable.Range(1, 10).Select(n =>
-        //            new Artist()
-        //            {
-        //                ArtistId = n + 1,
-        //                Name = "Artist Name " + n,
-        //            }).ToArray();
-
-        //        var albums = Enumerable.Range(1, 10).Select(n =>
-        //            new Album()
-        //            {
-        //                Artist = artists[n - 1],
-        //                ArtistId = n,
-        //                Genre = generes[n - 1],
-        //                GenreId = n,
-        //            }).ToArray();
-
-        //        return albums;
-        //    }
-        //}
     }
 }

@@ -384,6 +384,36 @@ form input[type=radio] {
     margin-bottom: 0;;
 }
 
+.photo-sm {
+    height: 60px;
+    width: 60px;
+    float: left;
+    margin-right: 10px;
+}
+
+.mod-controls {
+    width: 100px;
+    position: absolute;
+    right: 20px;
+    top: 5px;
+}
+
+.search-mobile {
+    display: none;
+    float: right;
+    margin-top: 10px;
+    margin-right: 10px;
+    width: 220px;
+}
+
+.search-mobile input[type=search] {
+    width: 180px;
+}
+
+.shade-sm {
+    width: 100%;
+}
+
 .clearfix:after { 
    content: " ";
    display: block; 
@@ -437,8 +467,12 @@ form input[type=radio] {
     color: #ffffff;
 }
 
-.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+.btn-primary:hover, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
     background: #FF964B;
+}
+
+.btn-primary:focus {
+    background: #fd7e23;    
 }
 
 .btn-hooli {
@@ -463,6 +497,11 @@ form input[type=radio] {
 .btn-option {
     background: #CCC;
     color: #333;    
+}
+
+.btn-option:focus {
+    background: #CCC;
+    color: #333;
 }
 
 .btn-selected {
@@ -603,6 +642,31 @@ form input[type=radio] {
     .following-people .info-photo {
         height: 220px;
     }
+    .search-mobile {
+        display: inline;
+        width: 320px;
+    }
+    .search-mobile input[type=search] {
+        width: 280px;
+    }
+}
+
+@media (max-width: 500px) {
+    .search-mobile {
+        width: 220px;
+    }
+    .search-mobile input[type=search] {
+        width: 180px;
+    }
+}
+
+@media (max-width: 390px) {
+    .search-mobile {
+        width: 140px;
+    }
+    .search-mobile input[type=search] {
+        width: 100px;
+    }
 }
 
 @media (min-width: 992px) {
@@ -611,6 +675,10 @@ form input[type=radio] {
     }
     .following-people .info-photo {
         height: 220px;
+    }
+    .mod-controls {
+        right: 25px;
+        top: 10px;
     }
 }
 

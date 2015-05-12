@@ -9,7 +9,7 @@
     <title>Hooli - Search</title>
     <link rel="shortcut icon" href="">
     <link href='http://fonts.googleapis.com/css?family=Rambla:400,700,400italic' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/site.css" />
     <!--[if IE]>
         <script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -27,19 +27,26 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+                <form class="navbar-search search-mobile" role="search">
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search">
+                        <button type="submit" class="btn btn-default">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </div>
+                </form>
                 <a class="navbar-brand" href="#">
                     <img id="navbar-logo-large" src="../images/logo_hooli.png" alt="Hooli logo"/>
                     <img id="navbar-logo-small" src="../images/logo_hooli_sm.png" alt="Hooli logo"/>
                 </a>
             </div>
-
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li class="active"><a href="#">Groups</a></li>
                     <li><a href="#">People</a></li>
                     <li><a href="#">Events</a></li>
                     <li><a href="#">Chat</a></li>
-                    <li>
+                    <li class="hidden-xs">
                         <form class="navbar-search" role="search">
                             <div class="form-group">
                                 <input type="search" class="form-control" placeholder="Search">
