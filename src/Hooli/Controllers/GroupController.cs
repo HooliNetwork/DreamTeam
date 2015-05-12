@@ -53,7 +53,14 @@ namespace Hooli.Controllers
         {
             if (ModelState.IsValid)
             {
-                DbContext.Update(group);
+                //DbContext.Update(group);
+                var groupData = DbContext.Groups.Single(groupTable => groupTable.GroupId == group.GroupId);
+
+                groupData.GroupName = group.GroupName;
+                groupData.Description = group.Description;
+                groupData.Private = group.Private;
+                groupData.Members = group.Members;
+                groupData.Image = group.Image;
                 await DbContext.SaveChangesAsync(requestAborted);
             }
 
