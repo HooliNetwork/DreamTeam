@@ -27,7 +27,6 @@ namespace Hooli.Models
         public string Image { get; set; }
 
         public virtual List<GroupMember> Members { get; set; }
-        //public virtual List<ApplicationUser> BannedUsers { get; set; }
         public virtual List<Post> Posts { get; set; }
 
         public Group()
