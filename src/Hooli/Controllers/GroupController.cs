@@ -14,7 +14,6 @@ using Microsoft.AspNet.Authorization;
 namespace Hooli.Controllers
 {
     [Authorize]
-    [Route("[controller]")]
     public class GroupController : Controller
     {
         [FromServices]
@@ -98,9 +97,9 @@ namespace Hooli.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> BanUser(string groupId, string userId, CancellationToken requestAborted)
+        public async Task<IActionResult> BanUser(string groupId, ApplicationUser user, CancellationToken requestAborted)
         {
-            var ban = await DbContext.GroupMembers.SingleAsync(u => (u.GroupId == groupId) && (u.UserId == userId));
+            var ban = await DbContext.GroupMembers.SingleAsync(u => (u.GroupId == groupId) && (u.UserId == user.Id));
             ban.banned = true;
             await DbContext.SaveChangesAsync(requestAborted);
             return View();
@@ -108,18 +107,18 @@ namespace Hooli.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UnBanUser(string groupId, string userId, CancellationToken requestAborted)
+        public async Task<IActionResult> UnBanUser(string groupId, ApplicationUser user, CancellationToken requestAborted)
         {
-            var unban = await DbContext.GroupMembers.SingleAsync(u => (u.GroupId == groupId) && (u.UserId == userId));
+            var unban = await DbContext.GroupMembers.SingleAsync(u => (u.GroupId == groupId) && (u.UserId == user.Id));
             unban.banned = false;
             await DbContext.SaveChangesAsync(requestAborted);
             return View();
         }
 
         //
-        // GET: /Account/SignleGroup
-        [HttpGet("SingleGroup/{id}")]
-        public IActionResult SingleGroup(int id)
+        // GET: /Account/Login
+        [HttpGet]
+        public IActionResult SingleGroup()
         {
             
             return View();
