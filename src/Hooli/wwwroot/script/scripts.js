@@ -22,25 +22,10 @@ $(document).ready(function () {
     $(".create-post-button").click(function(){
         $(".new-post-container").toggleClass('open');
     });
-    
-    // Search results filter
-    $(".search-filters button").click(function() {
-        $(this).siblings().not(".btn-option").toggleClass("btn-option");
-        $(this).toggleClass("btn-option");
-        var filter = $(this).attr("name");
 
-        if(filter === "s_all") {
-            $(".search-results").show(100);
-        } else {
-            //$(".search-results").hide(100)
-            $(".search-results").not('.' + filter).hide(100);            
-            $('.' + filter).show(100);
-        }
-    })
-    
-    $(function () {
-      $('[data-toggle="tooltip"]').tooltip()
-    })
+    $(".create-group-button").click(function () {
+        $(".edit-info-container").toggleClass('open');
+    });
     
 });
 
