@@ -8,6 +8,8 @@ using System.Threading;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Identity;
 using System.Security.Claims;
+using Microsoft.AspNet.Http;
+using Hooli.CloudStorage;
 
 
 
@@ -22,9 +24,13 @@ namespace Hooli.Controllers
         public HooliContext DbContext { get; set; }
 
         [FromServices]
+        public Cloud storage { get; set; }
+
+        [FromServices]
         public UserManager<ApplicationUser> UserManager { get; set; }
 
         // GET: /<controller>/
+
         public async Task<IActionResult> Index()
         {
             var user = await GetCurrentUserAsync();
@@ -37,28 +43,33 @@ namespace Hooli.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateGroup(Group group, CancellationToken requestAborted)
+        public async Task<IActionResult> CreateGroup(Group group, CancellationToken requestAborted, IFormFile file)
         {
             var user = await GetCurrentUserAsync();
             if (ModelState.IsValid && user != null)     
             {
-                
+
+                if ((file != null) && (file.Length > 0))
+                {
+                    group.Image = await storage.GetUri("postimages", Guid.NewGuid().ToString(), file);
+                }
+
                 DbContext.Groups.Add(group);
+
+                var groupmember = new GroupMember() { GroupId = group.GroupId, UserId=user.Id, banned = false };
+
+                DbContext.GroupMembers.Add(groupmember);
+
+
                 await DbContext.SaveChangesAsync(requestAborted);
 
 
-                var groupData = new Group
-                {
-                    GroupName = group.GroupName,
-                    Description = group.Description,
-                    Private = group.Private,
-                    //Members = group.Members
-                  };
 
 
             System.Diagnostics.Debug.WriteLine(group.DateCreated);
       
             return RedirectToAction("Index");
+              
             }
 
             return View(group);
