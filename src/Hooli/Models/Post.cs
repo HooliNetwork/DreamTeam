@@ -16,13 +16,18 @@ namespace Hooli.Models
 
         public string Text { get; set; }
 
-        [Display(Name = "Image URL")]
+        [Display(Name = "Link")]
         [StringLength(1024)]
-        public string ImgUrl { get; set; }
+        public string Link { get; set; }
+
+        [Display(Name = "ImageURI")]
+        [StringLength(1024)]
+        public string Image { get; set; }
 
         public int Points { get; set; }
 
         [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime DateCreated { get; set; }
 
         public virtual Group Group { get; set; }

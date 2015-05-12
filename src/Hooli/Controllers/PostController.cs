@@ -12,7 +12,11 @@ using Hooli.Models;
 using Hooli.ViewModels;
 using Microsoft.AspNet.Identity;
 using System.Security.Claims;
-
+using Microsoft.AspNet.Http;
+using Microsoft.Net.Http.Headers;
+using System.IO;
+using Hooli.CloudStorage;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace Hooli.Controllers
 {
@@ -29,6 +33,9 @@ namespace Hooli.Controllers
 
         [FromServices]
         public HooliContext DbContext { get; set; }
+
+        [FromServices]
+        public Cloud storage { get; set; }
 
         [FromServices]
         public IMemoryCache Cache { get; set; }
@@ -52,15 +59,20 @@ namespace Hooli.Controllers
             return View();
         }
 
-        // POST: /StoreManager/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Post post, CancellationToken requestAborted)
+        public async Task<IActionResult> Create(Post post, CancellationToken requestAborted, IFormFile file)
         {
             var user = await GetCurrentUserAsync();
             if (ModelState.IsValid && user != null)
             {
+                
                 post.User = user;
+                if((file != null) && (file.Length > 0))
+                {               
+                    post.Image = await storage.GetUri("postimages", Guid.NewGuid().ToString(), file);
+                }
+                
                 DbContext.Posts.Add(post);
                 await DbContext.SaveChangesAsync(requestAborted);
                 
@@ -94,7 +106,7 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Upvote(Post post, CancellationToken requestAborted)
         {
-            var postData = DbContext.Posts.Single(postTable => postTable.PostId == post.PostId);
+            var postData = await DbContext.Posts.SingleAsync(postTable => postTable.PostId == post.PostId);
             postData.Points++;
             await DbContext.SaveChangesAsync(requestAborted);
             return View();
@@ -104,11 +116,33 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Downvote(Post post, CancellationToken requestAborted)
         {
-            var postData = DbContext.Posts.Single(postTable => postTable.PostId == post.PostId);
+            var postData = await DbContext.Posts.SingleAsync(postTable => postTable.PostId == post.PostId);
             postData.Points--;
             await DbContext.SaveChangesAsync(requestAborted);
             return View();
         }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Post post, CancellationToken requestAborted)
+        {
+            var postData = await DbContext.Posts.SingleAsync(postTable => postTable.PostId == post.PostId);
+            postData.Title = post.Title;
+            postData.Title = post.Text;
+            await DbContext.SaveChangesAsync(requestAborted);
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(Post post, CancellationToken requestAborted)
+        {
+            var postData = await DbContext.Posts.SingleAsync(postTable => postTable.PostId == post.PostId);
+            DbContext.Remove(postData);
+            await DbContext.SaveChangesAsync(requestAborted);
+            return View();
+        }
+
 
         // GET: /StoreManager/Create
         public IActionResult Create()
@@ -119,5 +153,7 @@ namespace Hooli.Controllers
         {
             return await UserManager.FindByIdAsync(Context.User.GetUserId());
         }
+
+
     }
 }

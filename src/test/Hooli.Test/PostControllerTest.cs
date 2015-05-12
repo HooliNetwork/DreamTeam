@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Hooli.Models
+namespace Hooli.Test
 {
-    public enum FileType
+    public class PostControllerTest
     {
-        ProfilePicture = 1, Photo
     }
 }

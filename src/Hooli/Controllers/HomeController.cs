@@ -18,11 +18,9 @@ namespace Hooli.Controllers
     {
         [FromServices]
         public HooliContext DbContext { get; set; }
-        public HomeController(UserManager<ApplicationUser> userManager)
-        {
-            UserManager = userManager;
-        }
-        public UserManager<ApplicationUser> UserManager { get; private set; }
+
+        [FromServices]
+        public UserManager<ApplicationUser> UserManager { get; set; }
 
         [FromServices]
         public IMemoryCache Cache { get; set; }
@@ -114,6 +112,36 @@ namespace Hooli.Controllers
                 .Take(count)
                 .Include(u => u.Posts)
                 .ToListAsync();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Search(string searchString, string searchType="Users")
+        {
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                switch (searchType)
+                {
+                    case "Users":
+                        return View(await DbContext.Users.Where(s => s.LastName
+                                                   .Contains(searchString)
+                                                   || s.FirstName.Contains(searchString))
+                                                   .ToListAsync());
+                    case "Groups":
+                        return View(await DbContext.Groups.Where(g => g.GroupName
+                                                   .Contains(searchString))
+                                                   .ToListAsync());
+                    case "Events":
+                        return View(await DbContext.Events.Where(e => e.EventName
+                                                    .Contains(searchString))
+                                                    .ToListAsync());
+                    default:
+                        return View();
+                }
+            }
+            else
+            {
+                return View();
+            }
         }
         private async Task<ApplicationUser> GetCurrentUserAsync()
         {

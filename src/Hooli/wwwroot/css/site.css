@@ -97,10 +97,9 @@ p {
 
 .content-box {
     background: rgba(255,255,255,0.5);
-    min-height: 100px;
     padding-left: 20px;
     padding-right: 20px;
-    padding-bottom: 10px;
+    padding-bottom: 20px;
     margin-bottom: 20px;
 }
 
@@ -209,6 +208,20 @@ p {
     margin-bottom: 20px;
 }
 
+.info-photo>button {
+    width: 100px;
+}
+
+.highlight-overlay {
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.0);
+}
+
+.highlight-overlay:hover {
+    background: rgba(255, 234, 211, 0.2);
+}
+
 .info-photo-user {
     height: 350px;
 }
@@ -237,6 +250,10 @@ p {
 
 .info-info p {
     line-height: 1.3em;
+}
+
+.following-people .info-photo {
+    height: 320px;
 }
 
 input[type=text],
@@ -299,6 +316,10 @@ form input[type=radio] {
     font-weight: 700;
 }
 
+.edit-info-container {
+    display: none;
+}
+
 .edit-info-container .form-group {
     margin-bottom: 0;
 }
@@ -316,6 +337,66 @@ form input[type=radio] {
     height: 60px;
     margin-top: 15px;
     margin-right: 15px;
+}
+
+.view-post>p {
+    font-size: 1em;
+}
+
+.info-photo.comment {
+    width: 30px;
+    height: 30px;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: inherit;
+    position: absolute;
+}
+.info-photo.comment:hover {
+    opacity: 0.8;
+}
+
+.comment-container {
+    margin-bottom: 10px;
+}
+
+.parent-comment-container>.parent-comment-container {
+    margin-left: 40px;
+}
+
+.comment-body {
+    margin-left: 40px;
+}
+
+.comment-info {
+    font-size: 0.8em;
+    margin-bottom: 0;
+}
+
+.comment-text {
+    font-size: 1em;
+    color: #333;
+    line-height: 1.2em;
+    margin-bottom: 0;;
+}
+
+.clearfix:after { 
+   content: " ";
+   display: block; 
+   height: 0; 
+   clear: both;
+}
+
+.slider.open {
+	max-height: 600px; /* approximate max height */
+
+	transition-property: all;
+	transition-duration: .5s;
+	transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+
+.slider {
+    overflow: hidden;
+	max-height: 0;
 }
 
 .fb-button {
@@ -359,6 +440,16 @@ form input[type=radio] {
     color: #333;
 }
 
+.btn-hooli-link {
+    color: #fd7e23;
+    padding: 0;
+    font-weight: bolder;
+}
+
+.btn-hooli-link:hover, .btn-hooli-link:focus, .btn-hooli-link:active, .btn-hooli-link.active, .open > .dropdown-toggle.btn-hooli-link {
+    color: #FF964B;
+}
+
 .btn-hooli:hover, .btn-hooli:focus, .btn-hooli:active, .btn-hooli.active, .open > .dropdown-toggle.btn-hooli {
     color: #fd7e23;
     text-decoration: none;
@@ -379,6 +470,10 @@ form input[type=radio] {
     float: left;
 }
 
+.btn-container {
+    height: inherit;
+}
+
 .btn-mtop {
     margin-top: 15px;
     margin-bottom: 10px;
@@ -391,6 +486,23 @@ form input[type=radio] {
     right: 15px;
 }
 
+.btn-trans {
+    opacity: 0.95;
+}
+
+.row .btn {
+    border-color: #DDD;
+    border-style: solid;
+    border-width: 1px;
+    border-top: none;
+    border-bottom: none;
+    border-left: none;
+}
+
+.row .btn:last-of-type {
+    border-right: none;
+}
+
 .col-centered {
     float: none;
     margin: 0 auto;
@@ -400,6 +512,12 @@ form input[type=radio] {
     padding-left: 0;
     padding-right: 0;
 }
+
+.p-rm-s {
+    padding-left: 0;
+    padding-right: 0;
+}
+
 
 .padding-side {
     padding-left: 20px;
@@ -414,8 +532,16 @@ form input[type=radio] {
     margin-bottom: 10px;
 }
 
+.margin-b-no {
+    margin-bottom: 0;
+}
+
 .clear {
     clear: both;
+}
+
+.sep-top {
+    border-top: 1px solid #DDD;
 }
 
 @media (max-width: 991px) {
@@ -438,7 +564,7 @@ form input[type=radio] {
         display: block;
     }
     .image-box {
-        height: 95px;
+        height: 80px;
     }
 }
 
@@ -464,16 +590,22 @@ form input[type=radio] {
         margin-top: -20px;
     }
     .image-box {
-        height: 110px;
+        height: 100px;
     }
     .hidden-xs {
         display: none !important;
+    }
+    .following-people .info-photo {
+        height: 220px;
     }
 }
 
 @media (min-width: 992px) {
     .image-box {
         height: 75px;
+    }
+    .following-people .info-photo {
+        height: 220px;
     }
 }
 
