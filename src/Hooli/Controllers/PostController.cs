@@ -23,7 +23,6 @@ using System.Dynamic;
 namespace Hooli.Controllers
 {
     [Authorize]
-    [Route("[controller]")]
     public class PostController : Controller
     {
         private IConnectionManager _connectionManager;
@@ -73,6 +72,7 @@ namespace Hooli.Controllers
                                 .Select(u => u.GroupId).ToListAsync();
             return View(model);
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]

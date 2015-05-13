@@ -7,3 +7,5 @@
 /// <reference path="lib/jquery/jquery.js" />
 /// <reference path="lib/bootstrap/js/npm.js" />
 /// <reference path="lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" />
+/// <reference path="script/scripts.js" />
+/// <reference path="script/jquery.magnific-popup.js" />

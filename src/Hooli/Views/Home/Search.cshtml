@@ -104,13 +104,13 @@
                             </a>
                             @if (Model.Following.Contains(u.Id))
                             {
-                                <button type="button" data-id="@u.Id" data-url="/Manage/UnfollowGroup" class="btn-follow btn btn-primary pull-right btn-trans btn-option">
+                                <button type="button" data-id="@u.Id" data-url="/Manage/UnfollowUser" class="btn-follow btn btn-primary pull-right btn-trans btn-option">
                                     <span>Unfollow</span>
                                 </button>
                             }
                             else
                             {
-                                <button type="button" data-id="@u.Id" data-url="/Manage/FollowGroup" class="btn-follow btn btn-primary pull-right btn-trans">
+                                <button type="button" data-id="@u.Id" data-url="/Manage/FollowUser" class="btn-follow btn btn-primary pull-right btn-trans">
                                     <span>Follow</span>
                                 </button>
                             }
