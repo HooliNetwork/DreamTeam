@@ -5,28 +5,46 @@
      ViewBag.Title = "Post";
 }
 
-@model Hooli.Models.Post
+@model dynamic
 
 <div class="row">
     <div class="col-md-4">
         <div class="content-box padding-remove-sides">
             <div class="info-photo-container">
-                <div class="info-photo" style="background: url(../images/group_photo.jpg) center / cover;">
-                    <div class="info-photo-shade">
-                        <a href="#"><h1>Silicon valley</h1></a>
+                @if (Model.post.Group.Image != null)
+                {
+                    <div class="info-photo" style="background: url(@Model.post.Group.Image) center / cover;">
+                        <div class="info-photo-shade">
+                            <a asp-controller="Group" asp-action="SingleGroup" asp-route-id="@Model.post.Group.GroupId"><h1>@Model.post.Group.GroupName</h1></a>
+                        </div>
                     </div>
-                </div>
+                }
+                @if (Model.post.Group.Image == null)
+                {
+                    <div class="info-photo" style="background: url(@Url.Content("~/images/hooli_groupphoto_default.jpg")) center / cover;">
+                        <div class="info-photo-shade">
+                            <a asp-controller="Group" asp-action="SingleGroup" asp-route-id="@Model.post.Group.GroupId"><h1>@Model.post.Group.GroupName</h1></a>
+                        </div>
+                    </div>
+                }
             </div>
             <div class="group-info padding-side">
                 <p class="group-info-description">
-                    In the high-tech gold rush of modern Silicon Valley, the people most qualified to succeed are the least capable of handling success. A comedy partially inspired by Mike Judge's own experiences as a Silicon Valley engineer in the late 1980s.
+                    @Model.post.Group.Description
                 </p>
-                <button type="button" class="btn btn-primary btn-block">
-                    <span>Join group</span>
-                </button>
-                <button type="button" class="btn btn-primary btn-block btn-option">
-                    <span>Leave group</span>
-                </button>
+                @if (Model.Joined.Contains(Model.post.Group.GroupId))
+                {
+                    <button type="button" data-id="@Model.post.Group.GroupId" data-url="/Manage/UnfollowGroup" class="btn btn-primary btn-block btn-option btn-follow btn-trans">
+                        <span>Unfollow</span>
+                    </button>
+                }
+                else
+                {
+                    <button type="button" data-id="@Model.post.Group.GroupId" data-url="/Manage/FollowGroup" class="btn btn-primary btn-block btn-follow btn-trans">
+                        <span>Follow</span>
+                    </button>
+                }
+
             </div>
         </div>
     </div>
@@ -45,28 +63,164 @@
                     <button type="submit" class="btn btn-link vote">
                         <span class="glyphicon glyphicon-menu-up"></span>
                     </button>
-                    <div class="post-rating-count">@Model.Points</div>
+                    <div class="post-rating-count">@Model.post.Points</div>
                     <button type="submit" class="btn btn-link vote">
                         <span class="glyphicon glyphicon-menu-down"></span>
                     </button>
                 </div>
-                <a class="image-link" href="@Model.Link">
-                    <div class="photo-sm margin-top" style="background: url(http://upload.wikimedia.org/wikipedia/commons/9/9e/Steve_Ballmer_at_CES_2010.jpg) center / cover;"></div>
-                </a>
-                <h1>@Model.Title</h1>
-                <p class="post-body-info">
-                    <span class="post-author">Posted by <a href="#"><strong>@Model.User.FirstName</strong></a></span>
-                    <span class="post-date"> on <strong>@Model.DateCreated.ToString("MMM dd, yyy @ HH:mm")</strong>.</span>
-                </p>
-                <p>
-                    Windows phone hotmail leadership Zune most people steal music google is not a real company. Linux is a cancer Whoo! vista microsoft word bing outlook most people steal music windows leadership. Linux is a cancer google is not a real company i don't know what a monopoly is linux is not in the public domain windows i've got my kids brainwashed most people steal music winning innovation. Hotmail i don't know what a monopoly is linux is not in the public domain bing. Linux is a cancer hotmail i have never honestly thrown a chair in my life open source windows phone.
-                </p>
-                <p>
-                    Leadership powerpoint presentation Whoo! microsoft excel. Innovation no i do not have an ipod windows will be everywhere bing i have never honestly thrown a chair in my life open source Zune linux is not in the public domain. Powerpoint presentation Whoo! i've got my kids brainwashed Zune DEVELOPERS microsoft excel. Winning google is not a real company Zune hotmail bing i have never honestly thrown a chair in my life. Open source outlook programming vista DEVELOPERS.
-                </p>
-            </div>
-            <div class="post-comments">
+                @if (Model.post.Image != null)
+                {
+                        <a class="image-link" href="@Model.post.Image">
+                            <div class="photo-sm margin-top" style="background: url(@Model.post.Image) center / cover;"></div>
+                        </a>
+                }
+                else if (Model.post.Link != null)
+                {
+                        <a class="image-link" href="@Model.post.Link">
+                            <div class="photo-sm margin-top" style="background: url(@Model.post.Link) center / cover;"></div>
+                        </a>
+                }
 
+                <h1>@Model.post.Title</h1>
+                <p class="post-body-info">
+                    <span class="post-author">Posted by <a href="#"><strong>@Model.post.User.FirstName</strong></a></span>
+                    <span class="post-date"> on <strong>@Model.post.DateCreated.ToString("MMM dd, yyy @ HH:mm")</strong>.</span>
+                </p>
+                <p>
+                        @Model.post.Text               
+                 </p>
+            </div>
+            <div class="post-comments clearfix sep-top">
+                <h2>Comments</h2>
+                <div class="parent-comment-container">
+                    <div class="comment-container">
+                        <a href="#">
+                            <div class="info-photo comment" style="background: url(../images/people/people_hordur.jpg) center / cover;"></div>
+                        </a>
+                        <div class="comment-body">
+                            <p class="comment-info">
+                                <span class="post-author">Posted by <a href="#"><strong>Hörður Ragnarsson</strong></a></span>
+                                <span class="post-date"> on <strong>9. mars 2015 18:48</strong>.</span>
+                            </p>
+                            <p class="comment-text">
+                                Ohh, I like Microsoft very too, many micro very soft!
+                            </p>
+                            <button type="button" class="btn btn-link btn-xs btn-hooli-link">Reply</button>
+                            <div class="reply-to-comment">
+                                <form>
+                                    <div class="form-group margin-b-no">
+                                        <textarea class="form-control input-sm full-width margin-b-no" id="post_body" placeholder="Type your reply."></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary btn-sm btn-block">Reply!</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="parent-comment-container">
+                    <div class="comment-container">
+                        <a href="#">
+                            <div class="info-photo comment" style="background: url(../images/people/people_kari.jpg) center / cover;"></div>
+                        </a>
+                        <div class="comment-body">
+                            <p class="comment-info">
+                                <span class="post-author">Posted by <a href="#"><strong>Kári Mímisson</strong></a></span>
+                                <span class="post-date"> on <strong>9. mars 2015 18:48</strong>.</span>
+                            </p>
+                            <p class="comment-text">
+                                Wow, that post was awesome, keep it up Johann!
+                            </p>
+                            <button type="button" class="btn btn-link btn-xs btn-hooli-link">Reply</button>
+                        </div>
+                    </div>
+                    <div class="parent-comment-container">
+                        <div class="comment-container">
+                            <a href="#">
+                                <div class="info-photo comment" style="background: url(../images/people/people_musk.jpg) center / cover;"></div>
+                            </a>
+                            <div class="comment-body">
+                                <p class="comment-info">
+                                    <span class="post-author">Posted by <a href="#"><strong>Elon Musk</strong></a></span>
+                                    <span class="post-date"> on <strong>9. mars 2015 18:48</strong>.</span>
+                                </p>
+                                <p class="comment-text">
+                                    I totally agree with you Kári!
+                                </p>
+                                <button type="button" class="btn btn-link btn-xs btn-hooli-link">Reply</button>
+                            </div>
+                        </div>
+                        <div class="parent-comment-container">
+                            <div class="comment-container">
+                                <a href="#">
+                                    <div class="info-photo comment" style="background: url(../images/people/people_hordur.jpg) center / cover;"></div>
+                                </a>
+                                <div class="comment-body">
+                                    <p class="comment-info">
+                                        <span class="post-author">Posted by <a href="#"><strong>Hörður Ragnarsson</strong></a></span>
+                                        <span class="post-date"> on <strong>9. mars 2015 18:48</strong>.</span>
+                                    </p>
+                                    <p class="comment-text">
+                                        Dude, when is the new tesla coming out??!
+                                    </p>
+                                    <button type="button" class="btn btn-link btn-xs btn-hooli-link">Reply</button>
+                                </div>
+                            </div>
+                            <div class="parent-comment-container">
+                                <div class="comment-container">
+                                    <a href="#">
+                                        <div class="info-photo comment" style="background: url(../images/people/people_musk.jpg) center / cover;"></div>
+                                    </a>
+                                    <div class="comment-body">
+                                        <p class="comment-info">
+                                            <span class="post-author">Posted by <a href="#"><strong>Elon Musk</strong></a></span>
+                                            <span class="post-date"> on <strong>9. mars 2015 18:48</strong>.</span>
+                                        </p>
+                                        <p class="comment-text">
+                                            Soon Hörður, very soon ;)
+                                        </p>
+                                        <button type="button" class="btn btn-link btn-xs btn-hooli-link">Reply</button>
+                                    </div>
+                                </div>
+                                <div class="parent-comment-container">
+                                    <div class="comment-container">
+                                        <a href="#">
+                                            <div class="info-photo comment" style="background: url(../images/people/people_hordur.jpg) center / cover;"></div>
+                                        </a>
+                                        <div class="comment-body">
+                                            <p class="comment-info">
+                                                <span class="post-author">Posted by <a href="#"><strong>Hörður Ragnarsson</strong></a></span>
+                                                <span class="post-date"> on <strong>9. mars 2015 18:48</strong>.</span>
+                                            </p>
+                                            <p class="comment-text">
+                                                You devious...
+                                            </p>
+                                            <button type="button" class="btn btn-link btn-xs btn-hooli-link">Reply</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="parent-comment-container">
+                        <div class="comment-container">
+                            <a href="#">
+                                <div class="info-photo comment" style="background: url(../images/people/people_statham.jpg) center / cover;"></div>
+                            </a>
+                            <div class="comment-body">
+                                <p class="comment-info">
+                                    <span class="post-author">Posted by <a href="#"><strong>Jason Statham</strong></a></span>
+                                    <span class="post-date"> on <strong>9. mars 2015 18:48</strong>.</span>
+                                </p>
+                                <p class="comment-text">
+                                    Hey Kári, up for a double cheese at Mickey Dees?
+                                </p>
+                                <button type="button" class="btn btn-link btn-xs btn-hooli-link">Reply</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
