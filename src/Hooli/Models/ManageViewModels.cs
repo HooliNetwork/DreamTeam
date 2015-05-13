@@ -89,13 +89,4 @@ namespace Hooli.Models
         public string SelectedProvider { get; set; }
         public ICollection<SelectListItem> Providers { get; set; }
     }
-
-    public class EditProfileViewModel
-    {
-        public string Email { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public DateTime DateOfBirth { get; set; }
-        public IFormFile ProfilePicture { get; set; }
-    }
 }
