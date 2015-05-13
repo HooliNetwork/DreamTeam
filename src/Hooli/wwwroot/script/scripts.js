@@ -1,4 +1,4 @@
-﻿
+
 
 $(document).ready(function () {
     //TODO: add a check so that if a person clicks a previously selected button classes aren't added
@@ -23,6 +23,84 @@ $(document).ready(function () {
         $(".new-post-container").toggleClass('open');
     });
     
+    $(".search-filters button").click(function() {
+        $(this).siblings().not(".btn-option").toggleClass("btn-option");
+        $(this).toggleClass("btn-option");
+        var filter = $(this).attr("name");
+
+        if(filter === "s_all") {
+            $(".search-results").show(100);
+        } else {
+            $(".search-results").not('.' + filter).hide(100);            
+            $('.' + filter).show(100);
+        }
+    })
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    })
+    
+    $(".create-group-button").click(function () {
+        $(".edit-info-container").toggleClass('open');
+    });
+
+
+    // Search results filter
+    $(".search-filters button").click(function () {
+        $(this).siblings().not(".btn-option").toggleClass("btn-option");
+        $(this).toggleClass("btn-option");
+        var filter = $(this).attr("name");
+
+        if (filter === "s_all") {
+            $(".search-results").show(100);
+        } else {
+            $(".search-results").not('.' + filter).hide(100);
+            $('.' + filter).show(100);
+        }
+    })
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    
+    $('.image-link').magnificPopup({type:'image'});
+    
+    $('.popup-link').magnificPopup({ 
+        type: 'image'
+        // other options
+    });
+
+    $(".btn-follow").click(function () {
+        var currBtn = $(this);
+        var btnText = $("span", this);
+        var btnType = btnText.text();
+        var uri = currBtn.attr('data-url');
+        var id = currBtn.attr('data-id');
+        console.log(uri + id);
+        $.ajax({
+            type: "POST",
+            url: uri,
+            data: {
+                'Id': id
+            }
+        }).success(function (result) {
+            if (btnType === "Follow") {
+                btnText.text("Unfollow");
+            } else if (btnType === "Unfollow") {
+                btnText.text("Follow");
+            } else if (btnType === "Attend") {
+                btnText.text("Unattend");
+            } else {
+                btnText.text("Attend");
+            }
+            currBtn.toggleClass("btn-option")
+        }).fail(function (error) {
+            alert("There was an error posting the data to the server: " + error.responseText);
+        });
+    });
+    
 });
+
+
 
 

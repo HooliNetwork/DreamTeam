@@ -1,0 +1,42 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    // ViewBag.Title = "Home Page";
+}
+
+@model List<Hooli.Models.ApplicationUser>
+
+<div class="col-md-8">
+    <div class="content-box">
+        <h1>People you are following</h1>
+        <div class="row following-info-container following-people">
+
+            @if (Model != null)
+            {
+                @foreach (var u in Model)
+                {
+                    System.Diagnostics.Debug.WriteLine(u.Id);
+                    <div class="info-photo-container col-sm-12 col-md-6">
+                        @if (u.ProfilePicture != null)
+                        {
+                            <div class="info-photo" style="background: url(@u.ProfilePicture) center / cover;">
+                                <div class="info-photo-shade">
+                                    <a href="#"><h1>@u.FirstName @u.LastName</h1></a>
+                                </div>
+                            </div>
+                        }
+                         @if (u.ProfilePicture == null)
+                         {
+                            <div class="info-photo" style="background: url(@Url.Content("~/images/hooli_profilephoto_default.jpg")) center / cover;">
+                                <div class="info-photo-shade">
+                                    <a href="#"><h1>@u.FirstName @u.LastName</h1></a>
+                                </div>
+                            </div>
+                         } 
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>

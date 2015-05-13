@@ -2,5 +2,67 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    // ViewBag.Title = "Home Page";
+// ViewBag.Title = "Home Page";
 }
+@model Hooli.Models.Group
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="content-box padding-remove-sides">
+            <div class="info-photo-container">
+                @if (Model.Image != null)
+                {
+                <div class="info-photo" style="background: url(@Model.Image) center / cover;">
+                    <div class="info-photo-shade">
+                        <a href="#"><h1>Silicon valley</h1></a>
+                    </div>
+                </div>
+                }
+                @if (Model.Image == null)
+                {
+                    <div class="info-photo" style="background: url(@Url.Content("~/images/hooli_groupphoto_default.jpg")) center / cover;">
+                        <div class="info-photo-shade">
+                            <a href="#"><h1>@Model.GroupName</h1></a>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="group-info padding-side">
+                <p class="group-info-description">@Model.Description</p>
+                <button type="button" class="btn btn-primary btn-block">
+                    <span>Join group</span>
+                </button>
+                <button type="button" class="btn btn-primary btn-block btn-option">
+                    <span>Leave group</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="content-box">
+            <h1>Group feed</h1>
+            <div class="posts-orderby">
+                <button type="button" class="btn btn-primary btn-2way btn-option">
+                    <span>New</span>
+                </button>
+                <button type="button" class="btn btn-primary btn-2way btn-selected">
+                    <span>Top</span>
+                </button>
+            </div>
+            <div class="new-post">
+                <button type="button" class="btn btn-primary btn-block create-post-button">
+                    <span>Add new Post</span>
+                </button>
+                @await Html.PartialAsync("_Create", ViewData["Post"])
+            </div>
+
+
+
+            <!-- This below is new -->
+            @*@await Component.InvokeAsync("Feed", true, true)*@
+
+
+        </div>
+    </div>
+
+</div>

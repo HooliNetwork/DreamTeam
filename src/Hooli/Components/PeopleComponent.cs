@@ -11,10 +11,10 @@ using System.Security.Claims;
 
 namespace Hooli.Components
 {
-    [ViewComponent(Name = "Group")]
-    public class GroupComponent : ViewComponent
+    [ViewComponent(Name = "People")]
+    public class PeopleComponent : ViewComponent
     {
-        public GroupComponent(UserManager<ApplicationUser> userManager)
+        public PeopleComponent(UserManager<ApplicationUser> userManager)
         {
             UserManager = userManager;
         }
@@ -36,6 +36,7 @@ namespace Hooli.Components
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
+            System.Diagnostics.Debug.WriteLine("The Invoke");
             //var group = await Cache.GetOrSet("group", async context =>
             //{
             //    context.SetAbsoluteExpiration(TimeSpan.FromMinutes(10));
@@ -43,10 +44,10 @@ namespace Hooli.Components
             //});
             //return View(group);
             var user = await GetCurrentUserAsync();
-            var groups = DbContext.GroupMembers
-                    .Where(u => u.UserId == user.Id)
-                    .Select(u => u.GroupId).ToList();
-             return View( await GetGroups(groups));
+            var people = DbContext.FollowRelations
+                           .Where(u => u.FollowerId == user.Id)
+                           .Select(u => u.FollowingId).ToList();
+            return View(await GetPeople(people));
         }
 
         //private async Task<Group> GetUserGroups()
@@ -62,13 +63,13 @@ namespace Hooli.Components
             return await UserManager.FindByIdAsync(Context.User.GetUserId());
         }
 
-        private async Task<List<Group>> GetGroups(IEnumerable<string> group)
+        private async Task<List<ApplicationUser>> GetPeople(IEnumerable<string> people)
         {
             System.Diagnostics.Debug.WriteLine("Inside the getgroup function");
-            var groups = await DbContext.Groups
-                .Where(g => group.Contains(g.GroupId))
+            var peoples = await DbContext.Users
+                .Where(p => people.Contains(p.Id))
                 .ToListAsync();
-            return groups;
+            return peoples;
         }
 
     }
