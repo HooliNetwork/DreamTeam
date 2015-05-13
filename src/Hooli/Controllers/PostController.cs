@@ -17,10 +17,12 @@ using Microsoft.Net.Http.Headers;
 using System.IO;
 using Hooli.CloudStorage;
 using Microsoft.WindowsAzure.Storage.Blob;
+using System.Collections.Generic;
 
 namespace Hooli.Controllers
 {
     [Authorize]
+    [Route("[controller]")]
     public class PostController : Controller
     {
         private IConnectionManager _connectionManager;
@@ -30,14 +32,8 @@ namespace Hooli.Controllers
         {
             UserManager = userManager;
         }
-        //public PostController(UserManager<ApplicationUser> userManager, GroupManager<Group> groupManager)
-        //{
-        //    UserManager = userManager;
-        //    GroupManager = groupManager;
-        //}
 
         public UserManager<ApplicationUser> UserManager { get; private set; }
-        //        public GroupManager<Group> GroupManager { get; private set; }
 
         [FromServices]
         public HooliContext DbContext { get; set; }
@@ -62,9 +58,14 @@ namespace Hooli.Controllers
             }
         }
 
-        public IActionResult Index()
+        [HttpGet("{id}")]
+        public IActionResult Index(int id)
         {
-            return View();
+        System.Diagnostics.Debug.WriteLine(id);
+            var post =  DbContext.Posts
+                .Include(u => u.User)
+                .Single(p => p.PostId == id);
+            return View(post);
         }
 
         [HttpPost("{id}")]
