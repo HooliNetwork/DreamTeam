@@ -84,7 +84,7 @@
                 {
                     <div class="info-photo-container col-sm-12 col-md-6 search-results s_people">
                         <div class="info-container">
-                            <a asp-controller="People" asp-action="Index" asp-route-id="@u.Id">
+                            <a asp-controller="Profile" asp-action="Index" asp-route-id="@u.UserName">
                                 @if (u.ProfilePicture != null)
                                 {
                                     <div class="info-photo" style="background: url(@u.ProfilePicture) center / cover;">
