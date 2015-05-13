@@ -10,6 +10,7 @@
     <link rel="shortcut icon" href="">
     <link href='http://fonts.googleapis.com/css?family=Rambla:400,700,400italic' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/magnific-popup.css"> 
     <link rel="stylesheet" href="../css/site.css" />
     <!--[if IE]>
         <script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -142,18 +143,22 @@
                     <h1>Search results</h1>
                     <div class="row following-info-container">
                         <div class="info-photo-container col-sm-12 col-md-6 search-results s_groups">
-                            <div class="info-photo" style="background: url(../images/groups/group_silicon.jpg) center / cover;">
-                                <button type="button" class="btn btn-primary btn-selected pull-right btn-trans">
+                            <div class="info-container">
+                                <a href="/..">
+                                    <div class="info-photo" style="background: url(../images/groups/group_silicon.jpg) center / cover;">
+                                        <div class="info-photo-shade">
+                                            <h1>Silicon valley</h1>
+                                        </div>
+                                    </div>
+                                </a>
+                                <button type="button" class="btn-follow btn btn-primary pull-right btn-trans">
                                     <span>Follow</span>
                                 </button>
-                                <div class="info-photo-shade">
-                                    <a href="#"><h1>Silicon valley</h1></a>
-                                </div>
                             </div>
                         </div>
                         <div class="info-photo-container col-sm-12 col-md-6 search-results s_people">
                             <div class="info-photo" style="background: url(../images/people/people_kari.jpg) center / cover;">
-                                <button type="button" class="btn btn-primary btn-option pull-right btn-trans">
+                                <button type="button" class="btn-follow btn btn-primary btn-option pull-right btn-trans" data-url="/Manage/UnfollowGroup">
                                     <span>Unfollow</span>
                                 </button>                                 
                                 <div class="info-photo-shade">
@@ -163,7 +168,7 @@
                         </div>
                         <div class="info-photo-container col-sm-12 col-md-6 search-results s_groups">
                             <div class="info-photo" style="background: url(../images/groups/group_bitcoin.jpg) center / cover;">
-                                <button type="button" class="btn btn-primary btn-selected pull-right btn-trans">
+                                <button type="button" class="btn-follow btn btn-primary pull-right btn-trans">
                                     <span>Follow</span>
                                 </button>
                                 <div class="info-photo-shade">
@@ -173,7 +178,7 @@
                         </div> 
                         <div class="info-photo-container col-sm-12 col-md-6 search-results s_events">
                             <div class="info-photo" style="background: url(../images/events/event_party.jpg) center / cover;">
-                                <button type="button" class="btn btn-primary btn-selected pull-right btn-trans">
+                                <button type="button" class="btn-follow btn btn-primary pull-right btn-trans">
                                     <span>Attend</span>
                                 </button>
                                 <div class="info-photo-shade">
@@ -183,7 +188,7 @@
                         </div> 
                         <div class="info-photo-container col-sm-12 col-md-6 search-results s_people">
                             <div class="info-photo" style="background: url(../images/people/people_statham.jpg) center / cover;">
-                                <button type="button" class="btn btn-primary btn-selected pull-right btn-trans">
+                                <button type="button" class="btn-follow btn btn-primary pull-right btn-trans">
                                     <span>Follow</span>
                                 </button>
                                 <div class="info-photo-shade">
@@ -193,8 +198,8 @@
                         </div>
                         <div class="info-photo-container col-sm-12 col-md-6 search-results s_events">
                             <div class="info-photo" style="background: url(../images/events/event_pitch.jpg) center / cover;">
-                                <button type="button" class="btn btn-primary btn-option pull-right btn-trans">
-                                    <span>Not attending</span>
+                                <button type="button" class="btn-follow btn btn-primary btn-option pull-right btn-trans">
+                                    <span>Unattend</span>
                                 </button>                                 
                                 <div class="info-photo-shade">
                                     <a href="#"><h1>Pitch Perfect 2</h1></a>
@@ -203,7 +208,7 @@
                         </div>
                         <div class="info-photo-container col-sm-12 col-md-6 search-results s_people">
                             <div class="info-photo" style="background: url(../images/people/people_musk.jpg) center / cover;">
-                                <button type="button" class="btn btn-primary btn-selected pull-right btn-trans">
+                                <button type="button" class="btn-follow btn btn-primary pull-right btn-trans">
                                     <span>Follow</span>
                                 </button>
                                 <div class="info-photo-shade">
@@ -213,7 +218,7 @@
                         </div>
                         <div class="info-photo-container col-sm-12 col-md-6 search-results s_groups">
                             <div class="info-photo" style="background: url(../images/groups/group_cheese.jpg) center / cover;">
-                                <button type="button" class="btn btn-primary btn-selected pull-right btn-trans">
+                                <button type="button" class="btn-follow btn btn-primary pull-right btn-trans">
                                     <span>Follow</span>
                                 </button>
                                 <div class="info-photo-shade">
@@ -227,8 +232,9 @@
         </div>
     </main>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script> 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="../script/jquery.magnific-popup.js"></script>
     <script src="../script/scripts.js"></script>
 </body>
 </html>
