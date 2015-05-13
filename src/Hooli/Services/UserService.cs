@@ -22,6 +22,7 @@ namespace Hooli.Services
         {
             DbContext = dbContext;
         }
+
         public async Task<string> GetProfilePictureUrl(string userId)
         {
             Console.WriteLine(userId);
@@ -29,5 +30,38 @@ namespace Hooli.Services
             Console.WriteLine(user.ProfilePicture);
             return user.ProfilePicture;
         }
+
+        public async Task<string> GetLastname(string userId)
+        {
+            Console.WriteLine(userId);
+            var user = await DbContext.Users.SingleAsync(u => u.Id == userId);
+            Console.WriteLine(user.ProfilePicture);
+            return user.LastName;
+        }
+
+        public async Task<string> GetFirstname(string userId)
+        {
+            Console.WriteLine(userId);
+            var user = await DbContext.Users.SingleAsync(u => u.Id == userId);
+            Console.WriteLine(user.ProfilePicture);
+            return user.FirstName;
+        }
+
+        public async Task<DateTime> GetDateOfBirth(string userId)
+        {
+            Console.WriteLine(userId);
+            var user = await DbContext.Users.SingleAsync(u => u.Id == userId);
+            Console.WriteLine(user.ProfilePicture);
+            return user.DateOfBirth;
+        }
+
+        public async Task<string> GetUserName(string userId)
+        {
+            Console.WriteLine(userId);
+            var user = await DbContext.Users.SingleAsync(u => u.Id == userId);
+            Console.WriteLine(user.ProfilePicture);
+            return user.UserName;
+        }
+
     }
 }
