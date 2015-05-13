@@ -87,6 +87,18 @@
                                     <textarea class="form-control full-width" id="group_description"></textarea>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-5 col-lg-4 control-label" for="Image">Group image</label>
+                                <div class="col-sm-9 col-md-7 col-lg-8">
+                                    <div class="fileinputs">
+                                        <input type="file" class="file file-upload"  id="file" name="file" data-val="true" data-val-length="The field Group image must be a string with a maximum length of 1024." data-val-length-max="1024"/>
+                                        <div class="fakefile full-width">
+                                            <input type="button" class="btn btn-primary btn-block file-upload-name" value="Select file" />
+                                        </div>
+                                    </div>
+                                    <div class="text-danger field-validation-valid margin-top" data-valmsg-for="Image" data-valmsg-replace="true" style=""></div>
+                                </div>
+                            </div>
                             <h2>Group settings</h2>
                             <div class="form-group" style="margin-bottom: 10px;">
                                 <label for="privacy" class="col-sm-3 col-md-5 col-lg-4 control-label">Privacy</label>
@@ -189,12 +201,9 @@
         </div>
     </main>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script> 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <script>
-        $(function () {
-          $('[data-toggle="tooltip"]').tooltip()
-        })
-    </script>
+    <script src="../script/jquery.magnific-popup.js"></script>
+    <script src="../script/scripts.js"></script>
 </body>
 </html>

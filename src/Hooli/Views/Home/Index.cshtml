@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <div class="text-right">
-                    <a href="#">See all followed groups</a>
+                    <a asp-controller="Group" asp-action="Index">See all followed groups</a>
                 </div>
             </div>
             <div class="content-box">
@@ -62,7 +62,7 @@
                     </div>
                 </div>
                 <div class="text-right">
-                    <a href="#">See all followed groups</a>
+                    <a asp-controller="People" asp-action="Index">See all followed people</a>
                 </div>
             </div>
         </div>
@@ -88,7 +88,8 @@
                     </button>
                 </div>
                 <div id="feed-content">
-                    @await Component.InvokeAsync("Feed", timeView, groupView)
+                    @await Component.InvokeAsync("Feed", timeView, groupView, "Front")
+
                 </div>
             </div>
         </div>

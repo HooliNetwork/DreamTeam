@@ -17,11 +17,13 @@ using Microsoft.Net.Http.Headers;
 using System.IO;
 using Hooli.CloudStorage;
 using Microsoft.WindowsAzure.Storage.Blob;
-using System.Net;
+using System.Collections.Generic;
+using System.Dynamic;
 
 namespace Hooli.Controllers
 {
     [Authorize]
+    [Route("[controller]")]
     public class PostController : Controller
     {
         private IConnectionManager _connectionManager;
@@ -31,14 +33,8 @@ namespace Hooli.Controllers
         {
             UserManager = userManager;
         }
-        //public PostController(UserManager<ApplicationUser> userManager, GroupManager<Group> groupManager)
-        //{
-        //    UserManager = userManager;
-        //    GroupManager = groupManager;
-        //}
 
         public UserManager<ApplicationUser> UserManager { get; private set; }
-        //        public GroupManager<Group> GroupManager { get; private set; }
 
         [FromServices]
         public HooliContext DbContext { get; set; }
@@ -63,12 +59,24 @@ namespace Hooli.Controllers
             }
         }
 
-        public IActionResult Index()
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Index(int id)
         {
-            return View();
+            var currentuser = await GetCurrentUserAsync();
+            dynamic model = new ExpandoObject();
+            System.Diagnostics.Debug.WriteLine(id);
+           model.post =  await DbContext.Posts
+                .Include(u => u.User)
+                .Include(g => g.Group)
+                .SingleAsync(p => p.PostId == id);
+            model.Joined = await DbContext.GroupMembers
+                                .Where(u => u.UserId == currentuser.Id)
+                                .Select(u => u.GroupId).ToListAsync();
+            return View(model);
         }
 
         [HttpPost("{id}")]
+        [Route("Create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Post post, CancellationToken requestAborted, IFormFile file, string id)
         {

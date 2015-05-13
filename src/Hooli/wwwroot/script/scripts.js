@@ -103,6 +103,16 @@ $(document).ready(function () {
         return false;
     });
 
+    $(".file-upload").change(function(){
+        var FileName = $(this).val().slice(12);
+        var FileNameLength = FileName.length;
+        if (FileNameLength > 27) {
+            $(".file-upload-name").val(FileName.slice(0,16) + "..." + FileName.slice(FileNameLength - 8));
+        } else {
+            $(".file-upload-name").val(FileName);
+        }
+    })
+
 
     $("body").on('click', ".vote", function () {
         var currBtn = $(this);
@@ -116,19 +126,19 @@ $(document).ready(function () {
             url: uri,
             data: { 'upDown': upOrDown, 'postId': id },
             success: function (result) {
-                var value = parseInt(count.text(), 10);
+            var value = parseInt(count.text(), 10);
                 if (upOrDown == "up") {
-                    value += 1;
-                    count.text(value);
+                value += 1;
+                count.text(value);
                 } else if (upOrDown == "down") {
                 
-                    value -= 1;
-                    count.text(value);
-                }
+                value -= 1;
+                count.text(value);
+            }
             }
         });
     });
-        
+
     
 });
 
