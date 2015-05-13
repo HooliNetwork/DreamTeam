@@ -107,30 +107,29 @@ $(document).ready(function () {
     $("body").on('click', ".vote", function () {
         var currBtn = $(this);
         var uri = currBtn.parent().attr('data-url');
-        var id = parseInt(currBtn.parent().attr('data-postId'),10);
-        var type = currBtn.attr('data-type');
-        var count = currBtn.closest("post-rating-count");
+        var id = currBtn.parent().attr('data-postId');
+        var upOrDown = currBtn.attr('data-type');
+        var count = currBtn.siblings(".post-rating-count");
         $.ajax({
-            async: false,
+            async: true,
             type: "POST",
             url: uri,
-            data: { 'type': type, 'postId': id }
-        }).success(function (result) {
-            var value = parseInt(count.text(), 10);
-            if (type == "up") {
-                value += 1;
-                count.text(value);
-            } else if (type == "down") {
-                value -= 1;
-                count.text(value);
+            data: { 'upDown': upOrDown, 'postId': id },
+            success: function (result) {
+                var value = parseInt(count.text(), 10);
+                if (upOrDown == "up") {
+                    value += 1;
+                    count.text(value);
+                } else if (upOrDown == "down") {
+                
+                    value -= 1;
+                    count.text(value);
+                }
             }
-            currBtn.toggleClass("btn-option");
-        }).fail(function (error) {
-            alert("There was an error posting the data to the server: " + error.responseText);
         });
-        return false;
     });
-
+        
+    
 });
 
 

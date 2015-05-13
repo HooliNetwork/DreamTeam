@@ -17,6 +17,7 @@ using Microsoft.Net.Http.Headers;
 using System.IO;
 using Hooli.CloudStorage;
 using Microsoft.WindowsAzure.Storage.Blob;
+using System.Net;
 
 namespace Hooli.Controllers
 {
@@ -119,17 +120,17 @@ namespace Hooli.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Vote(string type, int postId)
+        public async Task<IActionResult> Vote(string upDown, int postId)
         {
-            Console.WriteLine(type + postId);
-            //var voted = await DbContext.VoteRelations.SingleOrDefaultAsync(v => v.UserId == Context.User.GetUserId()
-            //                                                                  && v.PostId == postId);
-            //if (voted != null)
-            //{
-            //    return Json(new { success = false, responseText = "Already voted!" });
-            //}
+            Console.WriteLine(upDown + postId);
+            var voted = await DbContext.VoteRelations.SingleOrDefaultAsync(v => v.UserId == Context.User.GetUserId()
+                                                                              && v.PostId == postId);
+            if (voted != null)
+            {
+                return HttpNotFound(); // Hack to return success = false , which does not work.
+            }
             var postData = await DbContext.Posts.SingleAsync(postTable => postTable.PostId == postId);
-            if (type == "up")
+            if (upDown == "up")
             {
                 postData.Points++;
             }
@@ -137,8 +138,12 @@ namespace Hooli.Controllers
             {
                 postData.Points--;
             }
+            var VoteRelations = new VoteRelation() {PostId = postId, UserId = Context.User.GetUserId()};
+            DbContext.VoteRelations.Add(VoteRelations);
             await DbContext.SaveChangesAsync();
-            return Json(new { success = true, responseText = "Success!" });
+            
+            
+            return Json(new {responseText = "Success!" });
         }
 
         [HttpPost]
