@@ -102,6 +102,16 @@ $(document).ready(function () {
         });
         return false;
     });
+    
+    $(".file-upload").change(function(){
+        var FileName = $(this).val().slice(12);
+        var FileNameLength = FileName.length;
+        if (FileNameLength > 27) {
+            $(".file-upload-name").val(FileName.slice(0,16) + "..." + FileName.slice(FileNameLength - 8));
+        } else {
+            $(".file-upload-name").val(FileName);
+        }
+    })
 
 
 });

@@ -7,15 +7,6 @@ body {
     background-repeat:round;
 }
 
-/* Set widths on the form inputs since otherwise they're 100% wide */
-input,
-select,
-textarea {
-    max-width: 280px;
-}
-
-/* Wrapping element */
-/* Set some basic padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
@@ -554,6 +545,35 @@ form input[type=radio] {
     border-right: none;
 }
 
+.fileinputs {
+    position: relative;
+    width: 100%;
+}
+
+.fakefile {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+    width: 100%;
+}
+
+.fakefile input[type=button] {
+    cursor: pointer;
+    width: 100%;
+}
+
+.fileinputs input.file {
+    position: relative;
+    text-align: right;
+    -moz-opacity:0 ;
+    filter:alpha(opacity: 0);
+    opacity: 0;
+    z-index: 2;
+    width: 100%;
+    cursor: pointer;
+}
+
 .col-centered {
     float: none;
     margin: 0 auto;
@@ -662,6 +682,26 @@ form input[type=radio] {
     .btn-option:hover {
         background: #CCC;
         color: #333;
+    }
+    .btn-file {
+        position: relative;
+        overflow: hidden;
+    }
+    .btn-file input[type=file] {
+        
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 100px;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        outline: none;
+        background: white;
+        cursor: inherit;
+        display: block;
     }
 }
 
