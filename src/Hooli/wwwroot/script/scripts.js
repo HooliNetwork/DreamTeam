@@ -126,14 +126,13 @@ $(document).ready(function () {
             url: uri,
             data: { 'upDown': upOrDown, 'postId': id },
             success: function (result) {
-            var value = parseInt(count.text(), 10);
-                if (upOrDown == "up") {
-                value += 1;
-                count.text(value);
-                } else if (upOrDown == "down") {
-                
-                value -= 1;
-                count.text(value);
+                var value = parseInt(count.text(), 10);
+                    if (upOrDown == "up") {
+                        value += 1;
+                        count.text(value);
+                    } else if (upOrDown == "down") {
+                        value -= 1;
+                        count.text(value);
             }
             }
         });
