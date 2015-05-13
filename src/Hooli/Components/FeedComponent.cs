@@ -26,13 +26,13 @@ namespace Hooli.Components
         [Activate]
         public IMemoryCache Cache { get; set; }
 
-        public async Task<IViewComponentResult> InvokeAsync(bool latestPosts, bool group, string groupId)
+        public async Task<IViewComponentResult> InvokeAsync(bool latestPosts, bool group)
         {
             System.Diagnostics.Debug.WriteLine("Inside Feed InvokeAsync");
             var user = await GetCurrentUserAsync();
             if (group)
             {
-                System.Diagnostics.Debug.WriteLine(groupId);
+                //System.Diagnostics.Debug.WriteLine(groupId);
                 //var groups = user.GroupsMember?.Select(g => g.GroupId);
 
                 var groups = DbContext.GroupMembers
