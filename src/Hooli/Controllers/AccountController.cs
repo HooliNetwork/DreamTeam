@@ -54,7 +54,7 @@ namespace Hooli.Controllers
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set shouldLockout: true
-                var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+                var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: false);
                 if (result.Succeeded)
                 {
                     return RedirectToLocal(returnUrl);
@@ -96,7 +96,7 @@ namespace Hooli.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName};
+                var user = new ApplicationUser { UserName = model.Username, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName};
                 if ((file != null) && (file.Length > 0))
                 {
                     user.ProfilePicture = await Storage.GetUri("profilepictures", Guid.NewGuid().ToString(), file);
