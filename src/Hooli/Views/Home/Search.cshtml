@@ -102,7 +102,7 @@
                                     </div>
                                 }
                             </a>
-                            @if (Model.Joined.Contains(u.Id))
+                            @if (Model.Following.Contains(u.Id))
                             {
                                 <button type="button" data-id="@u.Id" data-url="/Manage/UnfollowGroup" class="btn-follow btn btn-primary pull-right btn-trans btn-option">
                                     <span>Unfollow</span>
