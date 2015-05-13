@@ -11,25 +11,30 @@
                 <h2>Sign up with your email address</h2>
                 <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
                 <fieldset>
-                    <input asp-for="Username" type="text" class="form-control" style="width:100%;" id="username" placeholder="Username" required="required" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Your unique URL name, hooli.com/p/yourUsername<br><strong>This cannot be changed later!</strong>" />
+                    <input asp-for="Username" type="text" class="form-control full-width" id="username" placeholder="Username" required="required" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Your unique URL name, hooli.com/p/yourUsername<br><strong>This cannot be changed later!</strong>" />
                     <span asp-validation-for="Username" class="text-danger"></span>
-
+                        
                     <input asp-for="FirstName" type="text" class="form-control" id="first_name" placeholder="First name" autofocus="autofocus" required="required"/>
-
                     <input asp-for="LastName" type="text" class="form-control" id="last_name" placeholder="Last name" required="required"/>
                     <span asp-validation-for="FirstName" class="text-danger"></span>
-
                     <span asp-validation-for="LastName" class="text-danger"></span>
-
+                        
                     <input asp-for="Email" type="email" class="form-control" id="email" placeholder="Email" required="required"/>
                     <span asp-validation-for="Email" class="text-danger"></span>
-
+                        
                     <input asp-for="Password" type="password" class="form-control" id="password" placeholder="Password" required="required"/>
                     <span asp-validation-for="Password" class="text-danger"></span>
-
+                        
                     <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Confirm password" required="required"/>
                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        
                     <input asp-for="ProfilePicture" type="file" id="file" name="file" class="form-control"/>
+                    <div class="fileinputs">
+                        <input type="file" class="file file-upload"  id="file" name="file" data-val="true" data-val-length="The field Group image must be a string with a maximum length of 1024." data-val-length-max="1024"/>
+                        <div class="fakefile full-width">
+                            <input type="button" class="btn btn-primary btn-block file-upload-name" value="Select file" style="background:#666;"/>
+                        </div>
+                    </div>
                 </fieldset>
 
                 <button type="submit" class="btn btn-primary btn-block btn-mtop" id="form_signup_button" value="Register" />Sign up</button>
