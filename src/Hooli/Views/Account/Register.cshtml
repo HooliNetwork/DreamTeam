@@ -28,11 +28,10 @@
                     <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Confirm password" required="required"/>
                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                         
-                    <input asp-for="ProfilePicture" type="file" id="file" name="file" class="form-control"/>
                     <div class="fileinputs">
-                        <input type="file" class="file file-upload"  id="file" name="file" data-val="true" data-val-length="The field Group image must be a string with a maximum length of 1024." data-val-length-max="1024"/>
+                        <input asp-for="ProfilePicture" type="file" class="file file-upload"  id="file" name="file" data-val="true" data-val-length="The field Profile image must be a string with a maximum length of 1024." data-val-length-max="1024"/>
                         <div class="fakefile full-width">
-                            <input type="button" class="btn btn-primary btn-block file-upload-name" value="Select file" style="background:#666;"/>
+                            <input type="button" class="btn btn-primary btn-block file-upload-name" value="Upload profile picture" style="background:#666;"/>
                         </div>
                     </div>
                 </fieldset>
