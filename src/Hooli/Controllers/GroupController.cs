@@ -32,7 +32,6 @@ namespace Hooli.Controllers
 
 
         // GET: /<controller>/
-
         public async Task<IActionResult> Index()
         {
             var user = await GetCurrentUserAsync();

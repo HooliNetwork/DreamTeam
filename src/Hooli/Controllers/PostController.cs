@@ -75,10 +75,14 @@ namespace Hooli.Controllers
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         [HttpPost]
 =======
         [HttpPost("Create/{id}")]
 >>>>>>> Working on the routing.
+=======
+        [HttpPost]
+>>>>>>> Removing some of the routing
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Post post, CancellationToken requestAborted, IFormFile file, string id)
         {
@@ -130,9 +134,12 @@ namespace Hooli.Controllers
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         [HttpPost]
         public async Task<IActionResult> Vote(string upDown, int postId)
 =======
+=======
+>>>>>>> Removing some of the routing
         [HttpPost("Vote")]
         public async Task<IActionResult> Vote(string type, int postId)
 >>>>>>> Working on the routing.
