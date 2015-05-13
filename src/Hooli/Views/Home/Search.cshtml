@@ -80,72 +80,78 @@
         <div class="content-box">
             <h1>Search results</h1>
             <div class="row following-info-container">
-                @foreach (var u in Model.Users)
+                @foreach (var u in Model.Users))
                 {
-                    <div class="info-photo-container col-sm-12 col-md-6 search-results s_people">
-                        <div class="info-photo" style="background: url(../images/people/people_statham.jpg) center / cover;">
-                            @if (Model.Following.Contains(u.Id))
+                    <div class="info-photo-container col-sm-12 col-md-6 search-results s_groups">
+                        <div class="info-container">
+                            <a asp-controller="People" asp-action="Index" asp-route-id="@u.Id">
+                                @if (u.Image != null)
+                                {
+                                    <div class="info-photo" style="background: url(@u.Image) center / cover;">
+                                        <div class="info-photo-shade">
+                                            <h1>@u.FirstName @u.LastName</h1>
+                                        </div>
+                                    </div>
+                                }
+                                @if (u.Image == null)
+                                {
+                                    <div class="info-photo" style="background: url(@Url.Content("~/images/hooli_profilephoto_default.jpg")) center / cover;">
+                                        <div class="info-photo-shade">
+                                            <h1>@u.FirstName @u.LastName</h1>
+                                        </div>
+                                    </div>
+                                }
+                            </a>
+                            @if (Model.Joined.Contains(u.Id))
                             {
-                                <button type="button" data-id="@u.Id" data-url="/Manage/UnfollowUser" class="btn-follow btn btn-primary pull-right btn-trans btn-option">
+                                <button type="button" data-id="@u.Id" data-url="/Manage/UnfollowGroup" class="btn-follow btn btn-primary pull-right btn-trans btn-option">
                                     <span>Unfollow</span>
                                 </button>
                             }
                             else
                             {
-                                <button type="button" data-id="@u.Id" data-url="/Manage/FollowUser" class="btn-follow btn btn-primary pull-right btn-trans">
+                                <button type="button" data-id="@u.Id" data-url="/Manage/FollowGroup" class="btn-follow btn btn-primary pull-right btn-trans">
                                     <span>Follow</span>
                                 </button>
                             }
-                            <div class="info-photo-shade">
-                                <a href="#"><h1>@u.FirstName @u.LastName</h1></a>
-                            </div>
                         </div>
                     </div>
                 }
                 @foreach (var g in Model.Groups)
                 {
                     <div class="info-photo-container col-sm-12 col-md-6 search-results s_groups">
-                        @if (g.Image != null)
-                        {
-                            <div class="info-photo" style="background: url(@g.Image) center / cover;">
-                                @if (Model.Joined.Contains(g.GroupId))
+                        <div class="info-container">
+                            <a asp-controller="Group" asp-action="SingleGroup" asp-route-id="@g.GroupId">
+                                @if (g.Image != null)
                                 {
-                                    <button type="button" data-id="@g.GroupId" data-url="/Manage/UnfollowGroup" class="btn-follow btn btn-primary pull-right btn-trans btn-option">
-                                        <span>Unfollow</span>
-                                    </button>
+                                    <div class="info-photo" style="background: url(@g.Image) center / cover;">
+                                        <div class="info-photo-shade">
+                                            <h1>@g.GroupName</h1>
+                                        </div>
+                                    </div>
                                 }
-                                else
+                                @if (g.Image == null)
                                 {
-                                    <button type="button" data-id="@g.GroupId" data-url="/Manage/FollowGroup" class="btn-follow btn btn-primary pull-right btn-trans">
-                                        <span>Follow</span>
-                                    </button>
+                                    <div class="info-photo" style="background: url(@Url.Content("~/images/hooli_groupphoto_default.jpg")) center / cover;">
+                                        <div class="info-photo-shade">
+                                            <h1>@g.GroupName</h1>
+                                        </div>
+                                    </div>
                                 }
-                                <div class="info-photo-shade">
-                                    <a asp-controller="Group" asp-action="SingleGroup" asp-route-id="@g.GroupId"><h1>@g.GroupName</h1></a>
-                                </div>
-                            </div>
-                        }
-                        @if (g.Image == null)
-                        {
-                            <div class="info-photo" style="background: url(@Url.Content("~/images/hooli_groupphoto_default.jpg")) center / cover;">
-                                @if (Model.Joined.Contains(g.GroupId))
-                                {
-                                    <button type="button" data-id="@g.GroupId" data-url="/Manage/UnfollowGroup" class="btn-follow btn btn-primary pull-right btn-trans btn-option">
-                                        <span>Unfollow</span>
-                                    </button>
-                                }
-                                else
-                                {
-                                    <button type="button" data-id="@g.GroupId" data-url="/Manage/FollowGroup" class="btn-follow btn btn-primary pull-right btn-trans">
-                                        <span>Follow</span>
-                                    </button>
-                                }
-                                <div class="info-photo-shade">
-                                    <a asp-controller="Group" asp-action="SingleGroup" asp-route-id="@g.GroupId"><h1>@g.GroupName</h1></a>
-                                </div>
-                            </div>
-                        }
-                      
+                            </a>
+                            @if (Model.Joined.Contains(g.GroupId))
+                            {
+                                <button type="button" data-id="@g.GroupId" data-url="/Manage/UnfollowGroup" class="btn-follow btn btn-primary pull-right btn-trans btn-option">
+                                    <span>Unfollow</span>
+                                </button>
+                            }
+                            else
+                            {
+                                <button type="button" data-id="@g.GroupId" data-url="/Manage/FollowGroup" class="btn-follow btn btn-primary pull-right btn-trans">
+                                    <span>Follow</span>
+                                </button>
+                            }
+                        </div>
                     </div>
                 }
                 @*@foreach (var e in Model.Events)
