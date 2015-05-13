@@ -32,12 +32,13 @@ namespace Hooli.Components
             var user = await GetCurrentUserAsync();
             if (group)
             {
+                //System.Diagnostics.Debug.WriteLine(groupId);
                 //var groups = user.GroupsMember?.Select(g => g.GroupId);
 
                 var groups = DbContext.GroupMembers
                      .Where(u => u.UserId == user.Id)
                      .Select(u => u.GroupId).ToList();
-
+                System.Diagnostics.Debug.WriteLine("2");
                  if (latestPosts && groups != null)
                 { 
                 //   var post = await Cache.GetOrSet("latestGroupPost", async context =>
@@ -45,7 +46,7 @@ namespace Hooli.Components
                 //    context.SetAbsoluteExpiration(TimeSpan.FromMinutes(5));
                 //   return await GetLatestGroupPost(groups);
                 //});
-                //System.Diagnostics.Debug.WriteLine("3");
+                System.Diagnostics.Debug.WriteLine("3");
                 var post = GetLatestGroupPost(groups);
                 return View(post);
                 }
@@ -56,6 +57,7 @@ namespace Hooli.Components
                         context.SetAbsoluteExpiration(TimeSpan.FromMinutes(5));
                         return await GetPopularGroupPosts(groups);
                     });
+
                     return View(post);
                 }
                 else

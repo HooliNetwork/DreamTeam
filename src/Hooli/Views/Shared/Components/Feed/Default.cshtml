@@ -5,12 +5,12 @@
     @foreach (var p in Model) {
     <div class="post">
         <div class="row">
-            <div class="col-xs-2 col-sm-1 post-rating">
-                <button type="submit" class="btn btn-link vote">
+            <div class="col-xs-2 col-sm-1 post-rating" data-url="/Post/Vote" data-postId="@p.PostId">
+                <button type="button" data-type="up" class="btn btn-link vote btn-up">
                     <span class="glyphicon glyphicon-menu-up"></span>
                 </button>
                 <div class="post-rating-count">@p.Points</div>
-                <button type="submit" class="btn btn-link vote">
+                <button type="button" data-type="down" class="btn btn-link vote btn-down">
                     <span class="glyphicon glyphicon-menu-down"></span>
                 </button>
             </div>

@@ -131,6 +131,7 @@ namespace Hooli
 
             //Configure SignalR
             app.UseSignalR();
+
             // Add authentication middleware to the request pipeline. You can configure options such as Id and Secret in the ConfigureServices method.
             // For more information see http://go.microsoft.com/fwlink/?LinkID=532715
             // app.UseFacebookAuthentication();

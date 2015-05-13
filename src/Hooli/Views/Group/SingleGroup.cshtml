@@ -14,7 +14,7 @@
                 {
                 <div class="info-photo" style="background: url(@Model.Image) center / cover;">
                     <div class="info-photo-shade">
-                        <a href="#"><h1>Silicon valley</h1></a>
+                        <a href="#"><h1>@Model.GroupName</h1></a>
                     </div>
                 </div>
                 }
@@ -59,7 +59,7 @@
 
 
             <!-- This below is new -->
-            @*@await Component.InvokeAsync("Feed", true, true)*@
+            @await Component.InvokeAsync("Feed", true, false)
 
 
         </div>

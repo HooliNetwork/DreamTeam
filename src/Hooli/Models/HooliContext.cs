@@ -23,12 +23,15 @@ namespace Hooli.Models
         [Display(Name = "ImageURI")]
         [StringLength(1024)]
         public string ProfilePicture { get; set; }
-        [ForeignKey("UserID")]
+        [ForeignKey("UserId")]
         public virtual List<Post> Posts { get; set; }
         public virtual List<Event> Events { get; set; }
 
-        [ForeignKey("UserID")]
+        [ForeignKey("UserId")]
         public virtual List<GroupMember> GroupsMember { get; set; }
+
+        [ForeignKey("UserId")]
+        public virtual List<VoteRelation> votes { get; set; }
 
         public virtual List<FollowRelation> Following { get; set; }
         public virtual List<FollowRelation> Followers { get; set; }
@@ -50,6 +53,8 @@ namespace Hooli.Models
         public DbSet<Group> Groups { get; set; }
         public DbSet<FollowRelation> FollowRelations { get; set; }
         public DbSet<GroupMember> GroupMembers { get; set; }
+        public DbSet<VoteRelation> VoteRelations { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -75,6 +80,13 @@ namespace Hooli.Models
             builder.Entity<GroupMember>()
                 .Reference(c => c.Member)
                 .InverseCollection(g => g.GroupsMember)
+                .ForeignKey(c => c.UserId);
+
+            builder.Entity<VoteRelation>()
+                .Key(k => new { k.UserId, k.PostId });
+            builder.Entity<VoteRelation>()
+                .Reference(c => c.Voter)
+                .InverseCollection(g => g.votes)
                 .ForeignKey(c => c.UserId);
             base.OnModelCreating(builder);
         }

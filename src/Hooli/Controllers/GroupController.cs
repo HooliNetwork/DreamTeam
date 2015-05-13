@@ -29,6 +29,7 @@ namespace Hooli.Controllers
         [FromServices]
         public UserManager<ApplicationUser> UserManager { get; set; }
 
+
         // GET: /<controller>/
 
         public async Task<IActionResult> Index()
@@ -45,6 +46,7 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateGroup(Group group, CancellationToken requestAborted, IFormFile file)
         {
+        
             var user = await GetCurrentUserAsync();
             if (ModelState.IsValid && user != null)     
             {
@@ -165,6 +167,8 @@ namespace Hooli.Controllers
         {
             return await UserManager.FindByIdAsync(Context.User.GetUserId());
         }
+
+         
 
     }
 }

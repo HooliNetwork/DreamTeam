@@ -12,7 +12,7 @@ namespace Hooli.Migrations
     {
         public override string Id
         {
-            get { return "20150511233309_M"; }
+            get { return "20150513130410_M"; }
         }
         
         public override string ProductVersion
@@ -166,6 +166,15 @@ namespace Hooli.Migrations
                         b.Key("PostId");
                     });
                 
+                builder.Entity("Hooli.Models.VoteRelation", b =>
+                    {
+                        b.Property<int>("PostId")
+                            .Annotation("OriginalValueIndex", 0);
+                        b.Property<string>("UserId")
+                            .Annotation("OriginalValueIndex", 1);
+                        b.Key("UserId", "PostId");
+                    });
+                
                 builder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityRole", b =>
                     {
                         b.Property<string>("ConcurrencyStamp")
@@ -256,6 +265,12 @@ namespace Hooli.Migrations
                     {
                         b.ForeignKey("Hooli.Models.Group", "GroupGroupId");
                         b.ForeignKey("Hooli.Models.Post", "ParentPostId");
+                        b.ForeignKey("Hooli.Models.ApplicationUser", "UserId");
+                    });
+                
+                builder.Entity("Hooli.Models.VoteRelation", b =>
+                    {
+                        b.ForeignKey("Hooli.Models.Post", "PostId");
                         b.ForeignKey("Hooli.Models.ApplicationUser", "UserId");
                     });
                 

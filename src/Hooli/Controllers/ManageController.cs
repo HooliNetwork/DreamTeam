@@ -10,7 +10,8 @@ using Microsoft.AspNet.Mvc;
 using Hooli;
 using Hooli.Models;
 using System.Threading;
-
+using Microsoft.AspNet.Http;
+using Hooli.CloudStorage;
 
 namespace Hooli.Controllers
 {
@@ -360,23 +361,6 @@ namespace Hooli.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditProfile(ApplicationUser user, CancellationToken requestAborted)
-        {
-
-            var profileData = await GetCurrentUserAsync();
-
-            profileData.FirstName = user.FirstName;
-            profileData.LastName = user.LastName;
-            profileData.DateOfBirth = user.DateOfBirth;
-            profileData.RelationshipStatus = user.RelationshipStatus;
-            profileData.ProfilePicture = user.ProfilePicture;
-
-            await DbContext.SaveChangesAsync(requestAborted);
-            return View();
         }
 
         [HttpPost]
