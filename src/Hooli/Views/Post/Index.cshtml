@@ -5,6 +5,7 @@
      ViewBag.Title = "Post";
 }
 
+@model Hooli.Models.Post
 
 <div class="row">
     <div class="col-md-4">
@@ -32,19 +33,30 @@
     <div class="col-md-8">
         <div class="content-box">
             <div class="view-post">
+                <div class="mod-controls">
+                    <button type="button" class="btn btn-primary btn-xs btn-2way">
+                        <span>Edit</span>
+                    </button>
+                    <button type="button" class="btn btn-danger btn-xs btn-2way">
+                        <span>Delete</span>
+                    </button>
+                </div>
                 <div class="post-rating">
                     <button type="submit" class="btn btn-link vote">
                         <span class="glyphicon glyphicon-menu-up"></span>
                     </button>
-                    <div class="post-rating-count">86</div>
+                    <div class="post-rating-count">@Model.Points</div>
                     <button type="submit" class="btn btn-link vote">
                         <span class="glyphicon glyphicon-menu-down"></span>
                     </button>
                 </div>
-                <h1>Microsoft is my passion</h1>
+                <a class="image-link" href="@Model.Link">
+                    <div class="photo-sm margin-top" style="background: url(http://upload.wikimedia.org/wikipedia/commons/9/9e/Steve_Ballmer_at_CES_2010.jpg) center / cover;"></div>
+                </a>
+                <h1>@Model.Title</h1>
                 <p class="post-body-info">
-                    <span class="post-author">Posted by <a href="#"><strong>Jóhann</strong></a></span>
-                    <span class="post-date"> on <strong>9. mars 2015 18:48</strong>.</span>
+                    <span class="post-author">Posted by <a href="#"><strong>@Model.User.FirstName</strong></a></span>
+                    <span class="post-date"> on <strong>@Model.DateCreated.ToString("MMM dd, yyy @ HH:mm")</strong>.</span>
                 </p>
                 <p>
                     Windows phone hotmail leadership Zune most people steal music google is not a real company. Linux is a cancer Whoo! vista microsoft word bing outlook most people steal music windows leadership. Linux is a cancer google is not a real company i don't know what a monopoly is linux is not in the public domain windows i've got my kids brainwashed most people steal music winning innovation. Hotmail i don't know what a monopoly is linux is not in the public domain bing. Linux is a cancer hotmail i have never honestly thrown a chair in my life open source windows phone.

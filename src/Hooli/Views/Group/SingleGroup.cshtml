@@ -56,7 +56,6 @@
                 @await Html.PartialAsync("_Create", ViewData["Post"])
             </div>
 
-            <!-- This below is new -->
             @await Component.InvokeAsync("Feed", true, true, Model.GroupId)
         </div>
     </div>
