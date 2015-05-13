@@ -59,7 +59,6 @@ namespace Hooli.Controllers
             }
         }
 
-        [HttpGet("{id}")]
         public async Task<IActionResult> Index(int id)
         {
             var currentuser = await GetCurrentUserAsync();
@@ -75,8 +74,7 @@ namespace Hooli.Controllers
             return View(model);
         }
 
-        [HttpPost("{id}")]
-        [Route("Create")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Post post, CancellationToken requestAborted, IFormFile file, string id)
         {
