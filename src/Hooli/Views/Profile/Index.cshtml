@@ -5,4 +5,55 @@
     // ViewBag.Title = "Home Page";
 }
 
-<h1>The profile page</h1>
+@model Hooli.Models.ApplicationUser
+
+<main class="container body-content">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="content-box padding-remove-sides">
+                <div class="info-photo-container">
+                    <div class="info-photo info-photo-user" style="background: url(@Model.ProfilePicture) center / cover;">
+                        <div class="info-photo-shade">
+                            <a href="#"><h1>Hörður Ragnarsson</h1></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-info row">
+                    <div class="form-group clear">
+                        <label class="col-xs-3 col-md-4 col-lg-3 control-label">Full name</label>
+                        <div class="col-xs-9 col-md-8 col-lg-9">
+                            <span>@Model.FirstName @Model.LastName</span>
+                        </div>
+                    </div>
+                    <div class="form-group clear">
+                        <label class="col-xs-3 col-md-4 col-lg-3 control-label">Age</label>
+                        <div class="col-xs-9 col-md-8 col-lg-9">
+                            <span>@Model.DateOfBirth</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group clear">
+                        <label class="col-xs-3 col-md-4 col-lg-3 control-label">Username</label>
+                        <div class="col-xs-9 col-md-8 col-lg-9">
+                            <span>@Model.UserName</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-buttons padding-side margin-top">
+                    <button type="button" class="btn btn-primary btn-block">
+                        <span>Follow</span>
+                    </button>
+                    <button type="button" class="btn btn-primary btn-block btn-option">
+                        <span>Unfollow</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="content-box">
+                <h1>User feed</h1>
+
+            </div>
+        </div>
+    </div>
+</main>
