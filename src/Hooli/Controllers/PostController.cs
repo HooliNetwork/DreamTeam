@@ -110,11 +110,13 @@ namespace Hooli.Controllers
         [HttpPost]
         public async Task<IActionResult> Vote(string type, int postId)
         {
-            var voted = await DbContext.VoteRelations.SingleOrDefaultAsync(v => v.UserId == Context.User.GetUserId());
-            if (voted != null)
-            {
-                return Json(new { success = false, responseText = "Already voted!" });
-            }
+            Console.WriteLine(type + postId);
+            //var voted = await DbContext.VoteRelations.SingleOrDefaultAsync(v => v.UserId == Context.User.GetUserId()
+            //                                                                  && v.PostId == postId);
+            //if (voted != null)
+            //{
+            //    return Json(new { success = false, responseText = "Already voted!" });
+            //}
             var postData = await DbContext.Posts.SingleAsync(postTable => postTable.PostId == postId);
             if (type == "up")
             {

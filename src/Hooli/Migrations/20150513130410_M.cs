@@ -240,6 +240,27 @@ namespace Hooli.Migrations
                         referencedTable: "AspNetUsers",
                         referencedColumn: "Id");
                 });
+            migration.CreateTable(
+                name: "VoteRelation",
+                columns: table => new
+                {
+                    PostId = table.Column(type: "int", nullable: false),
+                    UserId = table.Column(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VoteRelation", x => new { x.UserId, x.PostId });
+                    table.ForeignKey(
+                        name: "FK_VoteRelation_Post_PostId",
+                        columns: x => x.PostId,
+                        referencedTable: "Post",
+                        referencedColumn: "PostId");
+                    table.ForeignKey(
+                        name: "FK_VoteRelation_AspNetUsers_UserId",
+                        columns: x => x.UserId,
+                        referencedTable: "AspNetUsers",
+                        referencedColumn: "Id");
+                });
         }
         
         public override void Down(MigrationBuilder migration)
@@ -250,6 +271,7 @@ namespace Hooli.Migrations
             migration.DropTable("Group");
             migration.DropTable("GroupMember");
             migration.DropTable("Post");
+            migration.DropTable("VoteRelation");
             migration.DropTable("AspNetRoles");
             migration.DropTable("AspNetRoleClaims");
             migration.DropTable("AspNetUserClaims");

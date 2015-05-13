@@ -106,16 +106,16 @@ $(document).ready(function () {
 
     $("body").on('click', ".vote", function () {
         var currBtn = $(this);
-        var uri = currBtn.parent.attr('data-url');
-        var id = currBtn.parent.attr('data-id');
+        var uri = currBtn.parent().attr('data-url');
+        var id = parseInt(currBtn.parent().attr('data-postId'),10);
         var type = currBtn.attr('data-type');
+        var count = currBtn.closest("post-rating-count");
         $.ajax({
             async: false,
             type: "POST",
             url: uri,
-            data: {'type' : type }
+            data: { 'type': type, 'postId': id }
         }).success(function (result) {
-            var count = currBtn.closest("post-rating-count");
             var value = parseInt(count.text(), 10);
             if (type == "up") {
                 value += 1;

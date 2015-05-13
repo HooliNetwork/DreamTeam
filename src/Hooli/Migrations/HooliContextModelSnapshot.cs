@@ -158,14 +158,10 @@ namespace Hooli.Migrations
                 
                 builder.Entity("Hooli.Models.VoteRelation", b =>
                     {
-                        b.Property<string>("PostId")
-                            .GenerateValueOnAdd()
+                        b.Property<int>("PostId")
                             .Annotation("OriginalValueIndex", 0);
-                        b.Property<int?>("PostPostId")
-                            .Annotation("OriginalValueIndex", 1)
-                            .Annotation("ShadowIndex", 0);
                         b.Property<string>("UserId")
-                            .Annotation("OriginalValueIndex", 2);
+                            .Annotation("OriginalValueIndex", 1);
                         b.Key("UserId", "PostId");
                     });
                 
@@ -264,7 +260,7 @@ namespace Hooli.Migrations
                 
                 builder.Entity("Hooli.Models.VoteRelation", b =>
                     {
-                        b.ForeignKey("Hooli.Models.Post", "PostPostId");
+                        b.ForeignKey("Hooli.Models.Post", "PostId");
                         b.ForeignKey("Hooli.Models.ApplicationUser", "UserId");
                     });
                 
