@@ -370,7 +370,7 @@ namespace Hooli.Controllers
             // To do
             return View();
         }
-        [HttpPost("FollowGroup")]
+        [HttpPost]
         public async Task<IActionResult> FollowGroup(string Id)
         {
             var message = "";
@@ -391,7 +391,7 @@ namespace Hooli.Controllers
             return Json(new { message });
 
         }
-        [HttpPost("FollowUser")]
+        [HttpPost]
         public async Task<IActionResult> FollowUser(string Id)
         {
             var message = "";
@@ -412,7 +412,7 @@ namespace Hooli.Controllers
             return Json(new { message });
 
         }
-        [HttpPost("UnfollowGroup")]
+        [HttpPost]
         public async Task<IActionResult> UnfollowGroup(string Id)
         {
             var message = "";
@@ -434,7 +434,7 @@ namespace Hooli.Controllers
             return Json(new { message });
 
         }
-        [HttpPost("UnfollowUser")]
+        [HttpPost]
         public async Task<IActionResult> UnfollowUser(string Id)
         {
             var message = "";

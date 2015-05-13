@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity;
 using System.Security.Claims;
 using Microsoft.AspNet.Http;
 using Hooli.CloudStorage;
+using System.Dynamic;
 
 
 
@@ -33,10 +34,10 @@ namespace Hooli.Controllers
         // GET: /<controller>/
         public async Task<IActionResult> Index()
         {
-            var user = await GetCurrentUserAsync();
-            var groups = DbContext.GroupMembers
-                    .Where(u => u.UserId == user.Id)
-                    .Select(u => u.GroupId).ToList();
+            //var user = await GetCurrentUserAsync();
+            //var groups = DbContext.GroupMembers
+            //        .Where(u => u.UserId == user.Id)
+            //        .Select(u => u.GroupId).ToList();
             //  return View( await GetGroups(groups));
             return View();
         }
@@ -141,16 +142,22 @@ namespace Hooli.Controllers
         [HttpGet]
         public async Task<IActionResult> SingleGroup(string id)
         {
-            var group = await DbContext.Groups
+            dynamic model = new ExpandoObject();
+            var currentuser = await GetCurrentUserAsync();
+            model.group = await DbContext.Groups
                     .Where(a => a.GroupId == id)
                     .FirstOrDefaultAsync();
+            model.Joined = await DbContext.GroupMembers
+                                .Where(u => u.UserId == currentuser.Id)
+                                .Select(u => u.GroupId).ToListAsync();
 
-            if (group == null)
+
+            if (model.group == null)
             {
                 return HttpNotFound();
             }
 
-            return View(group);
+            return View(model);
            // return View();
         }
 
