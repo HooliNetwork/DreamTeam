@@ -76,28 +76,28 @@ namespace Hooli.Controllers
                 
                 DbContext.Posts.Add(post);
                 await DbContext.SaveChangesAsync(requestAborted);
-                
-                //var postdata = new PostData
-                //{
-                //    Title = post.Title,
-                //    // We might want link to the post
-                //    //Url = Url.Action("Details", "Post", new { id = post.PostId })
-                //    Text = post.Text
-                //};
-                //var following = DbContext.FollowRelations
-                //        .Where(u => u.FollowingId == user.Id)
-                //        .Select(u => u.FollowerId)
-                //        .ToList();
-                //foreach (object o in following)
-                //{
-                //    Console.WriteLine(o);
-                //}
-                //Console.WriteLine(Context.User.Identity.Name);
-                
-                //_feedHub.Clients.User(Context.User.Identity.Name).feed(postdata);
-                ////_feedHub.Clients.All.feed(postdata);
-                
-                //Cache.Remove("latestPost");
+
+                var postdata = new PostData
+                {
+                    Title = post.Title,
+                    // We might want link to the post
+                    //Url = Url.Action("Details", "Post", new { id = post.PostId })
+                    Text = post.Text
+                };
+                var following = DbContext.FollowRelations
+                        .Where(u => u.FollowingId == user.Id)
+                        .Select(u => u.FollowerId)
+                        .ToList();
+                foreach (object o in following)
+                {
+                    Console.WriteLine(o);
+                }
+                Console.WriteLine(Context.User.Identity.Name);
+
+                _feedHub.Clients.User(Context.User.Identity.Name).feed(postdata);
+                //_feedHub.Clients.All.feed(postdata);
+
+                Cache.Remove("latestPost");
                 return RedirectToAction("Index");
             }
             return View(post);

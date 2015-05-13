@@ -437,7 +437,7 @@ namespace Hooli.Controllers
             {
                 var group = DbContext.GroupMembers.Single(u => u.UserId == Context.User.GetUserId()
                                                              && u.GroupId == Id);
-                DbContext.GroupMembers.Add(group);
+                DbContext.GroupMembers.Remove(group);
                 await DbContext.SaveChangesAsync();
                 // process your data using the parameter value
                 message = "Successfully processed!";

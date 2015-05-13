@@ -108,7 +108,7 @@
                         <div class="info-photo" style="background: url(../images/groups/group_silicon.jpg) center / cover;">
                             @if (Model.Joined.Contains(g.GroupId))
                             {
-                                <button type="button" data-id="@g.GroupId" data-url="/Manage/UnFollowGroup" class="btn-follow btn btn-primary pull-right btn-trans btn-option">
+                                <button type="button" data-id="@g.GroupId" data-url="/Manage/UnfollowGroup" class="btn-follow btn btn-primary pull-right btn-trans btn-option">
                                     <span>Unfollow</span>
                                 </button>
                             }
@@ -141,12 +141,4 @@
         </div>
     </div>
 </div>
-@section ajaxstuff{
-    <script>
-        $(document).ready(function () {
-
-        });
-    </script>
-    }
-}
 
