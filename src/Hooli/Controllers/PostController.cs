@@ -88,13 +88,16 @@ namespace Hooli.Controllers
                         .Where(u => u.FollowingId == user.Id)
                         .Select(u => u.FollowerId)
                         .ToList();
+                var usernames = DbContext.Users
+                        .Where(u => following.Contains(u.Id))
+                        .Select(u => u.UserName).ToList();
                 foreach (object o in following)
                 {
                     Console.WriteLine(o);
                 }
                 Console.WriteLine(Context.User.Identity.Name);
 
-                _feedHub.Clients.User(Context.User.Identity.Name).feed(postdata);
+                _feedHub.Clients.Users(usernames).feed(postdata);
                 //_feedHub.Clients.All.feed(postdata);
 
                 Cache.Remove("latestPost");
