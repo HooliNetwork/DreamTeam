@@ -68,7 +68,7 @@ namespace Hooli.Controllers
             return View(post);
         }
 
-        [HttpPost("{id}")]
+        [HttpPost("Create/{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Post post, CancellationToken requestAborted, IFormFile file, string id)
         {
@@ -119,7 +119,7 @@ namespace Hooli.Controllers
             return View(post);
         }
 
-        [HttpPost]
+        [HttpPost("Vote")]
         public async Task<IActionResult> Vote(string type, int postId)
         {
             Console.WriteLine(type + postId);
@@ -142,7 +142,7 @@ namespace Hooli.Controllers
             return Json(new { success = true, responseText = "Success!" });
         }
 
-        [HttpPost]
+        [HttpPost("Edit")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Post post, CancellationToken requestAborted)
         {
@@ -153,7 +153,7 @@ namespace Hooli.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpPost("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(Post post, CancellationToken requestAborted)
         {

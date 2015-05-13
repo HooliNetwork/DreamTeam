@@ -14,6 +14,7 @@ using System.Security.Claims;
 namespace Hooli.Controllers
 {
     [Authorize]
+    [Route("[controller]")]
     public class PeopleController : Controller
     {
         [FromServices]

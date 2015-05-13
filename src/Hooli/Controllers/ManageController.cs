@@ -16,6 +16,7 @@ using Hooli.CloudStorage;
 namespace Hooli.Controllers
 {
     [Authorize]
+    [Route("[controller]")]
     public class ManageController : Controller
     {
         [FromServices]
