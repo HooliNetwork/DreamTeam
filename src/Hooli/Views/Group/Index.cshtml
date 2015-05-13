@@ -41,14 +41,5 @@
             </div>
         </div>
     </div>
-    <div class="col-md-8">
-        <div class="content-box">
-            <h1>Groups you are following</h1>
-
-            <div class="row following-info-container">
-                @await Component.InvokeAsync("Group")
-            </div>
-
-        </div>
-    </div>
+    @await Component.InvokeAsync("Group")
 </div>
