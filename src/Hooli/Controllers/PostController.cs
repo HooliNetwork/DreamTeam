@@ -25,12 +25,19 @@ namespace Hooli.Controllers
     {
         private IConnectionManager _connectionManager;
         private IHubContext _feedHub;
+
         public PostController(UserManager<ApplicationUser> userManager)
         {
             UserManager = userManager;
         }
+        //public PostController(UserManager<ApplicationUser> userManager, GroupManager<Group> groupManager)
+        //{
+        //    UserManager = userManager;
+        //    GroupManager = groupManager;
+        //}
 
         public UserManager<ApplicationUser> UserManager { get; private set; }
+        //        public GroupManager<Group> GroupManager { get; private set; }
 
         [FromServices]
         public HooliContext DbContext { get; set; }
@@ -60,10 +67,13 @@ namespace Hooli.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpPost("{id}")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Post post, CancellationToken requestAborted, IFormFile file)
+        public async Task<IActionResult> Create(Post post, CancellationToken requestAborted, IFormFile file, string id)
         {
+            
+            Console.WriteLine("ID: " + id);
+            System.Diagnostics.Debug.WriteLine("ID " + id);
             var user = await GetCurrentUserAsync();
             if (ModelState.IsValid && user != null)
             {
@@ -73,7 +83,7 @@ namespace Hooli.Controllers
                 {               
                     post.Image = await Storage.GetUri("postimages", Guid.NewGuid().ToString(), file);
                 }
-                
+                post.GroupGroupId = id;
                 DbContext.Posts.Add(post);
                 await DbContext.SaveChangesAsync(requestAborted);
 
@@ -101,6 +111,7 @@ namespace Hooli.Controllers
                 //_feedHub.Clients.All.feed(postdata);
 
                 Cache.Remove("latestPost");
+                //return RedirectToAction("Index");
                 return RedirectToAction("Index");
             }
             return View(post);
