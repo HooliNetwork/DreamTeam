@@ -208,7 +208,7 @@ p {
 }
 
 .info-photo:hover {
-    color: #fd7e23;
+    color: #CCC;
    -webkit-filter: sepia(0.2) contrast(1.3);
 }
 
