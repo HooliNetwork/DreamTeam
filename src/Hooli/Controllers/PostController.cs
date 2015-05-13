@@ -18,6 +18,7 @@ using System.IO;
 using Hooli.CloudStorage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System.Collections.Generic;
+using System.Dynamic;
 
 namespace Hooli.Controllers
 {
@@ -59,16 +60,23 @@ namespace Hooli.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult Index(int id)
+        public async Task<IActionResult> Index(int id)
         {
-        System.Diagnostics.Debug.WriteLine(id);
-            var post =  DbContext.Posts
+            var currentuser = await GetCurrentUserAsync();
+            dynamic model = new ExpandoObject();
+            System.Diagnostics.Debug.WriteLine(id);
+           model.post =  await DbContext.Posts
                 .Include(u => u.User)
-                .Single(p => p.PostId == id);
-            return View(post);
+                .Include(g => g.Group)
+                .SingleAsync(p => p.PostId == id);
+            model.Joined = await DbContext.GroupMembers
+                                .Where(u => u.UserId == currentuser.Id)
+                                .Select(u => u.GroupId).ToListAsync();
+            return View(model);
         }
 
-        [HttpPost("Create/{id}")]
+        [HttpPost("{id}")]
+        [Route("Create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Post post, CancellationToken requestAborted, IFormFile file, string id)
         {
@@ -119,7 +127,7 @@ namespace Hooli.Controllers
             return View(post);
         }
 
-        [HttpPost("Vote")]
+        [HttpPost]
         public async Task<IActionResult> Vote(string type, int postId)
         {
             Console.WriteLine(type + postId);
@@ -142,7 +150,7 @@ namespace Hooli.Controllers
             return Json(new { success = true, responseText = "Success!" });
         }
 
-        [HttpPost("Edit")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Post post, CancellationToken requestAborted)
         {
@@ -153,7 +161,7 @@ namespace Hooli.Controllers
             return View();
         }
 
-        [HttpPost("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(Post post, CancellationToken requestAborted)
         {
