@@ -115,7 +115,7 @@ namespace Hooli.Controllers
                 .ToListAsync();
         }
 
-        [HttpPost]
+        [HttpPost("Search")]
         public async Task<IActionResult> Search(string searchString)
         {
             dynamic model = new ExpandoObject();

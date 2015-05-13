@@ -18,6 +18,7 @@ using Hooli.ViewModels;
 namespace Hooli.Controllers
 {
     [Authorize]
+    [Route("[controller]")]
     public class ProfileController : Controller
     {
         public UserManager<ApplicationUser> UserManager { get; private set; }
@@ -33,7 +34,7 @@ namespace Hooli.Controllers
             UserManager = userManager;
         }
 
-        [HttpPost]
+        [HttpPost("EditProfile")]
         [ValidateAntiForgeryToken]
         public async Task<JsonResult> EditProfile([FromForm]EditProfileData data, CancellationToken requestAborted)
         {

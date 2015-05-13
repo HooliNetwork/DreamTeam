@@ -74,7 +74,11 @@ namespace Hooli.Controllers
             return View(model);
         }
 
+<<<<<<< HEAD
         [HttpPost]
+=======
+        [HttpPost("Create/{id}")]
+>>>>>>> Working on the routing.
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Post post, CancellationToken requestAborted, IFormFile file, string id)
         {
@@ -125,8 +129,13 @@ namespace Hooli.Controllers
             return View(post);
         }
 
+<<<<<<< HEAD
         [HttpPost]
         public async Task<IActionResult> Vote(string upDown, int postId)
+=======
+        [HttpPost("Vote")]
+        public async Task<IActionResult> Vote(string type, int postId)
+>>>>>>> Working on the routing.
         {
             Console.WriteLine(upDown + postId);
             var voted = await DbContext.VoteRelations.SingleOrDefaultAsync(v => v.UserId == Context.User.GetUserId()
@@ -152,7 +161,7 @@ namespace Hooli.Controllers
             return Json(new {responseText = "Success!" });
         }
 
-        [HttpPost]
+        [HttpPost("Edit")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Post post, CancellationToken requestAborted)
         {
@@ -163,7 +172,7 @@ namespace Hooli.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpPost("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(Post post, CancellationToken requestAborted)
         {
