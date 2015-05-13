@@ -371,24 +371,24 @@ namespace Hooli.Controllers
         public async Task<IActionResult> EditProfile(ApplicationUser user, CancellationToken requestAborted, IFormFile file)
         {
 
-            var profileData = await GetCurrentUserAsync();
+            //var profileData = await GetCurrentUserAsync();
 
-            profileData.FirstName = user.FirstName;
+            //profileData.FirstName = user.FirstName;
 
-            profileData.LastName = user.LastName;
+            //profileData.LastName = user.LastName;
 
-            if ((user.DateOfBirth != null) && (user.DateOfBirth.ToString().Length > 0))
-            {
-                profileData.DateOfBirth = user.DateOfBirth;
-            }
-            // profileData.RelationshipStatus = user.RelationshipStatus;
+            //if ((user.DateOfBirth != null) && (user.DateOfBirth.ToString().Length > 0))
+            //{
+            //    profileData.DateOfBirth = user.DateOfBirth;
+            //}
+            //// profileData.RelationshipStatus = user.RelationshipStatus;
 
-            if ((file != null) && (file.Length > 0))
-            {
-                profileData.ProfilePicture = await Storage.GetUri("profilepictures", Guid.NewGuid().ToString(), file);
-            }
+            //if ((file != null) && (file.Length > 0))
+            //{
+            //    profileData.ProfilePicture = await Storage.GetUri("profilepictures", Guid.NewGuid().ToString(), file);
+            //}
 
-            await DbContext.SaveChangesAsync(requestAborted);
+            //await DbContext.SaveChangesAsync(requestAborted);
             return View();
         }
 
