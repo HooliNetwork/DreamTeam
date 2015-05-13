@@ -28,7 +28,7 @@ namespace Hooli.Controllers
         //
         // GET: /Home/
         public async Task<IActionResult> Index(string sortOrder)
-        { 
+        {
             // Get most popular Posts, from following users
             //var Posts = await Cache.GetOrSet("top", async context =>
             //{
@@ -40,7 +40,11 @@ namespace Hooli.Controllers
             //var user = await GetCurrentUserAsync();
             //user.Followers = DbContext.FollowRelations.Where(f => f.FollowerId == user.Id).ToList();
             //user.Following = DbContext.FollowRelations.Where(f => f.FollowingId == user.Id).ToList();
-
+            var following = DbContext.FollowRelations
+        .Where(u => u.FollowingId == Context.User.GetUserId())
+                     .Include(u => u.Follower)
+                     .Select(u => u.Follower.Id)
+                     .ToList();
             return View();
         }
 

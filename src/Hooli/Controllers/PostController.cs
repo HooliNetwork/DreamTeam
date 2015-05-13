@@ -76,53 +76,58 @@ namespace Hooli.Controllers
                 
                 DbContext.Posts.Add(post);
                 await DbContext.SaveChangesAsync(requestAborted);
-                
-                //var postdata = new PostData
-                //{
-                //    Title = post.Title,
-                //    // We might want link to the post
-                //    //Url = Url.Action("Details", "Post", new { id = post.PostId })
-                //    Text = post.Text
-                //};
-                //var following = DbContext.FollowRelations
-                //        .Where(u => u.FollowingId == user.Id)
-                //        .Select(u => u.FollowerId)
-                //        .ToList();
-                //foreach (object o in following)
-                //{
-                //    Console.WriteLine(o);
-                //}
-                //Console.WriteLine(Context.User.Identity.Name);
-                
-                //_feedHub.Clients.User(Context.User.Identity.Name).feed(postdata);
-                ////_feedHub.Clients.All.feed(postdata);
-                
-                //Cache.Remove("latestPost");
+
+                var postdata = new PostData
+                {
+                    Title = post.Title,
+                    // We might want link to the post
+                    //Url = Url.Action("Details", "Post", new { id = post.PostId })
+                    Text = post.Text
+                };
+                var following = DbContext.FollowRelations
+                        .Where(u => u.FollowingId == user.Id)
+                        .Include(u => u.Follower)
+                        .Select(u => u.Follower.Id)
+                        .ToList();
+                var usernames = DbContext.Users
+                        .Where(u => following.Contains(u.Id))
+                        .Select(u => u.UserName).ToList();
+                foreach (object o in following)
+                {
+                    Console.WriteLine(o);
+                }
+                Console.WriteLine(Context.User.Identity.Name);
+
+                _feedHub.Clients.Users(usernames).feed(postdata);
+                //_feedHub.Clients.All.feed(postdata);
+
+                Cache.Remove("latestPost");
                 return RedirectToAction("Index");
             }
             return View(post);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Upvote(Post post, CancellationToken requestAborted)
+        public async Task<IActionResult> Vote(string type, int postId)
         {
-            var postData = await DbContext.Posts.SingleAsync(postTable => postTable.PostId == post.PostId);
-            postData.Points++;
-            await DbContext.SaveChangesAsync(requestAborted);
-            return View();
+            var voted = await DbContext.VoteRelations.SingleOrDefaultAsync(v => v.UserId == Context.User.GetUserId());
+            if (voted != null)
+            {
+                return Json(new { success = false, responseText = "Already voted!" });
+            }
+            var postData = await DbContext.Posts.SingleAsync(postTable => postTable.PostId == postId);
+            if (type == "up")
+            {
+                postData.Points++;
+            }
+            else
+            {
+                postData.Points--;
+            }
+            await DbContext.SaveChangesAsync();
+            return Json(new { success = true, responseText = "Success!" });
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Downvote(Post post, CancellationToken requestAborted)
-        {
-            var postData = await DbContext.Posts.SingleAsync(postTable => postTable.PostId == post.PostId);
-            postData.Points--;
-            await DbContext.SaveChangesAsync(requestAborted);
-            return View();
-        }
-        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Post post, CancellationToken requestAborted)
