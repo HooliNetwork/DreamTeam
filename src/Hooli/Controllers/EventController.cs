@@ -13,7 +13,6 @@ using Microsoft.AspNet.Authorization;
 namespace Hooli.Controllers
 {
     [Authorize]
-    [Route("[controller]")]
     public class EventController : Controller
     {
         [FromServices]

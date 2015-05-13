@@ -18,7 +18,6 @@ using Hooli.CloudStorage;
 namespace Hooli.Controllers
 {
     [Authorize]
-    [Route("[controller]")]
     public class GroupController : Controller
     {
         [FromServices]
@@ -42,7 +41,7 @@ namespace Hooli.Controllers
             return View();
         }
 
-        [HttpPost("CreateGroup")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateGroup(Group group, CancellationToken requestAborted, IFormFile file)
         {
@@ -78,7 +77,7 @@ namespace Hooli.Controllers
            
         }
 
-        [HttpPost("EditGroup")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditGroup(Group group, CancellationToken requestAborted)
         {
@@ -107,7 +106,7 @@ namespace Hooli.Controllers
             return View();
         }
 
-        [HttpPost("AddPostToGroup")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddPostToGroup(string groupId, Post post, CancellationToken requestAborted)
         {
@@ -117,7 +116,7 @@ namespace Hooli.Controllers
             return View();
         }
 
-        [HttpPost("BanUser")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> BanUser(string groupId, string userId, CancellationToken requestAborted)
         {
@@ -127,7 +126,7 @@ namespace Hooli.Controllers
             return View();
         }
 
-        [HttpPost("UnBanUser")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UnBanUser(string groupId, string userId, CancellationToken requestAborted)
         {
@@ -139,7 +138,7 @@ namespace Hooli.Controllers
 
         //
         // GET: /Group/SingleGroup
-        [HttpGet("SingleGroup")]
+        [HttpGet]
         public async Task<IActionResult> SingleGroup(string id)
         {
             var group = await DbContext.Groups
