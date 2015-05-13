@@ -386,6 +386,92 @@ namespace Hooli.Controllers
             // To do
             return View();
         }
+        [HttpPost]
+        public async Task<IActionResult> FollowGroup(string Id)
+        {
+            var message = "";
+            Console.WriteLine(Id);
+            try
+            {
+                var groupmember = new GroupMember() { GroupId = Id, UserId = Context.User.GetUserId(), banned = false };
+                DbContext.GroupMembers.Add(groupmember);
+                await DbContext.SaveChangesAsync();
+                // process your data using the parameter value
+                message = "Successfully processed!";
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;  // if processing fails, we send the failure message to the view
+            }
+
+            return Json(new { message });
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> FollowUser(string Id)
+        {
+            var message = "";
+            Console.WriteLine(Id);
+            try
+            {
+                var follow = new FollowRelation() { FollowerId = Context.User.GetUserId(), FollowingId = Id};
+                DbContext.FollowRelations.Add(follow);
+                await DbContext.SaveChangesAsync();
+                // process your data using the parameter value
+                message = "Successfully processed!";
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;  // if processing fails, we send the failure message to the view
+            }
+
+            return Json(new { message });
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> UnfollowGroup(string Id)
+        {
+            var message = "";
+            Console.WriteLine(Id);
+            try
+            {
+                var group = DbContext.GroupMembers.Single(u => u.UserId == Context.User.GetUserId()
+                                                             && u.GroupId == Id);
+                DbContext.GroupMembers.Remove(group);
+                await DbContext.SaveChangesAsync();
+                // process your data using the parameter value
+                message = "Successfully processed!";
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;  // if processing fails, we send the failure message to the view
+            }
+
+            return Json(new { message });
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> UnfollowUser(string Id)
+        {
+            var message = "";
+            Console.WriteLine(Id);
+            try
+            {
+                var user = DbContext.FollowRelations.Single(u => u.FollowerId == Context.User.GetUserId()
+                                                             && u.FollowingId == Id);
+                DbContext.FollowRelations.Remove(user);
+                await DbContext.SaveChangesAsync();
+                // process your data using the parameter value
+                message = "Successfully processed!";
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;  // if processing fails, we send the failure message to the view
+            }
+
+            return Json(new { message });
+
+        }
 
         #endregion
     }

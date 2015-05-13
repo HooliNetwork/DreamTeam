@@ -28,20 +28,26 @@ namespace Hooli.Components
 
         public async Task<IViewComponentResult> InvokeAsync(bool latestPosts, bool group)
         {
+            System.Diagnostics.Debug.WriteLine("Inside Feed InvokeAsync");
             var user = await GetCurrentUserAsync();
             if (group)
             {
-                var groups = user.GroupsMember?.Select(g => g.GroupId);
+                //var groups = user.GroupsMember?.Select(g => g.GroupId);
 
-                if (latestPosts && groups != null)
+                var groups = DbContext.GroupMembers
+                     .Where(u => u.UserId == user.Id)
+                     .Select(u => u.GroupId).ToList();
+
+                 if (latestPosts && groups != null)
                 { 
-                    var post = await Cache.GetOrSet("latestGroupPost", async context =>
-                    {
-                        context.SetAbsoluteExpiration(TimeSpan.FromMinutes(5));
-                        return await GetLatestGroupPost(groups);
-                    });
-                    System.Diagnostics.Debug.WriteLine("3");
-                    return View(post);
+                //   var post = await Cache.GetOrSet("latestGroupPost", async context =>
+                //  {
+                //    context.SetAbsoluteExpiration(TimeSpan.FromMinutes(5));
+                //   return await GetLatestGroupPost(groups);
+                //});
+                //System.Diagnostics.Debug.WriteLine("3");
+                var post = GetLatestGroupPost(groups);
+                return View(post);
                 }
                 else if(groups != null)
                 {
@@ -59,30 +65,25 @@ namespace Hooli.Components
             }
             else
             {
-                //var following = user.Followers.Select(c => c.Following.Id);
                 var following = DbContext.FollowRelations
                     .Where(u => u.FollowerId == user.Id)
                     .Select(u => u.FollowingId).ToList();
-                foreach (object o in following)
-                {
-                    System.Diagnostics.Debug.WriteLine(o);
-                }
+                //foreach (object o in following)
+                //{
+                //    System.Diagnostics.Debug.WriteLine(o);
+                //}
                 if (latestPosts && following != null)
                 {
-                    //var post = await Cache.GetOrSet("latestPost", async context =>
-                    //{
-                    //    context.SetAbsoluteExpiration(TimeSpan.FromMinutes(5));
-                        var post = await GetLatestPost(following);
-                    //});
+                    var post = await GetLatestPost(following);
                     return View(post);
                 }
                 else if(following != null)
                 {
-                    var post = await Cache.GetOrSet("popularPost", async context =>
-                    {
-                        context.SetAbsoluteExpiration(TimeSpan.FromMinutes(5));
-                        return await GetPopularPosts(following);
-                    });
+                    //var post = await Cache.GetOrSet("popularPost", async context =>
+                    //{
+                        //context.SetAbsoluteExpiration(TimeSpan.FromMinutes(5));
+                         var post = await GetPopularPosts(following);
+                    //});
                     return View(post);
                 }
                 else

@@ -15,7 +15,7 @@
                 </button>
             </div>
             <div class="col-xs-10 col-sm-11 post-body">
-                <a asp-controller="Home" asp-action="Contact"><h2>@p.Title</h2></a>
+                <a asp-controller="Post" asp-action="Index" asp-route-id="@p.PostId"><h2>@p.Title</h2></a>
                 @if (@p.Image != null)
                 {
                     <img src="@p.Image" />
@@ -27,7 +27,7 @@
 
                 }
                 <div class="post-body-info">
-                    <span class="post-author">Posted by <a asp-controller="Home" asp-action="Contact"><strong>@p.User.FirstName</strong></a></span>
+                    <span class="post-author">Posted by <a asp-controller="Post" asp-action="Index" asp-route-id="@p.User.Id"><strong>@p.User.FirstName</strong></a></span>
                     <span class="post-date"> on <strong>@p.DateCreated.ToString("MMM dd, yyy @ HH:mm")</strong>.</span>
                     <span class="post-comment-count"> Total comments <strong></strong>.</span>
                 </div>

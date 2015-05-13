@@ -120,8 +120,7 @@ namespace Hooli
                 // sends the request to the following path or controller action.
                 app.UseErrorHandler("/Home/Error");
             }
-            //Configure SignalR
-            app.UseSignalR();
+
 
             //SampleData.InitializeHooliDatabaseAsync(app.ApplicationServices).Wait();
             // Add static files to the request pipeline.
@@ -130,6 +129,8 @@ namespace Hooli
             // Add cookie-based authentication to the request pipeline.
             app.UseIdentity();
 
+            //Configure SignalR
+            app.UseSignalR();
             // Add authentication middleware to the request pipeline. You can configure options such as Id and Secret in the ConfigureServices method.
             // For more information see http://go.microsoft.com/fwlink/?LinkID=532715
             // app.UseFacebookAuthentication();

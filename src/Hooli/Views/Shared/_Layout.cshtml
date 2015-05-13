@@ -23,7 +23,7 @@
                   asp-fallback-test-class="carousel-caption" asp-fallback-test-property="display" asp-fallback-test-value="none" /> 
         </environment>
         <link rel="stylesheet" href="~/css/site.css" />
-
+        <link href="~/css/magnific-popup.css" rel="stylesheet" />
     </head>
     <body>
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -66,7 +66,7 @@
                             </a>
                         </li>
                         }
-                        <li>
+                        <li id="navbar-logout-button">
                             @await Html.PartialAsync("_LoginPartial")
                         </li>
                     </ul>
@@ -107,10 +107,11 @@
                     asp-fallback-test="window.Zepto">
             </script>
         </environment>
+        <script src="~/script/scripts.js" type="text/javascript"></script>
+        <script src="~/script/jquery.magnific-popup.js"></script>
         <script src="~/lib/signalr/jquery.signalR.min.js"></script>
         <script src="~/signalr/hubs" type="text/javascript"></script>
-        <script src="~/script/scripts.js" type="text/javascript"></script>
-         <script>
+        <script>
             @*Display the new posts to feed *@
             $(function () {
                 $.connection.hub.logging = true;
@@ -129,6 +130,6 @@
             });
         </script>
         @RenderSection("scripts", required: false)
-        @RenderSection("MyScripts", required: false)
+        @RenderSection("ajaxstuff", required: false)
     </body>
 </html>
