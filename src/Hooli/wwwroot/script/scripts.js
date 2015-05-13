@@ -134,7 +134,6 @@ $(document).ready(function () {
                 value -= 1;
                 count.text(value);
             }
-            currBtn.toggleClass("btn-option");
         }).fail(function (error) {
             alert("There was an error posting the data to the server: " + error.responseText);
         });
