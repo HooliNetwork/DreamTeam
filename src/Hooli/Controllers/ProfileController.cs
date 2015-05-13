@@ -10,6 +10,7 @@ using Hooli.CloudStorage;
 using System.Security.Claims;
 using Microsoft.AspNet.Http;
 using System.Threading;
+using Hooli.ViewModels;
 
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -39,13 +40,19 @@ namespace Hooli.Controllers
 
             var profileData = await GetCurrentUserAsync();
 
-            profileData.FirstName = user.FirstName;
-
-            profileData.LastName = user.LastName;
-
-            if ((user.DateOfBirth != null) && (user.DateOfBirth.ToString().Length > 0))
+            if ((data.FirstName != null) && (data.FirstName.ToString().Length > 0))
             {
-                profileData.DateOfBirth = user.DateOfBirth;
+                profileData.FirstName = data.FirstName;
+            }
+
+            if ((data.LastName != null) && (data.LastName.ToString().Length > 0))
+            {
+                profileData.LastName = data.LastName;
+            }
+
+            if ((data.DateOfBirth != null) && (data.DateOfBirth.ToString().Length > 0))
+            {
+                profileData.DateOfBirth = data.DateOfBirth;
             }
             // profileData.RelationshipStatus = user.RelationshipStatus;
 
