@@ -604,6 +604,10 @@ form input[type=radio] {
     margin-bottom: 15px;
 }
 
+.margin-t-no {
+    margin-top: 0;    
+}
+
 .margin-b-no {
     margin-bottom: 0;
 }
