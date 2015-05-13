@@ -1,4 +1,7 @@
 ﻿@inject IOptions<AppSettings> AppSettings
+@inject Hooli.Services.UserService UserService
+@using System.Security.Claims
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -60,9 +63,9 @@
                             </form>
                         </li>
                         <li id="navbar-profile-photo">
-                            <a asp-controller="Profile" asp-action="Index">
+                            <a asp-controller="Manage" asp-action="Index">
                                 <span class="visible-mobile">Profile</span>
-                                <img id="navbar-profile" class="hidden-mobile" src="~/images/johann.jpg" alt="Profile photo" />
+                                <img id="navbar-profile" class="hidden-mobile" src="@await UserService.GetProfilePictureUrl(User.GetUserId())" alt="Profile photo" />
                             </a>
                         </li>
                         }

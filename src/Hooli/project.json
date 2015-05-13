@@ -38,7 +38,8 @@
         "kestrel": "1.0.0-beta4",
         "Microsoft.AspNet.Http": "1.0.0-beta4",
         "Microsoft.WindowsAzure.ConfigurationManager": "2.0.3",
-        "System.Text.RegularExpressions": "4.0.10-beta-22816"
+        "System.Text.RegularExpressions": "4.0.10-beta-22816",
+        "Microsoft.AspNet.Providers.Core": "2.0.0"
     },
 
     "commands": {
