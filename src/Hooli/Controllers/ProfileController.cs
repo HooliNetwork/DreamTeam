@@ -35,7 +35,7 @@ namespace Hooli.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditProfile(EditProfileData data, CancellationToken requestAborted, IFormFile file)
+        public async Task<JsonResult> EditProfile([FromForm]EditProfileData data, CancellationToken requestAborted)
         {
 
             var profileData = await GetCurrentUserAsync();
@@ -54,15 +54,9 @@ namespace Hooli.Controllers
             {
                 profileData.DateOfBirth = data.DateOfBirth;
             }
-            // profileData.RelationshipStatus = user.RelationshipStatus;
-
-            if ((file != null) && (file.Length > 0))
-            {
-                profileData.ProfilePicture = await Storage.GetUri("profilepictures", Guid.NewGuid().ToString(), file);
-            }
 
             await DbContext.SaveChangesAsync(requestAborted);
-            return View();
+            return Json("error-not-fully-implemented");
         }
 
         // GET: /<controller>/
