@@ -15,17 +15,23 @@
                 </button>
             </div>
             <div class="col-xs-10 col-sm-11 post-body">
-                <a asp-controller="Post" asp-action="Index" asp-route-id="@p.PostId"><h2>@p.Title</h2></a>
                 @if (@p.Image != null)
                 {
-                    <img src="@p.Image" />
-
+                <div class="pull-right">
+                    <a class="image-link" href="@p.Image">
+                        <div class="photo-sm photo-feed" style="background: url(@p.Image) center / cover;"></div>
+                    </a>
+                </div>
                 }
-                @if (@p.Link != null)
+                else if (@p.Link != null)
                 {
-                    <img src="@p.Link" />
-
+                <div class="pull-right">
+                    <a class="image-link" href="@p.Link">
+                        <div class="photo-sm photo-feed" style="background: url(@p.Link) center / cover;"></div>
+                    </a>
+                </div>                    
                 }
+                <a asp-controller="Post" asp-action="Index" asp-route-id="@p.PostId"><h2>@p.Title</h2></a>
                 <div class="post-body-info">
                     <span class="post-author">Posted by <a asp-controller="Post" asp-action="Index" asp-route-id="@p.User.Id"><strong>@p.User.FirstName</strong></a></span>
                     <span class="post-date"> on <strong>@p.DateCreated.ToString("MMM dd, yyy @ HH:mm")</strong>.</span>

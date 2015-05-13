@@ -64,13 +64,20 @@ p {
     height: 110px;
     border-radius: 50%;
     border: 4px solid white;
+    transition:all 1s ease-in-out;
+    perspective: 800px;
+    perspective-origin: 50% 100px;
 }
 
-#navbar-profile-photo{
+#navbar-profile-photo {
     max-height: 70px;
 }
 
-#navbar-profile-photo>a>span {
+#navbar-profile-photo:hover {
+    transform:rotateY(180deg);    
+}
+
+#navbar-profile-photo span {
     display: none;
 }
 
@@ -648,6 +655,13 @@ form input[type=radio] {
     }
     .search-mobile input[type=search] {
         width: 280px;
+    }
+    .btn-primary:hover {
+        background: #fd7e23;
+    }
+    .btn-option:hover {
+        background: #CCC;
+        color: #333;
     }
 }
 
