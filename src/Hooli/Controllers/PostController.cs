@@ -18,6 +18,7 @@ using System.IO;
 using Hooli.CloudStorage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System.Collections.Generic;
+using System.Dynamic;
 
 namespace Hooli.Controllers
 {
@@ -59,16 +60,23 @@ namespace Hooli.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult Index(int id)
+        public async Task<IActionResult> Index(int id)
         {
-        System.Diagnostics.Debug.WriteLine(id);
-            var post =  DbContext.Posts
+            var currentuser = await GetCurrentUserAsync();
+            dynamic model = new ExpandoObject();
+            System.Diagnostics.Debug.WriteLine(id);
+           model.post =  await DbContext.Posts
                 .Include(u => u.User)
-                .Single(p => p.PostId == id);
-            return View(post);
+                .Include(g => g.Group)
+                .SingleAsync(p => p.PostId == id);
+            model.Joined = await DbContext.GroupMembers
+                                .Where(u => u.UserId == currentuser.Id)
+                                .Select(u => u.GroupId).ToListAsync();
+            return View(model);
         }
 
         [HttpPost("{id}")]
+        [Route("Create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Post post, CancellationToken requestAborted, IFormFile file, string id)
         {
@@ -120,17 +128,17 @@ namespace Hooli.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Vote(string type, int postId)
+        public async Task<IActionResult> Vote(string upDown, int postId)
         {
-            Console.WriteLine(type + postId);
-            //var voted = await DbContext.VoteRelations.SingleOrDefaultAsync(v => v.UserId == Context.User.GetUserId()
-            //                                                                  && v.PostId == postId);
-            //if (voted != null)
-            //{
-            //    return Json(new { success = false, responseText = "Already voted!" });
-            //}
+            Console.WriteLine(upDown + postId);
+            var voted = await DbContext.VoteRelations.SingleOrDefaultAsync(v => v.UserId == Context.User.GetUserId()
+                                                                              && v.PostId == postId);
+            if (voted != null)
+            {
+                return HttpNotFound(); // Hack to return success = false , which does not work.
+            }
             var postData = await DbContext.Posts.SingleAsync(postTable => postTable.PostId == postId);
-            if (type == "up")
+            if (upDown == "up")
             {
                 postData.Points++;
             }
@@ -138,8 +146,12 @@ namespace Hooli.Controllers
             {
                 postData.Points--;
             }
+            var VoteRelations = new VoteRelation() {PostId = postId, UserId = Context.User.GetUserId()};
+            DbContext.VoteRelations.Add(VoteRelations);
             await DbContext.SaveChangesAsync();
-            return Json(new { success = true, responseText = "Success!" });
+            
+            
+            return Json(new {responseText = "Success!" });
         }
 
         [HttpPost]

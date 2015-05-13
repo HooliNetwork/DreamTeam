@@ -131,12 +131,12 @@ namespace Hooli.Controllers
                                             .Contains(searchString))
                                             .ToListAsync();
 
-                model.Following = DbContext.FollowRelations
+                model.Following = await DbContext.FollowRelations
                                 .Where(u => u.FollowerId == currentuser.Id)
-                                .Select(u => u.FollowingId).ToList();
-                model.Joined = DbContext.GroupMembers
+                                .Select(u => u.FollowingId).ToListAsync();
+                model.Joined = await DbContext.GroupMembers
                                 .Where(u => u.UserId == currentuser.Id)
-                                .Select(u => u.GroupId).ToList();
+                                .Select(u => u.GroupId).ToListAsync();
 
     
                 //model.Events = View(await DbContext.Events.Where(e => e.EventName
