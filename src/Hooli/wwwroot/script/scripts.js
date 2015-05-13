@@ -104,6 +104,33 @@ $(document).ready(function () {
     });
 
 
+    $("body").on('click', ".vote", function () {
+        var currBtn = $(this);
+        var uri = currBtn.parent.attr('data-url');
+        var id = currBtn.parent.attr('data-id');
+        var type = currBtn.attr('data-type');
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: uri,
+            data: {'type' : type }
+        }).success(function (result) {
+            var count = currBtn.closest("post-rating-count");
+            var value = parseInt(count.text(), 10);
+            if (type == "up") {
+                value += 1;
+                count.text(value);
+            } else if (type == "down") {
+                value -= 1;
+                count.text(value);
+            }
+            currBtn.toggleClass("btn-option");
+        }).fail(function (error) {
+            alert("There was an error posting the data to the server: " + error.responseText);
+        });
+        return false;
+    });
+
 });
 
 
