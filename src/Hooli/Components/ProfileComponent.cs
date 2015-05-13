@@ -26,10 +26,6 @@ namespace Hooli.Components
         public async Task<IViewComponentResult> InvokeAsync(string UserId)
         {
             var post = await GetLatestPost(UserId);
-            if(post.ToList().Count == 0)
-            {
-                // return View(new List<Post> { new Post() { Title = "No posts!", User = "" } });
-            }
 
             return View(post);
         }
