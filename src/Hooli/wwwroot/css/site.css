@@ -46,7 +46,7 @@ p {
     display: none;
 }
 
-#navbar-logout-button {
+.navbar-logout-button {
     margin-left: 60px;
 }
 /*
@@ -702,7 +702,7 @@ form input[type=radio] {
         display:inline !important;
     }
     #navbar-logout-button {
-        margin-left: 0;
+        margin-left: 15px;
     }
     .navbar-nav>li>a {
         line-height: 40px;
