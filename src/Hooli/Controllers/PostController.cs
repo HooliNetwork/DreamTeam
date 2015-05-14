@@ -23,15 +23,18 @@ using System.Dynamic;
 namespace Hooli.Controllers
 {
     [Authorize]
-    [Route("[controller]")]
     public class PostController : Controller
     {
         private IConnectionManager _connectionManager;
         private IHubContext _feedHub;
 
+        [FromServices]
+        public PostCache postCache { get; set; }
+
         public PostController(UserManager<ApplicationUser> userManager)
         {
             UserManager = userManager;
+
         }
 
         public UserManager<ApplicationUser> UserManager { get; private set; }
@@ -62,15 +65,18 @@ namespace Hooli.Controllers
         public async Task<IActionResult> Index(int id)
         {
             var currentuser = await GetCurrentUserAsync();
-            dynamic model = new ExpandoObject();
+            //dynamic model = new ExpandoObject();
             System.Diagnostics.Debug.WriteLine(id);
-           model.post =  await DbContext.Posts
-                .Include(u => u.User)
-                .Include(g => g.Group)
-                .SingleAsync(p => p.PostId == id);
-            model.Joined = await DbContext.GroupMembers
+            //IEnumerable<Post> posts = postCache.GetHierarchy(id);
+            //model.posts = posts;
+            var post = RecursiveLoad(id);
+
+            Console.WriteLine(post.Children.First().Title);
+            var joined = await DbContext.GroupMembers
                                 .Where(u => u.UserId == currentuser.Id)
                                 .Select(u => u.GroupId).ToListAsync();
+
+            PostViewModel model = new PostViewModel {Seed = post.PostId, post = post, Joined = joined, Children = post.Children};
             return View(model);
         }
 
@@ -94,13 +100,6 @@ namespace Hooli.Controllers
                 DbContext.Posts.Add(post);
                 await DbContext.SaveChangesAsync(requestAborted);
 
-                var postdata = new PostData
-                {
-                    Title = post.Title,
-                    // We might want link to the post
-                    //Url = Url.Action("Details", "Post", new { id = post.PostId })
-                    Text = post.Text
-                };
                 var following = DbContext.FollowRelations
                         .Where(u => u.FollowingId == user.Id)
                         .Include(u => u.Follower)
@@ -109,13 +108,8 @@ namespace Hooli.Controllers
                 var usernames = DbContext.Users
                         .Where(u => following.Contains(u.Id))
                         .Select(u => u.UserName).ToList();
-                foreach (object o in following)
-                {
-                    Console.WriteLine(o);
-                }
-                Console.WriteLine(Context.User.Identity.Name);
 
-                _feedHub.Clients.Users(usernames).feed(postdata);
+                _feedHub.Clients.Users(usernames).feed(post, user);
                 //_feedHub.Clients.All.feed(postdata);
 
                 Cache.Remove("latestPost");
@@ -182,6 +176,28 @@ namespace Hooli.Controllers
         private async Task<ApplicationUser> GetCurrentUserAsync()
         {
             return await UserManager.FindByIdAsync(Context.User.GetUserId());
+        }
+        private Post RecursiveLoad(int id)
+        {
+            var ParentFromDatabase = DbContext.Posts
+                .Include(u => u.User)
+                .Include(g => g.Group)
+                .Include(c => c.Children)
+                .Single(p => p.PostId == id);
+
+            foreach (var child in ParentFromDatabase.Children)
+            {
+                var childNotLoaded = child;
+                var childFullyLoaded = DbContext.Posts
+                  .Include(u => u.User)
+                  .Include(d => d.ParentPost)
+                  .Include(d => d.Children)
+                  .Single(d => d.PostId == childNotLoaded.PostId);
+
+                child.User = childFullyLoaded.User;   
+                child.ParentPost = RecursiveLoad(childFullyLoaded.PostId); //Require to set back the value because we want by reference to have everything in the tree
+            }
+            return ParentFromDatabase;
         }
 
 

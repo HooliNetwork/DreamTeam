@@ -1,0 +1,34 @@
+﻿@model Hooli.Models.PostViewModel
+@{
+    // ViewBag.Title = "Home Page";
+}
+@if (Model.Children != null && Model.Children.Where(s => s.ParentPostId == Model.Seed).Any())
+{
+    <div class="parent-comment-container">
+        @foreach (var node in Model.Children)
+        {
+            if (node.ParentPostId == Model.Seed)
+            {
+
+                <div class="comment-container">
+                    <a href="#">
+                        <div class="info-photo comment" style="background: url(@node.User.ProfilePicture) center / cover;"></div>
+                    </a>
+                    <div class="comment-body">
+                        <p class="comment-info">
+                            <span class="post-author">Posted by <a href="#"><strong>@node.User.FirstName @node.User.LastName</strong></a></span>
+                            <span class="post-date"> on <strong>@node.DateCreated</strong>.</span>
+                        </p>
+                        <p class="comment-text">
+                            @node.Text
+                        </p>
+                        <button type="button" class="btn btn-link btn-xs btn-hooli-link">Reply</button>
+                    </div>
+                </div>
+                Hooli.Models.PostViewModel inner = new Hooli.Models.PostViewModel { Seed = node.PostId, Children = node.Children };
+                @Html.Partial("_CommentTree", inner)
+            }
+        }
+    </div>
+
+}

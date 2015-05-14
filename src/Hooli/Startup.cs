@@ -97,6 +97,7 @@ namespace Hooli
             services.AddSignalR();
 
             services.AddTransient<Hooli.CloudStorage.Cloud>();
+            services.AddTransient<Hooli.Models.PostCache>();
         }
 
         // Configure is called after ConfigureServices is called.

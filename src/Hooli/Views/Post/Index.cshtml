@@ -5,7 +5,7 @@
      ViewBag.Title = "Post";
 }
 
-@model dynamic
+@model Hooli.Models.PostViewModel
 
 <div class="row">
     <div class="col-md-4">
@@ -92,6 +92,8 @@
             </div>
             <div class="post-comments clearfix sep-top">
                 <h2>Comments</h2>
+
+                @Html.Partial("_CommentTree", Model)
                 <div class="parent-comment-container">
                     <div class="comment-container">
                         <a href="#">
