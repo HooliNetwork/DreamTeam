@@ -26,39 +26,39 @@ namespace Hooli.Controllers
             _serviceProvider = services.BuildServiceProvider();
         }
 
-        [Fact]
-        public void Error_ReturnsErrorView()
-        {
-            // Arrange
-            var controller = new HomeController();
-            var errorView = "~/Views/Shared/Error.cshtml";
+        //[Fact]
+        //public void Error_ReturnsErrorView()
+        //{
+        //    // Arrange
+        //    var controller = new HomeController();
+        //    var errorView = "~/Views/Shared/Error.cshtml";
 
-            // Act
-            var result = controller.Error();
+        //    // Act
+        //    var result = controller.Error();
 
-            // Assert
-            var viewResult = Assert.IsType<ViewResult>(result);
+        //    // Assert
+        //    var viewResult = Assert.IsType<ViewResult>(result);
 
-            Assert.Equal(errorView, viewResult.ViewName);
-        }
+        //    Assert.Equal(errorView, viewResult.ViewName);
+        //}
 
         
 
-        [Fact]
-        public void StatusCodePage_ReturnsStatusCodePage()
-        {
-            // Arrange
-            var controller = new HomeController();
-            var statusCodeView = "~/Views/Shared/StatusCodePage.cshtml";
+        //[Fact]
+        //public void StatusCodePage_ReturnsStatusCodePage()
+        //{
+        //    // Arrange
+        //    var controller = new HomeController();
+        //    var statusCodeView = "~/Views/Shared/StatusCodePage.cshtml";
 
-            // Action
-            var result = controller.StatusCodePage();
+        //    // Action
+        //    var result = controller.StatusCodePage();
 
-            // Assert
-            var viewResult = Assert.IsType<ViewResult>(result);
+        //    // Assert
+        //    var viewResult = Assert.IsType<ViewResult>(result);
 
-            Assert.Equal(statusCodeView, viewResult.ViewName);
-        }
+        //    Assert.Equal(statusCodeView, viewResult.ViewName);
+        //}
 
         // Finish when Search has been completed
         //[Fact]
