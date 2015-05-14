@@ -7,7 +7,7 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>@ViewBag.Title - @AppSettings.Options.SiteTitle</title>
+        <title>@ViewBag.Title</title>
 
         <environment names="Development">
             <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
@@ -70,14 +70,26 @@
                                 </div>
                             </form>
                         </li>
-                        <li id="navbar-profile-photo">
+                        <li>
                             <a asp-controller="Manage" asp-action="Index">
                                 <span class="visible-mobile">Profile</span>
-                                <div id="navbar-profile" class="hidden-mobile" style="background: url(@await UserService.GetProfilePictureUrl(User.GetUserId())) center / cover;"></div>
+                                <span class="visible-xs">- @await UserService.GetFirstname(User.GetUserId()) @await UserService.GetLastname(User.GetUserId())</span>
+                                <div class="navbar-profile-container hidden-mobile">
+                                    <div id="navbar-profile-photo">
+                                        <figure class="front"  style="background: url(@await UserService.GetProfilePictureUrl(User.GetUserId())) center / cover;"></figure>
+                                        <figure class="back">
+                                            <div class="back-content">
+                                                <small>Welcome</small>
+                                                <strong>@await UserService.GetFirstname(User.GetUserId())</strong>
+                                                <small class="link">View profile</small>
+                                            </div>
+                                        </figure>
+                                    </div>
+                                </div>
                             </a>
                         </li>
                         }
-                        <li id="navbar-logout-button">
+                        <li>
                             @await Html.PartialAsync("_LoginPartial")
                         </li>
                     </ul>

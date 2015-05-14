@@ -1,5 +1,3 @@
-
-
 $(document).ready(function () {
     //TODO: add a check so that if a person clicks a previously selected button classes aren't added
     $(".posts-type button:nth-child(1)").click(function () {
@@ -164,7 +162,3 @@ $(document).ready(function () {
 
     
 });
-
-
-
-
