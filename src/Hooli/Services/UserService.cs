@@ -33,37 +33,18 @@ namespace Hooli.Services
             } else return "https://hoolidata.blob.core.windows.net/profilepictures/86f53944-3e52-4469-8bfe-df0b57745469";
   
         }
-
-        public async Task<string> GetLastname(string userId)
+        
+        public async Task<string> GetAge(string userId)
         {
-            Console.WriteLine(userId);
             var user = await DbContext.Users.SingleAsync(u => u.Id == userId);
-            Console.WriteLine(user.ProfilePicture);
-            return user.LastName;
-        }
-
-        public async Task<string> GetFirstname(string userId)
-        {
-            Console.WriteLine(userId);
-            var user = await DbContext.Users.SingleAsync(u => u.Id == userId);
-            Console.WriteLine(user.ProfilePicture);
-            return user.FirstName;
-        }
-
-        public async Task<DateTime> GetDateOfBirth(string userId)
-        {
-            Console.WriteLine(userId);
-            var user = await DbContext.Users.SingleAsync(u => u.Id == userId);
-            Console.WriteLine(user.ProfilePicture);
-            return user.DateOfBirth;
-        }
-
-        public async Task<string> GetUserName(string userId)
-        {
-            Console.WriteLine(userId);
-            var user = await DbContext.Users.SingleAsync(u => u.Id == userId);
-            Console.WriteLine(user.ProfilePicture);
-            return user.UserName;
+            if (user != null)
+            {
+                DateTime today = DateTime.Today;
+                int age = today.Year - user.DateOfBirth.Year;
+                if (user.DateOfBirth > today.AddYears(-age)) age--;
+                return age.ToString();
+            }
+            return "0";
         }
 
     }
