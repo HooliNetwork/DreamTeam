@@ -5,7 +5,7 @@
      ViewBag.Title = "Post";
 }
 
-@model dynamic
+@model Hooli.Models.PostViewModel
 
 <div class="row">
 
@@ -14,46 +14,42 @@
         <div class="col-md-4">
             <div class="content-box padding-remove-sides">
                 <div class="info-photo-container">
-                    @if (Model.post.Group.Image != null)
-                     {   
-                        <div class="info-photo" style="background: url(@Model.post.Group.Image) center / cover;">
-                            <div class="info-photo-shade">
-                                <a asp-controller="Group" asp-action="SingleGroup" asp-route-id="@Model.post.Group.GroupId"><h1>@Model.post.Group.GroupName</h1></a>
-                            </div>
-                        </div>
-                    }
-                    @if (Model.post.Group.Image == null)
-                     {
-                        <div class="info-photo" style="background: url(@Url.Content("~/images/hooli_groupphoto_default.jpg")) center / cover;">
-                            <div class="info-photo-shade">
-                                <a asp-controller="Group" asp-action="SingleGroup" asp-route-id="@Model.post.Group.GroupId"><h1>@Model.post.Group.GroupName</h1></a>
-                            </div>
-                        </div>
-                    }
-
+                    <div class="info-container">
+                        <a asp-controller="Group" asp-action="SingleGroup" asp-route-id="@Model.post.Group.GroupId">
+                            @if (Model.post.Group.Image != null)
+                            {   
+                                <div class="info-photo" style="background: url(@Model.post.Group.Image) center / cover;">
+                                    <div class="info-photo-shade">
+                                    <   h1>@Model.post.Group.GroupName</h1>
+                                    </div>
+                                </div>
+                            }
+                            @if (Model.post.Group.Image == null)
+                            {
+                                <div class="info-photo" style="background: url(@Url.Content("~/images/hooli_groupphoto_default.jpg")) center / cover;">
+                                    <div class="info-photo-shade">
+                                        <h1>@Model.post.Group.GroupName</h1>
+                                    </div>
+                                </div>
+                            }
+                    </div>
                 </div>
+                }                
                 <div class="group-info padding-side">
-                    <p class="group-info-description">
-                        @Model.post.Group.Description
-                    </p>
+                    <p class="group-info-description">@Model.post.Group.Description</p>
                     @if (Model.JoinedGroup.Contains(Model.post.Group.GroupId))
-                     {
-                        <button type="button" data-id="@Model.post.Group.GroupId" data-url="/Manage/UnfollowGroup" class="btn btn-primary btn-block btn-option btn-follow btn-trans">
+                    {
+                        <button type="button" data-id="@Model.post.Group.GroupId" data-url="/Manage/UnfollowGroup" class="btn btn-primary btn-follow btn-block btn-option">
                             <span>Unfollow</span>
                         </button>
-                    }
-                    else
-                    {
-                        <button type="button" data-id="@Model.post.Group.GroupId" data-url="/Manage/FollowGroup" class="btn btn-primary btn-block btn-follow btn-trans">
+                    } else {
+                        <button type="button" data-id="@Model.post.Group.GroupId" data-url="/Manage/FollowGroup" class="btn btn-primary btn-follow btn-block">
                             <span>Follow</span>
                         </button>
                     }
-
                 </div>
             </div>
         </div>
-
-
     }
     else if (Model.post.User != null)
     {
@@ -111,21 +107,26 @@
         <div class="content-box">
             <div class="view-post">
                 <div class="mod-controls">
-                    <button type="button" onclick="location.href='@Url.Action("Edit", "Post",  new { id = Model.post.PostId })'" class="btn btn-primary btn-xs btn-2way">
-                        <span>Edit</span>
-                    </button>
-                    <form asp-controller="Post" asp-action="Delete" asp-route-id="@Model.post.PostId" method="post">
-                    <button type="submit" class="btn btn-danger btn-xs btn-2way">
-                        <span>Delete</span>
-                    </button>
-                    </form>
+                    @if (Model.post.UserId == Model.UserId)
+                    {
+                        <button type="button" onclick="location.href='@Url.Action("Edit", "Post",  new { id = Model.post.PostId })'" class="btn btn-primary btn-xs btn-2way">
+                            <span>Edit</span>
+                        </button>
+                        <form asp-controller="Post" asp-action="Delete" asp-route-id="@Model.post.PostId" method="post">
+                            <button type="submit" class="btn btn-danger btn-xs btn-2way">
+                                <span>Delete</span>
+                            </button>
+                        </form>
+
+                    }
+
                 </div>
-                <div class="post-rating">
-                    <button type="submit" class="btn btn-link vote">
+                <div class="post-rating" data-url="/Post/Vote" data-postId="@Model.post.PostId">
+                    <button type="button" data-type="up" class="btn btn-link vote btn-up">
                         <span class="glyphicon glyphicon-menu-up"></span>
                     </button>
                     <div class="post-rating-count">@Model.post.Points</div>
-                    <button type="submit" class="btn btn-link vote">
+                    <button type="button" data-type="down" class="btn btn-link vote btn-down">
                         <span class="glyphicon glyphicon-menu-down"></span>
                     </button>
                 </div>
@@ -144,7 +145,7 @@
 
                 <h1>@Model.post.Title</h1>
                 <p class="post-body-info">
-                    <span class="post-author">Posted by <a href="#"><strong>@Model.post.User.FirstName</strong></a></span>
+                    <span class="post-author">Posted by <a asp-controller="Profile" asp-action="Index" asp-route-id="@Model.post.User.UserName"><strong>@Model.post.User.FirstName</strong></a></span>
                     <span class="post-date"> on <strong>@Model.post.DateCreated.ToString("MMM dd, yyy @ HH:mm")</strong>.</span>
                 </p>
                 <p>
@@ -153,6 +154,8 @@
             </div>
             <div class="post-comments clearfix sep-top">
                 <h2>Comments</h2>
+
+                @Html.Partial("_CommentTree", Model)
                 <div class="parent-comment-container">
                     <div class="comment-container">
                         <a href="#">

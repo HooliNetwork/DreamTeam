@@ -98,7 +98,9 @@ namespace Hooli
             services.AddTransient<Hooli.Components.FeedComponent>();
 
 
+
             services.AddTransient<Hooli.CloudStorage.Cloud>();
+            services.AddTransient<Hooli.Services.UserService>();
         }
 
         // Configure is called after ConfigureServices is called.

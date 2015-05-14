@@ -32,6 +32,7 @@ namespace Hooli.Controllers
         public PostController(UserManager<ApplicationUser> userManager)
         {
             UserManager = userManager;
+
         }
 
         public UserManager<ApplicationUser> UserManager { get; private set; }
@@ -64,19 +65,21 @@ namespace Hooli.Controllers
         public async Task<IActionResult> Index(int id)
         {
             var currentuser = await GetCurrentUserAsync();
-            dynamic model = new ExpandoObject();
+            //dynamic model = new ExpandoObject();
+            System.Diagnostics.Debug.WriteLine(id);
+            //IEnumerable<Post> posts = postCache.GetHierarchy(id);
+            //model.posts = posts;
+            var post = RecursiveLoad(id);
 
-            model.post = await DbContext.Posts
-                 .Include(u => u.User)
-                 .Include(g => g.Group)
-                 .SingleAsync(p => p.PostId == id);
-            model.JoinedGroup = await DbContext.GroupMembers
+            var joined = await DbContext.GroupMembers
                                 .Where(u => u.UserId == currentuser.Id)
-                                .Select(u => u.GroupId).ToListAsync();
-            model.FollowingPerson = await DbContext.FollowRelations
+                                ?.Select(u => u.GroupId).ToListAsync();
+            var following = await DbContext.FollowRelations
                                     .Where(u => u.FollowerId == currentuser.Id)
                                     .Select(u => u.FollowingId).ToListAsync();
-            Console.WriteLine("post in index: " + model.post.PostId + " " + model.post.Title + " " + model.post.Text);
+            var currentUserId = currentuser.Id;
+
+            PostViewModel model = new PostViewModel { Seed = post.PostId, post = post, JoinedGroup = joined, Children = post.Children, FollowingPerson = following, UserId = currentUserId};
 
             return View(model);
         }
@@ -98,7 +101,7 @@ namespace Hooli.Controllers
             {
                 post.User = user;
                 if ((file != null) && (file.Length > 0))
-                {
+                {               
                     post.Image = await Storage.GetUri("postimages", Guid.NewGuid().ToString(), file);
                 }
                 post.GroupGroupId = id;
@@ -107,24 +110,23 @@ namespace Hooli.Controllers
                 var postdata = new PostData
                 {
                     Title = post.Title,
-                    // We might want link to the post
-                    //Url = Url.Action("Details", "Post", new { id = post.PostId })
-                    Text = post.Text
+                    Text = post.Text,
+                    PostId = post.PostId,
+                    Points = post.Points,
+                    UserName = user.FirstName,
+                    UserId = user.Id,
+                    Image = post.Image,
+                    Link = post.Link,
+                    DateCreated = post.DateCreated.ToString("MMM dd, yyy @ HH:mm")
                 };
                 var following = DbContext.FollowRelations
                         .Where(u => u.FollowingId == user.Id)
-                        .Include(u => u.Follower)
                         .Select(u => u.FollowerId)
                         .ToList();
                 var usernames = DbContext.Users
                         .Where(u => following.Contains(u.Id))
                         .Select(u => u.UserName).ToList();
 
-                foreach (object o in following)
-                {
-                    Console.WriteLine(o);
-                }
-                Console.WriteLine(Context.User.Identity.Name);
 
                 _feedHub.Clients.Users(usernames).feed(postdata);
                 //_feedHub.Clients.All.feed(postdata);
@@ -134,6 +136,12 @@ namespace Hooli.Controllers
                 return Redirect("Post/Index/" + post.PostId);
             }
             return View(post);
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateComment(PostData post)
+        {
+
+            return Json(new { responseText = "Success!" });
         }
 
         [HttpPost]
@@ -158,8 +166,8 @@ namespace Hooli.Controllers
             var VoteRelations = new VoteRelation() { PostId = postId, UserId = Context.User.GetUserId() };
             DbContext.VoteRelations.Add(VoteRelations);
             await DbContext.SaveChangesAsync();
-
-
+            
+            
             return Json(new { responseText = "Success!" });
         }
 
@@ -189,7 +197,7 @@ namespace Hooli.Controllers
             if (post != null)
             {
                 DbContext.Entry(post).State = EntityState.Modified;
-                await DbContext.SaveChangesAsync(requestAborted);
+            await DbContext.SaveChangesAsync(requestAborted);
             }
 
             return Redirect("/Post/Index/" + post.PostId);
@@ -201,28 +209,57 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id, CancellationToken requestAborted)
         {
-            var post = DbContext.Posts.Single(p => p.PostId == id);
+            var post =await DbContext.Posts
+                .Include(u => u.User)
+                .SingleAsync(p => p.PostId == id);
+            var voteRelation = await DbContext.VoteRelations
+                .Where(u => u.PostId == post.PostId)
+                .ToListAsync();
+            var groupId = post.GroupGroupId;
+            var userName = post.User.UserName;
 
-            Console.WriteLine("Before delete post: " + post.PostId + " " + post.Title + " " + post.Text);
-
+            // Check if there are any comments and mark them for deletion
             if (post.ParentPostId == null)
             {
-                DbContext.Entry(post).State = EntityState.Deleted;
-                await DbContext.SaveChangesAsync(requestAborted);
+                Console.WriteLine("ParentPostId");
+                RecursiveSearch(RecursiveLoad(post.PostId));
+
+
+            }
+
+            // Check if there are any votes on the post and mark the relation for deletion
+            if (voteRelation != null)
+            {
+                Console.WriteLine("Vote relation not empty");
+                foreach (var relationLine in voteRelation)
+                {
+                   DbContext.Remove(relationLine);
+                }
+            }
+
+            // Safe to mark post since votes and comments have been marked
+            DbContext.Remove(post);
+            await DbContext.SaveChangesAsync(requestAborted);
+
+
+            //Redirecting after the delete based on where the post was based
+            if (groupId != null)
+            {
+                return Redirect("/Group/SingleGroup/" + groupId);
+            }
+            else if (userName != null)
+            {
+                return Redirect("/Profile/Index/" + userName);
             }
             else
             {
-                Console.WriteLine("Can't delete like above because of ParentPostId");
+                return Redirect("/");
             }
 
-            //TODO Check if the post has a voteRelation
-
-            Console.WriteLine("After delete post: " + post.PostId + " " + post.Title + " " + post.Text);
-
-            return Redirect("/Group/SingleGroup" + post.GroupGroupId);
+            
         }
 
-        
+
         // GET: /StoreManager/Create
         public IActionResult Create()
         {
@@ -232,7 +269,41 @@ namespace Hooli.Controllers
         {
             return await UserManager.FindByIdAsync(Context.User.GetUserId());
         }
+        private Post RecursiveLoad(int id)
+        {
+            var ParentFromDatabase = DbContext.Posts
+                .Include(u => u.User)
+                .Include(g => g.Group)
+                .Include(c => c.Children)
+                .Single(p => p.PostId == id);
 
+            foreach (var child in ParentFromDatabase.Children)
+            {
+                var childNotLoaded = child;
+                var childFullyLoaded = DbContext.Posts
+                  .Include(u => u.User)
+                  .Include(d => d.ParentPost)
+                  .Include(d => d.Children)
+                  .Single(d => d.PostId == childNotLoaded.PostId);
+
+                child.User = childFullyLoaded.User;   
+                child.ParentPost = RecursiveLoad(childFullyLoaded.PostId); //Require to set back the value because we want by reference to have everything in the tree
+            }
+            return ParentFromDatabase;
+        }
+
+        private void RecursiveSearch(Post post)
+        {
+            foreach (var child in post.Children.ToList())
+            {
+                Console.WriteLine("MoreReqursion " + child.PostId);
+                RecursiveSearch(child);
+                // Delete the comments, starting from the bottom
+                DbContext.Remove(child);
+                Console.WriteLine("Remove " + child.PostId);
+            }
+
+        }
 
     }
 }

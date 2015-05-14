@@ -2,7 +2,7 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    // ViewBag.Title = "Home Page";
+    ViewBag.Title = "Followed Groups";
 }
 
 @*@model List<Hooli.Models.Group>*@
@@ -44,14 +44,5 @@
             </div>
         </div>
     </div>
-    <div class="col-md-8">
-        <div class="content-box">
-            <h1>Groups you are following</h1>
-
-            <div class="row following-info-container">
-                @await Component.InvokeAsync("Group")
-            </div>
-
-        </div>
-    </div>
+    @await Component.InvokeAsync("Group")
 </div>
