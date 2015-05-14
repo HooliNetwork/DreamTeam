@@ -47,7 +47,7 @@ p {
 }
 
 .navbar-logout-button {
-    margin-left: 60px;
+    margin-left: 15px;
 }
 /*
 #navbar-profile {
@@ -142,6 +142,10 @@ p {
 }
 
 .visible-mobile {
+    display: none;
+}
+
+.visible-xs {
     display: none;
 }
 
@@ -701,9 +705,6 @@ form input[type=radio] {
     .visible-mobile {
         display:inline !important;
     }
-    #navbar-logout-button {
-        margin-left: 15px;
-    }
     .navbar-nav>li>a {
         line-height: 40px;
     }
@@ -719,6 +720,9 @@ form input[type=radio] {
 }
 
 @media (max-width: 767px) {
+     .visible-xs {
+        display:inline !important;
+    }
     .navbar-nav>li>a {
         line-height: 20px;
     }
@@ -812,6 +816,9 @@ form input[type=radio] {
     .mod-controls {
         right: 25px;
         top: 10px;
+    }
+    .navbar-logout-button {
+        margin-left: 60px;
     }
 }
 

@@ -73,6 +73,7 @@
                         <li>
                             <a asp-controller="Manage" asp-action="Index">
                                 <span class="visible-mobile">Profile</span>
+                                <span class="visible-xs">- @await UserService.GetFirstname(User.GetUserId()) @await UserService.GetLastname(User.GetUserId())</span>
                                 <div class="navbar-profile-container hidden-mobile">
                                     <div id="navbar-profile-photo">
                                         <figure class="front"  style="background: url(@await UserService.GetProfilePictureUrl(User.GetUserId())) center / cover;"></figure>
