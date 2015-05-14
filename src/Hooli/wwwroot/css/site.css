@@ -64,6 +64,8 @@ p {
     width: 110px;
     height: 110px;
     position: absolute;
+    -webkit-transform-style: preserve-3d;
+    -webkit-transition: transform 1s;
     transform-style: preserve-3d;
     transition: transform 1s;
 }
@@ -83,7 +85,6 @@ p {
 
 #navbar-profile-photo .back {
     background: #333;
-    -ms-transform: rotateY( 180deg );
     -webkit-transform: rotateY( 180deg );
     transform: rotateY( 180deg );
 }
@@ -128,7 +129,6 @@ p {
 }
 
 #navbar-profile-photo:hover {
-    -ms-transform: rotateY( 180deg );
     -webkit-transform: rotateY( 180deg );
     transform: rotateY( 180deg );
 }
