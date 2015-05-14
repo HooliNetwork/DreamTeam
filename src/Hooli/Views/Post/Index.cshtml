@@ -34,7 +34,6 @@
                             }
                         </a>
                     </div>
-
                 </div>
                 <div class="group-info padding-side">
                     <p class="group-info-description">
@@ -64,10 +63,25 @@
         <div class="col-md-4">
             <div class="content-box padding-remove-sides">
                 <div class="info-photo-container">
-                    <div class="info-photo info-photo-user" style="background: url(@Model.post.User.ProfilePicture) center / cover;">
-                        <div class="info-photo-shade">
-                            <a asp-controller="Profile" asp-action="Index" asp-route-id="@Model.post.User.UserName"><h1>@Model.post.User.FirstName @Model.post.User.LastName</h1></a>
-                        </div>
+                    <div class="info-container">
+                        <a asp-controller="Profile" asp-action="Index" asp-route-id="@Model.post.User.UserName">
+                            @if (Model.post.User.ProfilePicture != null)
+                             {   
+                                <div class="info-photo info-photo-user" style="background: url(@Model.post.User.ProfilePicture) center / cover;">
+                                    <div class="info-photo-shade">
+                                        <h1>@Model.post.Group.GroupName</h1>
+                                    </div>
+                                </div>
+                            }
+                            @if (Model.post.User.ProfilePicture == null)
+                             {
+                                <div class="info-photo info-photo-user" style="background: url(@Url.Content("~/images/hooli_profilephoto_default.jpg")) center / cover;">
+                                    <div class="info-photo-shade">
+                                        <h1>@Model.post.Group.GroupName</h1>
+                                    </div>
+                                </div>
+                            }
+                        </a>
                     </div>
                 </div>
                 <div class="profile-info row">
