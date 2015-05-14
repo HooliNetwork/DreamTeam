@@ -208,7 +208,7 @@ p {
     text-shadow: 0px 1px 5px #555;
 }
 
-.info-photo:hover {
+a>.info-photo:hover {
     color: #EEE;
     filter: sepia(0.15) contrast(1.15);
    -webkit-filter: sepia(0.15) contrast(1.15);
