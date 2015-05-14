@@ -10,30 +10,34 @@
 <div class="col-md-8">
     <div class="content-box">
         <h1>People you are following</h1>
-        <div class="row following-info-container following-people">
+        <div class="row following-info-container">
 
             @if (Model != null)
             {
                 @foreach (var u in Model)
                 {
                     System.Diagnostics.Debug.WriteLine(u.Id);
-                    <div class="info-photo-container col-sm-12 col-md-6">
-                        @if (u.ProfilePicture != null)
-                        {
-                            <div class="info-photo" style="background: url(@u.ProfilePicture) center / cover;">
-                                <div class="info-photo-shade">
-                                    <a href="#"><h1>@u.FirstName @u.LastName</h1></a>
-                                </div>
-                            </div>
-                        }
-                         @if (u.ProfilePicture == null)
-                         {
-                            <div class="info-photo" style="background: url(@Url.Content("~/images/hooli_profilephoto_default.jpg")) center / cover;">
-                                <div class="info-photo-shade">
-                                    <a href="#"><h1>@u.FirstName @u.LastName</h1></a>
-                                </div>
-                            </div>
-                         } 
+                    <div class="info-photo-container col-sm-6 col-md-6">
+                        <div class="info-container">
+                            <a asp-controller="People" asp-action="Index" asp-route-id="@u.Id">
+                                @if (u.ProfilePicture != null)
+                                {
+                                    <div class="info-photo" style="background: url(@u.ProfilePicture) center / cover;">
+                                        <div class="info-photo-shade">
+                                            <h1>@u.FirstName @u.LastName</h1>
+                                        </div>
+                                    </div>
+                                }
+                                 @if (u.ProfilePicture == null)
+                                 {
+                                    <div class="info-photo" style="background: url(@Url.Content("~/images/hooli_profilephoto_default.jpg")) center / cover;">
+                                        <div class="info-photo-shade">
+                                            <h1>@u.FirstName @u.LastName</h1>
+                                        </div>
+                                    </div>
+                                 }
+                            </a>
+                        </div>
                     </div>
                 }
             }

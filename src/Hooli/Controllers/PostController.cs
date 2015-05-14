@@ -32,6 +32,7 @@ namespace Hooli.Controllers
         public PostController(UserManager<ApplicationUser> userManager)
         {
             UserManager = userManager;
+
         }
 
         public UserManager<ApplicationUser> UserManager { get; private set; }
@@ -64,20 +65,20 @@ namespace Hooli.Controllers
         public async Task<IActionResult> Index(int id)
         {
             var currentuser = await GetCurrentUserAsync();
-            dynamic model = new ExpandoObject();
+            //dynamic model = new ExpandoObject();
+            System.Diagnostics.Debug.WriteLine(id);
+            //IEnumerable<Post> posts = postCache.GetHierarchy(id);
+            //model.posts = posts;
+            var post = RecursiveLoad(id);
 
-            model.post = await DbContext.Posts
-                 .Include(u => u.User)
-                 .Include(g => g.Group)
-                 .SingleAsync(p => p.PostId == id);
-            model.JoinedGroup = await DbContext.GroupMembers
+            var joined = await DbContext.GroupMembers
                                 .Where(u => u.UserId == currentuser.Id)
-                                .Select(u => u.GroupId).ToListAsync();
-            model.FollowingPerson = await DbContext.FollowRelations
+                                ?.Select(u => u.GroupId).ToListAsync();
+            var following = await DbContext.FollowRelations
                                     .Where(u => u.FollowerId == currentuser.Id)
                                     .Select(u => u.FollowingId).ToListAsync();
-            Console.WriteLine("post in index: " + model.post.PostId + " " + model.post.Title + " " + model.post.Text);
 
+            PostViewModel model = new PostViewModel { Seed = post.PostId, post = post, Joined = joined, Children = post.Children, FollowingPerson = following };
             return View(model);
         }
 
@@ -98,7 +99,7 @@ namespace Hooli.Controllers
             {
                 post.User = user;
                 if ((file != null) && (file.Length > 0))
-                {
+                {               
                     post.Image = await Storage.GetUri("postimages", Guid.NewGuid().ToString(), file);
                 }
                 post.GroupGroupId = id;
@@ -107,24 +108,23 @@ namespace Hooli.Controllers
                 var postdata = new PostData
                 {
                     Title = post.Title,
-                    // We might want link to the post
-                    //Url = Url.Action("Details", "Post", new { id = post.PostId })
-                    Text = post.Text
+                    Text = post.Text,
+                    PostId = post.PostId,
+                    Points = post.Points,
+                    UserName = user.FirstName,
+                    UserId = user.Id,
+                    Image = post.Image,
+                    Link = post.Link,
+                    DateCreated = post.DateCreated.ToString("MMM dd, yyy @ HH:mm")
                 };
                 var following = DbContext.FollowRelations
                         .Where(u => u.FollowingId == user.Id)
-                        .Include(u => u.Follower)
                         .Select(u => u.FollowerId)
                         .ToList();
                 var usernames = DbContext.Users
                         .Where(u => following.Contains(u.Id))
                         .Select(u => u.UserName).ToList();
 
-                foreach (object o in following)
-                {
-                    Console.WriteLine(o);
-                }
-                Console.WriteLine(Context.User.Identity.Name);
 
                 _feedHub.Clients.Users(usernames).feed(postdata);
                 //_feedHub.Clients.All.feed(postdata);
@@ -134,6 +134,12 @@ namespace Hooli.Controllers
                 return Redirect("Post/Index/" + post.PostId);
             }
             return View(post);
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateComment(PostData post)
+        {
+
+            return Json(new { responseText = "Success!" });
         }
 
         [HttpPost]
@@ -158,8 +164,8 @@ namespace Hooli.Controllers
             var VoteRelations = new VoteRelation() { PostId = postId, UserId = Context.User.GetUserId() };
             DbContext.VoteRelations.Add(VoteRelations);
             await DbContext.SaveChangesAsync();
-
-
+            
+            
             return Json(new { responseText = "Success!" });
         }
 
@@ -189,7 +195,7 @@ namespace Hooli.Controllers
             if (post != null)
             {
                 DbContext.Entry(post).State = EntityState.Modified;
-                await DbContext.SaveChangesAsync(requestAborted);
+            await DbContext.SaveChangesAsync(requestAborted);
             }
 
             return Redirect("/Post/Index/" + post.PostId);
@@ -206,9 +212,9 @@ namespace Hooli.Controllers
             Console.WriteLine("Before delete post: " + post.PostId + " " + post.Title + " " + post.Text);
 
             if (post.ParentPostId == null)
-            {
+        {
                 DbContext.Entry(post).State = EntityState.Deleted;
-                await DbContext.SaveChangesAsync(requestAborted);
+            await DbContext.SaveChangesAsync(requestAborted);
             }
             else
             {
@@ -222,7 +228,7 @@ namespace Hooli.Controllers
             return Redirect("/Group/SingleGroup" + post.GroupGroupId);
         }
 
-        
+
         // GET: /StoreManager/Create
         public IActionResult Create()
         {
@@ -231,6 +237,28 @@ namespace Hooli.Controllers
         private async Task<ApplicationUser> GetCurrentUserAsync()
         {
             return await UserManager.FindByIdAsync(Context.User.GetUserId());
+        }
+        private Post RecursiveLoad(int id)
+        {
+            var ParentFromDatabase = DbContext.Posts
+                .Include(u => u.User)
+                .Include(g => g.Group)
+                .Include(c => c.Children)
+                .Single(p => p.PostId == id);
+
+            foreach (var child in ParentFromDatabase.Children)
+            {
+                var childNotLoaded = child;
+                var childFullyLoaded = DbContext.Posts
+                  .Include(u => u.User)
+                  .Include(d => d.ParentPost)
+                  .Include(d => d.Children)
+                  .Single(d => d.PostId == childNotLoaded.PostId);
+
+                child.User = childFullyLoaded.User;   
+                child.ParentPost = RecursiveLoad(childFullyLoaded.PostId); //Require to set back the value because we want by reference to have everything in the tree
+            }
+            return ParentFromDatabase;
         }
 
 

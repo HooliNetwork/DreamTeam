@@ -82,7 +82,7 @@
             <div class="row following-info-container">
                 @foreach (var u in Model.Users)
                 {
-                    <div class="info-photo-container col-sm-12 col-md-6 search-results s_groups">
+                    <div class="info-photo-container col-sm-12 col-md-6 search-results s_people">
                         <div class="info-container">
                             <a asp-controller="Profile" asp-action="Index" asp-route-id="@u.UserName">
                                 @if (u.ProfilePicture != null)

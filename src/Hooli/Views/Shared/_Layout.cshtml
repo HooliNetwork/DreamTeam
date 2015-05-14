@@ -1,4 +1,7 @@
 ﻿@inject IOptions<AppSettings> AppSettings
+@inject Hooli.Services.UserService UserService
+@using System.Security.Claims
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -35,6 +38,14 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
+                    <form asp-controller="Home" asp-action="Search" class="navbar-search search-mobile" role="search" method="post">
+                        <div class="form-group">
+                            <input type="search" id="searchString" name="searchString" class="form-control" placeholder="Search">
+                            <button type="submit" class="btn btn-default" value="searchString">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </div>
+                    </form>
                     <a asp-controller="Home" asp-action="Index" class="navbar-brand">
                         <img id="navbar-logo-large" src="~/images/logo_hooli.png" alt="Hooli logo" />
                         <img id="navbar-logo-small" src="~/images/logo_hooli_sm.png" alt="Hooli logo" />
@@ -49,10 +60,10 @@
                         <li><a asp-controller="People" asp-action="Index">People</a></li>
                         <li><a asp-controller="Event" asp-action="Index">Events</a></li>
                         <li><a asp-controller="Chat" asp-action="Index">Chat</a></li>
-                        <li>
+                        <li class="hidden-xs">
                             <form asp-controller="Home" asp-action="Search" class="navbar-search" role="search"  method="post">
                                 <div class="form-group">
-                                    <input type="search" id="searchString" name="searchString" class="form-control" placeholder="Search">
+                                    <input type="search" id="searchString" name="searchString" class="form-control" placeholder="Search people and groups...">
                                     <button type="submit" class="btn btn-default" value="searchString">
                                         <span class="glyphicon glyphicon-search"></span>
                                     </button>
@@ -60,9 +71,9 @@
                             </form>
                         </li>
                         <li id="navbar-profile-photo">
-                            <a asp-controller="Profile" asp-action="Index">
+                            <a asp-controller="Manage" asp-action="Index">
                                 <span class="visible-mobile">Profile</span>
-                                <img id="navbar-profile" class="hidden-mobile" src="~/images/johann.jpg" alt="Profile photo" />
+                                <div id="navbar-profile" class="hidden-mobile" style="background: url(@await UserService.GetProfilePictureUrl(User.GetUserId())) center / cover;"></div>
                             </a>
                         </li>
                         }
@@ -116,13 +127,23 @@
             $(function () {
                 $.connection.hub.logging = true;
                 var feedHub = $.connection.Feed;
-                feedHub.client.feed = function (item) {
-                    var feedTitle = $('#feedTitle');
-                    var feedText = $('#feedText');
-                    //newArrivals.attr("href", item.Url); //Set the URL
-                    feedTitle.text(item.Title); //Set the title
-                    feedText.text(item.Text);
-                    consol.log(item.Title);
+                feedHub.client.feed = function (post) {
+                    var htmlTemplate;
+                    $.get("/htmlTemplates/post.html")
+                    .success(function (data) {
+                        htmlTemplate = data;
+                        $("#feed-content").prepend(htmlTemplate);
+                        $(".post-rating").first().attr("data-postid", post.PostId);
+                        $(".post-rating-count").first().text(post.Points);
+                        $(".post-body > a").first().attr("href", "/Post/Index/" + post.PostId);
+                        $(".post-body h2").first().text(post.Title);
+                        $(".post-author > a > strong").first().text(post.UserName);
+                        $(".post-author > a").first().attr("href", "/Profile/Index/" + post.UserId);
+                        $(".post-date > strong").first().text(post.DateCreated);
+                        $(".post").first().show(100);
+                        $("a.image-link").first().attr("href", post.Image);
+                        $("a > .photo-feed").first().css("background", "url(" + post.Image + ") center / cover");
+                    });
                 };
                 $.connection.hub.start().done(function () {
                     console.log('hub connection open');

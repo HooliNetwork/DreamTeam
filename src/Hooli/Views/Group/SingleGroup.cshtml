@@ -10,22 +10,24 @@
     <div class="col-md-4">
         <div class="content-box padding-remove-sides">
             <div class="info-photo-container">
-                @if (Model.group.Image != null)
-                {
-                <div class="info-photo" style="background: url(@Model.group.Image) center / cover;">
-                    <div class="info-photo-shade">
-                        <a href="#"><h1>@Model.group.GroupName</h1></a>
-                    </div>
-                </div>
-                }
-                @if (Model.group.Image == null)
-                {
-                    <div class="info-photo" style="background: url(@Url.Content("~/images/hooli_groupphoto_default.jpg")) center / cover;">
+                <div class="info-container">
+                    @if (Model.group.Image != null)
+                    {
+                    <div class="info-photo" style="background: url(@Model.group.Image) center / cover;">
                         <div class="info-photo-shade">
-                            <a href="#"><h1>@Model.group.GroupName</h1></a>
+                            <h1>@Model.group.GroupName</h1>
                         </div>
                     </div>
-                }
+                    }
+                    @if (Model.group.Image == null)
+                    {
+                        <div class="info-photo" style="background: url(@Url.Content("~/images/hooli_groupphoto_default.jpg")) center / cover;">
+                            <div class="info-photo-shade">
+                                <h1>@Model.group.GroupName</h1>
+                            </div>
+                        </div>
+                    }
+                </div>
             </div>
             <div class="group-info padding-side">
                 <p class="group-info-description">@Model.group.Description</p>
