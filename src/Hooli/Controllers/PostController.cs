@@ -17,6 +17,8 @@ using Microsoft.Net.Http.Headers;
 using System.IO;
 using Hooli.CloudStorage;
 using Microsoft.WindowsAzure.Storage.Blob;
+using System.Collections.Generic;
+using System.Dynamic;
 
 namespace Hooli.Controllers
 {
@@ -25,6 +27,7 @@ namespace Hooli.Controllers
     {
         private IConnectionManager _connectionManager;
         private IHubContext _feedHub;
+
         public PostController(UserManager<ApplicationUser> userManager)
         {
             UserManager = userManager;
@@ -55,28 +58,45 @@ namespace Hooli.Controllers
             }
         }
 
-        public IActionResult Index()
+
+
+        public async Task<IActionResult> Index(int id)
         {
-            return View();
+            var currentuser = await GetCurrentUserAsync();
+            dynamic model = new ExpandoObject();
+            System.Diagnostics.Debug.WriteLine(id);
+            model.post = await DbContext.Posts
+                 .Include(u => u.User)
+                 .Include(g => g.Group)
+                 .SingleAsync(p => p.PostId == id);
+            model.Joined = await DbContext.GroupMembers
+                                .Where(u => u.UserId == currentuser.Id)
+                                .Select(u => u.GroupId).ToListAsync();
+            return View(model);
         }
 
-        [HttpPost]
+
+        [HttpPost("{id}")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Post post, CancellationToken requestAborted, IFormFile file)
+        public async Task<IActionResult> Create(Post post, CancellationToken requestAborted, IFormFile file, string id)
         {
+
+            Console.WriteLine("ID: " + id);
+            System.Diagnostics.Debug.WriteLine("ID " + id);
             var user = await GetCurrentUserAsync();
             if (ModelState.IsValid && user != null)
             {
-                
+                Console.WriteLine("pc1");
                 post.User = user;
                 if((file != null) && (file.Length > 0))
                 {               
                     post.Image = await Storage.GetUri("postimages", Guid.NewGuid().ToString(), file);
                 }
-                
+                Console.WriteLine("pc2");
+                post.GroupGroupId = id;
                 DbContext.Posts.Add(post);
                 await DbContext.SaveChangesAsync(requestAborted);
-
+                Console.WriteLine("pc3");
                 var postdata = new PostData
                 {
                     Title = post.Title,
@@ -84,14 +104,18 @@ namespace Hooli.Controllers
                     //Url = Url.Action("Details", "Post", new { id = post.PostId })
                     Text = post.Text
                 };
+                Console.WriteLine("pc4");
                 var following = DbContext.FollowRelations
                         .Where(u => u.FollowingId == user.Id)
                         .Include(u => u.Follower)
-                        .Select(u => u.Follower.Id)
+                        .Select(u => u.FollowerId)
                         .ToList();
+                Console.WriteLine("pc5");
                 var usernames = DbContext.Users
                         .Where(u => following.Contains(u.Id))
                         .Select(u => u.UserName).ToList();
+                Console.WriteLine("pc6");
+
                 foreach (object o in following)
                 {
                     Console.WriteLine(o);
@@ -100,23 +124,28 @@ namespace Hooli.Controllers
 
                 _feedHub.Clients.Users(usernames).feed(postdata);
                 //_feedHub.Clients.All.feed(postdata);
+                Console.WriteLine("pc7");
 
                 Cache.Remove("latestPost");
-                return RedirectToAction("Index");
+                Console.WriteLine("pc8");
+
+                return Redirect("Post/Index/" + post.PostId);
             }
             return View(post);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Vote(string type, int postId)
+        public async Task<IActionResult> Vote(string upDown, int postId)
         {
-            var voted = await DbContext.VoteRelations.SingleOrDefaultAsync(v => v.UserId == Context.User.GetUserId());
+            Console.WriteLine(upDown + postId);
+            var voted = await DbContext.VoteRelations.SingleOrDefaultAsync(v => v.UserId == Context.User.GetUserId()
+                                                                              && v.PostId == postId);
             if (voted != null)
             {
-                return Json(new { success = false, responseText = "Already voted!" });
+                return HttpNotFound(); // Hack to return success = false , which does not work.
             }
             var postData = await DbContext.Posts.SingleAsync(postTable => postTable.PostId == postId);
-            if (type == "up")
+            if (upDown == "up")
             {
                 postData.Points++;
             }
@@ -124,8 +153,12 @@ namespace Hooli.Controllers
             {
                 postData.Points--;
             }
+            var VoteRelations = new VoteRelation() {PostId = postId, UserId = Context.User.GetUserId()};
+            DbContext.VoteRelations.Add(VoteRelations);
             await DbContext.SaveChangesAsync();
-            return Json(new { success = true, responseText = "Success!" });
+            
+            
+            return Json(new {responseText = "Success!" });
         }
 
         [HttpPost]

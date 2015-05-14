@@ -38,6 +38,14 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
+                    <form asp-controller="Home" asp-action="Search" class="navbar-search search-mobile" role="search" method="post">
+                        <div class="form-group">
+                            <input type="search" id="searchString" name="searchString" class="form-control" placeholder="Search">
+                            <button type="submit" class="btn btn-default" value="searchString">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </div>
+                    </form>
                     <a asp-controller="Home" asp-action="Index" class="navbar-brand">
                         <img id="navbar-logo-large" src="~/images/logo_hooli.png" alt="Hooli logo" />
                         <img id="navbar-logo-small" src="~/images/logo_hooli_sm.png" alt="Hooli logo" />
@@ -52,10 +60,10 @@
                         <li><a asp-controller="People" asp-action="Index">People</a></li>
                         <li><a asp-controller="Event" asp-action="Index">Events</a></li>
                         <li><a asp-controller="Chat" asp-action="Index">Chat</a></li>
-                        <li>
+                        <li class="hidden-xs">
                             <form asp-controller="Home" asp-action="Search" class="navbar-search" role="search"  method="post">
                                 <div class="form-group">
-                                    <input type="search" id="searchString" name="searchString" class="form-control" placeholder="Search">
+                                    <input type="search" id="searchString" name="searchString" class="form-control" placeholder="Search people and groups...">
                                     <button type="submit" class="btn btn-default" value="searchString">
                                         <span class="glyphicon glyphicon-search"></span>
                                     </button>

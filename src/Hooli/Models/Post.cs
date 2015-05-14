@@ -37,6 +37,8 @@ namespace Hooli.Models
         public List<Post> Children { get; set; }
         public string UserId { get; set; }
 
+        public string GroupGroupId { get; set; }
+
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
         public Post()

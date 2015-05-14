@@ -103,66 +103,42 @@ $(document).ready(function () {
         return false;
     });
 
+    $(".file-upload").change(function(){
+        var FileName = $(this).val().slice(12);
+        var FileNameLength = FileName.length;
+        if (FileNameLength > 27) {
+            $(".file-upload-name").val(FileName.slice(0,16) + "..." + FileName.slice(FileNameLength - 8));
+        } else {
+            $(".file-upload-name").val(FileName);
+        }
+    })
+
 
     $("body").on('click', ".vote", function () {
         var currBtn = $(this);
-        var uri = currBtn.parent.attr('data-url');
-        var id = currBtn.parent.attr('data-id');
-        var type = currBtn.attr('data-type');
+        var uri = currBtn.parent().attr('data-url');
+        var id = currBtn.parent().attr('data-postId');
+        var upOrDown = currBtn.attr('data-type');
+        var count = currBtn.siblings(".post-rating-count");
         $.ajax({
-            async: false,
+            async: true,
             type: "POST",
             url: uri,
-            data: {'type' : type }
-        }).success(function (result) {
-            var count = currBtn.closest("post-rating-count");
-            var value = parseInt(count.text(), 10);
-            if (type == "up") {
-                value += 1;
-                count.text(value);
-            } else if (type == "down") {
-                value -= 1;
-                count.text(value);
+            data: { 'upDown': upOrDown, 'postId': id },
+            success: function (result) {
+                var value = parseInt(count.text(), 10);
+                    if (upOrDown == "up") {
+                        value += 1;
+                        count.text(value);
+                    } else if (upOrDown == "down") {
+                        value -= 1;
+                        count.text(value);
             }
-            currBtn.toggleClass("btn-option");
-        }).fail(function (error) {
-            alert("There was an error posting the data to the server: " + error.responseText);
-        });
-        return false;
-    });
-
-    $('body').on('submit', '#edit_profile', function () {
-        var theForm = $(this);
-        $.ajax({
-            type: "POST",
-            url: "/Profile/EditProfile",
-            data: theForm.serialize(),
-        }).done(function (result) {
-            // Todo Update form
-
-        }).fail(function (error) {
-            alert("There was an error posting the data to the server: " + error.responseText);
-        });
-        return false;
-    });
-
-    $(".edit-profile button").click(function () {
-        var form = $("#edit_profile").serialize();
-        $.ajax({
-            type: 'POST',
-            url: "/Profile/EditProfile",
-            data: form,
-            dataType: 'json',
-            success: function (data) {
-                if (data.result == "Error") {
-                    alert(data.message);
-                }
             }
         });
     });
 
-
-
+    
 });
 
 

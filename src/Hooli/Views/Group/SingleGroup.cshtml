@@ -4,43 +4,50 @@
 @{
 // ViewBag.Title = "Home Page";
 }
-@model Hooli.Models.Group
+@model dynamic
 
 <div class="row">
     <div class="col-md-4">
         <div class="content-box padding-remove-sides">
             <div class="info-photo-container">
-                @if (Model.Image != null)
+                @if (Model.group.Image != null)
                 {
-                <div class="info-photo" style="background: url(@Model.Image) center / cover;">
+                <div class="info-photo" style="background: url(@Model.group.Image) center / cover;">
                     <div class="info-photo-shade">
-                        <a href="#"><h1>Silicon valley</h1></a>
+                        <a href="#"><h1>@Model.group.GroupName</h1></a>
                     </div>
                 </div>
                 }
-                @if (Model.Image == null)
+                @if (Model.group.Image == null)
                 {
                     <div class="info-photo" style="background: url(@Url.Content("~/images/hooli_groupphoto_default.jpg")) center / cover;">
                         <div class="info-photo-shade">
-                            <a href="#"><h1>@Model.GroupName</h1></a>
+                            <a href="#"><h1>@Model.group.GroupName</h1></a>
                         </div>
                     </div>
                 }
             </div>
             <div class="group-info padding-side">
-                <p class="group-info-description">@Model.Description</p>
-                <button type="button" class="btn btn-primary btn-block">
-                    <span>Join group</span>
-                </button>
-                <button type="button" class="btn btn-primary btn-block btn-option">
-                    <span>Leave group</span>
-                </button>
+                <p class="group-info-description">@Model.group.Description</p>
+                @if (Model.Joined.Contains(Model.group.GroupId))
+            {
+                    <button type="button" data-id="@Model.group.GroupId" data-url="/Manage/UnfollowGroup" class="btn btn-primary btn-block btn-option btn-follow btn-trans">
+                        <span>Unfollow</span>
+                    </button>
+                }
+                else
+                {
+                    <button type="button" data-id="@Model.group.GroupId" data-url="/Manage/FollowGroup" class="btn btn-primary btn-block btn-follow btn-trans">
+                        <span>Follow</span>
+                    </button>
+                }
             </div>
         </div>
     </div>
     <div class="col-md-8">
         <div class="content-box">
             <h1>Group feed</h1>
+
             <div class="posts-orderby">
                 <button type="button" class="btn btn-primary btn-2way btn-option">
                     <span>New</span>
@@ -56,12 +63,7 @@
                 @await Html.PartialAsync("_Create", ViewData["Post"])
             </div>
 
-
-
-            <!-- This below is new -->
-            @*@await Component.InvokeAsync("Feed", true, true)*@
-
-
+            @await Component.InvokeAsync("Feed", true, true, Model.group.GroupId)
         </div>
     </div>
 

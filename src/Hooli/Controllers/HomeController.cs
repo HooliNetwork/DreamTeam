@@ -40,6 +40,7 @@ namespace Hooli.Controllers
             //var user = await GetCurrentUserAsync();
             //user.Followers = DbContext.FollowRelations.Where(f => f.FollowerId == user.Id).ToList();
             //user.Following = DbContext.FollowRelations.Where(f => f.FollowingId == user.Id).ToList();
+            
             return View();
         }
 
@@ -114,7 +115,7 @@ namespace Hooli.Controllers
                 .ToListAsync();
         }
 
-        [HttpPost]
+        [HttpPost("Search")]
         public async Task<IActionResult> Search(string searchString)
         {
             dynamic model = new ExpandoObject();
@@ -130,12 +131,12 @@ namespace Hooli.Controllers
                                             .Contains(searchString))
                                             .ToListAsync();
 
-                model.Following = DbContext.FollowRelations
+                model.Following = await DbContext.FollowRelations
                                 .Where(u => u.FollowerId == currentuser.Id)
-                                .Select(u => u.FollowingId).ToList();
-                model.Joined = DbContext.GroupMembers
+                                .Select(u => u.FollowingId).ToListAsync();
+                model.Joined = await DbContext.GroupMembers
                                 .Where(u => u.UserId == currentuser.Id)
-                                .Select(u => u.GroupId).ToList();
+                                .Select(u => u.GroupId).ToListAsync();
 
     
                 //model.Events = View(await DbContext.Events.Where(e => e.EventName
