@@ -16,8 +16,8 @@
                     <div class="info-container">
                         @if (Model.User.ProfilePicture != null)
                         {
-                        <div class="info-photo info-photo-user" style="background: url(@Model.User.ProfilePicture) center / cover;">
-                            <div class="info-photo-shade">
+                    <div class="info-photo info-photo-user" style="background: url(@Model.User.ProfilePicture) center / cover;">
+                        <div class="info-photo-shade">
                                 <h1>@Model.User.FirstName @Model.User.LastName</h1>
                             </div>
                         </div>
@@ -28,7 +28,7 @@
                                 <div class="info-photo-shade">
                                     <h1>@Model.User.FirstName @Model.User.LastName</h1>
                                 </div>
-                            </div>
+                        </div>
                         }
                     </div>
                 </div>
@@ -42,7 +42,7 @@
                     <div class="form-group clear">
                         <label class="col-xs-3 col-md-4 col-lg-3 control-label">Age</label>
                         <div class="col-xs-9 col-md-8 col-lg-9">
-                            <span>@Model.User.DateOfBirth</span>
+                            <span>@Model.GetAge()</span>
                         </div>
                     </div>
 
@@ -72,7 +72,7 @@
         <div class="col-md-8">
             <div class="content-box">
                 <h1>User feed</h1>
-
+                @await Component.InvokeAsync("Feed", true, false, Model.User.Id)
             </div>
         </div>
     </div>

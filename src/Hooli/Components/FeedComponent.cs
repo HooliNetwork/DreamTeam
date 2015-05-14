@@ -87,6 +87,7 @@ namespace Hooli.Components
                 else
                 {
                     //Todo something that figures out what user we are looking at
+                    following.Add(groupId);
                 }
 
                 // Check if filtering should show latest posts or popular posts from users

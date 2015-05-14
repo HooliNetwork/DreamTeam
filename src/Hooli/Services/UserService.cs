@@ -66,5 +66,18 @@ namespace Hooli.Services
             return user.UserName;
         }
 
+        public async Task<string> GetAge(string userId)
+        {
+            var user = await DbContext.Users.SingleAsync(u => u.Id == userId);
+            if (user != null)
+            {
+                DateTime today = DateTime.Today;
+                int age = today.Year - user.DateOfBirth.Year;
+                if (user.DateOfBirth > today.AddYears(-age)) age--;
+                return age.ToString();
+            }
+            return "0";
+        }
+
     }
 }
