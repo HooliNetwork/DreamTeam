@@ -78,7 +78,7 @@ namespace Hooli.Controllers
                                     .Where(u => u.FollowerId == currentuser.Id)
                                     .Select(u => u.FollowingId).ToListAsync();
 
-            PostViewModel model = new PostViewModel { Seed = post.PostId, post = post, Joined = joined, Children = post.Children, FollowingPerson = following };
+            PostViewModel model = new PostViewModel { Seed = post.PostId, post = post, JoinedGroup = joined, Children = post.Children, FollowingPerson = following };
             return View(model);
         }
 

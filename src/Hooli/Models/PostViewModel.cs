@@ -9,7 +9,8 @@ namespace Hooli.Models
     {
        public int? Seed { get; set; }
        public Post post { get; set; }
+       public List<string> FollowingPerson { get; set; }
        public List<Post> Children { get; set; }
-       public List<string> Joined { get; set; }
+       public List<string> JoinedGroup { get; set; }
     }
 }
