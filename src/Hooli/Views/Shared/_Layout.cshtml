@@ -79,7 +79,7 @@
                                         <figure class="back">
                                             <div class="back-content">
                                                 <small>Welcome</small>
-                                                <strong>@User.FirstName</strong>
+                                                <strong>@await UserService.GetFirstname(User.GetUserId())</strong>
                                                 <small class="link">View profile</small>
                                             </div>
                                         </figure>

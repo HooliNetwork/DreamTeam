@@ -117,6 +117,10 @@ p {
     height: 20px
 }
 
+.back-content small {
+    color: #DDD;
+}
+
 .back-content strong {
     height: 40px;
     font-size: 1.1em;
@@ -125,6 +129,7 @@ p {
     overflow: hidden;
 }
 .back-content .link {
+    color: #FFF;
     line-height: 1.1em;
     text-decoration: underline;
 }
