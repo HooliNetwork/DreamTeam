@@ -126,7 +126,6 @@ namespace Hooli.Components
                 .OrderByDescending(a => a.DateCreated)
                 .Where(a => a.ParentPostId == null)
                 .Where(u => (following.Contains(u.UserId)) || (u.UserId == Context.User.GetUserId()))
-                .Where(a => (a.DateCreated - DateTime.UtcNow).TotalDays <= 2)
                 .Include(u => u.User)
                 .ToListAsync();
             foreach (object o in latestPost)
@@ -190,7 +189,6 @@ namespace Hooli.Components
                 .OrderByDescending(a => a.DateCreated)
                 .Where(a => a.ParentPostId == null)
                 .Where(g => group.Contains(g.GroupGroupId))
-                .Where(a => (a.DateCreated - DateTime.UtcNow).TotalDays <= 2)
                 .Include(u => u.User)
                 .ToListAsync();
             foreach (object o in latestPost)

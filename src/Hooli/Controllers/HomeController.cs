@@ -198,12 +198,12 @@ namespace Hooli.Controllers
                 if (latestPosts && groups != null)
                 {
                     var post = await GetLatestGroupPost(groups);
-                    return View(post);
+                    return PartialView(post);
                 }
                 else if (groups != null)
                 {
                     var post = await GetPopularGroupPosts(groups);
-                    return View(post);
+                    return PartialView(post);
                 }
                 else
                 {
@@ -230,12 +230,12 @@ namespace Hooli.Controllers
                 if (latestPosts && following != null)
                 {
                     var post = await GetLatestPost(following);
-                    return View(post);
+                    return PartialView(post);
                 }
                 else if (following != null)
                 {
                     var post = await GetPopularPosts(following);
-                    return View(post);
+                    return PartialView(post);
                 }
                 else
                 {

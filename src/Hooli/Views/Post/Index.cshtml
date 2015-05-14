@@ -127,7 +127,7 @@
 
     <div class="col-md-8">
         <div class="content-box">
-            <div class="new-post">
+            <div class="edit-post">
                 @await Html.PartialAsync("Edit")
 
             </div>
@@ -135,7 +135,7 @@
                 <div class="mod-controls">
                     @if (Model.post.UserId == Model.UserId)
                     {
-                        <button type="button" onclick="location.href='@Url.Action("Edit", "Post",  new { id = Model.post.PostId })'" class="btn btn-primary btn-xs btn-2way">
+                        <button type="button" onclick="location.href='@Url.Action("Edit", "Post",  new { id = Model.post.PostId })'" class="btn btn-primary btn-xs btn-2way edit-post-button">
                             <span>Edit</span>
                         </button>
                         <form asp-controller="Post" asp-action="Delete" asp-route-id="@Model.post.PostId" method="post">
