@@ -120,12 +120,12 @@
                     </button>
                     </form>
                 </div>
-                <div class="post-rating">
-                    <button type="submit" class="btn btn-link vote">
+                <div class="post-rating" data-url="/Post/Vote" data-postId="@Model.post.PostId">
+                    <button type="button" data-type="up" class="btn btn-link vote btn-up">
                         <span class="glyphicon glyphicon-menu-up"></span>
                     </button>
                     <div class="post-rating-count">@Model.post.Points</div>
-                    <button type="submit" class="btn btn-link vote">
+                    <button type="button" data-type="down" class="btn btn-link vote btn-down">
                         <span class="glyphicon glyphicon-menu-down"></span>
                     </button>
                 </div>
