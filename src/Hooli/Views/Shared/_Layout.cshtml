@@ -72,7 +72,7 @@
                             </form>
                         </li>
                         <li>
-                            <a asp-controller="Manage" asp-action="Index">
+                            <a asp-controller="Profile" asp-action="Owner">
                                 <span class="visible-mobile">Profile</span>
                                 <span class="visible-xs">- @await UserService.GetFirstname(User.GetUserId()) @await UserService.GetLastname(User.GetUserId())</span>
                                 <div class="navbar-profile-container hidden-mobile">
