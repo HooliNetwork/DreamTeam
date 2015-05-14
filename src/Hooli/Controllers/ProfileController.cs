@@ -7,6 +7,7 @@ using Hooli.Models;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Identity;
 using Hooli.CloudStorage;
+using Hooli.Services;
 using System.Security.Claims;
 using Microsoft.AspNet.Http;
 using System.Threading;
@@ -27,6 +28,9 @@ namespace Hooli.Controllers
 
         [FromServices]
         public Cloud Storage { get; set; }
+
+        [FromServices]
+        public UserService UserInfo { get; set;}
 
         public ProfileController(UserManager<ApplicationUser> userManager)
         {
@@ -64,9 +68,19 @@ namespace Hooli.Controllers
         {
             Console.WriteLine("Inside EditProfile");
             var user = await GetCurrentUserAsync();
-            user.FirstName = data.FirstName;
-            user.LastName = data.LastName;
-            user.DateOfBirth = data.DateOfBirth;
+            if((data.FirstName != null) && (data.FirstName.Length > 0))
+            {
+                user.FirstName = data.FirstName;
+            }
+            if((data.LastName != null) && (data.LastName.Length > 0))
+            {
+                user.LastName = data.LastName;
+            }
+            if (data.DateOfBirth != null)
+            {
+                user.DateOfBirth = data.DateOfBirth;
+            }
+            data.Age = await UserInfo.GetAge(user.Id);    
 
             await DbContext.SaveChangesAsync();
             return Json(data);
