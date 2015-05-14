@@ -81,10 +81,16 @@ namespace Hooli.Controllers
         public async Task<IActionResult> Create(Post post, CancellationToken requestAborted, IFormFile file, string id)
         {
 
-            Console.WriteLine("ID: " + id);
+            Console.WriteLine("Create post ID: " + id);
             System.Diagnostics.Debug.WriteLine("ID " + id);
             var user = await GetCurrentUserAsync();
-            if (ModelState.IsValid && user != null)
+
+            // The member has to be in the group to be able to post
+            var memberInGroup = DbContext.GroupMembers
+                    .Where(u => u.UserId == user.Id)
+                    .Where(u => u.GroupId == id);
+
+            if (ModelState.IsValid && user != null && memberInGroup != null)
             {
                 Console.WriteLine("pc1");
                 post.User = user;
