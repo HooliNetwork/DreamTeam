@@ -36,7 +36,7 @@
                 }
                 <a asp-controller="Post" asp-action="Index" asp-route-id="@p.PostId"><h2>@p.Title</h2></a>
                 <div class="post-body-info">
-                    <span class="post-author">Posted by <a asp-controller="Post" asp-action="Index" asp-route-id="@p.User.Id"><strong>@p.User.FirstName</strong></a></span>
+                    <span class="post-author">Posted by <a asp-controller="Profile" asp-action="Index" asp-route-id="@p.User.UserName"><strong>@p.User.FirstName</strong></a></span>
                     <span class="post-date"> on <strong>@p.DateCreated.ToString("MMM dd, yyy @ HH:mm")</strong>.</span>
                     <span class="post-comment-count"> Total comments <strong></strong>.</span>
                 </div>
