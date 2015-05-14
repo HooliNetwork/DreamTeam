@@ -88,6 +88,10 @@ $(document).ready(function () {
         }
     })
 
+    $('.edit-post-button').click(function () {
+        $('.edit-post').toggleClass('open');
+    });
+
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
     })
