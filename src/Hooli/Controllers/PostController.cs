@@ -58,15 +58,17 @@ namespace Hooli.Controllers
             }
         }
 
+
+
         public async Task<IActionResult> Index(int id)
         {
             var currentuser = await GetCurrentUserAsync();
             dynamic model = new ExpandoObject();
             System.Diagnostics.Debug.WriteLine(id);
-           model.post =  await DbContext.Posts
-                .Include(u => u.User)
-                .Include(g => g.Group)
-                .SingleAsync(p => p.PostId == id);
+            model.post = await DbContext.Posts
+                 .Include(u => u.User)
+                 .Include(g => g.Group)
+                 .SingleAsync(p => p.PostId == id);
             model.Joined = await DbContext.GroupMembers
                                 .Where(u => u.UserId == currentuser.Id)
                                 .Select(u => u.GroupId).ToListAsync();
@@ -74,26 +76,27 @@ namespace Hooli.Controllers
         }
 
 
-        [HttpPost]
-        [ValidateAntiForgeryToken   ]
+        [HttpPost("{id}")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Post post, CancellationToken requestAborted, IFormFile file, string id)
         {
-            
+
             Console.WriteLine("ID: " + id);
             System.Diagnostics.Debug.WriteLine("ID " + id);
             var user = await GetCurrentUserAsync();
             if (ModelState.IsValid && user != null)
             {
-                
+                Console.WriteLine("pc1");
                 post.User = user;
                 if((file != null) && (file.Length > 0))
                 {               
                     post.Image = await Storage.GetUri("postimages", Guid.NewGuid().ToString(), file);
                 }
+                Console.WriteLine("pc2");
                 post.GroupGroupId = id;
                 DbContext.Posts.Add(post);
                 await DbContext.SaveChangesAsync(requestAborted);
-
+                Console.WriteLine("pc3");
                 var postdata = new PostData
                 {
                     Title = post.Title,
@@ -101,14 +104,18 @@ namespace Hooli.Controllers
                     //Url = Url.Action("Details", "Post", new { id = post.PostId })
                     Text = post.Text
                 };
+                Console.WriteLine("pc4");
                 var following = DbContext.FollowRelations
                         .Where(u => u.FollowingId == user.Id)
                         .Include(u => u.Follower)
-                        .Select(u => u.Follower.Id)
+                        .Select(u => u.FollowerId)
                         .ToList();
+                Console.WriteLine("pc5");
                 var usernames = DbContext.Users
                         .Where(u => following.Contains(u.Id))
                         .Select(u => u.UserName).ToList();
+                Console.WriteLine("pc6");
+
                 foreach (object o in following)
                 {
                     Console.WriteLine(o);
@@ -117,10 +124,12 @@ namespace Hooli.Controllers
 
                 _feedHub.Clients.Users(usernames).feed(postdata);
                 //_feedHub.Clients.All.feed(postdata);
+                Console.WriteLine("pc7");
 
                 Cache.Remove("latestPost");
-                //return RedirectToAction("Index");
-                return RedirectToAction("Index");
+                Console.WriteLine("pc8");
+
+                return Redirect("Post/Index/" + post.PostId);
             }
             return View(post);
         }
