@@ -145,6 +145,28 @@ namespace Hooli.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateProfilePost(Post post, CancellationToken requestAborted, IFormFile file)
+        {
+            var user = await GetCurrentUserAsync();
+            if (ModelState.IsValid && user != null)
+            {
+                post.User = user;
+                if ((file != null) && (file.Length > 0))
+                {
+                    post.Image = await Storage.GetUri("postimages", Guid.NewGuid().ToString(), file);
+                }
+
+                post.GroupGroupId = null;
+                DbContext.Posts.Add(post);
+                await DbContext.SaveChangesAsync(requestAborted);
+
+                return Redirect("/Profile/Owner");
+            }
+            return View(post);
+        }
+
+        [HttpPost]
         public async Task<IActionResult> Vote(string upDown, int postId)
         {
             Console.WriteLine(upDown + postId);

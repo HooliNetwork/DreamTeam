@@ -3,18 +3,72 @@ $(document).ready(function () {
     $(".posts-type button:nth-child(1)").click(function () {
         $(".posts-type button:nth-child(1)").removeClass("btn-option").addClass("btn-selected");
         $(".posts-type button:nth-child(2)").removeClass("btn-selected").addClass("btn-option");
+        var uri = "/Home/Sort/";
+        var group = false;
+        var latestPosts = true;
+        var groupId = "Front";
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: uri,
+            data: { 'group': group, 'latestPosts': latestPosts, 'groupId': groupId },
+            success: function (result) {
+                $("#feed-content").html(result);
+            }
+        });
     });
     $(".posts-type button:nth-child(2)").click(function () {
         $(".posts-type button:nth-child(1)").removeClass("btn-selected").addClass("btn-option");
         $(".posts-type button:nth-child(2)").removeClass("btn-option").addClass("btn-selected");
+        var uri = "/Home/Sort/";
+        var group = true;
+        var latestPosts = true;
+        var groupId = "Front";
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: uri,
+            data: { 'group': group, 'latestPosts': latestPosts, 'groupId': groupId },
+            success: function (result) {
+                $("#feed-content").html(result);
+            }
+        });
+
     });
     $(".posts-orderby button:nth-child(1)").click(function() {
         $(".posts-orderby button:nth-child(1)").removeClass("btn-option").addClass("btn-selected");
         $(".posts-orderby button:nth-child(2)").removeClass("btn-selected").addClass("btn-option");
+        var uri = "/Home/Sort/";
+        var group = false;
+        var latestPosts = false;
+        var groupId = "Front";
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: uri,
+            data: { 'group': group, 'latestPosts': latestPosts, 'groupId': groupId },
+            success: function (result) {
+                $("#feed-content").html(result);
+            }
+        });
+
     });
     $(".posts-orderby button:nth-child(2)").click(function () {
         $(".posts-orderby button:nth-child(1)").removeClass("btn-selected").addClass("btn-option");
         $(".posts-orderby button:nth-child(2)").removeClass("btn-option").addClass("btn-selected");
+        var uri = "/Home/Sort/";
+        var group = true;
+        var latestPosts = false;
+        var groupId = "Front";
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: uri,
+            data: { 'group': group, 'latestPosts': latestPosts, 'groupId': groupId },
+            success: function (result) {
+                $("#feed-content").html(result);    
+            }
+        });
     });
 
     $(".create-post-button").click(function(){

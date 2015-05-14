@@ -14,14 +14,16 @@ namespace Hooli.Components
     [ViewComponent(Name = "Feed")]
     public class FeedComponent : ViewComponent
     {
-        public FeedComponent(UserManager<ApplicationUser> userManager)
+        public FeedComponent(UserManager<ApplicationUser> userManager, HooliContext dbContext)
         {
             UserManager = userManager;
+            DbContext = dbContext;
         }
+        public HooliContext DbContext { get;  set; }
         public UserManager<ApplicationUser> UserManager { get; private set; }
 
-        [Activate]
-        public HooliContext DbContext { get; set; }
+        //[Activate]
+        //public HooliContext DbContext { get; set; }
 
         [Activate]
         public IMemoryCache Cache { get; set; }
@@ -37,6 +39,7 @@ namespace Hooli.Components
         {
             System.Diagnostics.Debug.WriteLine("Inside Feed InvokeAsync");
             var user = await GetCurrentUserAsync();
+
             if (group)
             {
                 // Create the list of groups to show posts from
@@ -80,11 +83,11 @@ namespace Hooli.Components
                     following = DbContext.FollowRelations
                     .Where(u => u.FollowerId == user.Id)
                     .Select(u => u.FollowingId).ToList();
-                    Console.WriteLine("Front page baby");
                 }
                 else
                 {
                     //Todo something that figures out what user we are looking at
+                    following.Add(groupId);
                 }
 
                 // Check if filtering should show latest posts or popular posts from users
@@ -95,7 +98,6 @@ namespace Hooli.Components
                 }
                 else if(following != null)
                 {
-
                     var post = await GetPopularPosts(following);
                     return View(post);
                 }
@@ -126,7 +128,6 @@ namespace Hooli.Components
         private async Task<List<Post>> GetPopularPosts(IEnumerable<string> following)
         {
             Console.WriteLine("2");
-
             var postsByVotes = await DbContext.Posts
                 .Where(a => a.ParentPostId == null)
                 .Where(a => (following.Contains(a.UserId)) || (a.UserId == Context.User.GetUserId()))
