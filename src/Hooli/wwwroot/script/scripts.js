@@ -90,7 +90,7 @@ $(document).ready(function () {
 
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
-    })
+    });
     
     $(".create-group-button").click(function () {
         $(".edit-info-container").toggleClass('open');
