@@ -85,7 +85,13 @@ namespace Hooli.Controllers
         {
 
             var user = await GetCurrentUserAsync();
-            if (ModelState.IsValid && user != null)
+
+            // The member has to be in the group to be able to post
+            var memberInGroup = DbContext.GroupMembers
+                    .Where(u => u.UserId == user.Id)
+                    .Where(u => u.GroupId == id);
+
+            if (ModelState.IsValid && user != null && memberInGroup != null)
             {
                 post.User = user;
                 if ((file != null) && (file.Length > 0))
