@@ -49,26 +49,94 @@ p {
 #navbar-logout-button {
     margin-left: 60px;
 }
-
+/*
 #navbar-profile {
     width: 110px;
     height: 110px;
     border-radius: 50%;
     border: 4px solid white;
-    transition:all 1s ease-in-out;
-    perspective: 800px;
-    perspective-origin: 50% 100px;
 }
 
 #navbar-profile-photo {
     max-height: 70px;
 }
 
-#navbar-profile-photo:hover {
-    transform:rotateY(180deg);    
+#navbar-profile-photo span {
+    display: none;
+}
+*/
+
+.navbar-profile-container {
+    max-height: 70px;
+    position: relative;
+    perspective: 800px;
+    margin-right: 95px;
+    color: #FFF;
+    text-align: center;
+    vertical-align: middle;
 }
 
-#navbar-profile-photo span {
+#navbar-profile-photo {
+    width: 110px;
+    height: 110px;
+    position: absolute;
+    transform-style: preserve-3d;
+    transition: transform 1s;
+}
+#navbar-profile-photo figure {
+    display: block;
+    position: absolute;
+    border-radius: 50%;
+    border: 3px solid #EEE;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+#navbar-profile-photo .front {
+    background: url(../images/johann.jpg) center / cover;
+}
+
+#navbar-profile-photo .back {
+    background: #333;
+    transform: rotateY( 180deg );
+}
+
+.back-content {
+    height: 80px;
+    width: 90px;
+    margin: 0px auto;
+    margin-top: 5px;
+    overflow: hidden;
+}
+
+.back-content small,
+.back-content strong {
+    display: block;
+    width: 100%;
+    height: 20px
+}
+
+.back-content strong {
+    height: 40px;
+    font-size: 1.1em;
+    margin-top: 5px;
+    vertical-align: middle;
+    overflow: hidden;
+}
+.back-content .link {
+    line-height: 1.1em;
+    text-decoration: underline;
+}
+.back-content .link:hover {
+    color: #fd7e23;
+}
+
+#navbar-profile-photo:hover {
+    transform: rotateY( 180deg );
+}
+
+.visible-mobile {
     display: none;
 }
 
@@ -652,7 +720,7 @@ form input[type=radio] {
     .navbar-form {
         margin-top:0px;
     }
-    #navbar-profile-photo {
+    .navbar-profile-container {
         clear: left;
     }
     #navbar-logo-large {
@@ -745,5 +813,8 @@ form input[type=radio] {
 @media (min-width: 1200px) {
     .image-box {
         height: 95px;
+    }
+    .navbar-profile-container {
+        margin-right: 120px;
     }
 }
