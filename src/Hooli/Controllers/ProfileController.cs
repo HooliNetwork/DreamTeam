@@ -60,20 +60,16 @@ namespace Hooli.Controllers
         //}
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditProfile(IFormCollection form, CancellationToken requestAborted)
+        public async Task<IActionResult> EditProfile(EditProfileData data)
         {
+            Console.WriteLine("Inside EditProfile");
+            var user = await GetCurrentUserAsync();
+            user.FirstName = data.FirstName;
+            user.LastName = data.LastName;
+            user.DateOfBirth = data.DateOfBirth;
 
-            var profileData = await GetCurrentUserAsync();
-
-            profileData.FirstName = Convert.ToString(form["first_name"]);
-            profileData.LastName = Convert.ToString(form["last_name"]);
-            profileData.DateOfBirth = Convert.ToDateTime(form["date_birth"]);
-
-
-
-            await DbContext.SaveChangesAsync(requestAborted);
-            return Json("error-not-fully-implemented");
+            await DbContext.SaveChangesAsync();
+            return Json(data);
         }
 
         // GET: /<controller>/

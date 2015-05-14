@@ -71,7 +71,7 @@
                             </form>
                         </li>
                         <li id="navbar-profile-photo">
-                            <a asp-controller="Manage" asp-action="Index">
+                            <a asp-controller="Profile" asp-action="Owner">
                                 <span class="visible-mobile">Profile</span>
                                 <div id="navbar-profile" class="hidden-mobile" style="background: url(@await UserService.GetProfilePictureUrl(User.GetUserId())) center / cover;"></div>
                             </a>
@@ -150,6 +150,7 @@
                 });
             });
         </script>
+        @RenderSection("editProfile", required: false)
         @RenderSection("scripts", required: false)
         @RenderSection("ajaxstuff", required: false)
     </body>
