@@ -1,7 +1,7 @@
 ﻿@model List<Hooli.Models.Post>
 
 
-@if (Model != null) {
+@if (Model != null && Model.Count() > 0) {
     @foreach (var p in Model) {
     <div class="post">
         <div class="row">
@@ -41,9 +41,7 @@
         </div>
     </div>
     }
-}
-@if (Model == null)
-{
+} else {
     <p class="lead" style="margin-top: 60px; margin-bottom: 10px;">It is kind of lonely here isn't it?</p>
     <p >You can follow groups and people to see their content in your own personalized feed.</p>
 }

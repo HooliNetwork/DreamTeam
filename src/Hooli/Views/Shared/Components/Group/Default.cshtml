@@ -12,7 +12,7 @@
         <h1>Groups you are following</h1>
         <div class="row following-info-container">
             
-            @if (Model != null)
+            @if (Model != null && Model.Count() > 0)
             {
                 @foreach (var p in Model)
                 {
@@ -39,9 +39,7 @@
                         </div>
                     </div>
                 }
-            }
-            @if (Model == null)
-            {
+            } else {
                 <p style="margin-top: 10px;">
                     You are not following any groups, check out our suggestions or search for something interesting!
                 </p>            
