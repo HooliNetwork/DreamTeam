@@ -80,10 +80,7 @@ namespace Hooli.Controllers
             var currentUserId = currentuser.Id;
 
             PostViewModel model = new PostViewModel { Seed = post.PostId, post = post, JoinedGroup = joined, Children = post.Children, FollowingPerson = following, UserId = currentUserId};
-            //if (post == null)
-            //{
-            //    return HttpBadRequest();
-            //}
+
             return View(model);
         }
 
