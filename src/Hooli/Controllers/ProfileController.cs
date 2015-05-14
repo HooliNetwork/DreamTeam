@@ -86,6 +86,10 @@ namespace Hooli.Controllers
             {
                 return HttpNotFound();
             }
+            if (user.Id == currentUser.Id)
+            {
+                return RedirectToAction("Owner");
+            }
 
             var following = DbContext.FollowRelations
                             .Where(u => u.FollowerId == currentUser.Id)
@@ -95,9 +99,21 @@ namespace Hooli.Controllers
             var profileViewModel = new ProfileViewModel()
             {
                 User = user,
-                Following = isFollowing
+                Following = isFollowing,
             };
 
+            return View(profileViewModel);
+        }
+
+        // GET: /<controller>/
+        [HttpGet]
+        public async Task<IActionResult> Owner()
+        {
+            var currentUser = await GetCurrentUserAsync();
+            var profileViewModel = new ProfileViewModel()
+            {
+                User = currentUser
+            };
             return View(profileViewModel);
         }
 
