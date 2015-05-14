@@ -70,9 +70,12 @@ namespace Hooli.Controllers
                  .Include(u => u.User)
                  .Include(g => g.Group)
                  .SingleAsync(p => p.PostId == id);
-            model.Joined = await DbContext.GroupMembers
+            model.JoinedGroup = await DbContext.GroupMembers
                                 .Where(u => u.UserId == currentuser.Id)
                                 .Select(u => u.GroupId).ToListAsync();
+            model.FollowingPerson = await DbContext.FollowRelations
+                                    .Where(u => u.FollowerId == currentuser.Id)
+                                    .Select(u => u.FollowingId).ToListAsync();
             Console.WriteLine("post in index: " + model.post.PostId + " " + model.post.Title + " " + model.post.Text);
 
             return View(model);

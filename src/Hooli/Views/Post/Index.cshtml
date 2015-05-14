@@ -12,9 +12,7 @@
     @if (Model.post.Group != null)
     {
         <div class="col-md-4">
-
             <div class="content-box padding-remove-sides">
-
                 <div class="info-photo-container">
                     @if (Model.post.Group.Image != null)
                      {   
@@ -38,7 +36,7 @@
                     <p class="group-info-description">
                         @Model.post.Group.Description
                     </p>
-                    @if (Model.Joined.Contains(Model.post.Group.GroupId))
+                    @if (Model.JoinedGroup.Contains(Model.post.Group.GroupId))
                      {
                         <button type="button" data-id="@Model.post.Group.GroupId" data-url="/Manage/UnfollowGroup" class="btn btn-primary btn-block btn-option btn-follow btn-trans">
                             <span>Unfollow</span>
@@ -64,7 +62,7 @@
                 <div class="info-photo-container">
                     <div class="info-photo info-photo-user" style="background: url(@Model.post.User.ProfilePicture) center / cover;">
                         <div class="info-photo-shade">
-                            <a href="#"><h1>@Model.post.User.FirstName @Model.post.User.LastName</h1></a>
+                            <a asp-controller="Profile" asp-action="Index" asp-route-id="@Model.post.User.UserName"><h1>@Model.post.User.FirstName @Model.post.User.LastName</h1></a>
                         </div>
                     </div>
                 </div>
@@ -90,12 +88,18 @@
                     </div>
                 </div>
                 <div class="profile-buttons padding-side margin-top">
-                    <button type="button" class="btn btn-primary btn-block">
-                        <span>Follow</span>
-                    </button>
-                    <button type="button" class="btn btn-primary btn-block btn-option">
-                        <span>Unfollow</span>
-                    </button>
+                    @if (Model.FollowingPerson.Contains(Model.post.User.Id))
+                    {
+                        <button type="button" data-id="@Model.post.User.Id" data-url="/Manage/UnfollowUser" class="btn btn-primary btn-block btn-option btn-follow btn-trans">
+                            <span>Unfollow</span>
+                        </button>
+                    }
+                    else
+                    {
+                        <button type="button" data-id="@Model.post.User.Id" data-url="/Manage/FollowUser" class="btn btn-primary btn-block btn-follow btn-trans">
+                            <span>Follow</span>
+                        </button>
+                    }
                 </div>
             </div>
         </div>
