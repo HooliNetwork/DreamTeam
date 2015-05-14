@@ -1,5 +1,8 @@
 ﻿@model List<Hooli.Models.Post>
 
+@{
+    ViewBag.Title = @AppSettings.Options.SiteTitle;
+}
 
 @if (Model != null && Model.Count() > 0) {
     @foreach (var p in Model) {
