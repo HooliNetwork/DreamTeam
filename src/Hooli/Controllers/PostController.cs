@@ -28,9 +28,6 @@ namespace Hooli.Controllers
         private IConnectionManager _connectionManager;
         private IHubContext _feedHub;
 
-        [FromServices]
-        public PostCache postCache { get; set; }
-
         public PostController(UserManager<ApplicationUser> userManager)
         {
             UserManager = userManager;
@@ -73,12 +70,11 @@ namespace Hooli.Controllers
             //model.posts = posts;
             var post = RecursiveLoad(id);
 
-            Console.WriteLine(post.Children.First().Title);
             var joined = await DbContext.GroupMembers
                                 .Where(u => u.UserId == currentuser.Id)
-                                .Select(u => u.GroupId).ToListAsync();
+                                ?.Select(u => u.GroupId).ToListAsync();
 
-            PostViewModel model = new PostViewModel {Seed = post.PostId, post = post, Joined = joined, Children = post.Children};
+            PostViewModel model = new PostViewModel { Seed = post.PostId, post = post, Joined = joined, Children = post.Children };
             return View(model);
         }
 
@@ -87,7 +83,7 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Post post, CancellationToken requestAborted, IFormFile file, string id)
         {
-            
+
             Console.WriteLine("ID: " + id);
             System.Diagnostics.Debug.WriteLine("ID " + id);
             var user = await GetCurrentUserAsync();
@@ -95,26 +91,35 @@ namespace Hooli.Controllers
             {
                 Console.WriteLine("pc1");
                 post.User = user;
-                if((file != null) && (file.Length > 0))
-                {               
+                if ((file != null) && (file.Length > 0))
+                {
                     post.Image = await Storage.GetUri("postimages", Guid.NewGuid().ToString(), file);
                 }
                 Console.WriteLine("pc2");
                 post.GroupGroupId = id;
                 DbContext.Posts.Add(post);
                 await DbContext.SaveChangesAsync(requestAborted);
-
+                var postdata = new PostData
+                {
+                    Title = post.Title,
+                    Text = post.Text,
+                    PostId = post.PostId,
+                    Points = post.Points,
+                    UserName = user.FirstName,
+                    UserId = user.Id,
+                    Image = post.Image,
+                    Link = post.Link,
+                    DateCreated = post.DateCreated.ToString("MMM dd, yyy @ HH:mm")
+                };
                 var following = DbContext.FollowRelations
                         .Where(u => u.FollowingId == user.Id)
-                        .Include(u => u.Follower)
                         .Select(u => u.FollowerId)
                         .ToList();
-                Console.WriteLine("pc5");
                 var usernames = DbContext.Users
                         .Where(u => following.Contains(u.Id))
                         .Select(u => u.UserName).ToList();
 
-                _feedHub.Clients.Users(usernames).feed(post, user);
+                _feedHub.Clients.Users(usernames).feed(postdata);
                 //_feedHub.Clients.All.feed(postdata);
                 Console.WriteLine("pc7");
 
@@ -125,7 +130,13 @@ namespace Hooli.Controllers
             }
             return View(post);
         }
+        [HttpPost]
+        public async Task<IActionResult> CreateComment(PostData post)
+        {
 
+            return Json(new { responseText = "Success!" });
+        }
+    
         [HttpPost]
         public async Task<IActionResult> Vote(string upDown, int postId)
         {

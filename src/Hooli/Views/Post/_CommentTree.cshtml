@@ -22,7 +22,7 @@
                         <p class="comment-text">
                             @node.Text
                         </p>
-                        <button type="button" class="btn btn-link btn-xs btn-hooli-link">Reply</button>
+                        <button data-ParentId="@node.ParentPostId" type="button" class="btn btn-link btn-xs btn-hooli-link">Reply</button>
                     </div>
                 </div>
                 Hooli.Models.PostViewModel inner = new Hooli.Models.PostViewModel { Seed = node.PostId, Children = node.Children };

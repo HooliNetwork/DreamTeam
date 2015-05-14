@@ -127,7 +127,7 @@
             $(function () {
                 $.connection.hub.logging = true;
                 var feedHub = $.connection.Feed;
-                feedHub.client.feed = function (post,user) {
+                feedHub.client.feed = function (post) {
                     var htmlTemplate;
                     $.get("/htmlTemplates/post.html")
                     .success(function (data) {
@@ -137,11 +137,12 @@
                         $(".post-rating-count").first().text(post.Points);
                         $(".post-body > a").first().attr("href", "/Post/Index/" + post.PostId);
                         $(".post-body h2").first().text(post.Title);
-                        $(".post-author > a > strong").first().text(user.FirstName);
-                        $(".post-author > a").first().attr("href", "/Profile/Index/" + user.UserName);
+                        $(".post-author > a > strong").first().text(post.UserName);
+                        $(".post-author > a").first().attr("href", "/Profile/Index/" + post.UserId);
                         $(".post-date > strong").first().text(post.DateCreated);
-                        $(".post-comment-count > strong").first().text(post.Comments);
                         $(".post").first().show(100);
+                        $("a.image-link").first().attr("href", post.Image);
+                        $("a > .photo-feed").first().css("background", "url(" + post.Image + ") center / cover");
                     });
                 };
                 $.connection.hub.start().done(function () {
