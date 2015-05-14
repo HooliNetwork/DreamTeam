@@ -83,6 +83,8 @@ p {
 
 #navbar-profile-photo .back {
     background: #333;
+    -ms-transform: rotateY( 180deg );
+    -webkit-transform: rotateY( 180deg );
     transform: rotateY( 180deg );
 }
 
@@ -126,6 +128,8 @@ p {
 }
 
 #navbar-profile-photo:hover {
+    -ms-transform: rotateY( 180deg );
+    -webkit-transform: rotateY( 180deg );
     transform: rotateY( 180deg );
 }
 
