@@ -55,13 +55,13 @@
                 <div class="profile-buttons padding-side margin-top">
                     @if (Model.Following)
                     {
-                        <button type="button" data-id="@Model.User.Id" data-url="/Manage/UnfollowUser" class="btn btn-primary btn-block btn-option">
+                        <button type="button" data-id="@Model.User.Id" data-url="/Manage/UnfollowUser" class="btn btn-primary btn-follow btn-block btn-option">
                             <span>Unfollow</span>
                         </button>
                     }
                     else
                     {
-                        <button type="button" data-id="@Model.User.Id" data-url="/Manage/FollowUser" class="btn btn-primary btn-block">
+                        <button type="button" data-id="@Model.User.Id" data-url="/Manage/FollowUser" class="btn btn-primary btn-follow btn-block">
                             <span>Follow</span>
                         </button>
                     }

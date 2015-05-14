@@ -33,13 +33,13 @@
                 <p class="group-info-description">@Model.group.Description</p>
                 @if (Model.Joined.Contains(Model.group.GroupId))
             {
-                    <button type="button" data-id="@Model.group.GroupId" data-url="/Manage/UnfollowGroup" class="btn btn-primary btn-block btn-option btn-follow btn-trans">
+                    <button type="button" data-id="@Model.group.GroupId" data-url="/Manage/UnfollowGroup" class="btn btn-primary btn-follow btn-block btn-option">
                         <span>Unfollow</span>
                     </button>
                 }
                 else
                 {
-                    <button type="button" data-id="@Model.group.GroupId" data-url="/Manage/FollowGroup" class="btn btn-primary btn-block btn-follow btn-trans">
+                    <button type="button" data-id="@Model.group.GroupId" data-url="/Manage/FollowGroup" class="btn btn-primary btn-follow btn-block">
                         <span>Follow</span>
                     </button>
                 }
