@@ -1,0 +1,29 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    // ViewBag.Title = "Home Page";
+}
+
+@model Hooli.Models.ApplicationUser
+
+<form class="form-horizontal" asp-anti-forgery="true" asp-controller="Profile" asp-action="EditProfilePicture" enctype="multipart/form-data" method="post" role="form">
+    <h2>Replace profile picture</h2>
+    <div class="form-group">
+        <label asp-for="ProfilePicture" class="col-sm-3 col-md-5 col-lg-4 control-label">Profile Picture</label>
+        <div class="col-sm-9 col-md-7 col-lg-8">
+            <div class="fileinputs">
+                <input asp-for="ProfilePicture" type="file" class="file file-upload" id="file" name="file" />
+                <div class="fakefile full-width">
+                    <input type="button" class="btn btn-primary btn-block file-upload-name" value="Select file" />
+                </div>
+            </div>
+            <div asp-validation-for="Image" class="text-danger field-validation-valid margin-top"></div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-12">
+            <button type="submit" class="btn btn-primary btn-block margin-top">Change Picture</button>
+        </div>
+    </div>
+</form>
