@@ -77,8 +77,9 @@ namespace Hooli.Controllers
             var following = await DbContext.FollowRelations
                                     .Where(u => u.FollowerId == currentuser.Id)
                                     .Select(u => u.FollowingId).ToListAsync();
+            var currentUserId = currentuser.Id;
 
-            PostViewModel model = new PostViewModel { Seed = post.PostId, post = post, JoinedGroup = joined, Children = post.Children, FollowingPerson = following };
+            PostViewModel model = new PostViewModel { Seed = post.PostId, post = post, JoinedGroup = joined, Children = post.Children, FollowingPerson = following, UserId = currentUserId};
             //if (post == null)
             //{
             //    return HttpBadRequest();
@@ -296,19 +297,11 @@ namespace Hooli.Controllers
 
         private void RecursiveSearch(Post post)
         {
-            //    //Console.WriteLine("Parent " + post.PostId);
-            //    //Console.WriteLine("Child0 " + post.Children[0].PostId);
-            //    //Console.WriteLine("Child1 " + post.Children[1].PostId);
-            //    //Console.WriteLine("Child0Child0 " + post.Children[0].Children[0].PostId);
-            //    //Console.WriteLine("Child1Child0 " + post.Children[1].Children[0].PostId);
-
-
-
             foreach (var child in post.Children.ToList())
             {
                 Console.WriteLine("MoreReqursion " + child.PostId);
                 RecursiveSearch(child);
-                // Mark the comments for deletion starting from the bottom one
+                // Delete the comments, starting from the bottom
                 DbContext.Remove(child);
                 Console.WriteLine("Remove " + child.PostId);
             }

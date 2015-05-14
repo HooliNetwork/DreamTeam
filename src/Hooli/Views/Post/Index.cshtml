@@ -111,14 +111,19 @@
         <div class="content-box">
             <div class="view-post">
                 <div class="mod-controls">
-                    <button type="button" onclick="location.href='@Url.Action("Edit", "Post",  new { id = Model.post.PostId })'" class="btn btn-primary btn-xs btn-2way">
-                        <span>Edit</span>
-                    </button>
-                    <form asp-controller="Post" asp-action="Delete" asp-route-id="@Model.post.PostId" method="post">
-                    <button type="submit" class="btn btn-danger btn-xs btn-2way">
-                        <span>Delete</span>
-                    </button>
-                    </form>
+                    @if (Model.post.UserId == Model.UserId)
+                    {
+                        <button type="button" onclick="location.href='@Url.Action("Edit", "Post",  new { id = Model.post.PostId })'" class="btn btn-primary btn-xs btn-2way">
+                            <span>Edit</span>
+                        </button>
+                        <form asp-controller="Post" asp-action="Delete" asp-route-id="@Model.post.PostId" method="post">
+                            <button type="submit" class="btn btn-danger btn-xs btn-2way">
+                                <span>Delete</span>
+                            </button>
+                        </form>
+
+                    }
+
                 </div>
                 <div class="post-rating" data-url="/Post/Vote" data-postId="@Model.post.PostId">
                     <button type="button" data-type="up" class="btn btn-link vote btn-up">
