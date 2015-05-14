@@ -95,8 +95,10 @@ namespace Hooli
             // Add MVC services to the services container.
             services.AddMvc();
             services.AddSignalR();
+            
 
             services.AddTransient<Hooli.CloudStorage.Cloud>();
+            services.AddTransient<Hooli.Services.UserService>();
         }
 
         // Configure is called after ConfigureServices is called.
