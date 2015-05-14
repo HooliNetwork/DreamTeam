@@ -94,7 +94,7 @@ p {
 }
 
 #navbar-profile-photo .front {
-    background: url(../images/johann.jpg) center / cover;
+    background: #333;
 }
 
 #navbar-profile-photo .back {
