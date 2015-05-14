@@ -111,21 +111,26 @@
         <div class="content-box">
             <div class="view-post">
                 <div class="mod-controls">
-                    <button type="button" onclick="location.href='@Url.Action("Edit", "Post",  new { id = Model.post.PostId })'" class="btn btn-primary btn-xs btn-2way">
-                        <span>Edit</span>
-                    </button>
-                    <form asp-controller="Post" asp-action="Delete" asp-route-id="@Model.post.PostId" method="post">
-                    <button type="submit" class="btn btn-danger btn-xs btn-2way">
-                        <span>Delete</span>
-                    </button>
-                    </form>
+                    @if (Model.post.UserId == Model.UserId)
+                    {
+                        <button type="button" onclick="location.href='@Url.Action("Edit", "Post",  new { id = Model.post.PostId })'" class="btn btn-primary btn-xs btn-2way">
+                            <span>Edit</span>
+                        </button>
+                        <form asp-controller="Post" asp-action="Delete" asp-route-id="@Model.post.PostId" method="post">
+                            <button type="submit" class="btn btn-danger btn-xs btn-2way">
+                                <span>Delete</span>
+                            </button>
+                        </form>
+
+                    }
+
                 </div>
-                <div class="post-rating">
-                    <button type="submit" class="btn btn-link vote">
+                <div class="post-rating" data-url="/Post/Vote" data-postId="@Model.post.PostId">
+                    <button type="button" data-type="up" class="btn btn-link vote btn-up">
                         <span class="glyphicon glyphicon-menu-up"></span>
                     </button>
                     <div class="post-rating-count">@Model.post.Points</div>
-                    <button type="submit" class="btn btn-link vote">
+                    <button type="button" data-type="down" class="btn btn-link vote btn-down">
                         <span class="glyphicon glyphicon-menu-down"></span>
                     </button>
                 </div>
@@ -144,7 +149,7 @@
 
                 <h1>@Model.post.Title</h1>
                 <p class="post-body-info">
-                    <span class="post-author">Posted by <a href="#"><strong>@Model.post.User.FirstName</strong></a></span>
+                    <span class="post-author">Posted by <a asp-controller="Profile" asp-action="Index" asp-route-id="@Model.post.User.UserName"><strong>@Model.post.User.FirstName</strong></a></span>
                     <span class="post-date"> on <strong>@Model.post.DateCreated.ToString("MMM dd, yyy @ HH:mm")</strong>.</span>
                 </p>
                 <p>

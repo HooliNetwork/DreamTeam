@@ -77,8 +77,10 @@ namespace Hooli.Controllers
             var following = await DbContext.FollowRelations
                                     .Where(u => u.FollowerId == currentuser.Id)
                                     .Select(u => u.FollowingId).ToListAsync();
+            var currentUserId = currentuser.Id;
 
-            PostViewModel model = new PostViewModel { Seed = post.PostId, post = post, JoinedGroup = joined, Children = post.Children, FollowingPerson = following };
+            PostViewModel model = new PostViewModel { Seed = post.PostId, post = post, JoinedGroup = joined, Children = post.Children, FollowingPerson = following, UserId = currentUserId};
+
             return View(model);
         }
 
@@ -229,25 +231,54 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id, CancellationToken requestAborted)
         {
-            var post = DbContext.Posts.Single(p => p.PostId == id);
+            var post =await DbContext.Posts
+                .Include(u => u.User)
+                .SingleAsync(p => p.PostId == id);
+            var voteRelation = await DbContext.VoteRelations
+                .Where(u => u.PostId == post.PostId)
+                .ToListAsync();
+            var groupId = post.GroupGroupId;
+            var userName = post.User.UserName;
 
-            Console.WriteLine("Before delete post: " + post.PostId + " " + post.Title + " " + post.Text);
-
+            // Check if there are any comments and mark them for deletion
             if (post.ParentPostId == null)
-        {
-                DbContext.Entry(post).State = EntityState.Deleted;
+            {
+                Console.WriteLine("ParentPostId");
+                RecursiveSearch(RecursiveLoad(post.PostId));
+
+
+            }
+
+            // Check if there are any votes on the post and mark the relation for deletion
+            if (voteRelation != null)
+            {
+                Console.WriteLine("Vote relation not empty");
+                foreach (var relationLine in voteRelation)
+                {
+                   DbContext.Remove(relationLine);
+                }
+            }
+
+            // Safe to mark post since votes and comments have been marked
+            DbContext.Remove(post);
             await DbContext.SaveChangesAsync(requestAborted);
+
+
+            //Redirecting after the delete based on where the post was based
+            if (groupId != null)
+            {
+                return Redirect("/Group/SingleGroup/" + groupId);
+            }
+            else if (userName != null)
+            {
+                return Redirect("/Profile/Index/" + userName);
             }
             else
             {
-                Console.WriteLine("Can't delete like above because of ParentPostId");
+                return Redirect("/");
             }
 
-            //TODO Check if the post has a voteRelation
-
-            Console.WriteLine("After delete post: " + post.PostId + " " + post.Title + " " + post.Text);
-
-            return Redirect("/Group/SingleGroup" + post.GroupGroupId);
+            
         }
 
 
@@ -283,6 +314,18 @@ namespace Hooli.Controllers
             return ParentFromDatabase;
         }
 
+        private void RecursiveSearch(Post post)
+        {
+            foreach (var child in post.Children.ToList())
+            {
+                Console.WriteLine("MoreReqursion " + child.PostId);
+                RecursiveSearch(child);
+                // Delete the comments, starting from the bottom
+                DbContext.Remove(child);
+                Console.WriteLine("Remove " + child.PostId);
+            }
+
+        }
 
     }
 }

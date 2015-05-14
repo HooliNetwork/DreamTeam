@@ -7,7 +7,7 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>@ViewBag.Title - @AppSettings.Options.SiteTitle</title>
+        <title>@ViewBag.Title</title>
 
         <environment names="Development">
             <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
@@ -27,6 +27,7 @@
         </environment>
         <link rel="stylesheet" href="~/css/site.css" />
         <link href="~/css/magnific-popup.css" rel="stylesheet" />
+        <link href="~/lib/toastr/toastr.min.css" rel="stylesheet" />
     </head>
     <body>
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -70,14 +71,26 @@
                                 </div>
                             </form>
                         </li>
-                        <li id="navbar-profile-photo">
-                            <a asp-controller="Profile" asp-action="Owner">
+                        <li>
+                            <a asp-controller="Manage" asp-action="Index">
                                 <span class="visible-mobile">Profile</span>
-                                <div id="navbar-profile" class="hidden-mobile" style="background: url(@await UserService.GetProfilePictureUrl(User.GetUserId())) center / cover;"></div>
+                                <span class="visible-xs">- @await UserService.GetFirstname(User.GetUserId()) @await UserService.GetLastname(User.GetUserId())</span>
+                                <div class="navbar-profile-container hidden-mobile">
+                                    <div id="navbar-profile-photo">
+                                        <figure class="front"  style="background: url(@await UserService.GetProfilePictureUrl(User.GetUserId())) center / cover;"></figure>
+                                        <figure class="back">
+                                            <div class="back-content">
+                                                <small>Welcome</small>
+                                                <strong>@await UserService.GetFirstname(User.GetUserId())</strong>
+                                                <small class="link">View profile</small>
+                                            </div>
+                                        </figure>
+                                    </div>
+                                </div>
                             </a>
                         </li>
                         }
-                        <li id="navbar-logout-button">
+                        <li>
                             @await Html.PartialAsync("_LoginPartial")
                         </li>
                     </ul>
@@ -118,10 +131,12 @@
                     asp-fallback-test="window.Zepto">
             </script>
         </environment>
-        <script src="~/script/scripts.js" type="text/javascript"></script>
+
         <script src="~/script/jquery.magnific-popup.js"></script>
         <script src="~/lib/signalr/jquery.signalR.min.js"></script>
+        <script src="~/lib/toastr/toastr.min.js"></script>
         <script src="~/signalr/hubs" type="text/javascript"></script>
+        <script src="~/script/scripts.js" type="text/javascript"></script>
         <script>
             @*Display the new posts to feed *@
             $(function () {
@@ -150,7 +165,6 @@
                 });
             });
         </script>
-        @RenderSection("editProfile", required: false)
         @RenderSection("scripts", required: false)
         @RenderSection("ajaxstuff", required: false)
     </body>

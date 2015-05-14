@@ -23,7 +23,8 @@ gulp.task("copy", ["clean"], function () {
     "jquery": "jquery/dist/jquery*.{js,map}",
     "jquery-validation": "jquery-validation/jquery.validate.js",
     "jquery-validation-unobtrusive": "jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
-    "signalr": "signalr/jquery.signalR*.min.js"
+    "signalr": "signalr/jquery.signalR*.min.js",
+    "toastr": "toastr/toastr.min.{js,css}"
   }
 
   for (var destinationDir in bower) {
