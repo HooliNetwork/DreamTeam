@@ -94,12 +94,11 @@ $(document).ready(function () {
 
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
-    })
+    });
     
     $(".create-group-button").click(function () {
         $(".edit-info-container").toggleClass('open');
     });
-
 
     // Search results filter
     $(".search-filters button").click(function () {
@@ -113,17 +112,16 @@ $(document).ready(function () {
             $(".search-results").not('.' + filter).hide(100);
             $('.' + filter).show(100);
         }
-    })
+    });
 
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
-    })
+    });
     
     $('.image-link').magnificPopup({type:'image'});
     
     $('.popup-link').magnificPopup({ 
         type: 'image'
-        // other options
     });
 
 
@@ -193,6 +191,7 @@ $(document).ready(function () {
             }
         });
     });
+    
     $(function () {
         $('#personButton').click(function () {
             var currBtn = $(this);
@@ -234,7 +233,5 @@ $(document).ready(function () {
         "hideEasing": "linear",
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
-    }
-
-    
+    }; 
 });

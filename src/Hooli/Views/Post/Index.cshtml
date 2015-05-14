@@ -17,15 +17,15 @@
                     <div class="info-container">
                         <a asp-controller="Group" asp-action="SingleGroup" asp-route-id="@Model.post.Group.GroupId">
                             @if (Model.post.Group.Image != null)
-                            {   
+                             {   
                                 <div class="info-photo" style="background: url(@Model.post.Group.Image) center / cover;">
                                     <div class="info-photo-shade">
-                                    <   h1>@Model.post.Group.GroupName</h1>
+                                        <h1>@Model.post.Group.GroupName</h1>
                                     </div>
                                 </div>
                             }
                             @if (Model.post.Group.Image == null)
-                            {
+                             {
                                 <div class="info-photo" style="background: url(@Url.Content("~/images/hooli_groupphoto_default.jpg")) center / cover;">
                                     <div class="info-photo-shade">
                                         <h1>@Model.post.Group.GroupName</h1>
@@ -35,22 +35,28 @@
                         </a>
                     </div>
                 </div>
-                }                
                 <div class="group-info padding-side">
-                    <p class="group-info-description">@Model.post.Group.Description</p>
+                    <p class="group-info-description">
+                        @Model.post.Group.Description
+                    </p>
                     @if (Model.JoinedGroup.Contains(Model.post.Group.GroupId))
-                    {
-                        <button type="button" data-id="@Model.post.Group.GroupId" data-url="/Manage/UnfollowGroup" class="btn btn-primary btn-follow btn-block btn-option">
+                     {
+                        <button type="button" data-id="@Model.post.Group.GroupId" data-url="/Manage/UnfollowGroup" class="btn btn-primary btn-block btn-option btn-follow btn-trans">
                             <span>Unfollow</span>
                         </button>
-                    } else {
-                        <button type="button" data-id="@Model.post.Group.GroupId" data-url="/Manage/FollowGroup" class="btn btn-primary btn-follow btn-block">
+                    }
+                    else
+                    {
+                        <button type="button" data-id="@Model.post.Group.GroupId" data-url="/Manage/FollowGroup" class="btn btn-primary btn-block btn-follow btn-trans">
                             <span>Follow</span>
                         </button>
                     }
+
                 </div>
             </div>
         </div>
+
+
     }
     else if (Model.post.User != null)
     {
@@ -106,11 +112,15 @@
 
     <div class="col-md-8">
         <div class="content-box">
+            <div class="edit-post">
+                @await Html.PartialAsync("Edit")
+
+            </div>
             <div class="view-post">
                 <div class="mod-controls">
                     @if (Model.post.UserId == Model.UserId)
                     {
-                        <button type="button" onclick="location.href='@Url.Action("Edit", "Post",  new { id = Model.post.PostId })'" class="btn btn-primary btn-xs btn-2way">
+                        <button type="button" onclick="location.href='@Url.Action("Edit", "Post",  new { id = Model.post.PostId })'" class="btn btn-primary btn-xs btn-2way edit-post-button">
                             <span>Edit</span>
                         </button>
                         <form asp-controller="Post" asp-action="Delete" asp-route-id="@Model.post.PostId" method="post">
@@ -120,8 +130,9 @@
                         </form>
 
                     }
+                    </div>
 
-                </div>
+
                 <div class="post-rating" data-url="/Post/Vote" data-postId="@Model.post.PostId">
                     <button type="button" data-type="up" class="btn btn-link vote btn-up">
                         <span class="glyphicon glyphicon-menu-up"></span>
