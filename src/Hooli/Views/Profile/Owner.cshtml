@@ -39,12 +39,13 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="profile-buttons padding-side margin-top">
                     <button type="button" class="btn btn-primary btn-block btn-option">
                         <span>Edit profile</span>
                     </button>
                 </div>
-                <div class="edit-info-container margin-top padding-side slider open">
+                <div class="edit-info-container margin-top padding-side slider">
                     <div class="form-horizontal" id="edit_profile">
                         <h2>Profile information</h2>
                         <div class="form-group">
@@ -156,6 +157,11 @@
                 stringify: _stringify
             };
         })()
+
+        $('.profile-buttons button').click(function () {
+            $('.edit-info-container').toggleClass('open');
+        });
+
         $(function () {
             $('#edit_profile .btn-save').on('click', function () {
                 console.log("Inside the script !");
