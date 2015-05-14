@@ -1,5 +1,3 @@
-
-
 $(document).ready(function () {
     //TODO: add a check so that if a person clicks a previously selected button classes aren't added
     $(".posts-type button:nth-child(1)").click(function () {
@@ -137,10 +135,30 @@ $(document).ready(function () {
             }
         });
     });
+    $(function () {
+        $('#personButton').click(function () {
+            var currBtn = $(this);
+            var data = {
+                PostId: currBtn.attr('data-PostId'),
+                Address: currBtn.attr('data-PostId'),
+                Text: currBtn.attr('data-PostId'),
+                UserName: currBtn.attr('data-PostId'),
+                UserId: currBtn.attr('data-PostId'),
+                DateCreate: $.now(),
+                ParentId: currBtn.attr('data-PostId')
+                };
+
+            $.post('@Url.Action("IsValidPerson", "FormUrlEncoded")', MVC.stringify(data))
+                .done(function (result) {
+                    if (result) {
+                        $("#validPerson").html("The submitted data belongs to a valid person.");
+                    }
+                    else {
+                        $("#validPerson").html("The submitted data is invalid.");
+                    }
+                });
+        });
+    });
 
     
 });
-
-
-
-

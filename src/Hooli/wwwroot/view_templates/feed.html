@@ -10,6 +10,7 @@
     <link href='http://fonts.googleapis.com/css?family=Rambla:400,700,400italic' rel='stylesheet' type='text/css'>
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/magnific-popup.css"> 
     <link rel="stylesheet" href="../css/site.css" />
     <!--[if IE]>
         <script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -27,6 +28,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+                <form class="navbar-search search-mobile" role="search">
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search">
+                        <button type="submit" class="btn btn-default">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </div>
+                </form>
                 <a class="navbar-brand" href="#">
                     <img id="navbar-logo-large" src="../images/logo_hooli.png" alt="Hooli logo"/>
                     <img id="navbar-logo-small" src="../images/logo_hooli_sm.png" alt="Hooli logo"/>
@@ -68,9 +77,15 @@
                     <h1>Groups</h1>
                     <div class="container image-wall">
                         <div class="row">
-                            <div class="col-min-padding col-xs-8 col-sm-12 col-md-8">
-                                <div class="image-box" style="background: url(../images/groups/group_cheese.jpg) center / cover;"></div>                  
+                            <div class="info-photo-container col-sm-12 col-md-6">
+                                <div class="info-photo" style="background: url(../images/hooli_groupphoto_default.jpg) center / cover;">
+                                    <div class="info-photo-shade">
+                                        <a href="#"><h1>Silicon valley</h1></a>
+                                    </div>
+                                </div>
                             </div>
+                            <div class="col-min-padding col-xs-8 col-sm-12 col-md-8">
+                                <div class="image-box" style="background: url(../images/groups/group_cheese.jpg) center / cover;"></div>
                             <div class="col-min-padding col-xs-4 col-sm-6 col-md-4">
                                 <div class="image-box" style="background: url(../images/groups/group_movies.jpg) center / cover;"></div>
                             </div>
@@ -121,6 +136,7 @@
                     </div>
                 </div>
             </div>
+        </div>
             <div class="col-sm-8">
                 <div class="content-box">
                     <h1>The Feed</h1>
@@ -152,12 +168,17 @@
                                 </button>
                             </div>
                             <div class="col-xs-10 col-sm-11 post-body">
+                                <div class="pull-right">
+                                    <a class="image-link" href="http://upload.wikimedia.org/wikipedia/commons/9/9e/Steve_Ballmer_at_CES_2010.jpg">
+                                    <div class="photo-sm photo-feed" style="background: url(http://upload.wikimedia.org/wikipedia/commons/9/9e/Steve_Ballmer_at_CES_2010.jpg) center / cover;"></div>
+                                    </a>                                
+                                </div>
                                 <a href="#"><h2>Við söknum Jóhanns!</h2></a>
                                 <div class="post-body-info">
                                     <span class="post-author">Posted by <a href="#"><strong>Jóhann</strong></a></span>
                                     <span class="post-date"> on <strong>14. mars 2015 14:45</strong>.</span>
                                     <span class="post-comment-count"> Total comments <strong>24</strong>.</span>
-                                </div>
+                                </div>                                
                             </div>
                         </div>
                     </div>
@@ -208,7 +229,9 @@
         </div>
     </main>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script> 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="../script/jquery.magnific-popup.js"></script>
+    <script src="../script/scripts.js"></script>
 </body>
 </html>

@@ -12,7 +12,9 @@ namespace Hooli.Models
 
         public PostCache(HooliContext context)
         {
-            byKey = new Lazy<Dictionary<int, Post>>(() => context.Posts.ToDictionary(c => c.PostId));
+            byKey = new Lazy<Dictionary<int, Post>>(() => context.Posts.Include(u => u.User)
+                                                                       .Include(g => g.Group)
+                                                                       .ToDictionary(c => c.PostId));
             topLevel = new Lazy<Post[]>(() => byKey.Value.Values.Where(c => c.ParentPostId == null).ToArray());
         }
 
@@ -52,5 +54,7 @@ namespace Hooli.Models
                     .Where(c => c.Children != null)
                     .SelectMany(c => GetAllPostIdsIncludingChildren(c.Children)));
         }
+        
+
     }
 }
