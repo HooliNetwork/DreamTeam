@@ -80,17 +80,25 @@ namespace Hooli.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(string id)
         {
-            var q = Request.QueryString;
-            Console.WriteLine(q);    
-            Console.WriteLine("Inside index " + id);
-
+            var currentUser = await GetCurrentUserAsync();
             var user = await DbContext.Users.SingleAsync(u => u.UserName == id);
-            if(user == null)
+            if (user == null)
             {
                 return HttpNotFound();
             }
 
-            return View(user);
+            var following = DbContext.FollowRelations
+                            .Where(u => u.FollowerId == currentUser.Id)
+                            .Select(u => u.FollowingId).ToList();
+            var isFollowing = following.Contains(user.Id) ? true : false;
+
+            var profileViewModel = new ProfileViewModel()
+            {
+                User = user,
+                Following = isFollowing
+            };
+
+            return View(profileViewModel);
         }
 
 

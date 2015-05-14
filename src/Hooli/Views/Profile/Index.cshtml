@@ -5,14 +5,14 @@
     // ViewBag.Title = "Home Page";
 }
 
-@model Hooli.Models.ApplicationUser
+@model Hooli.ViewModels.ProfileViewModel
 
 <main class="container body-content">
     <div class="row">
         <div class="col-md-4">
             <div class="content-box padding-remove-sides">
                 <div class="info-photo-container">
-                    <div class="info-photo info-photo-user" style="background: url(@Model.ProfilePicture) center / cover;">
+                    <div class="info-photo info-photo-user" style="background: url(@Model.User.ProfilePicture) center / cover;">
                         <div class="info-photo-shade">
                             <a href="#"><h1>Hörður Ragnarsson</h1></a>
                         </div>
@@ -22,30 +22,36 @@
                     <div class="form-group clear">
                         <label class="col-xs-3 col-md-4 col-lg-3 control-label">Full name</label>
                         <div class="col-xs-9 col-md-8 col-lg-9">
-                            <span>@Model.FirstName @Model.LastName</span>
+                            <span>@Model.User.FirstName @Model.User.LastName</span>
                         </div>
                     </div>
                     <div class="form-group clear">
                         <label class="col-xs-3 col-md-4 col-lg-3 control-label">Age</label>
                         <div class="col-xs-9 col-md-8 col-lg-9">
-                            <span>@Model.DateOfBirth</span>
+                            <span>@Model.User.DateOfBirth</span>
                         </div>
                     </div>
 
                     <div class="form-group clear">
                         <label class="col-xs-3 col-md-4 col-lg-3 control-label">Username</label>
                         <div class="col-xs-9 col-md-8 col-lg-9">
-                            <span>@Model.UserName</span>
+                            <span>@Model.User.UserName</span>
                         </div>
                     </div>
                 </div>
                 <div class="profile-buttons padding-side margin-top">
-                    <button type="button" class="btn btn-primary btn-block">
-                        <span>Follow</span>
-                    </button>
-                    <button type="button" class="btn btn-primary btn-block btn-option">
-                        <span>Unfollow</span>
-                    </button>
+                    @if (Model.Following)
+                    {
+                        <button type="button" data-id="@Model.User.Id" data-url="/Manage/UnfollowUser" class="btn-follow btn btn-primary pull-right btn-trans btn-option">
+                            <span>Unfollow</span>
+                        </button>
+                    }
+                    else
+                    {
+                        <button type="button" data-id="@Model.User.Id" data-url="/Manage/FollowUser" class="btn-follow btn btn-primary pull-right btn-trans">
+                            <span>Follow</span>
+                        </button>
+                    }
                 </div>
             </div>
         </div>
