@@ -192,7 +192,7 @@ namespace Hooli.Controllers
                 await DbContext.SaveChangesAsync(requestAborted);
             }
 
-            return Redirect("Post/Index/" + post.PostId);
+            return Redirect("/Post/Index/" + post.PostId);
 
 
         }
@@ -212,12 +212,14 @@ namespace Hooli.Controllers
             }
             else
             {
-                Console.WriteLine("Can't");
+                Console.WriteLine("Can't delete like above because of ParentPostId");
             }
+
+            //TODO Check if the post has a voteRelation
 
             Console.WriteLine("After delete post: " + post.PostId + " " + post.Title + " " + post.Text);
 
-            return Redirect("Group/SingleGroup");
+            return Redirect("/Group/SingleGroup" + post.GroupGroupId);
         }
 
         
