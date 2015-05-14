@@ -86,6 +86,21 @@ namespace Hooli.Controllers
             return Json(data);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditProfilePicture(IFormFile file, CancellationToken requestAborted)
+        {
+            var user = await GetCurrentUserAsync();
+
+            if ((file != null) && (file.Length > 0))
+            {
+                Console.WriteLine("Upload new picture");
+                user.ProfilePicture = await Storage.GetUri("profileimages", Guid.NewGuid().ToString(), file);
+            }
+            await DbContext.SaveChangesAsync(requestAborted);
+            return RedirectToAction("Owner");
+        }
+
         // GET: /<controller>/
         [HttpGet]
         public async Task<IActionResult> Index(string id)

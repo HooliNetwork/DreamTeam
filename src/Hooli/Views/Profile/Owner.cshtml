@@ -45,8 +45,8 @@
                         <span>Edit profile</span>
                     </button>
                 </div>
-                <div class="edit-info-container margin-top padding-side slider">
-                    <div class="form-horizontal" id="edit_profile">
+                <div class="edit-info-container padding-side slider">
+                    <div class="form-horizontal form-seperator" id="edit_profile">
                         <h2>Profile information</h2>
                         <div class="form-group">
                             <label for="first_name" class="col-sm-3 col-md-5 col-lg-4 control-label">First name</label>
@@ -73,6 +73,7 @@
                         </div>
                     </div>
                     @await Html.PartialAsync("_ChangePassword", ViewData["ChangePasswordViewData"])
+                    @await Html.PartialAsync("_EditProfilePicture", ViewData["ApplicationUser"])
                 </div>
             </div>
         </div>
