@@ -62,6 +62,8 @@ namespace Hooli.Controllers
             }
         }
 
+
+
         public async Task<IActionResult> Index(int id)
         {
             var currentuser = await GetCurrentUserAsync();
@@ -80,7 +82,8 @@ namespace Hooli.Controllers
             return View(model);
         }
 
-        [HttpPost]
+
+        [HttpPost("{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Post post, CancellationToken requestAborted, IFormFile file, string id)
         {
@@ -90,12 +93,13 @@ namespace Hooli.Controllers
             var user = await GetCurrentUserAsync();
             if (ModelState.IsValid && user != null)
             {
-                
+                Console.WriteLine("pc1");
                 post.User = user;
                 if((file != null) && (file.Length > 0))
                 {               
                     post.Image = await Storage.GetUri("postimages", Guid.NewGuid().ToString(), file);
                 }
+                Console.WriteLine("pc2");
                 post.GroupGroupId = id;
                 DbContext.Posts.Add(post);
                 await DbContext.SaveChangesAsync(requestAborted);
@@ -103,18 +107,21 @@ namespace Hooli.Controllers
                 var following = DbContext.FollowRelations
                         .Where(u => u.FollowingId == user.Id)
                         .Include(u => u.Follower)
-                        .Select(u => u.Follower.Id)
+                        .Select(u => u.FollowerId)
                         .ToList();
+                Console.WriteLine("pc5");
                 var usernames = DbContext.Users
                         .Where(u => following.Contains(u.Id))
                         .Select(u => u.UserName).ToList();
 
                 _feedHub.Clients.Users(usernames).feed(post, user);
                 //_feedHub.Clients.All.feed(postdata);
+                Console.WriteLine("pc7");
 
                 Cache.Remove("latestPost");
-                //return RedirectToAction("Index");
-                return RedirectToAction("Index");
+                Console.WriteLine("pc8");
+
+                return Redirect("Post/Index/" + post.PostId);
             }
             return View(post);
         }

@@ -82,9 +82,9 @@
             <div class="row following-info-container">
                 @foreach (var u in Model.Users)
                 {
-                    <div class="info-photo-container col-sm-12 col-md-6 search-results s_groups">
+                    <div class="info-photo-container col-sm-12 col-md-6 search-results s_people">
                         <div class="info-container">
-                            <a asp-controller="People" asp-action="Index" asp-route-id="@u.Id">
+                            <a asp-controller="Profile" asp-action="Index" asp-route-id="@u.UserName">
                                 @if (u.ProfilePicture != null)
                                 {
                                     <div class="info-photo" style="background: url(@u.ProfilePicture) center / cover;">
@@ -104,13 +104,13 @@
                             </a>
                             @if (Model.Following.Contains(u.Id))
                             {
-                                <button type="button" data-id="@u.Id" data-url="/Manage/UnfollowGroup" class="btn-follow btn btn-primary pull-right btn-trans btn-option">
+                                <button type="button" data-id="@u.Id" data-url="/Manage/UnfollowUser" class="btn-follow btn btn-primary pull-right btn-trans btn-option">
                                     <span>Unfollow</span>
                                 </button>
                             }
                             else
                             {
-                                <button type="button" data-id="@u.Id" data-url="/Manage/FollowGroup" class="btn-follow btn btn-primary pull-right btn-trans">
+                                <button type="button" data-id="@u.Id" data-url="/Manage/FollowUser" class="btn-follow btn btn-primary pull-right btn-trans">
                                     <span>Follow</span>
                                 </button>
                             }

@@ -2,9 +2,9 @@
 
 @if (User.Identity.IsAuthenticated)
 {
-    <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
-        <ul class="nav navbar-nav navbar-right">
-            <li id="navbar-logout-button">
+    <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm">
+        <ul class="nav navbar-nav">
+            <li>
                 <a href="javascript:document.getElementById('logoutForm').submit()">Log out</a>
             </li>
         </ul>
@@ -12,9 +12,5 @@
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
-        <li id="navbar-logout-button">
-            <a id="loginLink" asp-controller="Account" asp-action="Register">Sign up</a>
-        </li>
-    </ul>
+    <a id="loginLink" asp-controller="Account" asp-action="Register">Sign up</a>
 }
