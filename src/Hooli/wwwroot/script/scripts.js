@@ -13,8 +13,7 @@ $(document).ready(function () {
             url: uri,
             data: { 'group': group, 'latestPosts': latestPosts, 'groupId': groupId },
             success: function (result) {
-                console.log(result);
-                $('#feed-content').empty().append(result);
+                replaceFeed(result);
             }
         });
     });
@@ -31,7 +30,7 @@ $(document).ready(function () {
             url: uri,
             data: { 'group': group, 'latestPosts': latestPosts, 'groupId': groupId },
             success: function (result) {
-                $('#feed-content').empty().append(result);
+                replaceFeed(result);
             }
         });
 
@@ -49,7 +48,7 @@ $(document).ready(function () {
             url: uri,
             data: { 'group': group, 'latestPosts': latestPosts, 'groupId': groupId },
             success: function (result) {
-                $('#feed-content').empty().append(result);
+                replaceFeed(result);
             }
         });
 
@@ -67,14 +66,13 @@ $(document).ready(function () {
             url: uri,
             data: { 'group': group, 'latestPosts': latestPosts, 'groupId': groupId },
             success: function (result) {
-                $('#feed-content').empty().append(result);
+                replaceFeed(result);
             }
         });
     });
 
     var replaceFeed = function (result) {
-        var newFeed = $(result).find('#feed-content');
-        $("#feed-content").replaceWith(newFeed);
+        $('#feed-content').empty().append(result);
     };
 
     $(".create-post-button").click(function(){
