@@ -111,12 +111,14 @@
         <div class="content-box">
             <div class="view-post">
                 <div class="mod-controls">
-                    <button type="button" onclick="location.href='@Url.Action("Edit", "Post",  new { id = Model.post.PostId})'" class="btn btn-primary btn-xs btn-2way">
+                    <button type="button" onclick="location.href='@Url.Action("Edit", "Post",  new { id = Model.post.PostId })'" class="btn btn-primary btn-xs btn-2way">
                         <span>Edit</span>
                     </button>
-                    <button type="button" class="btn btn-danger btn-xs btn-2way">
+                    <form asp-controller="Post" asp-action="Delete" asp-route-id="@Model.post.PostId" method="post">
+                    <button type="submit" class="btn btn-danger btn-xs btn-2way">
                         <span>Delete</span>
                     </button>
+                    </form>
                 </div>
                 <div class="post-rating">
                     <button type="submit" class="btn btn-link vote">

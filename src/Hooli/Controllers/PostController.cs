@@ -199,12 +199,25 @@ namespace Hooli.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(Post post, CancellationToken requestAborted)
+        public async Task<IActionResult> Delete(int id, CancellationToken requestAborted)
         {
-            var postData = await DbContext.Posts.SingleAsync(postTable => postTable.PostId == post.PostId);
-            DbContext.Remove(postData);
-            await DbContext.SaveChangesAsync(requestAborted);
-            return View();
+            var post = DbContext.Posts.Single(p => p.PostId == id);
+
+            Console.WriteLine("Before delete post: " + post.PostId + " " + post.Title + " " + post.Text);
+
+            if (post.ParentPostId == null)
+            {
+                DbContext.Entry(post).State = EntityState.Deleted;
+                await DbContext.SaveChangesAsync(requestAborted);
+            }
+            else
+            {
+                Console.WriteLine("Can't");
+            }
+
+            Console.WriteLine("After delete post: " + post.PostId + " " + post.Title + " " + post.Text);
+
+            return Redirect("Group/SingleGroup");
         }
 
         
