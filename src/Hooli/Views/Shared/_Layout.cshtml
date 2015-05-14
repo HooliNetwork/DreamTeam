@@ -73,7 +73,7 @@
                         <li id="navbar-profile-photo">
                             <a asp-controller="Manage" asp-action="Index">
                                 <span class="visible-mobile">Profile</span>
-                                <img id="navbar-profile" class="hidden-mobile" src="@await UserService.GetProfilePictureUrl(User.GetUserId())" alt="Profile photo" />
+                                <div id="navbar-profile" class="hidden-mobile" style="background: url(@await UserService.GetProfilePictureUrl(User.GetUserId())) center / cover;"></div>
                             </a>
                         </li>
                         }
