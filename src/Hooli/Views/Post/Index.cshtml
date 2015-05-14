@@ -14,46 +14,42 @@
         <div class="col-md-4">
             <div class="content-box padding-remove-sides">
                 <div class="info-photo-container">
-                    @if (Model.post.Group.Image != null)
-                     {   
-                        <div class="info-photo" style="background: url(@Model.post.Group.Image) center / cover;">
-                            <div class="info-photo-shade">
-                                <a asp-controller="Group" asp-action="SingleGroup" asp-route-id="@Model.post.Group.GroupId"><h1>@Model.post.Group.GroupName</h1></a>
-                            </div>
-                        </div>
-                    }
-                    @if (Model.post.Group.Image == null)
-                     {
-                        <div class="info-photo" style="background: url(@Url.Content("~/images/hooli_groupphoto_default.jpg")) center / cover;">
-                            <div class="info-photo-shade">
-                                <a asp-controller="Group" asp-action="SingleGroup" asp-route-id="@Model.post.Group.GroupId"><h1>@Model.post.Group.GroupName</h1></a>
-                            </div>
-                        </div>
-                    }
-
+                    <div class="info-container">
+                        <a asp-controller="Group" asp-action="SingleGroup" asp-route-id="@Model.post.Group.GroupId">
+                            @if (Model.post.Group.Image != null)
+                            {   
+                                <div class="info-photo" style="background: url(@Model.post.Group.Image) center / cover;">
+                                    <div class="info-photo-shade">
+                                    <   h1>@Model.post.Group.GroupName</h1>
+                                    </div>
+                                </div>
+                            }
+                            @if (Model.post.Group.Image == null)
+                            {
+                                <div class="info-photo" style="background: url(@Url.Content("~/images/hooli_groupphoto_default.jpg")) center / cover;">
+                                    <div class="info-photo-shade">
+                                        <h1>@Model.post.Group.GroupName</h1>
+                                    </div>
+                                </div>
+                            }
+                    </div>
                 </div>
+                }                
                 <div class="group-info padding-side">
-                    <p class="group-info-description">
-                        @Model.post.Group.Description
-                    </p>
+                    <p class="group-info-description">@Model.post.Group.Description</p>
                     @if (Model.JoinedGroup.Contains(Model.post.Group.GroupId))
-                     {
-                        <button type="button" data-id="@Model.post.Group.GroupId" data-url="/Manage/UnfollowGroup" class="btn btn-primary btn-block btn-option btn-follow btn-trans">
+                    {
+                        <button type="button" data-id="@Model.post.Group.GroupId" data-url="/Manage/UnfollowGroup" class="btn btn-primary btn-follow btn-block btn-option">
                             <span>Unfollow</span>
                         </button>
-                    }
-                    else
-                    {
-                        <button type="button" data-id="@Model.post.Group.GroupId" data-url="/Manage/FollowGroup" class="btn btn-primary btn-block btn-follow btn-trans">
+                    } else {
+                        <button type="button" data-id="@Model.post.Group.GroupId" data-url="/Manage/FollowGroup" class="btn btn-primary btn-follow btn-block">
                             <span>Follow</span>
                         </button>
                     }
-
                 </div>
             </div>
         </div>
-
-
     }
     else if (Model.post.User != null)
     {
