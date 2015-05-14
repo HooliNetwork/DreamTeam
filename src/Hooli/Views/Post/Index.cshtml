@@ -109,6 +109,10 @@
 
     <div class="col-md-8">
         <div class="content-box">
+            <div class="new-post">
+                @await Html.PartialAsync("Edit")
+
+            </div>
             <div class="view-post">
                 <div class="mod-controls">
                     @if (Model.post.UserId == Model.UserId)
@@ -123,8 +127,9 @@
                         </form>
 
                     }
+                    </div>
 
-                </div>
+
                 <div class="post-rating" data-url="/Post/Vote" data-postId="@Model.post.PostId">
                     <button type="button" data-type="up" class="btn btn-link vote btn-up">
                         <span class="glyphicon glyphicon-menu-up"></span>
