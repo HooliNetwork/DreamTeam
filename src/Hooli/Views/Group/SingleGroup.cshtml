@@ -58,13 +58,15 @@
                     <span>Top</span>
                 </button>
             </div>
-            <div class="new-post">
-                <button type="button" class="btn btn-primary btn-block create-post-button">
-                    <span>Add new Post</span>
-                </button>
-                @await Html.PartialAsync("_Create", ViewData["Post"])
-            </div>
-
+            @if (Model.Joined.Contains(Model.group.GroupId))
+            {
+                <div class="new-post">
+                    <button type="button" class="btn btn-primary btn-block create-post-button">
+                        <span>Add new Post</span>
+                    </button>
+                    @await Html.PartialAsync("_Create", ViewData["Post"])
+                </div>
+            }
             @await Component.InvokeAsync("Feed", true, true, Model.group.GroupId)
         </div>
     </div>
