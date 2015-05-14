@@ -77,8 +77,9 @@ namespace Hooli.Controllers
             var following = await DbContext.FollowRelations
                                     .Where(u => u.FollowerId == currentuser.Id)
                                     .Select(u => u.FollowingId).ToListAsync();
+            var currentUserId = currentuser.Id;
 
-            PostViewModel model = new PostViewModel { Seed = post.PostId, post = post, JoinedGroup = joined, Children = post.Children, FollowingPerson = following };
+            PostViewModel model = new PostViewModel { Seed = post.PostId, post = post, JoinedGroup = joined, Children = post.Children, FollowingPerson = following, UserId = currentUserId};
             //if (post == null)
             //{
             //    return HttpBadRequest();
