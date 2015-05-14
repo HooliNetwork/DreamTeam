@@ -131,6 +131,38 @@ $(document).ready(function () {
         return false;
     });
 
+    $('body').on('submit', '#edit_profile', function () {
+        var theForm = $(this);
+        $.ajax({
+            type: "POST",
+            url: "/Profile/EditProfile",
+            data: theForm.serialize(),
+        }).done(function (result) {
+            // Todo Update form
+
+        }).fail(function (error) {
+            alert("There was an error posting the data to the server: " + error.responseText);
+        });
+        return false;
+    });
+
+    $(".edit-profile button").click(function () {
+        var form = $("#edit_profile").serialize();
+        $.ajax({
+            type: 'POST',
+            url: "/Profile/EditProfile",
+            data: form,
+            dataType: 'json',
+            success: function (data) {
+                if (data.result == "Error") {
+                    alert(data.message);
+                }
+            }
+        });
+    });
+
+
+
 });
 
 
