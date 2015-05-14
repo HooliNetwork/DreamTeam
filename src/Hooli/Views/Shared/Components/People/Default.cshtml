@@ -12,7 +12,7 @@
         <h1>People you are following</h1>
         <div class="row following-info-container">
 
-            @if (Model != null && Model.count > 0)
+            @if (Model != null && Model.Count() > 0)
             {
                 @foreach (var u in Model)
                 {
