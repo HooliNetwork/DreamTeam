@@ -377,6 +377,7 @@ namespace Hooli.Controllers
             try
             {
                 var groupmember = new GroupMember() { GroupId = Id, UserId = Context.User.GetUserId(), banned = false };
+                Console.WriteLine(Id);
                 DbContext.GroupMembers.Add(groupmember);
                 await DbContext.SaveChangesAsync();
                 // process your data using the parameter value

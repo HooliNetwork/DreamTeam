@@ -21,7 +21,7 @@ namespace Hooli.Components
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            return View(null);
+            return View(await UserService.GetFollowedGroups(20, Context.User.GetUserId()));
         }
 
     }
