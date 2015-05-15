@@ -293,16 +293,15 @@ namespace Hooli.Controllers
             // Check if there are any comments and mark them for deletion
             if (post.ParentPostId == null)
             {
-                Console.WriteLine("ParentPostId");
-                RecursiveSearch(postService.FromKey(post.PostId));
-
-
+                foreach (var p in postService.GetThisAndChild(post.PostId))
+                {
+                    DbContext.Remove(p);
+                }
             }
 
             // Check if there are any votes on the post and mark the relation for deletion
             if (voteRelation != null)
             {
-                Console.WriteLine("Vote relation not empty");
                 foreach (var relationLine in voteRelation)
             {
                    DbContext.Remove(relationLine);

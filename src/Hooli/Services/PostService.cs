@@ -10,12 +10,15 @@ namespace Hooli.Services
     {
         private Lazy<Dictionary<int, Post>> byKey;
         private Lazy<Post[]> topLevel;
+        private HooliContext DbContext;
+
 
         public PostService(HooliContext context)
         {
             byKey = new Lazy<Dictionary<int, Post>>(() => context.Posts.Include(u => u.User)
                 .Include(g => g.Group).ToDictionary(c => c.PostId));
             topLevel = new Lazy<Post[]>(() => byKey.Value.Values.Where(c => c.ParentPostId == null).ToArray());
+            DbContext = context;
         }
 
         public Post FromKey(int postId)
@@ -41,20 +44,19 @@ namespace Hooli.Services
             return result;
         }
 
-        public IEnumerable<int> GetThisAndChildIds(int postId)
+        public IEnumerable<Post> GetThisAndChild(int postId)
         {
-            return GetAllPostIdsIncludingChildren(new Post[] { FromKey(postId) });
+            return GetAllPostsIncludingChildren(new Post[] { FromKey(postId) });
         }
 
-        private static IEnumerable<int> GetAllPostIdsIncludingChildren(IEnumerable<Post> posts)
+        private static IEnumerable<Post> GetAllPostsIncludingChildren(IEnumerable<Post> posts)
         {
             return posts
-                .Select(c => c.PostId)
                 .Union(posts
                     .Where(c => c.Children != null)
-                    .SelectMany(c => GetAllPostIdsIncludingChildren(c.Children)));
+                    .SelectMany(c => GetAllPostsIncludingChildren(c.Children)));
         }
-        
+
 
     }
 }
