@@ -146,12 +146,7 @@ namespace Hooli.Controllers
         {
             var user = await GetCurrentUserAsync();
 
-            //The member has to be in the group to be able to comment
-            var memberInGroup = DbContext.GroupMembers
-                    .Where(u => u.UserId == user.Id)
-                    .Where(u => u.GroupId == post.GroupId).Single();
-
-            if (ModelState.IsValid && user != null && memberInGroup != null)
+            if (ModelState.IsValid && user != null)
             {
 
                 var newPost = new Post

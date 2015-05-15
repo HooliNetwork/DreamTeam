@@ -146,7 +146,6 @@
                     }
                 </div>
 
-                <div class="post-information slider open">
                     <div class="post-rating" data-url="/Post/Vote" data-postid="@Model.post.PostId">
                         <button type="button" data-type="up" class="btn btn-link vote btn-up">
                             <span class="glyphicon glyphicon-menu-up"></span>
@@ -186,7 +185,7 @@
                         <textarea class="form-control full-width" id="post_body" placeholder="Type your reply."></textarea>
                     </div>
                     <div class="form-group">
-                        <button type="button" data-groupid="@Model.post.GroupGroupId" data-parentid="@Model.post.PostId" class="btn btn-primary btn-block">Reply!</button>
+                        <button type="button"  data-GroupId="@Model.post.GroupGroupId" data-ParentId="@Model.post.PostId" class="btn btn-primary btn-block">Reply!</button>
                     </div>
                 </div>
                 <div class="post-comments clearfix sep-top">
@@ -194,7 +193,6 @@
 
                     @Html.Partial("_CommentTree", Model)
 
-                </div>
             </div>
         </div>
     </div>
@@ -295,6 +293,7 @@
                     });
             });
         $(".reply-to-post button").click(function () {
+
             var currBtn = $(this);
             var data = {
                 Name: 'PostData',
@@ -302,9 +301,13 @@
                 ParentId: currBtn.attr('data-ParentId'),
                 GroupId: currBtn.attr('data-GroupId')
             };
+            console.log("Here comes the data:");
+            console.log(data);
 
             $.post('@Url.Action("CreateComment", "Post")', MVC.stringify(data))
                 .done(function (result) {
+                    console.log("Response from server");
+                    console.log(result);
                     if (result) {
                         $.get("/htmlTemplates/reply.html")
                             .success(function (data) {
@@ -325,6 +328,30 @@
 
                     }
                 });
+        });
+        $(function () {
+            $("#edit-button").click(function () {
+                console.log("Inside the script !");
+                var data = {
+                    Name: 'PostData',
+                    Title: $('#post_title').val(),
+                    Text: $('#post_body').val(),
+                    PostId: $(this).attr("data-postId")
+                };
+
+                $.post('@Url.Action("Edit", "Post")', MVC.stringify(data))
+                    .done(function (data) {
+                        if (data) {
+                            $('#post-info-title').text(data.Title);
+                            $('#post-info-body').text(data.Text);
+                            $('.edit-info-container').toggleClass('open');
+                            $('.post-information').toggleClass('open');
+                        }
+                        else {
+                            alert("The submitted data is invalid.");
+                        }
+                    });
+            });
         });
     </script>
 }
