@@ -167,6 +167,7 @@ $(document).ready(function () {
             url: uri,
             data: { 'upDown': upOrDown, 'postId': id },
             success: function (result) {
+                currBtn.toggleClass("btn-link-option")
                 var value = parseInt(count.text(), 10);
                     if (upOrDown == "up") {
                         value += 1;

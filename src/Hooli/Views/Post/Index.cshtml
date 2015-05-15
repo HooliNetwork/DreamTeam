@@ -145,13 +145,16 @@
 
                     }
                 </div>
-
+                    @if (nigga shit)
+                    {
+                    
+                    }
                     <div class="post-rating" data-url="/Post/Vote" data-postid="@Model.post.PostId">
-                        <button type="button" data-type="up" class="btn btn-link vote btn-up">
+                        <button type="button" data-type="up" class="btn btn-link vote btn-up btn-link-option">
                             <span class="glyphicon glyphicon-menu-up"></span>
                         </button>
-                        <div class="post-rating-count">@Model.post.Points</div>
-                        <button type="button" data-type="down" class="btn btn-link vote btn-down">
+                    <div class="post-rating-count">@Model.post.Points</div>
+                        <button type="button" data-type="down" class="btn btn-link vote btn-down btn-link-option">
                             <span class="glyphicon glyphicon-menu-down"></span>
                         </button>
                     </div>
