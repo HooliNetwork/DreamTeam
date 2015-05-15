@@ -14,14 +14,16 @@ namespace Hooli.Components
     [ViewComponent(Name = "Feed")]
     public class FeedComponent : ViewComponent
     {
-        public FeedComponent(UserManager<ApplicationUser> userManager)
+        public FeedComponent(UserManager<ApplicationUser> userManager, HooliContext dbContext)
         {
             UserManager = userManager;
+            DbContext = dbContext;
         }
+        public HooliContext DbContext { get;  set; }
         public UserManager<ApplicationUser> UserManager { get; private set; }
 
-        [Activate]
-        public HooliContext DbContext { get; set; }
+        //[Activate]
+        //public HooliContext DbContext { get; set; }
 
         [Activate]
         public IMemoryCache Cache { get; set; }
@@ -37,6 +39,7 @@ namespace Hooli.Components
         {
             System.Diagnostics.Debug.WriteLine("Inside Feed InvokeAsync");
             var user = await GetCurrentUserAsync();
+
             if (group)
             {
                 // Create the list of groups to show posts from
@@ -56,53 +59,63 @@ namespace Hooli.Components
 
                 // Check if filtering should show latest posts or popular posts from groups
                 if (latestPosts && groups != null)
-                { 
+                {
                     var post = await GetLatestGroupPost(groups);
                     return View(post);
                 }
-                else if(groups != null)
+                else if (groups != null)
                 {
                     var post = await GetPopularGroupPosts(groups);
                     return View(post);
                 }
                 else
                 {
-                    return View(new List<Post> { new Post() { Title = "No posts!", User = user} });
+                    return View(new List<Post> { new Post() { Title = "No posts!", User = user } });
                 }
             }
             else
             {
                 // Create the list of followers to show from
                 // Either all followed users or a owner of a profile
+                var post = new List<Post>();
                 var following = new List<string>();
                 if (groupId.Equals("Front"))
                 {
                     following = DbContext.FollowRelations
                     .Where(u => u.FollowerId == user.Id)
                     .Select(u => u.FollowingId).ToList();
-                    Console.WriteLine("Front page baby");
+                    if (latestPosts && following != null)
+                    {
+                        post = await GetLatestPost(following);
+                    }
+                    else if (following != null)
+                    {
+                        post = await GetPopularGroupPosts(following);
+                    }
+                    else
+                    {
+                        post = new List<Post> { new Post() { Title = "No posts!", UserId = user.Id } };
+                    }
+
                 }
                 else
                 {
-                    //Todo something that figures out what user we are looking at
+                    // groupId == UserId because viewing the Profile feed
+                    following.Add(groupId);
+                    if (latestPosts && following != null)
+                    {
+                        post = await GetLatestPostProfile(following);
+                    }
+                    else if (following != null)
+                    {
+                        post = await GetPopularPostsProfile(following);
+                    }
+                    else
+                    {
+                        post = new List<Post> { new Post() { Title = "No posts!", UserId = user.Id } };
+                    }
                 }
-
-                // Check if filtering should show latest posts or popular posts from users
-                if (latestPosts && following != null)
-                {
-                    var post = await GetLatestPost(following);
-                    return View(post);
-                }
-                else if(following != null)
-                {
-
-                    var post = await GetPopularPosts(following);
-                    return View(post);
-                }
-                else
-                {
-                    return View(new List<Post> { new Post() { Title = "No posts!", UserId = user.Id } });
-                }
+                return View(post);            
             }
         }
 
@@ -113,6 +126,22 @@ namespace Hooli.Components
                 .OrderByDescending(a => a.DateCreated)
                 .Where(a => a.ParentPostId == null)
                 .Where(u => (following.Contains(u.UserId)) || (u.UserId == Context.User.GetUserId()))
+                .Include(u => u.User)
+                .ToListAsync();
+            foreach (object o in latestPost)
+            {
+                Console.WriteLine(o);
+            }
+            return latestPost;
+        }
+
+        private async Task<List<Post>> GetLatestPostProfile(IEnumerable<string> following)
+        {
+            Console.WriteLine("1");
+            var latestPost = await DbContext.Posts
+                .OrderByDescending(a => a.DateCreated)
+                .Where(a => a.ParentPostId == null)
+                .Where(u => following.Contains(u.UserId))
                 .Where(a => (a.DateCreated - DateTime.UtcNow).TotalDays <= 2)
                 .Include(u => u.User)
                 .ToListAsync();
@@ -123,10 +152,11 @@ namespace Hooli.Components
             return latestPost;
         }
 
+
+
         private async Task<List<Post>> GetPopularPosts(IEnumerable<string> following)
         {
             Console.WriteLine("2");
-
             var postsByVotes = await DbContext.Posts
                 .Where(a => a.ParentPostId == null)
                 .Where(a => (following.Contains(a.UserId)) || (a.UserId == Context.User.GetUserId()))
@@ -137,6 +167,20 @@ namespace Hooli.Components
             return postsByVotes;
         }
 
+        private async Task<List<Post>> GetPopularPostsProfile(IEnumerable<string> following)
+        {
+            Console.WriteLine("2");
+            var postsByVotes = await DbContext.Posts
+                .Where(a => a.ParentPostId == null)
+                .Where(a => following.Contains(a.UserId))
+                .OrderByDescending(a => a.Points)
+                .Include(u => u.User)
+                .ToListAsync();
+
+            return postsByVotes;
+        }
+
+
         private async Task<List<Post>> GetLatestGroupPost(IEnumerable<string> group)
         {
             Console.WriteLine("3");
@@ -145,7 +189,6 @@ namespace Hooli.Components
                 .OrderByDescending(a => a.DateCreated)
                 .Where(a => a.ParentPostId == null)
                 .Where(g => group.Contains(g.GroupGroupId))
-                .Where(a => (a.DateCreated - DateTime.UtcNow).TotalDays <= 2)
                 .Include(u => u.User)
                 .ToListAsync();
             foreach (object o in latestPost)

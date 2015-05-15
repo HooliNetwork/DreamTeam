@@ -1,21 +1,35 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@{
-    // ViewBag.Title = "Home Page";
-}
 
 @model Hooli.ViewModels.ProfileViewModel
+
+@{
+    ViewBag.Title = "Profile";
+}
 
 <main class="container body-content">
     <div class="row">
         <div class="col-md-4">
             <div class="content-box padding-remove-sides">
                 <div class="info-photo-container">
+                    <div class="info-container">
+                        @if (Model.User.ProfilePicture != null)
+                        {
                     <div class="info-photo info-photo-user" style="background: url(@Model.User.ProfilePicture) center / cover;">
                         <div class="info-photo-shade">
-                            <a href="#"><h1>Hörður Ragnarsson</h1></a>
+                                <h1>@Model.User.FirstName @Model.User.LastName</h1>
+                            </div>
                         </div>
+                        }
+                        @if (Model.User.ProfilePicture == null)
+                        {
+                            <div class="info-photo info-photo-user" style="background: url(@Url.Content("~/images/hooli_profilephoto_default.jpg")) center / cover;">
+                                <div class="info-photo-shade">
+                                    <h1>@Model.User.FirstName @Model.User.LastName</h1>
+                                </div>
+                        </div>
+                        }
                     </div>
                 </div>
                 <div class="profile-info row">
@@ -28,7 +42,7 @@
                     <div class="form-group clear">
                         <label class="col-xs-3 col-md-4 col-lg-3 control-label">Age</label>
                         <div class="col-xs-9 col-md-8 col-lg-9">
-                            <span>@Model.User.DateOfBirth</span>
+                            <span>@Model.GetAge()</span>
                         </div>
                     </div>
 
@@ -42,13 +56,13 @@
                 <div class="profile-buttons padding-side margin-top">
                     @if (Model.Following)
                     {
-                        <button type="button" data-id="@Model.User.Id" data-url="/Manage/UnfollowUser" class="btn-follow btn btn-primary pull-right btn-trans btn-option">
+                        <button type="button" data-id="@Model.User.Id" data-url="/Manage/UnfollowUser" class="btn btn-primary btn-follow btn-block btn-option">
                             <span>Unfollow</span>
                         </button>
                     }
                     else
                     {
-                        <button type="button" data-id="@Model.User.Id" data-url="/Manage/FollowUser" class="btn-follow btn btn-primary pull-right btn-trans">
+                        <button type="button" data-id="@Model.User.Id" data-url="/Manage/FollowUser" class="btn btn-primary btn-follow btn-block">
                             <span>Follow</span>
                         </button>
                     }
@@ -58,7 +72,7 @@
         <div class="col-md-8">
             <div class="content-box">
                 <h1>User feed</h1>
-
+                @await Component.InvokeAsync("Feed", true, false, Model.User.Id)
             </div>
         </div>
     </div>

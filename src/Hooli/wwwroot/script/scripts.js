@@ -1,23 +1,83 @@
-
-
 $(document).ready(function () {
     //TODO: add a check so that if a person clicks a previously selected button classes aren't added
+    // People filtering button
     $(".posts-type button:nth-child(1)").click(function () {
         $(".posts-type button:nth-child(1)").removeClass("btn-option").addClass("btn-selected");
         $(".posts-type button:nth-child(2)").removeClass("btn-selected").addClass("btn-option");
+        var uri = "/Home/Sort/";
+        var group = false;
+        var latestPosts = true;
+        var groupId = "Front";
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: uri,
+            data: { 'group': group, 'latestPosts': latestPosts, 'groupId': groupId },
+            success: function (result) {
+                replaceFeed(result);
+            }
     });
+    });
+    // Groups filtering button
     $(".posts-type button:nth-child(2)").click(function () {
         $(".posts-type button:nth-child(1)").removeClass("btn-selected").addClass("btn-option");
         $(".posts-type button:nth-child(2)").removeClass("btn-option").addClass("btn-selected");
+        var uri = "/Home/Sort/";
+        var group = true;
+        var latestPosts = true;
+        var groupId = "Front";
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: uri,
+            data: { 'group': group, 'latestPosts': latestPosts, 'groupId': groupId },
+            success: function (result) {
+                replaceFeed(result);
+            }
     });
+
+    });
+    // New posts filtering button
     $(".posts-orderby button:nth-child(1)").click(function() {
         $(".posts-orderby button:nth-child(1)").removeClass("btn-option").addClass("btn-selected");
         $(".posts-orderby button:nth-child(2)").removeClass("btn-selected").addClass("btn-option");
+        var uri = "/Home/Sort/";
+        var group = false;
+        var latestPosts = false;
+        var groupId = "Front";
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: uri,
+            data: { 'group': group, 'latestPosts': latestPosts, 'groupId': groupId },
+            success: function (result) {
+                replaceFeed(result);
+            }
     });
+
+    });
+    // Top posts filtering button
     $(".posts-orderby button:nth-child(2)").click(function () {
         $(".posts-orderby button:nth-child(1)").removeClass("btn-selected").addClass("btn-option");
         $(".posts-orderby button:nth-child(2)").removeClass("btn-option").addClass("btn-selected");
+        var uri = "/Home/Sort/";
+        var group = true;
+        var latestPosts = false;
+        var groupId = "Front";
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: uri,
+            data: { 'group': group, 'latestPosts': latestPosts, 'groupId': groupId },
+            success: function (result) {
+                replaceFeed(result);
+            }
+        });
     });
+
+    var replaceFeed = function (result) {
+        $('#feed-content').empty().append(result);
+    };
 
     $(".create-post-button").click(function(){
         $(".new-post-container").toggleClass('open');
@@ -38,10 +98,11 @@ $(document).ready(function () {
 
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
-    })
+    });
     
-    $(".create-group-button").click(function () {
+    $(".edit-post-button").click(function () {
         $(".edit-info-container").toggleClass('open');
+        $(".post-information").toggleClass('open');
     });
 
     $(".comment-body button").click(function () {
@@ -65,20 +126,14 @@ $(document).ready(function () {
             $(".search-results").not('.' + filter).hide(100);
             $('.' + filter).show(100);
         }
-    })
+    });
 
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
-    })
+    });
     
     $('.image-link').magnificPopup({type:'image'});
     
-    $('.popup-link').magnificPopup({ 
-        type: 'image'
-        // other options
-    });
-
-
     $("body").on('click', ".btn-follow", function () {
         var currBtn = $(this);
         var btnText = $("span", this);
@@ -147,11 +202,23 @@ $(document).ready(function () {
     });
 
 
-   
 
-    
+
+    toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-bottom-left",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }; 
 });
-
-
-
-

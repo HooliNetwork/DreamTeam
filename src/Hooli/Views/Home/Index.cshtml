@@ -1,7 +1,7 @@
 ﻿@using Hooli.ViewModels
 @model HomeViewModel
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Hooli";
     bool groupView = false;
     bool timeView = true;
 }
@@ -111,7 +111,6 @@
                 </div>
                 <div id="feed-content">
                     @await Component.InvokeAsync("Feed", timeView, groupView, "Front")
-
                 </div>
             </div>
         </div>

@@ -53,7 +53,15 @@
                         <span class="visible-mobile">Profile</span>
                         <img id="navbar-profile" class="hidden-mobile" src="../images/johann.jpg" alt="Profile photo"/></a>
                     </li>
-                    <li id="navbar-logout-button"><a href="#">Log out</a></li>
+                    <li id="navbar-logout-button">
+                        <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm">
+                            <ul class="nav navbar-nav">
+                                <li>
+                                    <a href="javascript:document.getElementById('logoutForm').submit()">Log out</a>
+                                </li>
+                            </ul>
+                        </form>         
+                    </li>
                 </ul>
             </div><!--.nav-collapse -->
         </div>

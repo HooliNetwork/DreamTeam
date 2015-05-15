@@ -1,0 +1,45 @@
+﻿@model Hooli.Models.Post
+
+<div class="new-post-container margin-top slider">
+    <form class="form-horizontal" asp-anti-forgery="true" asp-controller="Post" asp-action="CreateProfilePost" enctype="multipart/form-data" method="post" role="form" >
+        <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="Title" class="control-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <input type="text" asp-for="Title" class="form-control full-width" id="post_title" placeholder="Post title" autofocus="autofocus" required="required" />
+                <span asp-validation-for="Title" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Text" class="control-label col-sm-2" ></label>
+            <div class="col-sm-10">
+                <textarea asp-for="Text" class="form-control full-width" id="post_body" placeholder="Try to write something interesting!" required="required"></textarea>
+                <span asp-validation-for="Text" class="text-danger" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Link" class="control-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <input type="text" asp-for="Link" class="form-control full-width" placeholder="Paste image url here" />
+                <span asp-validation-for="Link" class="text-danger" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Image" class="control-label col-sm-2"></label>
+            <div class="col-md-10">
+                <input type="file" asp-for="Image" id="file" name="file" />
+                <span asp-validation-for="Image" class="text-danger" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary btn-block">Post!</button>
+            </div>
+        </div>
+    </form>
+</div>

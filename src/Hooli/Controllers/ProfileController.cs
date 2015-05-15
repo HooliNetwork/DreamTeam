@@ -7,6 +7,7 @@ using Hooli.Models;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Identity;
 using Hooli.CloudStorage;
+using Hooli.Services;
 using System.Security.Claims;
 using Microsoft.AspNet.Http;
 using System.Threading;
@@ -27,6 +28,9 @@ namespace Hooli.Controllers
 
         [FromServices]
         public Cloud Storage { get; set; }
+
+        [FromServices]
+        public UserService UserInfo { get; set;}
 
         public ProfileController(UserManager<ApplicationUser> userManager)
         {
@@ -60,20 +64,41 @@ namespace Hooli.Controllers
         //}
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditProfile(IFormCollection form, CancellationToken requestAborted)
+        public async Task<EditProfileData> EditProfile(EditProfileData data)
         {
+            Console.WriteLine("Inside EditProfile");
+            var user = await GetCurrentUserAsync();
+            if((data.FirstName != null) && (data.FirstName.Length > 0))
+            {
+                user.FirstName = data.FirstName;
+            }
+            if((data.LastName != null) && (data.LastName.Length > 0))
+            {
+                user.LastName = data.LastName;
+            }
+            if (data.DateOfBirth != null)
+            {
+                user.DateOfBirth = data.DateOfBirth;
+            }
+            data.Age = await UserInfo.GetAge(user.Id);    
 
-            var profileData = await GetCurrentUserAsync();
+            await DbContext.SaveChangesAsync();
+            return data;
+        }
 
-            profileData.FirstName = Convert.ToString(form["first_name"]);
-            profileData.LastName = Convert.ToString(form["last_name"]);
-            profileData.DateOfBirth = Convert.ToDateTime(form["date_birth"]);
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditProfilePicture(IFormFile file, CancellationToken requestAborted)
+        {
+            var user = await GetCurrentUserAsync();
 
-
-
+            if ((file != null) && (file.Length > 0))
+            {
+                Console.WriteLine("Upload new picture");
+                user.ProfilePicture = await Storage.GetUri("profileimages", Guid.NewGuid().ToString(), file);
+            }
             await DbContext.SaveChangesAsync(requestAborted);
-            return Json("error-not-fully-implemented");
+            return RedirectToAction("Owner");
         }
 
         // GET: /<controller>/
@@ -86,6 +111,10 @@ namespace Hooli.Controllers
             {
                 return HttpNotFound();
             }
+            if (user.Id == currentUser.Id)
+            {
+                return RedirectToAction("Owner");
+            }
 
             var following = DbContext.FollowRelations
                             .Where(u => u.FollowerId == currentUser.Id)
@@ -95,9 +124,21 @@ namespace Hooli.Controllers
             var profileViewModel = new ProfileViewModel()
             {
                 User = user,
-                Following = isFollowing
+                Following = isFollowing,
             };
 
+            return View(profileViewModel);
+        }
+
+        // GET: /<controller>/
+        [HttpGet]
+        public async Task<IActionResult> Owner()
+        {
+            var currentUser = await GetCurrentUserAsync();
+            var profileViewModel = new ProfileViewModel()
+            {
+                User = currentUser
+            };
             return View(profileViewModel);
         }
 

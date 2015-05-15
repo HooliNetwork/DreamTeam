@@ -1,0 +1,195 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    // ViewBag.Title = "Home Page";
+}
+
+@model Hooli.ViewModels.ProfileViewModel
+
+<main class="container body-content">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="content-box padding-remove-sides">
+                <div class="info-photo-container">
+                    <div class="info-photo info-photo-user" style="background: url(@Model.User.ProfilePicture) center / cover;">
+                        <div class="info-photo-shade">
+                            <a href="#"><h1>@Model.User.FirstName @Model.User.LastName</h1></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-info row">
+                    <div class="form-group clear">
+                        <label class="col-xs-3 col-md-4 col-lg-3 control-label">Full name</label>
+                        <div class="col-xs-9 col-md-8 col-lg-9">
+                            <span id="profile-info-fullName">@Model.User.FirstName @Model.User.LastName</span>
+                        </div>
+                    </div>
+                    <div class="form-group clear">
+                        <label class="col-xs-3 col-md-4 col-lg-3 control-label">Age</label>
+                        <div class="col-xs-9 col-md-8 col-lg-9">
+                            <span id="profile-info-age">@Model.GetAge()</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group clear">
+                        <label class="col-xs-3 col-md-4 col-lg-3 control-label">Username</label>
+                        <div class="col-xs-9 col-md-8 col-lg-9">
+                            <span id="profile-info-username">@Model.User.UserName</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="profile-buttons padding-side margin-top">
+                    <button type="button" class="btn btn-primary btn-block btn-option">
+                        <span>Edit profile</span>
+                    </button>
+                </div>
+                <div class="edit-info-container padding-side slider">
+                    <div class="form-horizontal form-seperator" id="edit_profile">
+                        <h2>Profile information</h2>
+                        <div class="form-group">
+                            <label for="first_name" class="col-sm-3 col-md-5 col-lg-4 control-label">First name</label>
+                            <div class="col-sm-9 col-md-7 col-lg-8">
+                                <input type="text" class="form-control full-width" id="first_name" value="@Model.User.FirstName">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="last_name" class="col-sm-3 col-md-5 col-lg-4 control-label">Last name</label>
+                            <div class="col-sm-9 col-md-7 col-lg-8">
+                                <input type="text" class="form-control full-width" id="last_name" value="@Model.User.LastName">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="date_birth" class="col-sm-3 col-md-5 col-lg-4 control-label">Date of birth</label>
+                            <div class="col-sm-9 col-md-7 col-lg-8">
+                                <input type="date" class="form-control full-width" id="date_birth" value="@Model.User.DateOfBirth">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <button type="button" class="btn btn-primary btn-block margin-top btn-save">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                    @await Html.PartialAsync("_ChangePassword", ViewData["ChangePasswordViewData"])
+                    @await Html.PartialAsync("_EditProfilePicture", ViewData["ApplicationUser"])
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="content-box">
+                <h1>User feed</h1>
+                <div class="new-post">
+                    <button type="button" class="btn btn-primary btn-block create-post-button">
+                        <span>Add new Post</span>
+                    </button>
+                    @await Html.PartialAsync("_CreateProfilePost", ViewData["Post"])
+                </div>
+                @await Component.InvokeAsync("Feed", true, false, Model.User.Id)
+            </div>
+        </div>
+    </div>
+</main>
+
+@section editProfile{
+    
+    <script>
+        // Copyright (c) Microsoft Open Technologies, Inc. All rights reserved.
+        // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
+
+        var MVC = (function () {
+            // Takes the data which needs to be converted to form-url encoded format understadable by MVC.
+            // This does not depend on jQuery. Can be used independently.
+            var _stringify = function (data) {
+                // This holds the stringified result.
+                var result = "";
+
+                if (typeof data !== "object")
+                {
+                    return result;
+                }
+
+                for (var element in data) {
+                    if (data.hasOwnProperty(element)) {
+                        result += process(element, data[element]);
+                    }
+                }
+
+                // An '&' is appended at the end. Removing it.
+                return result.substring(0, result.length - 1);
+            }
+
+            function process(key, value, prefix) {
+                // Ignore functions.
+                if (typeof value === "function") {
+                    return;
+                }
+
+                if (Object.prototype.toString.call(value) === '[object Array]') {
+                    var result = "";
+                    for (var i = 0; i < value.length; i++) {
+                        var tempPrefix = (prefix || key) + "[" + i + "]";
+                        result += process(key, value[i], tempPrefix);
+                    }
+
+                    return result;
+                }
+                else if (typeof value === "object") {
+                    var result = "";
+                    for (var prop in value) {
+                        // This is to prevent looping through inherited proeprties.
+                        if (value.hasOwnProperty(prop)) {
+                            var tempPrefix = (prefix || key) + "." + prop;
+                            result += process(prop, value[prop], tempPrefix);
+                        }
+                    }
+
+                    return result;
+                }
+                else {
+                    return encodeURIComponent(prefix || key) + "=" + encodeURIComponent(value) + "&";
+                }
+            }
+
+            return {
+                // Converts a Json object into MVC understandable format
+                // when submitted as form-url-encoded data.
+                stringify: _stringify
+            };
+        })()
+
+        $('.profile-buttons button').click(function () {
+            $('.edit-info-container').toggleClass('open');
+        });
+
+        $(function () {
+            $('#edit_profile .btn-save').on('click', function () {
+                console.log("Inside the script !");
+                var data = {
+                    Name: 'EditProfileData',
+                    FirstName: $('#first_name').val(),
+                    LastName: $('#last_name').val(),
+                    DateOfBirth: $('#date_birth').val()
+                };
+
+                $.post('@Url.Action("EditProfile", "Profile")', MVC.stringify(data))
+                    .done(function (data) {
+                        if (data) {
+                            alert(data.Age);
+                            $('#profile-info-fullName').text(data.FirstName + ' ' + data.LastName);
+                            $('#profile-info-age').text(data.Age);
+                            $('#profile-info-username').text(data.username);
+                            $('.edit-info-container').toggleClass('open');
+                            $('#first_name').val(data.FirstName);
+                            $('#last_name').val(data.LastName);
+                            $('#date_birth').val(data.DateOfBirth);
+                        }
+                        else {
+                            alert("The submitted data is invalid.");
+                        }
+                    });
+            });
+        });
+    </script>
+    }
