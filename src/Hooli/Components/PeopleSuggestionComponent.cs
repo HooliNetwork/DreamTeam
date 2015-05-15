@@ -25,6 +25,7 @@ namespace Hooli.Components
             if (showInteresting || (people.Count() < 6))
             {
                 people = await UserService.GetInterestingPeople(6, userId);
+                showInteresting = true;
             }
             return View(new SuggestionGroupViewModel
             {
