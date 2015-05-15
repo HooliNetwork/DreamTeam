@@ -174,8 +174,9 @@
                 };
 
                 $.post('@Url.Action("EditProfile", "Profile")', MVC.stringify(data))
-                    .done(function (result) {
-                        if (result) {
+                    .done(function (data) {
+                        if (data) {
+                            alert(data.Age);
                             $('#profile-info-fullName').text(data.FirstName + ' ' + data.LastName);
                             $('#profile-info-age').text(data.Age);
                             $('#profile-info-username').text(data.username);

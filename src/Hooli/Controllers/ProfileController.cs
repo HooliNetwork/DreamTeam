@@ -64,7 +64,7 @@ namespace Hooli.Controllers
         //}
 
         [HttpPost]
-        public async Task<IActionResult> EditProfile(EditProfileData data)
+        public async Task<EditProfileData> EditProfile(EditProfileData data)
         {
             Console.WriteLine("Inside EditProfile");
             var user = await GetCurrentUserAsync();
@@ -83,7 +83,7 @@ namespace Hooli.Controllers
             data.Age = await UserInfo.GetAge(user.Id);    
 
             await DbContext.SaveChangesAsync();
-            return Json(data);
+            return data;
         }
 
         [HttpPost]
