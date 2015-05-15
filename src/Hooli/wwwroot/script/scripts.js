@@ -40,6 +40,7 @@ $(document).ready(function () {
     };
     
     var filterReplaceFeed = function (html) {
+        console.log("Inside HTML replacer");
         $('#feed-content').empty().append(html);
     };
 
