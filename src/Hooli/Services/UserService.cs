@@ -7,7 +7,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
 using Microsoft.AspNet.Authorization;
-using Microsoft.AspNet.Identity;
 using System.Security.Claims;
 using Microsoft.AspNet.Http;
 using Microsoft.Data.Entity;

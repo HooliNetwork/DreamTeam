@@ -32,13 +32,8 @@ namespace Hooli.Controllers
 
 
         // GET: /<controller>/
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            //var user = await GetCurrentUserAsync();
-            //var groups = DbContext.GroupMembers
-            //        .Where(u => u.UserId == user.Id)
-            //        .Select(u => u.GroupId).ToList();
-            //  return View( await GetGroups(groups));
             return View();
         }
 

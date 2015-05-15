@@ -307,9 +307,6 @@ namespace Hooli.Controllers
                    DbContext.Remove(relationLine);
                 }
             }
-
-            // Safe to mark post since votes and comments have been marked
-            DbContext.Remove(post);
             await DbContext.SaveChangesAsync(requestAborted);
 
 
@@ -339,19 +336,6 @@ namespace Hooli.Controllers
         private async Task<ApplicationUser> GetCurrentUserAsync()
         {
             return await UserManager.FindByIdAsync(Context.User.GetUserId());
-        }
-
-        private void RecursiveSearch(Post post)
-        {
-            foreach (var child in post.Children.ToList())
-            {
-                Console.WriteLine("MoreReqursion " + child.PostId);
-                RecursiveSearch(child);
-                // Delete the comments, starting from the bottom
-                DbContext.Remove(child);
-                Console.WriteLine("Remove " + child.PostId);
-            }
-
         }
 
     }
