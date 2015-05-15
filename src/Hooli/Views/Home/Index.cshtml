@@ -7,215 +7,245 @@
 }
 
 <div class="row">
-    <div class="col-sm-4">
-        <div class="row">
-            @if (Model.Groups.Count() >= 6)
-            {
-
-                <div class="content-box hidden-xs">
-                @if (Model.InterestingGroups)
-                {
-                        <h1>Groups you might find intesting</h1>
-                    }
-                    else
-                    {
-                        <h1>Groups</h1>
-                    }
-                    <div class="container image-wall">
-                        <div class="row following-info-container">
-                            <div class="info-photo-container col-min-padding col-xs-8 col-sm-12 col-md-8">
-                                <div class="info-container">
-                                    <a asp-controller="Group" asp-action="SingleGroup" asp-route-id="@Model.Groups[0].GroupId">
-                                        <div class="info-photo image-box margin-bottom-sm" style="background: url(@Model.Groups[0].Image) center / cover;">
-                                            <div class="info-photo-shade interesting">
-                                                <h1>@Model.Groups[0].GroupName</h1>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="info-photo-container col-min-padding col-xs-4 col-sm-6 col-md-4">
-                                <div class="info-container">
-                                    <a asp-controller="Group" asp-action="SingleGroup" asp-route-id="@Model.Groups[1].GroupId">
-                                        <div class="info-photo image-box margin-bottom-sm" style="background: url(@Model.Groups[1].Image) center / cover;">
-                                            <div class="info-photo-shade interesting">
-                                                <h1>@Model.Groups[1].GroupName</h1>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="info-photo-container col-min-padding col-xs-4 col-sm-6 col-md-4">
-                                <div class="info-container">
-                                    <a asp-controller="Group" asp-action="SingleGroup" asp-route-id="@Model.Groups[2].GroupId">
-                                        <div class="info-photo image-box margin-bottom-sm" style="background: url(@Model.Groups[2].Image) center / cover;">
-                                            <div class="info-photo-shade interesting">
-                                                <h1>@Model.Groups[2].GroupName</h1>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="info-photo-container col-min-padding col-xs-8 col-sm-12 col-md-8">
-                                <div class="info-container">
-                                    <a asp-controller="Group" asp-action="SingleGroup" asp-route-id="@Model.Groups[3].GroupId">
-                                        <div class="info-photo image-box margin-bottom-sm" style="background: url(@Model.Groups[3].Image) center / cover;">
-                                            <div class="info-photo-shade interesting">
-                                                <h1>@Model.Groups[3].GroupName</h1>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="info-photo-container col-min-padding col-xs-8 col-sm-6 col-md-8">
-                                <div class="info-container">
-                                    <a asp-controller="Group" asp-action="SingleGroup" asp-route-id="@Model.Groups[4].GroupId">
-                                        <div class="info-photo image-box margin-bottom-sm" style="background: url(@Model.Groups[4].Image) center / cover;">
-                                            <div class="info-photo-shade interesting">
-                                                <h1>@Model.Groups[4].GroupName</h1>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="info-photo-container col-min-padding col-xs-4 col-sm-6 col-md-4">
-                                <div class="info-container">
-                                    <a asp-controller="Group" asp-action="SingleGroup" asp-route-id="@Model.Groups[5].GroupId">
-                                        <div class="info-photo image-box margin-bottom-sm" style="background: url(@Model.Groups[5].Image) center / cover;">
-                                            <div class="info-photo-shade interesting">
-                                                <h1>@Model.Groups[5].GroupName</h1>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <div class="col-sx-8 col-sm-push-4">
+        <div class="content-box clearfix">
+            <h1>The Feed</h1>
+            <div class="posts-orderby feed-control">
+                <button type="button" class="btn btn-primary btn-2way btn-option">
+                    <span>New</span>
+                </button>
+                <button type="button" class="btn btn-primary btn-2way">
+                    <span>Top</span>
+                </button>
+            </div>
+            <div class="posts-type feed-control">
+                <button type="button" class="btn btn-primary btn-2way">
+                    <span>People</span>
+                </button>
+                <button type="button" class="btn btn-primary btn-2way btn-option">
+                    <span>Groups</span>
+                </button>
+            </div>
+            <div id="feed-content">
+                @*Shows empty feed message if nothing is to be shown*@
+                <div id="empty-feed-message" style="display:none;">
+                    <p class="lead" style="margin-top: 60px; margin-bottom: 10px;">It is kind of lonely here isn't it?</p>
+                    <p >You can follow groups and people to see their content in your own personalized feed.</p>
+                    <p >Check out our suggestions or search for something intersting!</p>
                 </div>
-            }
-            @if (Model.People.Count() >= 6)
-            {
-
-                <div class="content-box hidden-xs">
-                    @if (Model.InterestingPeople)
-                {
-                        <h1>People you might find intesting</h1>
-                    }
-                    else
-                    {
-                        <h1>People</h1>
-                    }
-                    <div class="container image-wall">
-                        <div class="row following-info-container">
-                            <div class="info-photo-container col-min-padding col-xs-8 col-sm-12 col-md-8">
-                                <div class="info-container">
-                                    <a asp-controller="Profile" asp-action="Index" asp-route-id="@Model.People[0].UserName">
-                                        <div class="info-photo image-box margin-bottom-sm" style="background: url(@Model.People[0].ProfilePicture) center / cover;">
-                                            <div class="info-photo-shade interesting">
-                                                <h1>@Model.People[0].FirstName @Model.People[0].LastName</h1>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-min-padding col-xs-8 col-sm-12 col-md-8">
-                                <div class="image-box" style="background: url(@Model.People[0].ProfilePicture) center / cover;"></div>
-                            </div>
-                            <div class="col-min-padding col-xs-4 col-sm-6 col-md-4">
-                                <div class="image-box" style="background: url(@Model.People[1].ProfilePicture) center / cover;"></div>
-                            </div>
-                            <div class="col-min-padding col-xs-4 col-sm-6 col-md-4">
-                                <div class="image-box" style="background: url(@Model.People[2].ProfilePicture) center / cover;"></div>
-                            </div>
-                            <div class="col-min-padding col-xs-8 col-sm-12 col-md-8">
-                                <div class="image-box" style="background: url(@Model.People[3].ProfilePicture) center / cover;"></div>
-                            </div>
-                            <div class="col-min-padding col-xs-8 col-sm-6 col-md-8">
-                                <div class="image-box" style="background: url(@Model.People[4].ProfilePicture) center / cover;"></div>
-                            </div>
-                            <div class="col-min-padding col-xs-4 col-sm-6 col-md-4">
-                                <div class="image-box" style="background: url(@Model.People[5].ProfilePicture) center / cover;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @await Component.InvokeAsync("Feed", timeView, groupView, "Front")
+            </div>
+            @section feed{
+            <script src="~/lib/signalr/jquery.signalR.min.js"></script>
+            <script src="~/signalr/hubs" type="text/javascript"></script>
+            <script>
+                @*Display the new posts to feed *@
+                    $(function () {
+                        //$.connection.hub.logging = true;
+                        var feedHub = $.connection.Feed;
+                        feedHub.client.feed = function (post) {
+                            var htmlTemplate;
+                            $.get("/htmlTemplates/post.html")
+                            .success(function (data) {
+                                htmlTemplate = data;
+                                $("#feed-content").prepend(htmlTemplate);
+                                $(".post-rating").first().attr("data-postid", post.PostId);
+                                $(".post-rating-count").first().text(post.Points);
+                                $(".post-body > a").first().attr("href", "/Post/Index/" + post.PostId);
+                                $(".post-body h2").first().text(post.Title);
+                                $(".post-author > a > strong").first().text(post.FullName);
+                                $(".post-author > a").first().attr("href", "/Profile/Index/" + post.Username);
+                                $(".post-date > strong").first().text(post.DateCreated);
+                                if (post.GroupId) {
+                                    $(".post-group > a").first().attr("href", "/Group/SingleGroup/" + post.GroupId);
+                                    $(".post-group > a > strong > small").first().text("/" + post.GroupId);
+                                    $(".post-group").first().show();
+                                }
+                                if (post.Image) {
+                                    $("a.image-link").first().attr("href", post.Image);
+                                    $("a > .photo-feed").first().css("background", "url(" + post.Image + ") center / cover");
+                                    $("a.image-link").first().show();
+                                }
+                                $(".post").first().show(100);
+                                $('.image-link').magnificPopup({type:'image'});
+                            });
+                        };
+                        $.connection.hub.start().done(function () {
+                            console.log('hub connection open');
+                        });
+                    });
+            </script>
             }
         </div>
     </div>
-
-    <div class="col-sm-8">
-            <div class="content-box clearfix">
-                <h1>The Feed</h1>
-                <div class="posts-orderby feed-control">
-                    <button type="button" class="btn btn-primary btn-2way btn-option">
-                        <span>New</span>
-                    </button>
-                    <button type="button" class="btn btn-primary btn-2way">
-                        <span>Top</span>
-                    </button>
-                </div>
-                <div class="posts-type feed-control">
-                    <button type="button" class="btn btn-primary btn-2way">
-                        <span>People</span>
-                    </button>
-                    <button type="button" class="btn btn-primary btn-2way btn-option">
-                        <span>Groups</span>
-                    </button>
-                </div>
-                <div id="feed-content">
-                    @*Shows empty feed message if nothing is to be shown*@
-                    <div id="empty-feed-message" style="display:none;">
-                        <p class="lead" style="margin-top: 60px; margin-bottom: 10px;">It is kind of lonely here isn't it?</p>
-                        <p >You can follow groups and people to see their content in your own personalized feed.</p>
-                        <p >Check out our suggestions or search for something intersting!</p>
+    <div class="col-sx-4 col-sm-pull-8">
+        @if (Model.Groups.Count() >= 6)
+        {
+        <div class="content-box hidden-xs">
+            @if (Model.InterestingGroups)
+            {
+                <h1>Groups you might find intesting</h1>
+            }
+            else
+            {
+                <h1>Groups</h1>
+            }
+                <div class="container image-wall">
+                    <div class="row following-info-container">
+                        <div class="info-photo-container col-min-padding col-xs-8 col-sm-12 col-md-8">
+                            <div class="info-container">
+                                <a asp-controller="Group" asp-action="SingleGroup" asp-route-id="@Model.Groups[0].GroupId">
+                                    <div class="info-photo image-box margin-bottom-sm" style="background: url(@Model.Groups[0].Image) center / cover;">
+                                        <div class="info-photo-shade interesting">
+                                            <h1>@Model.Groups[0].GroupName</h1>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="info-photo-container col-min-padding col-xs-4 col-sm-6 col-md-4">
+                            <div class="info-container">
+                                <a asp-controller="Group" asp-action="SingleGroup" asp-route-id="@Model.Groups[1].GroupId">
+                                    <div class="info-photo image-box margin-bottom-sm" style="background: url(@Model.Groups[1].Image) center / cover;">
+                                        <div class="info-photo-shade interesting">
+                                            <h1>@Model.Groups[1].GroupName</h1>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="info-photo-container col-min-padding col-xs-4 col-sm-6 col-md-4">
+                            <div class="info-container">
+                                <a asp-controller="Group" asp-action="SingleGroup" asp-route-id="@Model.Groups[2].GroupId">
+                                    <div class="info-photo image-box margin-bottom-sm" style="background: url(@Model.Groups[2].Image) center / cover;">
+                                        <div class="info-photo-shade interesting">
+                                            <h1>@Model.Groups[2].GroupName</h1>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="info-photo-container col-min-padding col-xs-8 col-sm-12 col-md-8">
+                            <div class="info-container">
+                                <a asp-controller="Group" asp-action="SingleGroup" asp-route-id="@Model.Groups[3].GroupId">
+                                    <div class="info-photo image-box margin-bottom-sm" style="background: url(@Model.Groups[3].Image) center / cover;">
+                                        <div class="info-photo-shade interesting">
+                                            <h1>@Model.Groups[3].GroupName</h1>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="info-photo-container col-min-padding col-xs-8 col-sm-6 col-md-8">
+                            <div class="info-container">
+                                <a asp-controller="Group" asp-action="SingleGroup" asp-route-id="@Model.Groups[4].GroupId">
+                                    <div class="info-photo image-box margin-bottom-sm" style="background: url(@Model.Groups[4].Image) center / cover;">
+                                        <div class="info-photo-shade interesting">
+                                            <h1>@Model.Groups[4].GroupName</h1>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="info-photo-container col-min-padding col-xs-4 col-sm-6 col-md-4">
+                            <div class="info-container">
+                                <a asp-controller="Group" asp-action="SingleGroup" asp-route-id="@Model.Groups[5].GroupId">
+                                    <div class="info-photo image-box margin-bottom-sm" style="background: url(@Model.Groups[5].Image) center / cover;">
+                                        <div class="info-photo-shade interesting">
+                                            <h1>@Model.Groups[5].GroupName</h1>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                    @await Component.InvokeAsync("Feed", timeView, groupView, "Front")
                 </div>
             </div>
-        </div>
+        }
+        @if (Model.People.Count() >= 6)
+        {
+            <div class="content-box hidden-xs">
+            @if (Model.InterestingPeople)
+            {
+                <h1>People you might find intesting</h1>
+            }
+            else
+            {
+                <h1>People</h1>
+            }
+                <div class="container image-wall">
+                    <div class="row following-info-container">
+                        <div class="info-photo-container col-min-padding col-xs-8 col-sm-12 col-md-8">
+                            <div class="info-container">
+                                <a asp-controller="Profile" asp-action="Index" asp-route-id="@Model.People[0].UserName">
+                                    <div class="info-photo image-box margin-bottom-sm" style="background: url(@Model.People[0].ProfilePicture) center / cover;">
+                                        <div class="info-photo-shade interesting">
+                                            <h1>@Model.People[0].FirstName @Model.People[0].LastName</h1>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="info-photo-container col-min-padding col-xs-4 col-sm-6 col-md-4">
+                            <div class="info-container">
+                                <a asp-controller="Profile" asp-action="Index" asp-route-id="@Model.People[1].UserName">
+                                    <div class="info-photo image-box margin-bottom-sm" style="background: url(@Model.People[1].ProfilePicture) center / cover;">
+                                        <div class="info-photo-shade interesting">
+                                            <h1>@Model.People[1].FirstName @Model.People[1].LastName</h1>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="info-photo-container col-min-padding col-xs-4 col-sm-6 col-md-4">
+                            <div class="info-container">
+                                <a asp-controller="Profile" asp-action="Index" asp-route-id="@Model.People[2].UserName">
+                                    <div class="info-photo image-box margin-bottom-sm" style="background: url(@Model.People[2].ProfilePicture) center / cover;">
+                                        <div class="info-photo-shade interesting">
+                                            <h1>@Model.People[2].FirstName @Model.People[2].LastName</h1>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="info-photo-container col-min-padding col-xs-8 col-sm-12 col-md-8">
+                            <div class="info-container">
+                                <a asp-controller="Profile" asp-action="Index" asp-route-id="@Model.People[3].UserName">
+                                    <div class="info-photo image-box margin-bottom-sm" style="background: url(@Model.People[3].ProfilePicture) center / cover;">
+                                        <div class="info-photo-shade interesting">
+                                            <h1>@Model.People[3].FirstName @Model.People[3].LastName</h1>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="info-photo-container col-min-padding col-xs-8 col-sm-6 col-md-8">
+                            <div class="info-container">
+                                <a asp-controller="Profile" asp-action="Index" asp-route-id="@Model.People[4].UserName">
+                                    <div class="info-photo image-box margin-bottom-sm" style="background: url(@Model.People[4].ProfilePicture) center / cover;">
+                                        <div class="info-photo-shade interesting">
+                                            <h1>@Model.People[4].FirstName @Model.People[4].LastName</h1>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="info-photo-container col-min-padding col-xs-4 col-sm-6 col-md-4">
+                            <div class="info-container">
+                                <a asp-controller="Profile" asp-action="Index" asp-route-id="@Model.People[5].UserName">
+                                    <div class="info-photo image-box margin-bottom-sm" style="background: url(@Model.People[5].ProfilePicture) center / cover;">
+                                        <div class="info-photo-shade interesting">
+                                            <h1>@Model.People[5].FirstName @Model.People[5].LastName</h1>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>
-@section feed{
-    <script src="~/lib/signalr/jquery.signalR.min.js"></script>
-    <script src="~/signalr/hubs" type="text/javascript"></script>
-    <script>
-
-    @*Display the new posts to feed *@
-        $(function () {
-            //$.connection.hub.logging = true;
-            var feedHub = $.connection.Feed;
-            feedHub.client.feed = function (post) {
-                var htmlTemplate;
-                $.get("/htmlTemplates/post.html")
-                .success(function (data) {
-                    htmlTemplate = data;
-                    $("#feed-content").prepend(htmlTemplate);
-                    $(".post-rating").first().attr("data-postid", post.PostId);
-                    $(".post-rating-count").first().text(post.Points);
-                    $(".post-body > a").first().attr("href", "/Post/Index/" + post.PostId);
-                    $(".post-body h2").first().text(post.Title);
-                    $(".post-author > a > strong").first().text(post.FullName);
-                    $(".post-author > a").first().attr("href", "/Profile/Index/" + post.Username);
-                    $(".post-date > strong").first().text(post.DateCreated);
-                    if (post.GroupId) {
-                        $(".post-group > a").first().attr("href", "/Group/SingleGroup/" + post.GroupId);
-                        $(".post-group > a > strong > small").first().text("/" + post.GroupId);
-                        $(".post-group").first().show();
-                    }
-                    if (post.Image) {
-                        $("a.image-link").first().attr("href", post.Image);
-                        $("a > .photo-feed").first().css("background", "url(" + post.Image + ") center / cover");
-                        $("a.image-link").first().show();
-                    }
-                    $(".post").first().show(100);
-                    $('.image-link').magnificPopup({type:'image'});
-                });
-            };
-            $.connection.hub.start().done(function () {
-                console.log('hub connection open');
-            });
-        });
-
-    </script>
-}
 
 
