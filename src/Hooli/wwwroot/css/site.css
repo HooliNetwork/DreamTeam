@@ -698,6 +698,10 @@ form input[type=radio] {
     border-top: 1px solid #DDD;
 }
 
+.toast-success {
+  background-color: #fd7e23;
+}
+
 @media (max-width: 991px) {
     .hidden-mobile {
         display:none !important;
