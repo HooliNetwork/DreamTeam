@@ -6,31 +6,9 @@
 }
     <div class="row">
         <div class="col-md-4">
-            <div class="content-box hidden-mobile">
-                <h1>People you might find intersting</h1>
-                <div class="container image-wall">
-                    <div class="row">
-                        <div class="col-min-padding col-xs-8 col-sm-12 col-md-8">
-                            <div class="image-box" style="background: url(../images/groups/group_cheese.jpg) center / cover;"></div>
-                        </div>
-                        <div class="col-min-padding col-xs-4 col-sm-6 col-md-4">
-                            <div class="image-box" style="background: url(../images/groups/group_movies.jpg) center / cover;"></div>
-                        </div>
-                        <div class="col-min-padding col-xs-4 col-sm-6 col-md-4">
-                            <div class="image-box" style="background: url(../images/groups/group_programming.jpg) center / cover;"></div>
-                        </div>
-                        <div class="col-min-padding col-xs-8 col-sm-12 col-md-8">
-                            <div class="image-box" style="background: url(../images/groups/group_cycling.jpg) center / cover;"></div>
-                        </div>
-                        <div class="col-min-padding col-xs-8 col-sm-6 col-md-8">
-                            <div class="image-box" style="background: url(../images/groups/group_silicon.jpg) center / cover;"></div>
-                        </div>
-                        <div class="col-min-padding col-xs-4 col-sm-6 col-md-4">
-                            <div class="image-box" style="background: url(../images/groups/group_bitcoin.jpg) center / cover;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+            
+                @await Component.InvokeAsync("PeopleSuggestion", true)
+                  </div>
         @await Component.InvokeAsync("People")
+        
     </div>
