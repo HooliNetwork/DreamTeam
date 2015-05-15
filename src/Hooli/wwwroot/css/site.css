@@ -670,6 +670,10 @@ form input[type=radio] {
     margin-top: 20px;
 }
 
+.margin-top-sm {
+    margin-top: 10px;
+}
+
 .margin-bottom-sm {
     margin-bottom: 10px;
 }
@@ -692,6 +696,10 @@ form input[type=radio] {
 
 .sep-top {
     border-top: 1px solid #DDD;
+}
+
+.toast-success {
+  background-color: #fd7e23;
 }
 
 @media (max-width: 991px) {
