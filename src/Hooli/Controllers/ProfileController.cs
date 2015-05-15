@@ -64,7 +64,7 @@ namespace Hooli.Controllers
         //}
 
         [HttpPost]
-        public async Task<IActionResult> EditProfile(EditProfileData data)
+        public async Task<EditProfileData> EditProfile(EditProfileData data)
         {
             Console.WriteLine("Inside EditProfile");
             var user = await GetCurrentUserAsync();
@@ -83,7 +83,22 @@ namespace Hooli.Controllers
             data.Age = await UserInfo.GetAge(user.Id);    
 
             await DbContext.SaveChangesAsync();
-            return Json(data);
+            return data;
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditProfilePicture(IFormFile file, CancellationToken requestAborted)
+        {
+            var user = await GetCurrentUserAsync();
+
+            if ((file != null) && (file.Length > 0))
+            {
+                Console.WriteLine("Upload new picture");
+                user.ProfilePicture = await Storage.GetUri("profileimages", Guid.NewGuid().ToString(), file);
+            }
+            await DbContext.SaveChangesAsync(requestAborted);
+            return RedirectToAction("Owner");
         }
 
         // GET: /<controller>/

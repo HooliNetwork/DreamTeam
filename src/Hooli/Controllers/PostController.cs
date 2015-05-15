@@ -161,6 +161,32 @@ namespace Hooli.Controllers
                 DbContext.Posts.Add(post);
                 await DbContext.SaveChangesAsync(requestAborted);
 
+                var postdata = new PostData
+                {
+                    Title = post.Title,
+                    Text = post.Text,
+                    PostId = post.PostId,
+                    Points = post.Points,
+                    UserName = user.FirstName,
+                    UserId = user.Id,
+                    Image = post.Image,
+                    Link = post.Link,
+                    DateCreated = post.DateCreated.ToString("MMM dd, yyy @ HH:mm")
+                };
+                var following = DbContext.FollowRelations
+                        .Where(u => u.FollowingId == user.Id)
+                        .Select(u => u.FollowerId)
+                        .ToList();
+                var usernames = DbContext.Users
+                        .Where(u => following.Contains(u.Id))
+                        .Select(u => u.UserName).ToList();
+
+
+                _feedHub.Clients.Users(usernames).feed(postdata);
+                //_feedHub.Clients.All.feed(postdata);
+
+                Cache.Remove("latestPost");
+
                 return Redirect("/Profile/Owner");
             }
             return View(post);

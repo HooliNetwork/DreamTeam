@@ -102,6 +102,10 @@ namespace Hooli.Controllers
                     user.ProfilePicture = await Storage.GetUri("profilepictures", Guid.NewGuid().ToString(), file);
                     Console.WriteLine("Added to blob");
                 }
+                else
+                {
+                    user.ProfilePicture = "https://hoolidata.blob.core.windows.net/profilepictures/86f53944-3e52-4469-8bfe-df0b57745469";
+                }
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
