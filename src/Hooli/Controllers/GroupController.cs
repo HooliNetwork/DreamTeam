@@ -13,9 +13,6 @@ using Hooli.CloudStorage;
 using System.Dynamic;
 
 
-
-// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace Hooli.Controllers
 {
     [Authorize]
@@ -27,10 +24,6 @@ namespace Hooli.Controllers
         [FromServices]
         public Cloud storage { get; set; }
 
-        [FromServices]
-        public UserManager<ApplicationUser> UserManager { get; set; }
-
-
         // GET: /<controller>/
         public IActionResult Index()
         {
@@ -41,9 +34,9 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateGroup(Group group, CancellationToken requestAborted, IFormFile file)
         {
-        
-            var user = await GetCurrentUserAsync();
-            if (ModelState.IsValid && user != null)     
+
+            var userId = Context.User.GetUserId();
+            if (ModelState.IsValid)     
             {
 
                 if ((file != null) && (file.Length > 0))
@@ -53,7 +46,7 @@ namespace Hooli.Controllers
 
                 DbContext.Groups.Add(group);
 
-                var groupmember = new GroupMember() { GroupId = group.GroupId, UserId=user.Id, banned = false };
+                var groupmember = new GroupMember() { GroupId = group.GroupId, UserId=userId, banned = false };
 
                 DbContext.GroupMembers.Add(groupmember);
 
@@ -79,7 +72,6 @@ namespace Hooli.Controllers
         {
             if (ModelState.IsValid)
             {
-                //DbContext.Update(group);
                 var groupData = DbContext.Groups.Single(groupTable => groupTable.GroupId == group.GroupId);
 
                 groupData.GroupName = group.GroupName;
@@ -89,15 +81,6 @@ namespace Hooli.Controllers
                 groupData.Image = group.Image;
                 await DbContext.SaveChangesAsync(requestAborted);
             }
-
-            //var groupData = DbContext.Groups.Single(groupTable => groupTable.GroupId == group.GroupId);
-
-            //groupData.GroupName = group.GroupName;
-            //groupData.Description = group.Description;
-            //groupData.Private = group.Private;
-            //groupData.DateCreated = group.DateCreated;
-            //groupData.Members = group.Members;
-            //groupData.GroupPicture = group.GroupPicture;
 
             return View();
         }
@@ -132,20 +115,18 @@ namespace Hooli.Controllers
             return View();
         }
 
-        //
         // GET: /Group/SingleGroup
         [HttpGet]
         public async Task<IActionResult> SingleGroup(string id)
         {
             dynamic model = new ExpandoObject();
-            var currentuser = await GetCurrentUserAsync();
+            var userId = Context.User.GetUserId();
             model.group = await DbContext.Groups
                     .Where(a => a.GroupId == id)
                     .FirstOrDefaultAsync();
             model.Joined = await DbContext.GroupMembers
-                                .Where(u => u.UserId == currentuser.Id)
+                                .Where(u => u.UserId == userId)
                                 .Select(u => u.GroupId).ToListAsync();
-
 
             if (model.group == null)
             {
@@ -153,7 +134,6 @@ namespace Hooli.Controllers
             }
 
             return View(model);
-           // return View();
         }
 
         private async Task<List<Group>> GetGroups(IEnumerable<string> group)
@@ -163,13 +143,5 @@ namespace Hooli.Controllers
                 .ToListAsync();
             return groups;
         }
-
-        private async Task<ApplicationUser> GetCurrentUserAsync()
-        {
-            return await UserManager.FindByIdAsync(Context.User.GetUserId());
-        }
-
-         
-
     }
 }

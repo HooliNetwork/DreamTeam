@@ -29,15 +29,12 @@ namespace Hooli.Controllers
     {
         private IConnectionManager _connectionManager;
         private IHubContext _feedHub;
-        private PostService postService;
 
-        public PostController(UserManager<ApplicationUser> userManager, PostService postServ)
-        {
-            UserManager = userManager;
-            postService = postServ;
-        }
+        [FromServices]
+        public UserService UserService { get; set; }
 
-        public UserManager<ApplicationUser> UserManager { get; private set; }
+        [FromServices]
+        public PostService postService { get; set; }
 
         [FromServices]
         public HooliContext DbContext { get; set; }
@@ -66,23 +63,12 @@ namespace Hooli.Controllers
 
         public async Task<IActionResult> Index(int id)
         {
-            var currentuser = await GetCurrentUserAsync();
-            //dynamic model = new ExpandoObject();
-            System.Diagnostics.Debug.WriteLine(id);
-            //IEnumerable<Post> posts = postCache.GetHierarchy(id);
-            //model.posts = posts;
-            //var post = RecursiveLoad(id);
+            var userId = Context.User.GetUserId();
             var post = postService.FromKey(id);
+            var joined = await UserService.GetFollowedGroupsIds(userId);
+            var following = await UserService.GetFollowedPeopleIds(userId);
 
-            var joined = await DbContext.GroupMembers
-                                .Where(u => u.UserId == currentuser.Id)
-                                ?.Select(u => u.GroupId).ToListAsync();
-            var following = await DbContext.FollowRelations
-                                    .Where(u => u.FollowerId == currentuser.Id)
-                                    .Select(u => u.FollowingId).ToListAsync();
-            var currentUserId = currentuser.Id;
-
-            PostViewModel model = new PostViewModel { Seed = post.PostId, post = post, JoinedGroup = joined, Children = post.Children, FollowingPerson = following, UserId = currentUserId};
+            PostViewModel model = new PostViewModel { Seed = post.PostId, post = post, JoinedGroup = joined, Children = post.Children, FollowingPerson = following, UserId = userId};
 
             return View(model);
         }
@@ -93,7 +79,7 @@ namespace Hooli.Controllers
         public async Task<IActionResult> Create(Post post, CancellationToken requestAborted, IFormFile file, string id)
         {
 
-            var user = await GetCurrentUserAsync();
+            var user = await UserService.GetUser(Context.User.GetUserId());
 
             // The member has to be in the group to be able to post
             var memberInGroup = DbContext.GroupMembers
@@ -125,14 +111,10 @@ namespace Hooli.Controllers
                     DateCreated = post.DateCreated.ToString("MMM dd, yyy @ HH:mm")
                 };
 
-                var following = DbContext.FollowRelations
-                        .Where(u => u.FollowingId == user.Id)
-                        .Select(u => u.FollowerId)
-                        .ToList();
+                var following = await UserService.GetFollowingPeopleIds(user.Id);
                 var usernames = DbContext.Users
                         .Where(u => following.Contains(u.Id))
                         .Select(u => u.UserName).ToList();
-
 
                 _feedHub.Clients.Users(usernames).feed(postdata);
 
@@ -144,7 +126,7 @@ namespace Hooli.Controllers
         [HttpPost]
         public async Task<PostData> CreateComment(PostData post)
         {
-            var user = await GetCurrentUserAsync();
+            var user = await UserService.GetUser(Context.User.GetUserId());
 
             if (ModelState.IsValid && user != null)
             {
@@ -172,7 +154,7 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateProfilePost(Post post, CancellationToken requestAborted, IFormFile file)
         {
-            var user = await GetCurrentUserAsync();
+            var user = await UserService.GetUser(Context.User.GetUserId());
             if (ModelState.IsValid && user != null)
             {
                 post.User = user;
@@ -197,17 +179,13 @@ namespace Hooli.Controllers
                     Link = post.Link,
                     DateCreated = post.DateCreated.ToString("MMM dd, yyy @ HH:mm")
                 };
-                var following = DbContext.FollowRelations
-                        .Where(u => u.FollowingId == user.Id)
-                        .Select(u => u.FollowerId)
-                        .ToList();
+                var following = await UserService.GetFollowingPeopleIds(user.Id);
                 var usernames = DbContext.Users
                         .Where(u => following.Contains(u.Id))
                         .Select(u => u.UserName).ToList();
 
 
                 _feedHub.Clients.Users(usernames).feed(postdata);
-                //_feedHub.Clients.All.feed(postdata);
 
                 Cache.Remove("latestPost");
 
@@ -219,7 +197,6 @@ namespace Hooli.Controllers
         [HttpPost]
         public async Task<IActionResult> Vote(string upDown, int postId)
         {
-            Console.WriteLine(upDown + postId);
             var voted = await DbContext.VoteRelations.SingleOrDefaultAsync(v => v.UserId == Context.User.GetUserId()
                                                                               && v.PostId == postId);
             if (voted != null)
@@ -243,24 +220,10 @@ namespace Hooli.Controllers
             return Json(new { responseText = "Success!" });
         }
 
-        //public ActionResult Edit(int id)
-        //{
-        //    Console.WriteLine("id:" + id);
-        //    var post = DbContext.Posts.Single(p => p.PostId == id);
-        //    if (post == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    Console.WriteLine("post: " + post.PostId + " " + post.Title + " " + post.Text);
-        //    return View(post);
-        //}
-
-
-
         [HttpPost]
         public async Task<PostData> Edit(PostData data)
         {
-            var user = await GetCurrentUserAsync();
+            var user = await UserService.GetUser(Context.User.GetUserId());
             var post = await DbContext.Posts
                         .SingleAsync(p => p.PostId == data.PostId);
             if ((data.Title != null) && (data.Title.Length > 0))
@@ -326,16 +289,10 @@ namespace Hooli.Controllers
 
 
         }
-
-
         // GET: /StoreManager/Create
         public IActionResult Create()
         {
             return View();
-        }
-        private async Task<ApplicationUser> GetCurrentUserAsync()
-        {
-            return await UserManager.FindByIdAsync(Context.User.GetUserId());
         }
 
     }

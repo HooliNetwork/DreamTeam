@@ -374,7 +374,6 @@ namespace Hooli.Controllers
         public async Task<IActionResult> FollowGroup(string Id)
         {
             var message = "";
-            Console.WriteLine(Id);
             try
             {
                 var groupmember = new GroupMember() { GroupId = Id, UserId = Context.User.GetUserId(), banned = false };
@@ -395,7 +394,6 @@ namespace Hooli.Controllers
         public async Task<IActionResult> FollowUser(string Id)
         {
             var message = "";
-            Console.WriteLine(Id);
             try
             {
                 var follow = new FollowRelation() { FollowerId = Context.User.GetUserId(), FollowingId = Id};
@@ -416,7 +414,6 @@ namespace Hooli.Controllers
         public async Task<IActionResult> UnfollowGroup(string Id)
         {
             var message = "";
-            Console.WriteLine(Id);
             try
             {
                 var group = DbContext.GroupMembers.Single(u => u.UserId == Context.User.GetUserId()
@@ -438,7 +435,6 @@ namespace Hooli.Controllers
         public async Task<IActionResult> UnfollowUser(string Id)
         {
             var message = "";
-            Console.WriteLine(Id);
             try
             {
                 var user = DbContext.FollowRelations.Single(u => u.FollowerId == Context.User.GetUserId()

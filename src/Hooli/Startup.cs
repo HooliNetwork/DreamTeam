@@ -99,7 +99,7 @@ namespace Hooli
             services.AddTransient<Services.PostService>();
 
             services.AddTransient<Hooli.CloudStorage.Cloud>();
-            services.AddTransient<Hooli.Services.UserService>();
+            services.AddSingleton<Hooli.Services.UserService>();
         }
 
         // Configure is called after ConfigureServices is called.
