@@ -1,21 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.Http.Core;
-using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Session;
-using Microsoft.Framework.Caching.Distributed;
-using Microsoft.Framework.Caching.Memory;
 using Microsoft.Framework.DependencyInjection;
-using Microsoft.Framework.Logging.Testing;
 using Hooli.Models;
-using Hooli.ViewModels;
 using Xunit;
 using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Identity;
 
 namespace Hooli.Controllers
