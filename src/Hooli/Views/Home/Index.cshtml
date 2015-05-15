@@ -154,6 +154,7 @@
                         $("a.image-link").first().show();
                     }
                     $(".post").first().show(100);
+                    $('.image-link').magnificPopup({type:'image'});
                 });
             };
             $.connection.hub.start().done(function () {

@@ -119,7 +119,7 @@ namespace Hooli.Controllers
                     Username = user.UserName,
                     UserId = user.Id,
                     Image = post.Image,
-                    FullName = user.LastName + " " + user.LastName,
+                    FullName = user.FirstName + " " + user.LastName,
                     Link = post.Link,
                     GroupId = post.GroupGroupId,
                     DateCreated = post.DateCreated.ToString("MMM dd, yyy @ HH:mm")
