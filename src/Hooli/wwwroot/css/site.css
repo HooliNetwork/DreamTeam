@@ -212,6 +212,7 @@ p {
     margin-bottom: 10px;
 }
 
+
 .posts-orderby {
     position: absolute;
     top: 15px;
@@ -286,6 +287,7 @@ p {
     margin-bottom: 20px;
     color: #FFF;
     text-shadow: 0px 1px 5px #555;
+    overflow: hidden;
 }
 
 a>.info-photo:hover {
@@ -321,6 +323,12 @@ a>.info-photo:hover {
     position: absolute;
     bottom: 0;
     left: 10px;
+}
+
+.interesting h1 {
+    font-size: 1.2em;
+    line-height: 1.0em;
+    overflow: hidden;
 }
 
 .info-info p {

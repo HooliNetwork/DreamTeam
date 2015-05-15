@@ -49,10 +49,7 @@
                             </div>
                         </form>
                     </li>
-                    <li id="navbar-profile-photo"><a href="#">
-                        <span class="visible-mobile">Profile</span>
-                        <img id="navbar-profile" class="hidden-mobile" src="../images/johann.jpg" alt="Profile photo"/></a>
-                    </li>
+
                     <li id="navbar-logout-button">
                         <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm">
                             <ul class="nav navbar-nav">
@@ -148,9 +145,28 @@
                 <div class="content-box hidden-mobile">
                     <h1>Groups you might find intersting</h1>
                     <div class="container image-wall">
-                        <div class="row">
-                            <div class="col-min-padding col-xs-8 col-sm-12 col-md-8">
-                                <div class="image-box" style="background: url(../images/groups/group_cheese.jpg) center / cover;"></div>                  
+                        <div class="row following-info-container">
+                            <div class="info-photo-container col-min-padding col-xs-8 col-sm-12 col-md-8">
+                                <div class="info-container">
+                                    <a href="#">
+                                        <div class="info-photo image-box" style="background: url(../images/groups/group_cheese.jpg) center / cover;">
+                                            <div class="info-photo-shade interesting">
+                                                <h1>Cheese Cakes</h1>
+                                            </div>
+                                        </div>  
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="info-photo-container col-min-padding col-xs-4 col-sm-6 col-md-4">
+                                <div class="info-container">
+                                    <a href="#">
+                                        <div class="info-photo image-box" style="background: url(../images/groups/group_movies.jpg) center / cover;">
+                                            <div class="info-photo-shade interesting">
+                                                <h1>Moviescheese</h1>
+                                            </div>
+                                        </div>  
+                                    </a>
+                                </div>
                             </div>
                             <div class="col-min-padding col-xs-4 col-sm-6 col-md-4">
                                 <div class="image-box" style="background: url(../images/groups/group_movies.jpg) center / cover;"></div>
