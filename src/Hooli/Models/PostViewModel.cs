@@ -12,6 +12,6 @@ namespace Hooli.Models
        public List<string> FollowingPerson { get; set; }
        public List<Post> Children { get; set; }
        public List<string> JoinedGroup { get; set; }
-        public string UserId { get; set; }
+       public string UserId { get; set; }
     }
 }
