@@ -279,7 +279,7 @@ namespace Hooli.Controllers
                     }
                     else if (following != null)
                     {
-                        post = await GetPopularGroupPosts(following);
+                        post = await GetPopularPosts(following);
                         return PartialView(post);
                     }
                     else
