@@ -96,7 +96,7 @@ namespace Hooli.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Username, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName};
+                var user = new ApplicationUser { UserName = model.Username, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, DateOfBirth= model.DateOfBirth};
                 if ((file != null) && (file.Length > 0))
                 {
                     user.ProfilePicture = await Storage.GetUri("profilepictures", Guid.NewGuid().ToString(), file);

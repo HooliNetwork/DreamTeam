@@ -75,17 +75,8 @@ namespace Hooli.Controllers
 
         
 
-        public async Task<IActionResult> About()
+        public IActionResult About()
         {
-            // Get most popular Posts
-            //var Users = await Cache.GetOrSet("users", async context =>
-            //{
-            //Refresh it every 10 minutes. Let this be the last item to be removed by cache if cache GC kicks in.
-            //    context.SetAbsoluteExpiration(TimeSpan.FromMinutes(10));
-            //   context.SetPriority(CachePreservationPriority.High);
-            //    return await GetUsers(4);
-            //});
-            //return View(Users);
             return View();
         }
 
@@ -178,8 +169,10 @@ namespace Hooli.Controllers
         public async Task<IActionResult> Search(string searchString)
         {
             dynamic model = new ExpandoObject();
+
             if (!String.IsNullOrEmpty(searchString))
             {
+
                 var currentuser = await GetCurrentUserAsync();
                 model.Users = await DbContext.Users.Where(s => s.LastName
                                             .Contains(searchString)
@@ -197,15 +190,11 @@ namespace Hooli.Controllers
                                 .Where(u => u.UserId == currentuser.Id)
                                 .Select(u => u.GroupId).ToListAsync();
 
-    
-                //model.Events = View(await DbContext.Events.Where(e => e.EventName
-                //                            .Contains(searchString))
-                //                            .ToListAsync());
                 return View(model);
             }
             else
             {
-                return View();
+                return View(model);
             }
         }
         private async Task<ApplicationUser> GetCurrentUserAsync()
