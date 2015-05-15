@@ -71,31 +71,6 @@ namespace Hooli.Controllers
         }
 
         [Fact]
-        public async Task AddPostToGroupTest()
-        {
-            var postId = 1;
-            var groupId = "1";
-            var post = new Post() { PostId = postId };
-            var group = new Group() { GroupId = groupId, GroupName = groupId };
-            var dbContext = _serviceProvider.GetRequiredService<HooliContext>();
-
-            dbContext.Add(group);
-            dbContext.Add(post);
-            dbContext.SaveChanges();
-
-            var controller = new GroupController()
-            {
-                DbContext = dbContext,
-            };
-
-            // Act
-            await controller.AddPostToGroup(groupId, post, CancellationToken.None);
-
-            // Assert
-            Assert.True(group.Posts.Count == 1);
-        }
-
-        [Fact]
         public async Task EditGroupTest()
         {
             // Arrange
@@ -122,25 +97,6 @@ namespace Hooli.Controllers
             Assert.True(group.Private == changedGroup.Private);
             Assert.True(group.Members == changedGroup.Members);
             Assert.True(group.Posts == changedGroup.Posts);
-        }
-
-        [Fact]
-        public async Task CreateGroupTest()
-        {
-            // Arrange
-            var groupId = "1";
-            var group = new Group() { GroupId = groupId, GroupName = groupId };
-            var dbContext = _serviceProvider.GetRequiredService<HooliContext>();
-
-            var controller = new GroupController()
-            {
-                DbContext = dbContext,
-            };
-            // Act
-            await controller.CreateGroup(group, CancellationToken.None, null);
-
-            // Assert
-            Assert.False(controller.DbContext.Groups.Single(u => u.GroupId == groupId).Equals(null));
         }
     }
 
