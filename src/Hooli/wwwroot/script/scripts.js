@@ -88,7 +88,7 @@ $(document).ready(function () {
     });
     
     $('.image-link').magnificPopup({type:'image'});
-    
+/*    
     $('body').on('submit', '#profile_change_password', function() {
        var theForm = $(this);
        $.ajax({
@@ -103,7 +103,7 @@ $(document).ready(function () {
        });
        return false;
     });
-    
+  */  
     $("body").on('click', ".btn-follow", function () {
         var currBtn = $(this);
         var btnText = $("span", this);
