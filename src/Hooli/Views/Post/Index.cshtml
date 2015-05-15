@@ -16,31 +16,31 @@
                 <div class="info-photo-container">
                     <div class="info-container">
                         <a asp-controller="Group" asp-action="SingleGroup" asp-route-id="@Model.post.Group.GroupId">
-                    @if (Model.post.Group.Image != null)
-                     {   
-                        <div class="info-photo" style="background: url(@Model.post.Group.Image) center / cover;">
-                            <div class="info-photo-shade">
+                            @if (Model.post.Group.Image != null)
+                            {
+                                <div class="info-photo" style="background: url(@Model.post.Group.Image) center / cover;">
+                                    <div class="info-photo-shade">
                                         <h1>@Model.post.Group.GroupName</h1>
-                            </div>
-                        </div>
-                    }
-                    @if (Model.post.Group.Image == null)
-                     {
-                        <div class="info-photo" style="background: url(@Url.Content("~/images/hooli_groupphoto_default.jpg")) center / cover;">
-                            <div class="info-photo-shade">
+                                    </div>
+                                </div>
+                            }
+                            @if (Model.post.Group.Image == null)
+                            {
+                                <div class="info-photo" style="background: url(@Url.Content("~/images/hooli_groupphoto_default.jpg")) center / cover;">
+                                    <div class="info-photo-shade">
                                         <h1>@Model.post.Group.GroupName</h1>
-                            </div>
-                        </div>
-                    }
+                                    </div>
+                                </div>
+                            }
                         </a>
-                </div>
+                    </div>
                 </div>
                 <div class="group-info padding-side">
                     <p class="group-info-description">
                         @Model.post.Group.Description
                     </p>
                     @if (Model.JoinedGroup.Contains(Model.post.Group.GroupId))
-                     {
+                    {
                         <button type="button" data-id="@Model.post.Group.GroupId" data-url="/Manage/UnfollowGroup" class="btn btn-primary btn-block btn-option btn-follow btn-trans">
                             <span>Unfollow</span>
                         </button>
@@ -66,20 +66,20 @@
                     <div class="info-container">
                         <a asp-controller="Profile" asp-action="Index" asp-route-id="@Model.post.User.UserName">
                             @if (Model.post.User.ProfilePicture != null)
-                             {   
-                    <div class="info-photo info-photo-user" style="background: url(@Model.post.User.ProfilePicture) center / cover;">
-                        <div class="info-photo-shade">
+                            {
+                                <div class="info-photo info-photo-user" style="background: url(@Model.post.User.ProfilePicture) center / cover;">
+                                    <div class="info-photo-shade">
                                         <h1>@Model.post.User.FirstName @Model.post.User.LastName</h1>
                                     </div>
                                 </div>
                             }
                             @if (Model.post.User.ProfilePicture == null)
-                             {
+                            {
                                 <div class="info-photo info-photo-user" style="background: url(@Url.Content("~/images/hooli_profilephoto_default.jpg")) center / cover;">
                                     <div class="info-photo-shade">
                                         <h1>@Model.post.User.FirstName @Model.post.User.LastName</h1>
                                     </div>
-                        </div>
+                                </div>
                             }
                         </a>
                     </div>
@@ -135,69 +135,71 @@
                     @if (Model.post.UserId == Model.UserId)
                     {
                         <button type="button" class="btn btn-primary btn-xs btn-2way edit-post-button">
-                        <span>Edit</span>
-                    </button>
-                    <form asp-controller="Post" asp-action="Delete" asp-route-id="@Model.post.PostId" method="post">
-                    <button type="submit" class="btn btn-danger btn-xs btn-2way">
-                        <span>Delete</span>
-                    </button>
-                    </form>
+                            <span>Edit</span>
+                        </button>
+                        <form asp-controller="Post" asp-action="Delete" asp-route-id="@Model.post.PostId" method="post">
+                            <button type="submit" class="btn btn-danger btn-xs btn-2way">
+                                <span>Delete</span>
+                            </button>
+                        </form>
 
                     }
                 </div>
 
                 <div class="post-information slider open">
-                <div class="post-rating" data-url="/Post/Vote" data-postId="@Model.post.PostId">
-                    <button type="button" data-type="up" class="btn btn-link vote btn-up">
-                        <span class="glyphicon glyphicon-menu-up"></span>
-                    </button>
-                    <div class="post-rating-count">@Model.post.Points</div>
-                    <button type="button" data-type="down" class="btn btn-link vote btn-down">
-                        <span class="glyphicon glyphicon-menu-down"></span>
-                    </button>
-                </div>
-                @if (Model.post.Image != null)
-                {
+                    <div class="post-rating" data-url="/Post/Vote" data-postid="@Model.post.PostId">
+                        <button type="button" data-type="up" class="btn btn-link vote btn-up">
+                            <span class="glyphicon glyphicon-menu-up"></span>
+                        </button>
+                        <div class="post-rating-count">@Model.post.Points</div>
+                        <button type="button" data-type="down" class="btn btn-link vote btn-down">
+                            <span class="glyphicon glyphicon-menu-down"></span>
+                        </button>
+                    </div>
+                    @if (Model.post.Image != null)
+                    {
                         <a class="image-link" href="@Model.post.Image">
                             <div class="photo-sm margin-top" style="background: url(@Model.post.Image) center / cover;"></div>
                         </a>
-                }
-                else if (Model.post.Link != null)
-                {
+                    }
+                    else if (Model.post.Link != null)
+                    {
                         <a class="image-link" href="@Model.post.Link">
                             <div class="photo-sm margin-top" style="background: url(@Model.post.Link) center / cover;"></div>
                         </a>
-                }
+                    }
 
-                <h1 id="post-info-title">@Model.post.Title</h1>
-                <p class="post-body-info">
-                    <span class="post-author">Posted by <a asp-controller="Profile" asp-action="Index" asp-route-id="@Model.post.User.UserName"><strong>@Model.post.User.FirstName</strong></a></span>
-                    <span class="post-date"> on <strong>@Model.post.DateCreated.ToString("MMM dd, yyy @ HH:mm")</strong>.</span>
-                </p>
-                <p id="post-info-body">
-                        @Model.post.Text               
-                 </p>
-            </div>
-            <button type="button" class="btn btn-primary btn-block" id="button-comment-to-post">
-                <span>Leave a comment</span>
-            </button>
-            <div class="reply-to-post margin-top slider">
-                                    <div class="form-group margin-b-no">
+                    <h1 id="post-info-title">@Model.post.Title</h1>
+                    <p class="post-body-info">
+                        <span class="post-author">Posted by <a asp-controller="Profile" asp-action="Index" asp-route-id="@Model.post.User.UserName"><strong>@Model.post.User.FirstName</strong></a></span>
+                        <span class="post-date"> on <strong>@Model.post.DateCreated.ToString("MMM dd, yyy @ HH:mm")</strong>.</span>
+                    </p>
+                    <p id="post-info-body">
+                        @Model.post.Text
+                    </p>
+                </div>
+                <button type="button" class="btn btn-primary btn-block" id="button-comment-to-post">
+                    <span>Leave a comment</span>
+                </button>
+                <div class="reply-to-post margin-top slider">
+                    <div class="form-group margin-b-no">
                         <textarea class="form-control full-width" id="post_body" placeholder="Type your reply."></textarea>
-                                    </div>
-                                    <div class="form-group">
-                        <button type="button"data-GroupId="@Model.post.GroupGroupId" data-ParentId="@Model.post.PostId" class="btn btn-primary btn-block">Reply!</button>
-                                    </div>
-                            </div>
-            <div class="post-comments clearfix sep-top">
-                <h2>Comments</h2>
-
-                @Html.Partial("_CommentTree", Model)
-                
-                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" data-groupid="@Model.post.GroupGroupId" data-parentid="@Model.post.PostId" class="btn btn-primary btn-block">Reply!</button>
                     </div>
                 </div>
-                        </div>
+                <div class="post-comments clearfix sep-top">
+                    <h2>Comments</h2>
+
+                    @Html.Partial("_CommentTree", Model)
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section postcomment{
     <script>
         var MVC = (function () {
