@@ -98,7 +98,7 @@ $(document).ready(function () {
        }).done(function (result) {
             var errors = "";
             $('.validation-summary-errors ul li', result).each(function(){
-            errors += $(this).text() + "<br>";
+                	errors += $(this).text() + "<br>";
             });
             if(errors.length > 0) {
                 toastr["error"](errors);
