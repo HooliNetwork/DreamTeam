@@ -275,10 +275,12 @@ namespace Hooli.Controllers
                     if (latestPosts && following != null)
                     {
                         post = await GetLatestPost(following);
+                        return PartialView(post);
                     }
                     else if (following != null)
                     {
-                        post = await GetPopularGroupPosts(following);
+                        post = await GetPopularPosts(following);
+                        return PartialView(post);
                     }
                     else
                     {
@@ -293,10 +295,12 @@ namespace Hooli.Controllers
                     if (latestPosts && following != null)
                     {
                         post = await GetLatestPostProfile(following);
+                        return PartialView(post);
                     }
                     else if (following != null)
                     {
                         post = await GetPopularPostsProfile(following);
+                        return PartialView(post);
                     }
                     else
                     {

@@ -1,100 +1,52 @@
 $(document).ready(function () {
-    //TODO: add a check so that if a person clicks a previously selected button classes aren't added
-    // People filtering button
-    $(".posts-type button:nth-child(1)").click(function () {
-        $(".posts-type button:nth-child(1)").removeClass("btn-option").addClass("btn-selected");
-        $(".posts-type button:nth-child(2)").removeClass("btn-selected").addClass("btn-option");
+    $(".feed-control button").click(function(){
+        var button = $(this);
+        var feedControl = $(".feed-control");
+        if(button.hasClass("btn-option")) {
+            button.parent().children().eq(0).toggleClass("btn-option");
+            button.parent().children().eq(1).toggleClass("btn-option");
+            var fPeople = !$("span:contains('People')", feedControl).parent().hasClass("btn-option");
+            var fGroups = !$("span:contains('Groups')", feedControl).parent().hasClass("btn-option");
+            var fNew = !$("span:contains('New')", feedControl).parent().hasClass("btn-option");
+            var fTop = !$("span:contains('Top')", feedControl).parent().hasClass("btn-option");
+            if (fPeople && fNew) {
+                console.log("New in People");
+                filterFeedAjax(false,true);
+            } else if (fPeople && fTop) {
+                console.log("Top in People");
+                filterFeedAjax(false,false);
+            } else if (fGroups && fNew) {
+                console.log("New in Groups");
+                filterFeedAjax(true,true);
+            } else {
+                console.log("Top in Groups");
+                filterFeedAjax(true,false);
+            }
+        }
+    });
+    
+    var filterFeedAjax = function (filter1, filter2) {
         var uri = "/Home/Sort/";
-        var group = false;
-        var latestPosts = true;
         var groupId = "Front";
         $.ajax({
             async: true,
             type: "POST",
             url: uri,
-            data: { 'group': group, 'latestPosts': latestPosts, 'groupId': groupId },
+            data: {'group': filter1, 'latestPosts': filter2, 'groupId': groupId},
             success: function (result) {
-                replaceFeed(result);
-            }
-    });
-    });
-    // Groups filtering button
-    $(".posts-type button:nth-child(2)").click(function () {
-        $(".posts-type button:nth-child(1)").removeClass("btn-selected").addClass("btn-option");
-        $(".posts-type button:nth-child(2)").removeClass("btn-option").addClass("btn-selected");
-        var uri = "/Home/Sort/";
-        var group = true;
-        var latestPosts = true;
-        var groupId = "Front";
-        $.ajax({
-            async: true,
-            type: "POST",
-            url: uri,
-            data: { 'group': group, 'latestPosts': latestPosts, 'groupId': groupId },
-            success: function (result) {
-                replaceFeed(result);
-            }
-    });
-
-    });
-    // New posts filtering button
-    $(".posts-orderby button:nth-child(1)").click(function() {
-        $(".posts-orderby button:nth-child(1)").removeClass("btn-option").addClass("btn-selected");
-        $(".posts-orderby button:nth-child(2)").removeClass("btn-selected").addClass("btn-option");
-        var uri = "/Home/Sort/";
-        var group = false;
-        var latestPosts = false;
-        var groupId = "Front";
-        $.ajax({
-            async: true,
-            type: "POST",
-            url: uri,
-            data: { 'group': group, 'latestPosts': latestPosts, 'groupId': groupId },
-            success: function (result) {
-                replaceFeed(result);
-            }
-    });
-
-    });
-    // Top posts filtering button
-    $(".posts-orderby button:nth-child(2)").click(function () {
-        $(".posts-orderby button:nth-child(1)").removeClass("btn-selected").addClass("btn-option");
-        $(".posts-orderby button:nth-child(2)").removeClass("btn-option").addClass("btn-selected");
-        var uri = "/Home/Sort/";
-        var group = true;
-        var latestPosts = false;
-        var groupId = "Front";
-        $.ajax({
-            async: true,
-            type: "POST",
-            url: uri,
-            data: { 'group': group, 'latestPosts': latestPosts, 'groupId': groupId },
-            success: function (result) {
-                replaceFeed(result);
-            }
+                filterReplaceFeed(result);
+            }  
         });
-    });
-
-    var replaceFeed = function (result) {
-        $('#feed-content').empty().append(result);
+    };
+    
+    var filterReplaceFeed = function (html) {
+        console.log("Inside HTML replacer");
+        $('#feed-content').empty().append(html);
     };
 
     $(".create-post-button").click(function(){
         $(".new-post-container").toggleClass('open');
     });
-    
-    $(".search-filters button").click(function() {
-        $(this).siblings().not(".btn-option").toggleClass("btn-option");
-        $(this).toggleClass("btn-option");
-        var filter = $(this).attr("name");
-
-        if(filter === "s_all") {
-            $(".search-results").show(100);
-        } else {
-            $(".search-results").not('.' + filter).hide(100);            
-            $('.' + filter).show(100);
-        }
-    })
 
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
@@ -114,7 +66,6 @@ $(document).ready(function () {
         $(".reply-to-post").toggleClass('open');
     });
 
-    // Search results filter
     $(".search-filters button").click(function () {
         $(this).siblings().not(".btn-option").toggleClass("btn-option");
         $(this).toggleClass("btn-option");
