@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Hooli.Models;
 
-namespace Hooli.Models
+namespace Hooli.Services
 {
-    public class PostCache
+    public class PostService
     {
         private Lazy<Dictionary<int, Post>> byKey;
         private Lazy<Post[]> topLevel;
 
-        public PostCache(HooliContext context)
+        public PostService(HooliContext context)
         {
             byKey = new Lazy<Dictionary<int, Post>>(() => context.Posts.Include(u => u.User)
-                                                                       .Include(g => g.Group)
-                                                                       .ToDictionary(c => c.PostId));
+                .Include(g => g.Group).ToDictionary(c => c.PostId));
             topLevel = new Lazy<Post[]>(() => byKey.Value.Values.Where(c => c.ParentPostId == null).ToArray());
         }
 

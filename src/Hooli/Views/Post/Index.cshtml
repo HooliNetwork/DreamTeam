@@ -151,140 +151,151 @@
                         @Model.post.Text               
                  </p>
             </div>
+            <button type="button" class="btn btn-primary btn-block" id="button-comment-to-post">
+                <span>Leave a comment</span>
+            </button>
+            <div class="reply-to-post margin-top slider">
+                    <div class="form-group margin-b-no">
+                        <textarea class="form-control full-width" id="post_body" placeholder="Type your reply."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="button"data-GroupId="@Model.post.GroupGroupId" data-ParentId="@Model.post.PostId" class="btn btn-primary btn-block">Reply!</button>
+                    </div>
+            </div>
             <div class="post-comments clearfix sep-top">
                 <h2>Comments</h2>
 
                 @Html.Partial("_CommentTree", Model)
-                <div class="parent-comment-container">
-                    <div class="comment-container">
-                        <a href="#">
-                            <div class="info-photo comment" style="background: url(../images/people/people_hordur.jpg) center / cover;"></div>
-                        </a>
-                        <div class="comment-body">
-                            <p class="comment-info">
-                                <span class="post-author">Posted by <a href="#"><strong>Hörður Ragnarsson</strong></a></span>
-                                <span class="post-date"> on <strong>9. mars 2015 18:48</strong>.</span>
-                            </p>
-                            <p class="comment-text">
-                                Ohh, I like Microsoft very too, many micro very soft!
-                            </p>
-                            <button type="button" class="btn btn-link btn-xs btn-hooli-link">Reply</button>
-                            <div class="reply-to-comment">
-                                <form>
-                                    <div class="form-group margin-b-no">
-                                        <textarea class="form-control input-sm full-width margin-b-no" id="post_body" placeholder="Type your reply."></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-primary btn-sm btn-block">Reply!</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="parent-comment-container">
-                    <div class="comment-container">
-                        <a href="#">
-                            <div class="info-photo comment" style="background: url(../images/people/people_kari.jpg) center / cover;"></div>
-                        </a>
-                        <div class="comment-body">
-                            <p class="comment-info">
-                                <span class="post-author">Posted by <a href="#"><strong>Kári Mímisson</strong></a></span>
-                                <span class="post-date"> on <strong>9. mars 2015 18:48</strong>.</span>
-                            </p>
-                            <p class="comment-text">
-                                Wow, that post was awesome, keep it up Johann!
-                            </p>
-                            <button type="button" class="btn btn-link btn-xs btn-hooli-link">Reply</button>
-                        </div>
-                    </div>
-                    <div class="parent-comment-container">
-                        <div class="comment-container">
-                            <a href="#">
-                                <div class="info-photo comment" style="background: url(../images/people/people_musk.jpg) center / cover;"></div>
-                            </a>
-                            <div class="comment-body">
-                                <p class="comment-info">
-                                    <span class="post-author">Posted by <a href="#"><strong>Elon Musk</strong></a></span>
-                                    <span class="post-date"> on <strong>9. mars 2015 18:48</strong>.</span>
-                                </p>
-                                <p class="comment-text">
-                                    I totally agree with you Kári!
-                                </p>
-                                <button type="button" class="btn btn-link btn-xs btn-hooli-link">Reply</button>
-                            </div>
-                        </div>
-                        <div class="parent-comment-container">
-                            <div class="comment-container">
-                                <a href="#">
-                                    <div class="info-photo comment" style="background: url(../images/people/people_hordur.jpg) center / cover;"></div>
-                                </a>
-                                <div class="comment-body">
-                                    <p class="comment-info">
-                                        <span class="post-author">Posted by <a href="#"><strong>Hörður Ragnarsson</strong></a></span>
-                                        <span class="post-date"> on <strong>9. mars 2015 18:48</strong>.</span>
-                                    </p>
-                                    <p class="comment-text">
-                                        Dude, when is the new tesla coming out??!
-                                    </p>
-                                    <button type="button" class="btn btn-link btn-xs btn-hooli-link">Reply</button>
-                                </div>
-                            </div>
-                            <div class="parent-comment-container">
-                                <div class="comment-container">
-                                    <a href="#">
-                                        <div class="info-photo comment" style="background: url(../images/people/people_musk.jpg) center / cover;"></div>
-                                    </a>
-                                    <div class="comment-body">
-                                        <p class="comment-info">
-                                            <span class="post-author">Posted by <a href="#"><strong>Elon Musk</strong></a></span>
-                                            <span class="post-date"> on <strong>9. mars 2015 18:48</strong>.</span>
-                                        </p>
-                                        <p class="comment-text">
-                                            Soon Hörður, very soon ;)
-                                        </p>
-                                        <button type="button" class="btn btn-link btn-xs btn-hooli-link">Reply</button>
-                                    </div>
-                                </div>
-                                <div class="parent-comment-container">
-                                    <div class="comment-container">
-                                        <a href="#">
-                                            <div class="info-photo comment" style="background: url(../images/people/people_hordur.jpg) center / cover;"></div>
-                                        </a>
-                                        <div class="comment-body">
-                                            <p class="comment-info">
-                                                <span class="post-author">Posted by <a href="#"><strong>Hörður Ragnarsson</strong></a></span>
-                                                <span class="post-date"> on <strong>9. mars 2015 18:48</strong>.</span>
-                                            </p>
-                                            <p class="comment-text">
-                                                You devious...
-                                            </p>
-                                            <button type="button" class="btn btn-link btn-xs btn-hooli-link">Reply</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="parent-comment-container">
-                        <div class="comment-container">
-                            <a href="#">
-                                <div class="info-photo comment" style="background: url(../images/people/people_statham.jpg) center / cover;"></div>
-                            </a>
-                            <div class="comment-body">
-                                <p class="comment-info">
-                                    <span class="post-author">Posted by <a href="#"><strong>Jason Statham</strong></a></span>
-                                    <span class="post-date"> on <strong>9. mars 2015 18:48</strong>.</span>
-                                </p>
-                                <p class="comment-text">
-                                    Hey Kári, up for a double cheese at Mickey Dees?
-                                </p>
-                                <button type="button" class="btn btn-link btn-xs btn-hooli-link">Reply</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
         </div>
     </div>
 </div>
+@section postcomment{
+    <script>
+        var MVC = (function () {
+            // Takes the data which needs to be converted to form-url encoded format understadable by MVC.
+            // This does not depend on jQuery. Can be used independently.
+            var _stringify = function (data) {
+                // This holds the stringified result.
+                var result = "";
+
+                if (typeof data !== "object") {
+                    return result;
+                }
+
+                for (var element in data) {
+                    if (data.hasOwnProperty(element)) {
+                        result += process(element, data[element]);
+                    }
+                }
+
+                // An '&' is appended at the end. Removing it.
+                return result.substring(0, result.length - 1);
+            }
+
+            function process(key, value, prefix) {
+                // Ignore functions.
+                if (typeof value === "function") {
+                    return;
+                }
+
+                if (Object.prototype.toString.call(value) === '[object Array]') {
+                    var result = "";
+                    for (var i = 0; i < value.length; i++) {
+                        var tempPrefix = (prefix || key) + "[" + i + "]";
+                        result += process(key, value[i], tempPrefix);
+                    }
+
+                    return result;
+                }
+                else if (typeof value === "object") {
+                    var result = "";
+                    for (var prop in value) {
+                        // This is to prevent looping through inherited proeprties.
+                        if (value.hasOwnProperty(prop)) {
+                            var tempPrefix = (prefix || key) + "." + prop;
+                            result += process(prop, value[prop], tempPrefix);
+                        }
+                    }
+
+                    return result;
+                }
+                else {
+                    return encodeURIComponent(prefix || key) + "=" + encodeURIComponent(value) + "&";
+                }
+            }
+
+            return {
+                // Converts a Json object into MVC understandable format
+                // when submitted as form-url-encoded data.
+                stringify: _stringify
+            };
+        })()
+            $(".reply-to-comment button").click(function () {
+                var currBtn = $(this);
+                var parent = currBtn.parents().eq(4);
+                var data = {
+                    Name: 'PostData',
+                    Text: currBtn.parent().parent().find("textarea").val(),
+                    ParentId: currBtn.attr('data-ParentId'),
+                    GroupId: currBtn.attr('data-GroupId')
+                };
+
+                $.post('@Url.Action("CreateComment", "Post")', MVC.stringify(data))
+                    .done(function (result) {
+                        if (result) {
+                            $.get("/htmlTemplates/reply.html")
+                                .success(function (data) {
+                                    $(parent).append(data);
+                                    var newComment = $(".parent-comment-container", parent).last();
+                                    $(".comment-container > a", newComment).attr('href', '/Profile/Index/' + result.Username);
+                                    $('.comment-container .info-photo', newComment).css('background', 'url(' + result.UserImage + ') center / cover');
+                                    $('.post-author a', newComment).attr('href', '/Profile/Index/' + result.Username);
+                                    $('.post-author strong', newComment).text(result.FullName);
+                                    $('.post-date strong', newComment).text(result.DateCreated);
+                                    $('.comment-text', newComment).text(result.Text);
+                                    $('.form-group button', newComment).attr('data-parentid', result.ParentId);
+                                    $('.form-group button', newComment).attr('data-groupid', result.GroupId);
+                                    $(currBtn).parents().eq(1).toggleClass('open');
+                                    $(newComment).show();
+                                });
+                        } else {
+
+                        }
+                    });
+            });
+        $(".reply-to-post button").click(function () {
+            var currBtn = $(this);
+            var data = {
+                Name: 'PostData',
+                Text: currBtn.parent().parent().find("textarea").val(),
+                ParentId: currBtn.attr('data-ParentId'),
+                GroupId: currBtn.attr('data-GroupId')
+            };
+
+            $.post('@Url.Action("CreateComment", "Post")', MVC.stringify(data))
+                .done(function (result) {
+                    if (result) {
+                        $.get("/htmlTemplates/reply.html")
+                            .success(function (data) {
+                                $('.post-comments').append(data);
+                                var newComment = $('.post-comments .parent-comment-container:last');
+                                $(".comment-container > a", newComment).attr('href', '/Profile/Index/' + result.Username);
+                                $('.comment-container .info-photo', newComment).css('background', 'url(' + result.UserImage + ') center / cover');
+                                $('.post-author a', newComment).attr('href', '/Profile/Index/' + result.Username);
+                                $('.post-author strong', newComment).text(result.FullName);
+                                $('.post-date strong', newComment).text(result.DateCreated);
+                                $('.comment-text', newComment).text(result.Text);
+                                $('.form-group button', newComment).attr('data-parentid', result.ParentId);
+                                $('.form-group button', newComment).attr('data-groupid', result.GroupId);
+                                $(currBtn).parents().eq(1).toggleClass('open');
+                                $(newComment).show();
+                            });
+                    } else {
+
+                    }
+                });
+        });
+    </script>
+}

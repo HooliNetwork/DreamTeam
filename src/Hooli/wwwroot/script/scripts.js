@@ -44,6 +44,14 @@ $(document).ready(function () {
         $(".edit-info-container").toggleClass('open');
     });
 
+    $(".comment-body button").click(function () {
+        var parent = $(this).parent();
+        $(".reply-to-comment", parent).toggleClass('open');
+    });
+
+    $("#button-comment-to-post").click(function () {
+        $(".reply-to-post").toggleClass('open');
+    });
 
     // Search results filter
     $(".search-filters button").click(function () {
@@ -137,30 +145,9 @@ $(document).ready(function () {
             }
         });
     });
-    $(function () {
-        $('#personButton').click(function () {
-            var currBtn = $(this);
-            var data = {
-                PostId: currBtn.attr('data-PostId'),
-                Address: currBtn.attr('data-PostId'),
-                Text: currBtn.attr('data-PostId'),
-                UserName: currBtn.attr('data-PostId'),
-                UserId: currBtn.attr('data-PostId'),
-                DateCreate: $.now(),
-                ParentId: currBtn.attr('data-PostId')
-                };
 
-            $.post('@Url.Action("IsValidPerson", "FormUrlEncoded")', MVC.stringify(data))
-                .done(function (result) {
-                    if (result) {
-                        $("#validPerson").html("The submitted data belongs to a valid person.");
-                    }
-                    else {
-                        $("#validPerson").html("The submitted data is invalid.");
-                    }
-                });
-        });
-    });
+
+   
 
     
 });

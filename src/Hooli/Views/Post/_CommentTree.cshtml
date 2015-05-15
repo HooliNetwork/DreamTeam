@@ -4,31 +4,38 @@
 }
 @if (Model.Children != null && Model.Children.Where(s => s.ParentPostId == Model.Seed).Any())
 {
-    <div class="parent-comment-container">
         @foreach (var node in Model.Children)
         {
             if (node.ParentPostId == Model.Seed)
             {
-
-                <div class="comment-container">
-                    <a href="#">
-                        <div class="info-photo comment" style="background: url(@node.User.ProfilePicture) center / cover;"></div>
-                    </a>
-                    <div class="comment-body">
-                        <p class="comment-info">
-                            <span class="post-author">Posted by <a href="#"><strong>@node.User.FirstName @node.User.LastName</strong></a></span>
-                            <span class="post-date"> on <strong>@node.DateCreated</strong>.</span>
-                        </p>
-                        <p class="comment-text">
-                            @node.Text
-                        </p>
-                        <button data-ParentId="@node.ParentPostId" type="button" class="btn btn-link btn-xs btn-hooli-link">Reply</button>
+                <div class="parent-comment-container">
+                    <div class="comment-container">
+                        <a href="#">
+                            <div class="info-photo comment" style="background: url(@node.User.ProfilePicture) center / cover;"></div>
+                        </a>
+                        <div class="comment-body">
+                            <p class="comment-info">
+                                <span class="post-author">Posted by <a href="#"><strong>@node.User.FirstName @node.User.LastName</strong></a></span>
+                                <span class="post-date"> on <strong>@node.DateCreated</strong>.</span>
+                            </p>
+                            <p class="comment-text">
+                                @node.Text
+                            </p>
+                            <button type="button" class="btn btn-link btn-xs btn-hooli-link">Reply</button>
+                            <div class="reply-to-comment slider">
+                                <div class="form-group margin-b-no">
+                                    <textarea class="form-control input-sm full-width margin-b-no" id="post_body" placeholder="Type your reply."></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <button data-parentid="@node.PostId" data-groupid="@node.GroupGroupId" type="button" class="btn btn-primary btn-sm btn-block">Reply!</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    @Html.Partial("_CommentTree", new Hooli.Models.PostViewModel { Seed = node.PostId, Children = node.Children })
                 </div>
-                Hooli.Models.PostViewModel inner = new Hooli.Models.PostViewModel { Seed = node.PostId, Children = node.Children };
-                @Html.Partial("_CommentTree", inner)
+
             }
         }
-    </div>
 
 }

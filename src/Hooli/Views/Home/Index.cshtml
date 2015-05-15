@@ -1,5 +1,5 @@
-﻿@using Hooli.Models
-@model List<Post>
+﻿@using Hooli.ViewModels
+@model HomeViewModel
 @{
     ViewBag.Title = "Home Page";
     bool groupView = false;
@@ -9,62 +9,84 @@
 <div class="row">
     <div class="col-sm-4">
         <div class="row">
-            <div class="content-box">
-                <h1>Groups</h1>
-                <div class="container image-wall">
-                    <div class="row">
-                        <div class="col-min-padding col-xs-8 col-sm-12 col-md-8">
-                            <div class="image-box" style="background: url(../../images/groups/group_cheese.jpg) center;"></div>
-                        </div>
-                        <div class="col-min-padding col-xs-4 col-sm-6 col-md-4">
-                            <div class="image-box" style="background: url(../../images/groups/group_movies.jpg) center;"></div>
-                        </div>
-                        <div class="col-min-padding col-xs-4 col-sm-6 col-md-4">
-                            <div class="image-box" style="background: url(../../images/groups/group_programming.jpg) center;"></div>
-                        </div>
-                        <div class="col-min-padding col-xs-8 col-sm-12 col-md-8">
-                            <div class="image-box" style="background: url(../../images/groups/group_cycling.jpg) center;"></div>
-                        </div>
-                        <div class="col-min-padding col-xs-8 col-sm-6 col-md-8">
-                            <div class="image-box" style="background: url(../../images/groups/group_silicon.jpg) center;"></div>
-                        </div>
-                        <div class="col-min-padding col-xs-4 col-sm-6 col-md-4">
-                            <div class="image-box" style="background: url(../../images/groups/group_bitcoin.jpg) center;"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="text-right">
-                    <a asp-controller="Group" asp-action="Index">See all followed groups</a>
-                </div>
-            </div>
-            <div class="content-box">
-                <h1>People</h1>
-                <div class="container image-wall">
-                    <div class="row">
-                        <div class="col-min-padding col-xs-8 col-sm-12 col-md-8">
-                            <div class="image-box"></div>
-                        </div>
-                        <div class="col-min-padding col-xs-4 col-sm-6 col-md-4">
-                            <div class="image-box"></div>
-                        </div>
-                        <div class="col-min-padding col-xs-4 col-sm-6 col-md-4">
-                            <div class="image-box"></div>
-                        </div>
-                        <div class="col-min-padding col-xs-8 col-sm-12 col-md-8">
-                            <div class="image-box"></div>
-                        </div>
-                        <div class="col-min-padding col-xs-8 col-sm-6 col-md-8">
-                            <div class="image-box"></div>
-                        </div>
-                        <div class="col-min-padding col-xs-4 col-sm-6 col-md-4">
-                            <div class="image-box"></div>
+            @if (Model.Groups.Count() >= 6)
+            {
+
+                <div class="content-box">
+                @if (Model.InterestingPeople)
+                {
+                        <h1>Groups you might find intesting</h1>
+                    }
+                    else
+                    {
+                        <h1>Groups</h1>
+                    }
+                    <div class="container image-wall">
+                        <div class="row">
+                            <div class="col-min-padding col-xs-8 col-sm-12 col-md-8">
+                                <div class="image-box" style="background: url(@Model.Groups[0].Image) center / cover;"></div>
+                            </div>
+                            <div class="col-min-padding col-xs-4 col-sm-6 col-md-4">
+                                <div class="image-box" style="background: url(@Model.Groups[1].Image) center / cover;"></div>
+                            </div>
+                            <div class="col-min-padding col-xs-4 col-sm-6 col-md-4">
+                                <div class="image-box" style="background: url(@Model.Groups[2].Image) center / cover;"></div>
+                            </div>
+                            <div class="col-min-padding col-xs-8 col-sm-12 col-md-8">
+                                <div class="image-box" style="background: url(@Model.Groups[3].Image) center / cover;"></div>
+                            </div>
+                            <div class="col-min-padding col-xs-8 col-sm-6 col-md-8">
+                                <div class="image-box" style="background: url(@Model.Groups[4].Image) center / cover;"></div>
+                            </div>
+                            <div class="col-min-padding col-xs-4 col-sm-6 col-md-4">
+                                <div class="image-box" style="background: url(@Model.Groups[5].Image) center / cover;"></div>
+                            </div>
                         </div>
                     </div>
+                    <div class="text-right">
+                        <a asp-controller="Group" asp-action="Index">See all groups you are following</a>
+                    </div>
                 </div>
-                <div class="text-right">
-                    <a asp-controller="People" asp-action="Index">See all followed people</a>
+            }
+            @if (Model.People.Count() >= 6)
+            {
+
+                <div class="content-box">
+                    @if (Model.InterestingPeople)
+                {
+                        <h1>People you might find intesting</h1>
+                    }
+                    else
+                    {
+                        <h1>People</h1>
+                    }
+                    <div class="container image-wall">
+                        <div class="row">
+                            <div class="col-min-padding col-xs-8 col-sm-12 col-md-8">
+                                <div class="image-box" style="background: url(@Model.People[0].ProfilePicture) center / cover;"></div>
+                            </div>
+                            <div class="col-min-padding col-xs-4 col-sm-6 col-md-4">
+                                <div class="image-box" style="background: url(@Model.People[1].ProfilePicture) center / cover;"></div>
+                            </div>
+                            <div class="col-min-padding col-xs-4 col-sm-6 col-md-4">
+                                <div class="image-box" style="background: url(@Model.People[2].ProfilePicture) center / cover;"></div>
+                            </div>
+                            <div class="col-min-padding col-xs-8 col-sm-12 col-md-8">
+                                <div class="image-box" style="background: url(@Model.People[3].ProfilePicture) center / cover;"></div>
+                            </div>
+                            <div class="col-min-padding col-xs-8 col-sm-6 col-md-8">
+                                <div class="image-box" style="background: url(@Model.People[4].ProfilePicture) center / cover;"></div>
+                            </div>
+                            <div class="col-min-padding col-xs-4 col-sm-6 col-md-4">
+                                <div class="image-box" style="background: url(@Model.People[5].ProfilePicture) center / cover;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <a asp-controller="People" asp-action="Index">See all people you are following</a>
+                    </div>
                 </div>
-            </div>
+            }
         </div>
     </div>
 
@@ -94,3 +116,39 @@
             </div>
         </div>
 </div>
+@section feed{
+    <script src="~/lib/signalr/jquery.signalR.min.js"></script>
+    <script src="~/signalr/hubs" type="text/javascript"></script>
+    <script>
+
+    @*Display the new posts to feed *@
+        $(function () {
+            //$.connection.hub.logging = true;
+            var feedHub = $.connection.Feed;
+            feedHub.client.feed = function (post) {
+                var htmlTemplate;
+                $.get("/htmlTemplates/post.html")
+                .success(function (data) {
+                    htmlTemplate = data;
+                    $("#feed-content").prepend(htmlTemplate);
+                    $(".post-rating").first().attr("data-postid", post.PostId);
+                    $(".post-rating-count").first().text(post.Points);
+                    $(".post-body > a").first().attr("href", "/Post/Index/" + post.PostId);
+                    $(".post-body h2").first().text(post.Title);
+                    $(".post-author > a > strong").first().text(post.FullName);
+                    $(".post-author > a").first().attr("href", "/Profile/Index/" + post.Username);
+                    $(".post-date > strong").first().text(post.DateCreated);
+                    $(".post").first().show(100);
+                    $("a.image-link").first().attr("href", post.Image);
+                    $("a > .photo-feed").first().css("background", "url(" + post.Image + ") center / cover");
+                });
+            };
+            $.connection.hub.start().done(function () {
+                console.log('hub connection open');
+            });
+        });
+
+    </script>
+}
+
+

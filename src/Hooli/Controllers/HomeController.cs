@@ -11,6 +11,7 @@ using System.Security.Claims;
 using Microsoft.Data.Entity;
 using Microsoft.AspNet.Authorization;
 using System.Dynamic;
+using Hooli.ViewModels;
 
 namespace Hooli.Controllers
 {
@@ -29,19 +30,27 @@ namespace Hooli.Controllers
         // GET: /Home/
         public async Task<IActionResult> Index(string sortOrder)
         {
-            // Get most popular Posts, from following users
-            //var Posts = await Cache.GetOrSet("top", async context =>
-            //{
-            //    //Refresh it every 10 minutes. Let this be the last item to be removed by cache if cache GC kicks in.
-            //    context.SetAbsoluteExpiration(TimeSpan.FromMinutes(10));
-            //    context.SetPriority(CachePreservationPriority.High);
-            //    return await GetMostRecentPosts(10);
-            //});
-            //var user = await GetCurrentUserAsync();
-            //user.Followers = DbContext.FollowRelations.Where(f => f.FollowerId == user.Id).ToList();
-            //user.Following = DbContext.FollowRelations.Where(f => f.FollowingId == user.Id).ToList();
-            
-            return View();
+            var people = await GetFollowedPeople(6);
+            var groups = await GetFollowedGroups(6);
+            var interestingGroups = false;
+            var interestingPeople = false;
+            if (groups.Count() < 6)
+            {
+                groups = await GetOtherGroups(6);
+                interestingGroups = true;
+            }
+            if (people.Count() < 6)
+            {
+                people = await GetOtherPeople(6);
+                interestingPeople = true;
+            }
+            return View(new HomeViewModel {
+                Groups = groups,
+                People = people,
+                InterestingPeople = interestingPeople,
+                InterestingGroups = interestingGroups}
+            );
+
         }
 
         //Can be removed and handled when HandleError filter is implemented
@@ -103,15 +112,57 @@ namespace Hooli.Controllers
                 .ToListAsync();
         }
 
-        private async Task<List<ApplicationUser>> GetUsers(int count)
+        private async Task<List<ApplicationUser>> GetFollowedPeople(int count)
         {
             // Group the order details by Post and return
             // the Posts with the highest count of Upvotes
+            var following = await DbContext.FollowRelations
+                .Where(u => u.FollowerId == Context.User.GetUserId())
+                .Select(u => u.FollowingId).ToListAsync();
 
             return await DbContext.Users
-                .OrderByDescending(a => a.LastName)
+
+                .Where(u => following.Contains(u.Id))
                 .Take(count)
-                .Include(u => u.Posts)
+                .ToListAsync();
+        }
+        private async Task<List<Group>> GetFollowedGroups(int count)
+        {
+            // Group the order details by Post and return
+            // the Posts with the highest count of Upvotes
+            var following = await DbContext.GroupMembers
+                .Where(u => u.UserId == Context.User.GetUserId())
+                .Select(u => u.GroupId).ToListAsync();
+
+            return await DbContext.Groups
+                .Where(u => following.Contains(u.GroupId))
+                .Take(count)
+                .ToListAsync();
+        }
+        private async Task<List<ApplicationUser>> GetOtherPeople(int count)
+        {
+            // Group the order details by Post and return
+            // the Posts with the highest count of Upvotes
+            var following = await DbContext.FollowRelations
+                .Where(u => u.FollowerId == Context.User.GetUserId())
+                .Select(u => u.FollowingId).ToListAsync();
+
+            return await DbContext.Users
+                .Where(u => !following.Contains(u.Id))
+                .Take(count)
+                .ToListAsync();
+        }
+        private async Task<List<Group>> GetOtherGroups(int count)
+        {
+            // Group the order details by Post and return
+            // the Posts with the highest count of Upvotes
+            var following = await DbContext.GroupMembers
+                .Where(u => u.UserId == Context.User.GetUserId())
+                .Select(u => u.GroupId).ToListAsync();
+
+            return await DbContext.Groups
+                .Where(u => !following.Contains(u.GroupId))
+                .Take(count)
                 .ToListAsync();
         }
 
