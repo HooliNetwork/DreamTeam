@@ -41,9 +41,19 @@ p {
     height: 40px;
 }
 
+#navbar-logo-large:hover {
+    filter: brightness(1.1) contrast(1.2);
+    -webkit-filter: brightness(1.1) contrast(1.2);
+}
+
 #navbar-logo-small {
     height: 40px;
     display: none;
+}
+
+#navbar-logo-small:hover {
+    filter: brightness(1.1) contrast(1.2);
+    -webkit-filter: brightness(1.1) contrast(1.2);
 }
 
 .navbar-logout-button {
@@ -65,9 +75,9 @@ p {
     height: 110px;
     position: absolute;
     -webkit-transform-style: preserve-3d;
-    -webkit-transition: transform 1s;
+    -webkit-transition: transform .5s;
     transform-style: preserve-3d;
-    transition: transform 1s;
+    transition: transform .5s;
 }
 #navbar-profile-photo figure {
     display: block;
@@ -202,6 +212,7 @@ p {
     margin-bottom: 10px;
 }
 
+
 .posts-orderby {
     position: absolute;
     top: 15px;
@@ -276,6 +287,7 @@ p {
     margin-bottom: 20px;
     color: #FFF;
     text-shadow: 0px 1px 5px #555;
+    overflow: hidden;
 }
 
 a>.info-photo:hover {
@@ -311,6 +323,16 @@ a>.info-photo:hover {
     position: absolute;
     bottom: 0;
     left: 10px;
+}
+
+.interesting h1 {
+    font-size: 1.1em;
+    line-height: 1.0em;
+    overflow: hidden;
+}
+
+.margin-b-min {
+    margin-bottom: 5px;
 }
 
 .info-info p {

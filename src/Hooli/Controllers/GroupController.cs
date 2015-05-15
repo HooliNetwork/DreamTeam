@@ -43,6 +43,10 @@ namespace Hooli.Controllers
                 {
                     group.Image = await storage.GetUri("postimages", Guid.NewGuid().ToString(), file);
                 }
+                else
+                {
+                    group.Image = "https://hoolidata.blob.core.windows.net/postimages/0efc9043-9fb2-4302-aa52-266c8149d866";
+                }
 
                 DbContext.Groups.Add(group);
 

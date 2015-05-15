@@ -89,6 +89,21 @@ $(document).ready(function () {
     
     $('.image-link').magnificPopup({type:'image'});
     
+    $('body').on('submit', '#profile_change_password', function() {
+       var theForm = $(this);
+       $.ajax({
+           type: "POST",
+           url: "/Manage/ChangePassword/",
+           data: theForm.serialize(),
+       }).done(function (result) {
+           $('.edit-info-container').toggleClass('open');
+           toastr["success"]("Password updated!");
+       }).fail(function (error) {
+           alert("There was an error posting data to the server");
+       });
+       return false;
+    });
+    
     $("body").on('click', ".btn-follow", function () {
         var currBtn = $(this);
         var btnText = $("span", this);

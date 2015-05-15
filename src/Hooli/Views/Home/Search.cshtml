@@ -113,6 +113,11 @@
                             }
                         </div>
                     </div>
+                    <script>
+                        window.onload = function() {
+                            $(".message-no-match").hide();
+                        }
+                    </script>
                 }
                 @foreach (var g in Model.Groups)
                 {
@@ -150,7 +155,13 @@
                             }
                         </div>
                     </div>
+                    <script>
+                        window.onload = function() {
+                            $(".message-no-match").hide();
+                        }
+                    </script>
                 }
+                <h2 class="message-no-match">There was no match to your search</h2>
             </div>
         </div>
     </div>

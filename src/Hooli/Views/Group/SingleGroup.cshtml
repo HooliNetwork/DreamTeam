@@ -49,13 +49,20 @@
     <div class="col-md-8">
         <div class="content-box">
             <h1>Group feed</h1>
-
-            <div class="posts-orderby">
-                <button type="button" class="btn btn-primary btn-2way btn-option">
+            <div class="posts-orderby feed-control">
+                <button type="button" class="btn btn-primary btn-2way">
                     <span>New</span>
                 </button>
-                <button type="button" class="btn btn-primary btn-2way btn-selected">
+                <button type="button" class="btn btn-primary btn-2way btn-option">
                     <span>Top</span>
+                </button>
+            </div>
+            <div class="posts-type feed-control" style="display:none;">
+                <button type="button" class="btn btn-primary btn-2way btn-option">
+                    <span>People</span>
+                </button>
+                <button type="button" class="btn btn-primary btn-2way">
+                    <span>Groups</span>
                 </button>
             </div>
             @if (Model.Joined.Contains(Model.group.GroupId))
@@ -67,7 +74,13 @@
                     @await Html.PartialAsync("_Create", ViewData["Post"])
                 </div>
             }
-            @await Component.InvokeAsync("Feed", true, true, Model.group.GroupId)
+            <div id="feed-content">
+                <div id="empty-feed-message-group" style="display:none">
+                    <p class="lead" style=" margin-bottom: 10px;">This group needs content!</p>
+                    <p>Try adding an interesting post to the group.</p>    
+                </div>
+                @await Component.InvokeAsync("Feed", true, true, Model.group.GroupId)
+            </div>
         </div>
     </div>
 
