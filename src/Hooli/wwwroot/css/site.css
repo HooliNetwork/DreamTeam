@@ -326,9 +326,13 @@ a>.info-photo:hover {
 }
 
 .interesting h1 {
-    font-size: 1.2em;
+    font-size: 1.1em;
     line-height: 1.0em;
     overflow: hidden;
+}
+
+.margin-b-min {
+    margin-bottom: 5px;
 }
 
 .info-info p {
