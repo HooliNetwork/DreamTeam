@@ -12,7 +12,6 @@
             <div class="content-box">
                 <h1>@ViewBag.Title.</h1>
                 <form asp-controller="Account" asp-action="Login" id="form-login" asp-route-returnurl="@ViewBag.ReturnUrl" method="post" class="form-horizontal" role="form">
-                    <h2>Log in </h2>
                     <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
                     <fieldset>
                         <input asp-for="Username" class="form-control full-width" id="username" name="username" placeholder="Your Username" autofocus="autofocus" required="required"/>
