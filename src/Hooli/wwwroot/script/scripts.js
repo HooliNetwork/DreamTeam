@@ -96,8 +96,9 @@ $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();
     });
     
-    $(".create-group-button").click(function () {
+    $(".edit-post-button").click(function () {
         $(".edit-info-container").toggleClass('open');
+        $(".post-information").toggleClass('open');
     });
 
     // Search results filter

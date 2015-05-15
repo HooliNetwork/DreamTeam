@@ -193,38 +193,38 @@ namespace Hooli.Controllers
             return Json(new { responseText = "Success!" });
         }
 
-        public ActionResult Edit(int id)
-        {
-            Console.WriteLine("id:" + id);
-            var post = DbContext.Posts.Single(p => p.PostId == id);
-            if (post == null)
-            {
-                return HttpNotFound();
-            }
-            Console.WriteLine("post: " + post.PostId + " " + post.Title + " " + post.Text);
-            return View(post);
-        }
+        //public ActionResult Edit(int id)
+        //{
+        //    Console.WriteLine("id:" + id);
+        //    var post = DbContext.Posts.Single(p => p.PostId == id);
+        //    if (post == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    Console.WriteLine("post: " + post.PostId + " " + post.Title + " " + post.Text);
+        //    return View(post);
+        //}
 
 
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Post post, CancellationToken requestAborted)
+        public async Task<PostData> Edit(PostData data)
         {
-
-
-            Console.WriteLine("post: " + post.PostId + " " + post.Title + " " + post.Text);
-
-
-            if (post != null)
+            var user = await GetCurrentUserAsync();
+            var post = await DbContext.Posts
+                        .SingleAsync(p => p.PostId == data.PostId);
+            if ((data.Title != null) && (data.Title.Length > 0))
             {
-                DbContext.Entry(post).State = EntityState.Modified;
-            await DbContext.SaveChangesAsync(requestAborted);
+                post.Title = data.Title;
+            }
+            if ((data.Text != null) && (data.Text.Length > 0))
+            {
+                post.Text = data.Text;
             }
 
-            return Redirect("/Post/Index/" + post.PostId);
+            await DbContext.SaveChangesAsync();
 
-
+            return data;
         }
 
         [HttpPost]

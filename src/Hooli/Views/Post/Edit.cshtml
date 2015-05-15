@@ -1,54 +1,35 @@
 ﻿@model Hooli.Models.PostViewModel
 
 <div class="row">
-    <div class="col-md-8">
-        <div class="content-box">
-            <div class="new-post">
-                <div class="new-post-container margin-top">
-                    <div class="new-post-container margin-top slider">
-                        <div class="form-horizontal" method="post" role="form">
+    <div class="new-post-container margin-top" >
+        <div class="edit-info-container margin-top slider">
+            <h2>Edit Post</h2>
+            <div class="form-horizontal" id="edit_post">
 
-                            <input type="hidden" asp-for="@Model.post.PostId" />
-                            <input type="hidden" asp-for="@Model.post.GroupGroupId" />
-                            <input type="hidden" asp-for="@Model.post.Points" />
-                            <input type="hidden" asp-for="@Model.post.UserId" />
-                            <input type="hidden" asp-for="@Model.post.ParentPostId" />
+                @*<input type="hidden" id="post_id" value="@Model.post.PostId" />
+                <input type="hidden" id="post_groupid" value="@Model.post.GroupGroupId" />
+                <input type="hidden" id="post_points" value="@Model.post.Points" />
+                <input type="hidden" id="post_userid" value="@Model.post.UserId" />
+                <input type="hidden" id="post_parentpostid" value="@Model.post.ParentPostId" />*@
 
-                            <div class="form-group">
-                                <label for="post_title" class="control-label col-sm-2">Title</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control full-width" id="post_title" value="@Model.post.Title" autofocus="autofocus" required="required" />
-                                </div>
-                            </div>
+                <div class="form-group">
+                    <label for="post_title" class="control-label col-sm-2">Title</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control full-width" id="post_title" value="@Model.post.Title" autofocus="autofocus" required="required" />
+                    </div>
+                </div>
 
-                            <div class="form-group">
-                                <label for="post_body" class="control-label col-sm-2">Text</label>
-                                <div class="col-sm-10">
-                                    <textarea class="form-control full-width" id="post_body" value="@Model.post.Text" required="required"></textarea>
-                                </div>
-                            </div>
+                <div class="form-group">
+                    <label for="post_body" class="control-label col-sm-2">Text</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control full-width" id="post_body" required="required">@Model.post.Text</textarea>
+                    </div>
+                </div>
 
-
-                            <div class="form-group">
-                                <label for="post_link" class="control-label col-sm-2">Image</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control full-width" id="post_link" value="@Model.post.Link" />
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="post_image" class="control-label col-sm-2">Image</label>
-                                <div class="col-md-10">
-                                    <input type="file" id="post_file" value="@Model.post.Image" name="file" />
-                                </div>
-                            </div>
-
-
-                            <div class="form-group">
-                                <div class="col-sm-offset-2 col-sm-10">
-                                    <button type="submit" class="btn btn-primary btn-block" id="edit-post">Edit!</button>
-                                </div>
-                            </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <div class="col-sm-12">
+                            <button type="button" data-postId="@Model.post.PostId" id="edit-button" class="btn btn-primary btn-block margin-top btn-save">Edit!</button>
                         </div>
                     </div>
                 </div>
@@ -58,97 +39,3 @@
 </div>
 
 
-
-    @section editPost{
-
-        <script>
-        // Copyright (c) Microsoft Open Technologies, Inc. All rights reserved.
-        // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
-
-        var MVC = (function () {
-            // Takes the data which needs to be converted to form-url encoded format understadable by MVC.
-            // This does not depend on jQuery. Can be used independently.
-            var _stringify = function (data) {
-                // This holds the stringified result.
-                var result = "";
-
-                if (typeof data !== "object")
-                {
-                    return result;
-                }
-
-                for (var element in data) {
-                    if (data.hasOwnProperty(element)) {
-                        result += process(element, data[element]);
-                    }
-                }
-
-                // An '&' is appended at the end. Removing it.
-                return result.substring(0, result.length - 1);
-            }
-
-            function process(key, value, prefix) {
-                // Ignore functions.
-                if (typeof value === "function") {
-                    return;
-                }
-
-                if (Object.prototype.toString.call(value) === '[object Array]') {
-                    var result = "";
-                    for (var i = 0; i < value.length; i++) {
-                        var tempPrefix = (prefix || key) + "[" + i + "]";
-                        result += process(key, value[i], tempPrefix);
-                    }
-
-                    return result;
-                }
-                else if (typeof value === "object") {
-                    var result = "";
-                    for (var prop in value) {
-                        // This is to prevent looping through inherited proeprties.
-                        if (value.hasOwnProperty(prop)) {
-                            var tempPrefix = (prefix || key) + "." + prop;
-                            result += process(prop, value[prop], tempPrefix);
-                        }
-                    }
-
-                    return result;
-                }
-                else {
-                    return encodeURIComponent(prefix || key) + "=" + encodeURIComponent(value) + "&";
-                }
-            }
-
-            return {
-                // Converts a Json object into MVC understandable format
-                // when submitted as form-url-encoded data.
-                stringify: _stringify
-            };
-        })()
-
-
-
-        $(function () {
-            $('#edit-post .btn-save').on('click', function () {
-                console.log("Inside the script !");
-                var data = {
-                    Name: 'Edit',
-                    Title: $('#post_title').val(),
-                    Text: $('#post_body').val()
-                };
-
-                $.post('@Url.Action("Edit", "Post")', MVC.stringify(data))
-                    .done(function (result) {
-                        if (result) {
-                            $('.new-post-container').toggleClass('open');
-                            $('#post_title').val(data.Title);
-                            $('#post_body').val(data.Text);
-                        }
-                        else {
-                            alert("The submitted data is invalid.");
-                        }
-                    });
-            });
-        });
-        </script>
-    }
