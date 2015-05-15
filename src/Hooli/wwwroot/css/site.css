@@ -257,6 +257,14 @@ p {
     font-size: 1.2em;
 }
 
+.vote:hover, .vote:active, .vote:focus, .vote.active, .open > .dropdown-toggle.vote {
+    color: #fd7e23;
+}
+
+.btn-link-option {
+    color: #333;
+}
+
 .post-rating-count {
     height: 20px;
     line-height: 30px;
