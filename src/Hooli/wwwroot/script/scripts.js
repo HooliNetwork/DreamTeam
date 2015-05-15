@@ -88,7 +88,7 @@ $(document).ready(function () {
     });
     
     $('.image-link').magnificPopup({type:'image'});
-    
+   
     $('body').on('submit', '#profile_change_password', function() {
        var theForm = $(this);
        $.ajax({
@@ -96,14 +96,22 @@ $(document).ready(function () {
            url: "/Manage/ChangePassword/",
            data: theForm.serialize(),
        }).done(function (result) {
-           $('.edit-info-container').toggleClass('open');
-           toastr["success"]("Password updated!");
+            var errors = "";
+            $('.validation-summary-errors ul li', result).each(function(){
+            errors += $(this).text() + "<br>";
+            });
+            if(errors.length > 0) {
+                toastr["error"](errors);
+            } else {
+                $('.edit-info-container').toggleClass('open');
+                toastr["success"]("Password updated!");   
+            }
        }).fail(function (error) {
            alert("There was an error posting data to the server");
        });
        return false;
     });
-    
+ 
     $("body").on('click', ".btn-follow", function () {
         var currBtn = $(this);
         var btnText = $("span", this);
