@@ -12,7 +12,7 @@
             @if (Model.Groups.Count() >= 6)
             {
 
-                <div class="content-box">
+                <div class="content-box hidden-xs">
                 @if (Model.InterestingGroups)
                 {
                         <h1>Groups you might find intesting</h1>
@@ -96,7 +96,7 @@
             @if (Model.People.Count() >= 6)
             {
 
-                <div class="content-box">
+                <div class="content-box hidden-xs">
                     @if (Model.InterestingPeople)
                 {
                         <h1>People you might find intesting</h1>
@@ -106,7 +106,18 @@
                         <h1>People</h1>
                     }
                     <div class="container image-wall">
-                        <div class="row">
+                        <div class="row following-info-container">
+                            <div class="info-photo-container col-min-padding col-xs-8 col-sm-12 col-md-8">
+                                <div class="info-container">
+                                    <a asp-controller="Profile" asp-action="Index" asp-route-id="@Model.People[0].Username">
+                                        <div class="info-photo image-box margin-bottom-sm" style="background: url(@Model.People[0].ProfilePicture) center / cover;">
+                                            <div class="info-photo-shade interesting">
+                                                <h1>@Model.People[0].FirstName @Model.People[0].LastName</h1>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
                             <div class="col-min-padding col-xs-8 col-sm-12 col-md-8">
                                 <div class="image-box" style="background: url(@Model.People[0].ProfilePicture) center / cover;"></div>
                             </div>
