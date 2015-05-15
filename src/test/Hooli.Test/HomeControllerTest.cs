@@ -26,41 +26,41 @@ namespace Hooli.Controllers
             _serviceProvider = services.BuildServiceProvider();
         }
 
-        //[Fact]
-        //public void Error_ReturnsErrorView()
-        //{
-        //    // Arrange
-        //    var controller = new HomeController();
-        //    var errorView = "~/Views/Shared/Error.cshtml";
+        [Fact]
+        public void Error_ReturnsErrorView()
+        {
+            // Arrange
+            var controller = new HomeController(null);
+            var errorView = "~/Views/Shared/Error.cshtml";
 
-        //    // Act
-        //    var result = controller.Error();
+            // Act
+            var result = controller.Error();
 
-        //    // Assert
-        //    var viewResult = Assert.IsType<ViewResult>(result);
+            // Assert
+            var viewResult = Assert.IsType<ViewResult>(result);
 
-        //    Assert.Equal(errorView, viewResult.ViewName);
-        //}
+            Assert.Equal(errorView, viewResult.ViewName);
+        }
 
-        
 
-        //[Fact]
-        //public void StatusCodePage_ReturnsStatusCodePage()
-        //{
-        //    // Arrange
-        //    var controller = new HomeController();
-        //    var statusCodeView = "~/Views/Shared/StatusCodePage.cshtml";
 
-        //    // Action
-        //    var result = controller.StatusCodePage();
+        [Fact]
+        public void StatusCodePage_ReturnsStatusCodePage()
+        {
+            // Arrange
+            var controller = new HomeController(null);
+            var statusCodeView = "~/Views/Shared/StatusCodePage.cshtml";
 
-        //    // Assert
-        //    var viewResult = Assert.IsType<ViewResult>(result);
+            // Action
+            var result = controller.StatusCodePage();
 
-        //    Assert.Equal(statusCodeView, viewResult.ViewName);
-        //}
+            // Assert
+            var viewResult = Assert.IsType<ViewResult>(result);
 
-        // Finish when Search has been completed
+            Assert.Equal(statusCodeView, viewResult.ViewName);
+        }
+
+        //To do: Finish when Search has been completed
         //[Fact]
         //public async Task SearchTest()
         //{
@@ -83,16 +83,16 @@ namespace Hooli.Controllers
         //    dbContext.Add(group3);
         //    dbContext.SaveChanges();
 
-        //    var controller = new HomeController()
+        //    var controller = new HomeController(null)
         //    {
         //        DbContext = dbContext,
         //    };
 
         //    // Act
-        //    await controller.Search();
+        //    var result = await controller.Search("Benedikt");
 
         //    // Assert
-        //    Assert.False(controller.DbContext.Groups.Single(u => u.GroupId == groupId).Equals(null));
+        //    Assert.True(result.);
         //}
 
 
