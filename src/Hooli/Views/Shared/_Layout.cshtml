@@ -57,10 +57,9 @@
                     <ul class="nav navbar-nav navbar-right">
                         @if (User.Identity.IsAuthenticated)
                         {
+                        <li><a asp-controller="Home" asp-action="Index">The Feed</a></li>
                         <li><a asp-controller="Group" asp-action="Index">Groups</a></li>
                         <li><a asp-controller="People" asp-action="Index">People</a></li>
-                        <li><a asp-controller="Event" asp-action="Index">Events</a></li>
-                        <li><a asp-controller="Chat" asp-action="Index">Chat</a></li>
                         <li class="hidden-xs">
                             <form asp-controller="Home" asp-action="Search" class="navbar-search" role="search"  method="post">
                                 <div class="form-group">
