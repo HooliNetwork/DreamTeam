@@ -98,7 +98,7 @@ $(document).ready(function () {
        }).done(function (result) {
             var errors = "";
             $('.validation-summary-errors ul li', result).each(function(){
-            errors += $(this).text() + "<br>";
+                	errors += $(this).text() + "<br>";
             });
             if(errors.length > 0) {
                 toastr["error"](errors);
@@ -167,6 +167,7 @@ $(document).ready(function () {
             url: uri,
             data: { 'upDown': upOrDown, 'postId': id },
             success: function (result) {
+                currBtn.toggleClass("btn-link-option")
                 var value = parseInt(count.text(), 10);
                     if (upOrDown == "up") {
                         value += 1;

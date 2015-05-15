@@ -8,38 +8,24 @@ using Hooli.Models;
 using Microsoft.Data.Entity;
 using Microsoft.AspNet.Identity;
 using System.Security.Claims;
+using Hooli.Services;
 
 namespace Hooli.Components
 {
     [ViewComponent(Name = "Feed")]
     public class FeedComponent : ViewComponent
     {
-        public FeedComponent(UserManager<ApplicationUser> userManager, HooliContext dbContext)
+        public FeedComponent(UserService userService, HooliContext dbContext)
         {
-            UserManager = userManager;
+            UserService = userService;
             DbContext = dbContext;
         }
         public HooliContext DbContext { get;  set; }
-        public UserManager<ApplicationUser> UserManager { get; private set; }
-
-        //[Activate]
-        //public HooliContext DbContext { get; set; }
-
-        [Activate]
-        public IMemoryCache Cache { get; set; }
-
-        // How caching stuff is - remove before handing in!
-        // var post = await Cache.GetOrSet("popularGroupPost", async context =>
-        // {
-        //  context.SetAbsoluteExpiration(TimeSpan.FromMinutes(5));
-        //return await GetPopularGroupPosts(groups);
-        //});
+        public UserService UserService { get; set; }
 
         public async Task<IViewComponentResult> InvokeAsync(bool latestPosts, bool group, string groupId)
         {
-            System.Diagnostics.Debug.WriteLine("Inside Feed InvokeAsync");
-            var user = await GetCurrentUserAsync();
-
+            var user = await UserService.GetUser(Context.User.GetUserId());
             if (group)
             {
                 // Create the list of groups to show posts from
@@ -80,16 +66,16 @@ namespace Hooli.Components
                 var following = new List<string>();
                 if (groupId.Equals("Front"))
                 {
-                    following = DbContext.FollowRelations
-                    .Where(u => u.FollowerId == user.Id)
-                    .Select(u => u.FollowingId).ToList();
+                    following = await UserService.GetFollowedPeopleIds(user.Id);
                     if (latestPosts && following != null)
                     {
                         post = await GetLatestPost(following);
+                        return View(post);
                     }
                     else if (following != null)
                     {
-                        post = await GetPopularGroupPosts(following);
+                        post = await GetPopularPosts(following);
+                        return View(post);
                     }
                     else
                     {
@@ -104,17 +90,19 @@ namespace Hooli.Components
                     if (latestPosts && following != null)
                     {
                         post = await GetLatestPostProfile(following);
+                        return View(post);
                     }
                     else if (following != null)
                     {
                         post = await GetPopularPostsProfile(following);
+                        return View(post);
                     }
                     else
                     {
                         post = new List<Post> { new Post() { Title = "No posts!", UserId = user.Id } };
                     }
                 }
-                return View(post);            
+                return View(post);
             }
         }
 
@@ -124,6 +112,7 @@ namespace Hooli.Components
                 .OrderByDescending(a => a.DateCreated)
                 .Where(a => a.ParentPostId == null)
                 .Where(u => (following.Contains(u.UserId)) || (u.UserId == Context.User.GetUserId()))
+                .Where(a => (a.DateCreated - DateTime.UtcNow).TotalDays <= 2)
                 .Include(u => u.User)
                 .ToListAsync();
 
@@ -142,8 +131,6 @@ namespace Hooli.Components
 
             return latestPost;
         }
-
-
 
         private async Task<List<Post>> GetPopularPosts(IEnumerable<string> following)
         {
@@ -176,6 +163,7 @@ namespace Hooli.Components
                 .OrderByDescending(a => a.DateCreated)
                 .Where(a => a.ParentPostId == null)
                 .Where(g => group.Contains(g.GroupGroupId))
+                .Where(a => (a.DateCreated - DateTime.UtcNow).TotalDays <= 2)
                 .Include(u => u.User)
                 .ToListAsync();
 
@@ -192,11 +180,6 @@ namespace Hooli.Components
                 .ToListAsync();
 
             return postsByVotes;
-        }
-
-        private async Task<ApplicationUser> GetCurrentUserAsync()
-        {
-            return await UserManager.FindByIdAsync(Context.User.GetUserId());
         }
     }
 }

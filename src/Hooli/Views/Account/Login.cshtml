@@ -12,7 +12,6 @@
             <div class="content-box">
                 <h1>@ViewBag.Title.</h1>
                 <form asp-controller="Account" asp-action="Login" id="form-login" asp-route-returnurl="@ViewBag.ReturnUrl" method="post" class="form-horizontal" role="form">
-                    <h2>Log in </h2>
                     <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
                     <fieldset>
                         <input asp-for="Username" class="form-control full-width" id="username" name="username" placeholder="Your Username" autofocus="autofocus" required="required"/>
@@ -29,9 +28,6 @@
                     </div>
                     <button type="submit" value="Log in" class="btn btn-primary btn-block" id="form_login_button">Log in</button>
                 </form>
-                <div class="form-login-forgotten text-right">
-                    <a asp-action="ForgotPassword">Forgot your password?</a>
-                </div>
             </div>
 
         </div>
