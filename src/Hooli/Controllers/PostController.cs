@@ -196,7 +196,7 @@ namespace Hooli.Controllers
                     Text = post.Text,
                     PostId = post.PostId,
                     Points = post.Points,
-                    UserName = user.FirstName,
+                    Username = user.FirstName,
                     UserId = user.Id,
                     Image = post.Image,
                     Link = post.Link,
@@ -299,7 +299,7 @@ namespace Hooli.Controllers
             if (post.ParentPostId == null)
             {
                 Console.WriteLine("ParentPostId");
-                RecursiveSearch(RecursiveLoad(post.PostId));
+                RecursiveSearch(postService.FromKey(post.PostId));
 
 
             }

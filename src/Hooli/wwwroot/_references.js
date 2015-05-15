@@ -10,3 +10,4 @@
 /// <reference path="script/scripts.js" />
 /// <reference path="script/jquery.magnific-popup.js" />
 /// <reference path="script/mvc.js" />
+/// <reference path="lib/toastr/toastr.min.js" />
