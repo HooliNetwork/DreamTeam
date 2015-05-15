@@ -47,6 +47,10 @@ $(document).ready(function () {
     $(".create-post-button").click(function(){
         $(".new-post-container").toggleClass('open');
     });
+    
+     $(".create-group-button").click(function(){
+        $(".edit-info-container").toggleClass('open');
+    });
 
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
