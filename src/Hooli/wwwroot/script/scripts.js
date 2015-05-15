@@ -119,11 +119,6 @@ $(document).ready(function () {
     });
     
     $('.image-link').magnificPopup({type:'image'});
-    
-    $('.popup-link').magnificPopup({ 
-        type: 'image'
-    });
-
 
     $("body").on('click', ".btn-follow", function () {
         var currBtn = $(this);
