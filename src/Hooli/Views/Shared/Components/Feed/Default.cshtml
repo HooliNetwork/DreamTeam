@@ -45,6 +45,7 @@
     }
 } else {
     @*Shows empty feed message if nothing is to be shown*@
-    <script>$("#empty-feed-message").show();</script>
+    <script>
+    $(document).ready(function () {$("#empty-feed-message").show();});</script>
 }
          
