@@ -37,30 +37,9 @@ namespace Hooli.Controllers
 
         //
         // GET: /Home/
-        public async Task<IActionResult> Index(string sortOrder)
+        public async Task<IActionResult> Index()
         {
-            var userId = Context.User.GetUserId();
-            var people = await UserService.GetFollowedPeople(6, userId);
-            var groups = await UserService.GetFollowedGroups(6, userId);
-            var interestingGroups = false;
-            var interestingPeople = false;
-            if (groups.Count() < 6)
-            {
-                groups = await UserService.GetInterestingGroups(6, userId);
-                interestingGroups = true;
-            }
-            if (people.Count() < 6)
-            {
-                people = await UserService.GetInterestingPeople(6, userId);
-                interestingPeople = true;
-            }
-            return View(new HomeViewModel {
-                Groups = groups,
-                People = people,
-                InterestingPeople = interestingPeople,
-                InterestingGroups = interestingGroups}
-            );
-            
+            return View();   
         }
 
         //Can be removed and handled when HandleError filter is implemented
