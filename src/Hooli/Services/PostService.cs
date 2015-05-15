@@ -12,7 +12,6 @@ namespace Hooli.Services
         private Lazy<Post[]> topLevel;
         private HooliContext DbContext;
 
-
         public PostService(HooliContext context)
         {
             byKey = new Lazy<Dictionary<int, Post>>(() => context.Posts.Include(u => u.User)
@@ -54,7 +53,7 @@ namespace Hooli.Services
             return posts
                 .Union(posts
                     .Where(c => c.Children != null)
-                    .SelectMany(c => GetAllPostsIncludingChildren(c.Children)));
+                    .SelectMany( c =>  GetAllPostsIncludingChildren(c.Children)));
         }
 
 

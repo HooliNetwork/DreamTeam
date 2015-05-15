@@ -50,7 +50,6 @@ namespace Hooli.Components
                     groups = DbContext.GroupMembers
                     .Where(u => u.UserId == user.Id)
                     .Select(u => u.GroupId).ToList();
-                    Console.WriteLine("Front page baby");
                 }
                 else
                 {
@@ -121,23 +120,18 @@ namespace Hooli.Components
 
         private async Task<List<Post>> GetLatestPost(IEnumerable<string> following)
         {
-            Console.WriteLine("1");
             var latestPost = await DbContext.Posts
                 .OrderByDescending(a => a.DateCreated)
                 .Where(a => a.ParentPostId == null)
                 .Where(u => (following.Contains(u.UserId)) || (u.UserId == Context.User.GetUserId()))
                 .Include(u => u.User)
                 .ToListAsync();
-            foreach (object o in latestPost)
-            {
-                Console.WriteLine(o);
-            }
+
             return latestPost;
         }
 
         private async Task<List<Post>> GetLatestPostProfile(IEnumerable<string> following)
         {
-            Console.WriteLine("1");
             var latestPost = await DbContext.Posts
                 .OrderByDescending(a => a.DateCreated)
                 .Where(a => a.ParentPostId == null)
@@ -145,10 +139,7 @@ namespace Hooli.Components
                 .Where(a => (a.DateCreated - DateTime.UtcNow).TotalDays <= 2)
                 .Include(u => u.User)
                 .ToListAsync();
-            foreach (object o in latestPost)
-            {
-                Console.WriteLine(o);
-            }
+
             return latestPost;
         }
 
@@ -156,7 +147,6 @@ namespace Hooli.Components
 
         private async Task<List<Post>> GetPopularPosts(IEnumerable<string> following)
         {
-            Console.WriteLine("2");
             var postsByVotes = await DbContext.Posts
                 .Where(a => a.ParentPostId == null)
                 .Where(a => (following.Contains(a.UserId)) || (a.UserId == Context.User.GetUserId()))
@@ -169,7 +159,6 @@ namespace Hooli.Components
 
         private async Task<List<Post>> GetPopularPostsProfile(IEnumerable<string> following)
         {
-            Console.WriteLine("2");
             var postsByVotes = await DbContext.Posts
                 .Where(a => a.ParentPostId == null)
                 .Where(a => following.Contains(a.UserId))
@@ -183,36 +172,25 @@ namespace Hooli.Components
 
         private async Task<List<Post>> GetLatestGroupPost(IEnumerable<string> group)
         {
-            Console.WriteLine("3");
-
             var latestPost = await DbContext.Posts
                 .OrderByDescending(a => a.DateCreated)
                 .Where(a => a.ParentPostId == null)
                 .Where(g => group.Contains(g.GroupGroupId))
                 .Include(u => u.User)
                 .ToListAsync();
-            foreach (object o in latestPost)
-            {
-                Console.WriteLine(o);
-            }
 
             return latestPost;
         }
 
         private async Task<List<Post>> GetPopularGroupPosts(IEnumerable<string> group)
         {
-            Console.WriteLine("4");
-
             var postsByVotes = await DbContext.Posts
                 .OrderByDescending(a => a.Points)
                 .Where(a => a.ParentPostId == null)
                 .Where(g => group.Contains(g.GroupGroupId))
                 .Include(u => u.User)
                 .ToListAsync();
-            foreach (object o in postsByVotes)
-            {
-                Console.WriteLine(o);
-            }
+
             return postsByVotes;
         }
 

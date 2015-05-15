@@ -100,7 +100,6 @@ namespace Hooli.Controllers
                 if ((file != null) && (file.Length > 0))
                 {
                     user.ProfilePicture = await Storage.GetUri("profilepictures", Guid.NewGuid().ToString(), file);
-                    Console.WriteLine("Added to blob");
                 }
                 else
                 {

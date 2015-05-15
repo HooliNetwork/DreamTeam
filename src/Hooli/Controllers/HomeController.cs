@@ -13,6 +13,7 @@ using Microsoft.AspNet.Authorization;
 using System.Dynamic;
 using Hooli.ViewModels;
 using Hooli.Components;
+using Hooli.Services;
 
 namespace Hooli.Controllers
 {
@@ -23,7 +24,7 @@ namespace Hooli.Controllers
         public HooliContext DbContext { get; set; }
 
         [FromServices]
-        public UserManager<ApplicationUser> UserManager { get; set; }
+        public UserService UserService { get; set; }
 
         public FeedComponent feedComponent { get; set; }
         public HomeController(FeedComponent _feedComponent)
@@ -38,18 +39,19 @@ namespace Hooli.Controllers
         // GET: /Home/
         public async Task<IActionResult> Index(string sortOrder)
         {
-            var people = await GetFollowedPeople(6);
-            var groups = await GetFollowedGroups(6);
+            var userId = Context.User.GetUserId();
+            var people = await UserService.GetFollowedPeople(6, userId);
+            var groups = await UserService.GetFollowedGroups(6, userId);
             var interestingGroups = false;
             var interestingPeople = false;
             if (groups.Count() < 6)
             {
-                groups = await GetOtherGroups(6);
+                groups = await UserService.GetInterestingGroups(6, userId);
                 interestingGroups = true;
             }
             if (people.Count() < 6)
             {
-                people = await GetOtherPeople(6);
+                people = await UserService.GetInterestingPeople(6, userId);
                 interestingPeople = true;
             }
             return View(new HomeViewModel {
@@ -73,99 +75,7 @@ namespace Hooli.Controllers
             return View("~/Views/Shared/StatusCodePage.cshtml");
         }
 
-        
-
-        public IActionResult About()
-        {
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
-        private async Task<List<Post>> GetTopPost(int count)
-        {
-            // Group the order details by Post and return
-            // the Posts with the highest count of Upvotes
-
-            return await DbContext.Posts
-                .OrderByDescending(a => a.Points)
-                .Take(count)
-                .Include(u => u.User)
-                .ToListAsync();
-        }
-        private async Task<List<Post>> GetMostRecentPosts(int count)
-        {
-            // Group the order details by Post and return
-            // the Posts with the highest count of Upvotes
-            var user = await GetCurrentUserAsync();
-            var FollowedUsers = user.Following;
-            return await DbContext.Posts
-                .OrderByDescending(a => a.Points)
-                .Take(count)
-                .Include(u => u.User)
-                .ToListAsync();
-        }
-
-        private async Task<List<ApplicationUser>> GetFollowedPeople(int count)
-        {
-            // Group the order details by Post and return
-            // the Posts with the highest count of Upvotes
-            var following = await DbContext.FollowRelations
-                .Where(u => u.FollowerId == Context.User.GetUserId())
-                .Select(u => u.FollowingId).ToListAsync();
-
-            return await DbContext.Users
-
-                .Where(u => following.Contains(u.Id))
-                .Take(count)
-                .ToListAsync();
-        }
-        private async Task<List<Group>> GetFollowedGroups(int count)
-        {
-            // Group the order details by Post and return
-            // the Posts with the highest count of Upvotes
-            var following = await DbContext.GroupMembers
-                .Where(u => u.UserId == Context.User.GetUserId())
-                .Select(u => u.GroupId).ToListAsync();
-
-            return await DbContext.Groups
-                .Where(u => following.Contains(u.GroupId))
-                .Take(count)
-                .ToListAsync();
-        }
-        private async Task<List<ApplicationUser>> GetOtherPeople(int count)
-        {
-            // Group the order details by Post and return
-            // the Posts with the highest count of Upvotes
-            var following = await DbContext.FollowRelations
-                .Where(u => u.FollowerId == Context.User.GetUserId())
-                .Select(u => u.FollowingId).ToListAsync();
-
-            return await DbContext.Users
-                .Where(u => !following.Contains(u.Id))
-                .Take(count)
-                .ToListAsync();
-        }
-        private async Task<List<Group>> GetOtherGroups(int count)
-        {
-            // Group the order details by Post and return
-            // the Posts with the highest count of Upvotes
-            var following = await DbContext.GroupMembers
-                .Where(u => u.UserId == Context.User.GetUserId())
-                .Select(u => u.GroupId).ToListAsync();
-
-            return await DbContext.Groups
-                .Where(u => !following.Contains(u.GroupId))
-                .Take(count)
-                .ToListAsync();
-        }
-
-        [HttpPost("Search")]
+        [HttpPost]
         public async Task<IActionResult> Search(string searchString)
         {
             dynamic model = new ExpandoObject();
@@ -173,7 +83,8 @@ namespace Hooli.Controllers
             if (!String.IsNullOrEmpty(searchString))
             {
 
-                var currentuser = await GetCurrentUserAsync();
+                var userId = Context.User.GetUserId();
+
                 model.Users = await DbContext.Users.Where(s => s.LastName
                                             .Contains(searchString)
                                             || s.FirstName.Contains(searchString))
@@ -183,12 +94,8 @@ namespace Hooli.Controllers
                                             .Contains(searchString))
                                             .ToListAsync();
 
-                model.Following = await DbContext.FollowRelations
-                                .Where(u => u.FollowerId == currentuser.Id)
-                                .Select(u => u.FollowingId).ToListAsync();
-                model.Joined = await DbContext.GroupMembers
-                                .Where(u => u.UserId == currentuser.Id)
-                                .Select(u => u.GroupId).ToListAsync();
+                model.Following = await UserService.GetFollowedPeopleIds(userId);
+                model.Joined = await UserService.GetFollowedGroupsIds(userId);
 
                 return View(model);
             }
@@ -197,27 +104,10 @@ namespace Hooli.Controllers
                 return View(model);
             }
         }
-        private async Task<ApplicationUser> GetCurrentUserAsync()
-        {
-            return await UserManager.FindByIdAsync(Context.User.GetUserId());
-        }
-
-        //[HttpPost]
-        //public async Task<IViewComponentResult> Sort(bool latestPosts, bool group, string groupId)
-        //{
-        //    //var feedComponent = new FeedComponent(UserManager);
-        //    System.Diagnostics.Debug.WriteLine("\n\n\n context \n\n " + Context.User.GetUserId() + "\n\n\n");
-            
-        //    return await feedComponent.InvokeAsync( latestPosts, group, groupId, Context.User.GetUserId());
-        //    //System.Diagnostics.Debug.WriteLine("\n\n\n hello \n\n " + result.ToString() + "\n\n\n");
-        //    //return View(result);
-        //}
 
         public async Task<IActionResult> Sort(bool latestPosts, bool group, string groupId)
         {
-            System.Diagnostics.Debug.WriteLine("Inside Feed InvokeAsync");
-            var user = await GetCurrentUserAsync(); 
-
+            var user = await UserService.GetUser(Context.User.GetUserId());
             if (group)
             {
                 // Create the list of groups to show posts from
@@ -258,9 +148,7 @@ namespace Hooli.Controllers
                 var following = new List<string>();
                 if (groupId.Equals("Front"))
                 {
-                    following = DbContext.FollowRelations
-                    .Where(u => u.FollowerId == user.Id)
-                    .Select(u => u.FollowingId).ToList();
+                    following = await UserService.GetFollowedPeopleIds(user.Id);
                     if (latestPosts && following != null)
                     {
                         post = await GetLatestPost(following);
@@ -302,7 +190,6 @@ namespace Hooli.Controllers
 
         private async Task<List<Post>> GetLatestPost(IEnumerable<string> following)
         {
-            Console.WriteLine("1");
             var latestPost = await DbContext.Posts
                 .OrderByDescending(a => a.DateCreated)
                 .Where(a => a.ParentPostId == null)
@@ -310,16 +197,12 @@ namespace Hooli.Controllers
                 .Where(a => (a.DateCreated - DateTime.UtcNow).TotalDays <= 2)
                 .Include(u => u.User)
                 .ToListAsync();
-            foreach (object o in latestPost)
-            {
-                Console.WriteLine(o);
-            }
+
             return latestPost;
         }
 
         private async Task<List<Post>> GetLatestPostProfile(IEnumerable<string> following)
         {
-            Console.WriteLine("1");
             var latestPost = await DbContext.Posts
                 .OrderByDescending(a => a.DateCreated)
                 .Where(a => a.ParentPostId == null)
@@ -327,16 +210,12 @@ namespace Hooli.Controllers
                 .Where(a => (a.DateCreated - DateTime.UtcNow).TotalDays <= 2)
                 .Include(u => u.User)
                 .ToListAsync();
-            foreach (object o in latestPost)
-            {
-                Console.WriteLine(o);
-            }
+
             return latestPost;
         }
 
         private async Task<List<Post>> GetPopularPosts(IEnumerable<string> following)
         {
-            Console.WriteLine("2");
             var postsByVotes = await DbContext.Posts
                 .Where(a => a.ParentPostId == null)
                 .Where(a => (following.Contains(a.UserId)) || (a.UserId == Context.User.GetUserId()))
@@ -349,7 +228,6 @@ namespace Hooli.Controllers
 
         private async Task<List<Post>> GetPopularPostsProfile(IEnumerable<string> following)
         {
-            Console.WriteLine("2");
             var postsByVotes = await DbContext.Posts
                 .Where(a => a.ParentPostId == null)
                 .Where(a => following.Contains(a.UserId))
@@ -363,8 +241,6 @@ namespace Hooli.Controllers
 
         private async Task<List<Post>> GetLatestGroupPost(IEnumerable<string> group)
         {
-            Console.WriteLine("3");
-
             var latestPost = await DbContext.Posts
                 .OrderByDescending(a => a.DateCreated)
                 .Where(a => a.ParentPostId == null)
@@ -372,28 +248,19 @@ namespace Hooli.Controllers
                 .Where(a => (a.DateCreated - DateTime.UtcNow).TotalDays <= 2)
                 .Include(u => u.User)
                 .ToListAsync();
-            foreach (object o in latestPost)
-            {
-                Console.WriteLine(o);
-            }
 
             return latestPost;
         }
 
         private async Task<List<Post>> GetPopularGroupPosts(IEnumerable<string> group)
         {
-            Console.WriteLine("4");
-
             var postsByVotes = await DbContext.Posts
                 .OrderByDescending(a => a.Points)
                 .Where(a => a.ParentPostId == null)
                 .Where(g => group.Contains(g.GroupGroupId))
                 .Include(u => u.User)
                 .ToListAsync();
-            foreach (object o in postsByVotes)
-            {
-                Console.WriteLine(o);
-            }
+
             return postsByVotes;
         }
     }
