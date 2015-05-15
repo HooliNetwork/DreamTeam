@@ -45,6 +45,10 @@
     }
 } else {
     @*Shows empty feed message if nothing is to be shown*@
-    <script>(function () {$("#empty-feed-message").show();});</script>
+    <script>
+        window.onload = function () {
+            $("#empty-feed-message").show();
+        }
+    </script>
 }
          
