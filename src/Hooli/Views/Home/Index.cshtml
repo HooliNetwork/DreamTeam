@@ -13,7 +13,7 @@
             {
 
                 <div class="content-box">
-                @if (Model.InterestingPeople)
+                @if (Model.InterestingGroups)
                 {
                         <h1>Groups you might find intesting</h1>
                     }
@@ -24,7 +24,15 @@
                     <div class="container image-wall">
                         <div class="row">
                             <div class="col-min-padding col-xs-8 col-sm-12 col-md-8">
-                                <div class="image-box" style="background: url(@Model.Groups[0].Image) center / cover;"></div>
+                                <div class="info-container">
+                                    <a asp-controller="Group" asp-action="SingleGroup" asp-route-id="@Model.Groups[0].GroupId">
+                                        <div class="image-box" style="background: url(@Model.Groups[0].Image) center / cover;">
+                                            <div class="info-photo-shade">
+                                                <h1>@Model.Groups[0].GroupName</h1>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
                             <div class="col-min-padding col-xs-4 col-sm-6 col-md-4">
                                 <div class="image-box" style="background: url(@Model.Groups[1].Image) center / cover;"></div>
@@ -42,9 +50,6 @@
                                 <div class="image-box" style="background: url(@Model.Groups[5].Image) center / cover;"></div>
                             </div>
                         </div>
-                    </div>
-                    <div class="text-right">
-                        <a asp-controller="Group" asp-action="Index">See all groups you are following</a>
                     </div>
                 </div>
             }
@@ -81,9 +86,6 @@
                                 <div class="image-box" style="background: url(@Model.People[5].ProfilePicture) center / cover;"></div>
                             </div>
                         </div>
-                    </div>
-                    <div class="text-right">
-                        <a asp-controller="People" asp-action="Index">See all people you are following</a>
                     </div>
                 </div>
             }
