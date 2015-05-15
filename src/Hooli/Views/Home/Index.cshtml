@@ -143,9 +143,17 @@
                     $(".post-author > a > strong").first().text(post.FullName);
                     $(".post-author > a").first().attr("href", "/Profile/Index/" + post.Username);
                     $(".post-date > strong").first().text(post.DateCreated);
+                    if (post.GroupId) {
+                        $(".post-group > a").first().attr("href", "/Group/SingleGroup/" + post.GropuId);
+                        $(".post-group > a > strong > small").first().text("/" + post.GropuId);
+                        $(".post-group").first().show();
+                    }
+                    if (post.GroupId) {
+                        $("a.image-link").first().attr("href", post.Image);
+                        $("a > .photo-feed").first().css("background", "url(" + post.Image + ") center / cover");
+                        $("a.image-link").first().show();
+                    }
                     $(".post").first().show(100);
-                    $("a.image-link").first().attr("href", post.Image);
-                    $("a > .photo-feed").first().css("background", "url(" + post.Image + ") center / cover");
                 });
             };
             $.connection.hub.start().done(function () {
