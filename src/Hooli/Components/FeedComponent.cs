@@ -100,7 +100,7 @@ namespace Hooli.Components
                 }
                 else
                 {
-                    //Todo something that figures out what user we are looking at
+                    // groupId == UserId because viewing the Profile feed
                     following.Add(groupId);
                     if (latestPosts && following != null)
                     {
