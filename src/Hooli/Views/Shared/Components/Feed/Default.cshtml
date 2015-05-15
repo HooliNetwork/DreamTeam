@@ -37,11 +37,11 @@
                 <a asp-controller="Post" asp-action="Index" asp-route-id="@p.PostId"><h2>@p.Title</h2></a>
                 <div class="post-body-info">
                     <span class="post-author">Posted by <a asp-controller="Profile" asp-action="Index" asp-route-id="@p.User.UserName"><strong>@p.User.FirstName</strong></a></span>
-                        @if (@p.Group != null) {
+                        @if (@p.GroupGroupId != null) {
                             <span class="post-group">
                                 in 
-                                <a asp-controller="Group" asp-action="SingleGroup" asp-route-id="@p.Group.GroupId">
-                                    /@p.Group.GropuId
+                                <a asp-controller="Group" asp-action="SingleGroup" asp-route-id="@p.Group.GroupGroupId">
+                                    <strong>@p.Group.GroupGroupId</strong>
                                 </a>
                             </span>
                         }
