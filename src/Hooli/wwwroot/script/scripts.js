@@ -27,7 +27,8 @@ $(document).ready(function () {
     
     var filterFeedAjax = function (filter1, filter2) {
         var uri = "/Home/Sort/";
-        var groupId = "Front";
+        var groupId = $('.posts-orderby').attr('data-id');
+        console.log("GROUP ID ISS: " + groupId);
         $.ajax({
             async: true,
             type: "POST",

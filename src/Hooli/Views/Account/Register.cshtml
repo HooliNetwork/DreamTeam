@@ -11,17 +11,17 @@
                 <h2>Sign up with your email address</h2>
                 <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
                 <fieldset>
-                    <input asp-for="Username" type="text" class="form-control full-width" style="width:100%;" id="username" placeholder="Username" required="required" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Your unique URL name, hooli.com/p/yourUsername<br><strong>This cannot be changed later!</strong>" />
+                    <input asp-for="Username" type="text" class="form-control full-width" style="width:100%;" id="username" placeholder="Username" autofocus="autofocus" required="required" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Your unique URL name, hooli.com/p/yourUsername<br><strong>This cannot be changed later!</strong>" />
                     <span asp-validation-for="Username" class="text-danger"></span>
                         
-                    <input asp-for="FirstName" type="text" class="form-control" id="first_name" placeholder="First name" autofocus="autofocus" required="required"/>
+                    <input asp-for="FirstName" type="text" class="form-control" id="first_name" placeholder="First name" required="required"/>
                     <input asp-for="LastName" type="text" class="form-control" id="last_name" placeholder="Last name" required="required"/>
                     <span asp-validation-for="FirstName" class="text-danger"></span>
                     <span asp-validation-for="LastName" class="text-danger"></span>
                         
                     <input asp-for="Email" type="email" class="form-control" id="email" placeholder="Email" required="required"/>
                     <span asp-validation-for="Email" class="text-danger"></span>
-                    <input asp-for="DateOfBirth" type="date" class="form-control" id="dateOfBirth" placeholder="Date of Birth" required="required" />
+                    <input asp-for="DateOfBirth" type="date" class="form-control" id="dateOfBirth" placeholder="Date of birth (mm/dd/yyyy)" required="required" />
                     <span asp-validation-for="DateOfBirth" class="text-danger"></span>
                         
                     <input asp-for="Password" type="password" class="form-control" id="password" placeholder="Password" required="required"/>

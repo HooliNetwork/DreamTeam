@@ -10,13 +10,13 @@
             {
                 <div class="parent-comment-container">
                     <div class="comment-container">
-                        <a asp-controller="Profile" asp-action="Index" asp-rout-id="@node.User.UserName">
+                        <a asp-controller="Profile" asp-action="Index" asp-route-id="@node.User.UserName">
                             <div class="info-photo comment" style="background: url(@node.User.ProfilePicture) center / cover;"></div>
                         </a>
                         <div class="comment-body">
                             <p class="comment-info">
                                 <span class="post-author">Posted by
-                                    <a asp-controller="Profile" asp-action="Index" asp-rout-id="@node.User.UserName">
+                                    <a asp-controller="Profile" asp-action="Index" asp-route-id="@node.User.UserName">
                                         <strong>@node.User.FirstName @node.User.LastName</strong>
                                     </a>
                                 </span>
