@@ -133,8 +133,7 @@ namespace Hooli.Migrations
                         b.Property<DateTime>("DateCreated")
                             .Annotation("OriginalValueIndex", 0);
                         b.Property<string>("GroupGroupId")
-                            .Annotation("OriginalValueIndex", 1)
-                            .Annotation("ShadowIndex", 0);
+                            .Annotation("OriginalValueIndex", 1);
                         b.Property<string>("Image")
                             .Annotation("OriginalValueIndex", 2);
                         b.Property<string>("Link")

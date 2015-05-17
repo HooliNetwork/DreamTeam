@@ -5,7 +5,7 @@ using Microsoft.Data.Entity.Relational.Migrations.Operations;
 
 namespace Hooli.Migrations
 {
-    public partial class M : Migration
+    public partial class H : Migration
     {
         public override void Up(MigrationBuilder migration)
         {

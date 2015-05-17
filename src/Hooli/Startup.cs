@@ -23,6 +23,7 @@ using Microsoft.Framework.Runtime;
 using Hooli.Models;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
+using Microsoft.AspNet.Mvc;
 
 namespace Hooli
 {
@@ -45,6 +46,31 @@ namespace Hooli
             Configuration = configuration;
         }
 
+        public class RequireHttpsExceptForLocalHostAttribute : RequireHttpsAttribute
+        {
+            public override void OnAuthorization(AuthorizationContext filterContext)
+            {
+                if (!filterContext.HttpContext.Request.IsHttps) 
+                {
+                    var hostName = filterContext?.HttpContext?.Request?.Host.Value;
+
+                    //check for existence of a : and if there, lop it off
+                    if (!String.IsNullOrWhiteSpace(hostName))
+                    {
+                        var indexOfColon = hostName.IndexOf(':');
+                        if (indexOfColon > 0) hostName = hostName.Substring(0, indexOfColon);
+                    }
+                    //only bypass if hostname is exactly localhost
+
+                    if (hostName == null || !hostName.Equals("localhost", StringComparison.CurrentCultureIgnoreCase)) HandleNonHttpsRequest(filterContext);
+                }
+            }
+
+            protected override void HandleNonHttpsRequest(AuthorizationContext filterContext)
+            {
+                base.HandleNonHttpsRequest(filterContext);
+            }
+        }
         public IConfiguration Configuration { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -93,7 +119,10 @@ namespace Hooli
 
 
             // Add MVC services to the services container.
-            services.AddMvc();
+            services.AddMvc().Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(typeof(RequireHttpsExceptForLocalHostAttribute));
+            });
             services.AddSignalR();
             services.AddTransient<Hooli.Components.FeedComponent>();
             services.AddTransient<Services.PostService>();
