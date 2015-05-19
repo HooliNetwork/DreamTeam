@@ -10,7 +10,7 @@
     "dependencies": {
         "WindowsAzure.Storage": "4.4.0-preview",
         "EntityFramework.SqlServer": "7.0.0-beta4",
-        "EntityFramework.InMemory": "7.0.0-beta4", // For Mono.
+        "EntityFramework.InMemory": "7.0.0-beta4",
         "EntityFramework.Commands": "7.0.0-beta4",
         "Microsoft.AspNet.Mvc": "6.0.0-beta4",
         "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-beta4",
@@ -23,7 +23,7 @@
         "Microsoft.AspNet.Diagnostics.Entity": "7.0.0-beta4",
         "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-beta4",
         "Microsoft.AspNet.Session": "1.0.0-beta4",
-        "Microsoft.Framework.Caching.Distributed": "1.0.0-beta4", // For Session.
+        "Microsoft.Framework.Caching.Distributed": "1.0.0-beta4",
         "Microsoft.AspNet.Server.IIS": "1.0.0-beta4",
         "Microsoft.AspNet.Server.WebListener": "1.0.0-beta4",
         "Microsoft.AspNet.StaticFiles": "1.0.0-beta4",
