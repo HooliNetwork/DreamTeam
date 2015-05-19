@@ -12,6 +12,7 @@ using System.Security.Claims;
 using Microsoft.AspNet.Http;
 using System.Threading;
 using Hooli.ViewModels;
+using Microsoft.Data.Entity;
 
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860

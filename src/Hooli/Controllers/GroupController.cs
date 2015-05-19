@@ -11,7 +11,7 @@ using System.Security.Claims;
 using Microsoft.AspNet.Http;
 using Hooli.CloudStorage;
 using System.Dynamic;
-
+using Microsoft.Data.Entity;
 
 namespace Hooli.Controllers
 {
