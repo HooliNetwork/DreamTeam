@@ -12,8 +12,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Hooli", "src\Hooli\Hooli.xproj", "{DB09AAE3-5ABD-478D-B057-DEA9E79850BC}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Hooli.Test", "src\test\Hooli.Test\Hooli.Test.xproj", "{CA663205-77DE-4E55-B300-85594181B5A9}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,16 +22,11 @@ Global
 		{DB09AAE3-5ABD-478D-B057-DEA9E79850BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB09AAE3-5ABD-478D-B057-DEA9E79850BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB09AAE3-5ABD-478D-B057-DEA9E79850BC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CA663205-77DE-4E55-B300-85594181B5A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CA663205-77DE-4E55-B300-85594181B5A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CA663205-77DE-4E55-B300-85594181B5A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CA663205-77DE-4E55-B300-85594181B5A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{DB09AAE3-5ABD-478D-B057-DEA9E79850BC} = {09C7E8D4-088D-41BD-A65A-55824E79B0D0}
-		{CA663205-77DE-4E55-B300-85594181B5A9} = {09C7E8D4-088D-41BD-A65A-55824E79B0D0}
 	EndGlobalSection
 EndGlobal

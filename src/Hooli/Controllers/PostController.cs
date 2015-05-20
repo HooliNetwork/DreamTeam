@@ -43,9 +43,6 @@ namespace Hooli.Controllers
         public Cloud Storage { get; set; }
 
         [FromServices]
-        public IMemoryCache Cache { get; set; }
-
-        [FromServices]
         public IConnectionManager ConnectionManager
         {
             get
@@ -186,8 +183,6 @@ namespace Hooli.Controllers
 
 
                 _feedHub.Clients.Users(usernames).feed(postdata);
-
-                Cache.Remove("latestPost");
 
                 return Redirect("/Profile/Owner");
             }

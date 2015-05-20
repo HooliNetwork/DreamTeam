@@ -189,6 +189,7 @@
                 $.post('@Url.Action("EditProfile", "Profile")', MVC.stringify(data))
                     .done(function (data) {
                         if (data) {
+                            console.log(data);
                             $('#profile-info-fullName').text(data.FirstName + ' ' + data.LastName);
                             $('#profile-info-age').text(data.Age);
                             $('#profile-info-username').text(data.username);

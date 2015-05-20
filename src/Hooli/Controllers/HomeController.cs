@@ -32,9 +32,6 @@ namespace Hooli.Controllers
             feedComponent = _feedComponent;
         }
 
-        [FromServices]
-        public IMemoryCache Cache { get; set; }
-
         //
         // GET: /Home/
         public async Task<IActionResult> Index()

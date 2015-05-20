@@ -12,6 +12,7 @@ using System.Security.Claims;
 using Microsoft.AspNet.Http;
 using System.Threading;
 using Hooli.ViewModels;
+using Microsoft.Data.Entity;
 
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -34,10 +35,17 @@ namespace Hooli.Controllers
         [FromServices]
         public UserService UserInfo { get; set;}
 
+        public ProfileController(UserManager<ApplicationUser> userManager)
+        {
+            UserManager = userManager;
+        }
+
+        public UserManager<ApplicationUser> UserManager { get; private set; }
+
         [HttpPost]
         public async Task<EditProfileData> EditProfile(EditProfileData data)
         {
-            var user = await UserService.GetUser(Context.User.GetUserId());
+            var user = await GetCurrentUserAsync();
             if ((data.FirstName != null) && (data.FirstName.Length > 0))
             {
                 user.FirstName = data.FirstName;
@@ -60,11 +68,11 @@ namespace Hooli.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditProfilePicture(IFormFile file, CancellationToken requestAborted)
         {
-            var user = await UserService.GetUser(Context.User.GetUserId());
+            var user = await GetCurrentUserAsync();
 
             if ((file != null) && (file.Length > 0))
             {
-                user.ProfilePicture = await Storage.GetUri("profileimages", Guid.NewGuid().ToString(), file);
+                user.ProfilePicture = await Storage.GetUri("profilepictures", Guid.NewGuid().ToString(), file);
             }
             await DbContext.SaveChangesAsync(requestAborted);
             return RedirectToAction("Owner");
@@ -107,6 +115,11 @@ namespace Hooli.Controllers
                 User = currentUser
             };
             return View(profileViewModel);
+        }
+
+        private async Task<ApplicationUser> GetCurrentUserAsync()
+        {
+            return await UserManager.FindByIdAsync(Context.User.GetUserId());
         }
     }
 }
