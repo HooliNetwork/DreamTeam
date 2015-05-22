@@ -23,7 +23,6 @@
         "Microsoft.AspNet.Diagnostics.Entity": "7.0.0-beta4",
         "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-beta4",
         "Microsoft.AspNet.Session": "1.0.0-beta4",
-        "Microsoft.Framework.Caching.Distributed": "1.0.0-beta4",
         "Microsoft.AspNet.Server.IIS": "1.0.0-beta4",
         "Microsoft.AspNet.Server.WebListener": "1.0.0-beta4",
         "Microsoft.AspNet.StaticFiles": "1.0.0-beta4",
