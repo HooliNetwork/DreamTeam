@@ -30,7 +30,7 @@ p {
 }
 
 .navbar-nav {
-    min-height: 70px;    
+    min-height: 70px;
 }
 
 .navbar-nav>li>a {
@@ -359,13 +359,13 @@ textarea {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    
+
     border-radius: 0;
     border: 1px solid #DDD;
     padding-left: 5px;
     text-align: left;
     background: rgba(255,255,255,0.9);
-    outline: none;    
+    outline: none;
     height: 35px;
     margin-bottom: 5px;
 }
@@ -514,10 +514,10 @@ form input[type=radio] {
     width: 100%;
 }
 
-.clearfix:after { 
+.clearfix:after {
    content: " ";
-   display: block; 
-   height: 0; 
+   display: block;
+   height: 0;
    clear: both;
 }
 
@@ -572,7 +572,7 @@ form input[type=radio] {
 }
 
 .btn-primary:focus {
-    background: #fd7e23;    
+    background: #fd7e23;
 }
 
 .btn-hooli {
@@ -596,7 +596,7 @@ form input[type=radio] {
 
 .btn-option {
     background: #CCC;
-    color: #333;    
+    color: #333;
 }
 
 .btn-option:focus {
@@ -606,7 +606,7 @@ form input[type=radio] {
 
 .btn-selected {
     background: #fd7e23;
-    color: #FFF;    
+    color: #FFF;
 }
 
 .btn-2way {
@@ -714,7 +714,7 @@ form input[type=radio] {
 }
 
 .margin-t-no {
-    margin-top: 0;    
+    margin-top: 0;
 }
 
 .margin-b-no {
@@ -749,7 +749,7 @@ footer {
     overflow: hidden;
 }
 .btn-file input[type=file] {
-    
+
     position: absolute;
     top: 0;
     right: 0;
