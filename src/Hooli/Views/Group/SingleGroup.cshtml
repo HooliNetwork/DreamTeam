@@ -13,11 +13,13 @@
                 <div class="info-container">
                     @if (Model.group.Image != null)
                     {
-                    <div class="info-photo" style="background: url(@Model.group.Image) center / cover;">
-                        <div class="info-photo-shade">
-                            <h1>@Model.group.GroupName</h1>
+                    <a class="image-link" href="@Model.group.Image">
+                        <div class="info-photo" style="background: url(@Model.group.Image) center / cover;">
+                            <div class="info-photo-shade">
+                                <h1>@Model.group.GroupName</h1>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                     }
                     @if (Model.group.Image == null)
                     {

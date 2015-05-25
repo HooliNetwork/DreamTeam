@@ -15,11 +15,13 @@
                     <div class="info-container">
                         @if (Model.User.ProfilePicture != null)
                         {
-                    <div class="info-photo info-photo-user" style="background: url(@Model.User.ProfilePicture) center / cover;">
-                        <div class="info-photo-shade">
-                                <h1>@Model.User.FirstName @Model.User.LastName</h1>
+                        <a class="image-link" href="@Model.User.ProfilePicture">
+                            <div class="info-photo info-photo-user" style="background: url(@Model.User.ProfilePicture) center / cover;">
+                                <div class="info-photo-shade">
+                                    <h1>@Model.User.FirstName @Model.User.LastName</h1>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                         }
                         @if (Model.User.ProfilePicture == null)
                         {
@@ -27,7 +29,7 @@
                                 <div class="info-photo-shade">
                                     <h1>@Model.User.FirstName @Model.User.LastName</h1>
                                 </div>
-                        </div>
+                        	</div>
                         }
                     </div>
                 </div>
